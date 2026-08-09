@@ -2,7 +2,7 @@
 """
 demo_meeting_figures.py
 =======================
-Generates 4 publication-quality figures demonstrating:
+Generates 4 high-quality figures demonstrating:
   1. Graupner-Brunel calcium-based plasticity rule (STDP curve)
   2. Dendritic disinhibitory gating mechanism (Yang et al. 2016)
   3. Inhibition-dependent plasticity regimes

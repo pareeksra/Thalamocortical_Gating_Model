@@ -1,6 +1,6 @@
 """
 generate_network_synapse_figure.py
-Generates a comprehensive 4-panel publication-quality figure illustrating:
+Generates a comprehensive 4-panel high-quality figure illustrating:
 Panel A: Complete Network Architecture & Synaptic Wiring (with receptor types)
 Panel B: Receptor Kinetics (AMPA, GABA_A, NMDA waveforms & Mg2+ voltage block)
 Panel C: Multi-Compartmental Soma-Dendrite Electrical Coupling
@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.gridspec import GridSpec
 
-# Dark theme matching our publication style
+# Dark theme matching our presentation style
 plt.style.use('dark_background')
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['font.sans-serif'] = ['Segoe UI', 'Arial', 'DejaVu Sans']

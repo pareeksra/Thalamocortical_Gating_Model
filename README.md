@@ -13,9 +13,8 @@ By modeling the MD thalamus' projections to both Somatostatin (SOM) gating circu
 - `validate_model.py` - Automated verification test suite for basic model sanity checks (6/6 tests).
 - `demo_v2_zhang2025.py` - Context-switching simulation demonstrating how MD thalamic drive switches learning pathways.
 - `sweep_phase_diagram.py` - 2D parameter sweep script exploring MD→PV vs. MD→VIP weights to map out healthy cognitive flexibility vs. "Schizophrenic" pathology.
-- `generate_network_synapse_figure.py` - Script to generate publication-quality figures of the network and synaptic architecture.
+- `generate_network_synapse_figure.py` - Script to generate high-quality figures of the network and synaptic architecture.
 - `print_network_summary.py` - A lightweight script that prints a formatted live inspection of the Brian 2 Network and synaptic equations.
-- `create_presentation.py` - Compiles the results and generated figures into a comprehensive PowerPoint presentation.
 - `figures/` - Generated output plots (e.g., Phase Diagram, Calcium Plasticity).
 
 ## Installation
@@ -56,11 +55,7 @@ To run the full 2D parameter sweep over Thalamocortical weight drives (this take
 python sweep_phase_diagram.py
 ```
 
-**5. Create Output Presentation**
-Generates a 10-slide PPTX summary of the project with all figures and embedded speaker notes:
-```bash
-python create_presentation.py
-```
+
 
 ## Modeling Details
 
