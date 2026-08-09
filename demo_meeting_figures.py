@@ -386,7 +386,8 @@ def _simplified_calcium(rate_hz: float, inh_rate_hz: float):
     post_rate = max(0.0, (v_dend + 50.0) / 20.0)  # rough F–I
     ca_bap = BAP_SCALING * post_rate / 30.0
 
-    return ca_nmda + ca_bap
+    # Scale up steady-state mean calcium to match peak-calibrated thresholds (THETA_D=1.0)
+    return (ca_nmda + ca_bap) * 50.0
 
 
 def _weight_change_from_ca(ca_level: float):
@@ -483,7 +484,7 @@ def make_figure4():
             # 1. Compute total excitation on this branch from BOTH pathways
             g_exc_total = 0.0
             for pathway in range(2):
-                g_exc_total += 0.5 * 40 * rates[pathway] / 50.0 * W[pathway, branch]
+                g_exc_total += 0.5 * 100 * rates[pathway] / 50.0 * W[pathway, branch]
             
             g_inh = 0.8 * inh[branch]
 
@@ -498,9 +499,11 @@ def make_figure4():
             # 4. Compute individual calcium and weight updates per pathway
             for pathway in range(2):
                 s_nmda = 0.06 * rates[pathway] / (1.0 + 0.06 * rates[pathway])
-                ca_nmda_val = NMDA_SCALING * s_nmda * mg * max(v_dend + 10, 0) / 30.0
+                # Lower the driving force threshold to -60 mV so we actually get NMDA influx
+                ca_nmda_val = NMDA_SCALING * s_nmda * mg * max(v_dend + 60, 0) / 30.0
                 
-                ca = ca_nmda_val + ca_bap_val + rng.normal(0, 0.05)
+                # Scale up by 50.0 to match the peak thresholds (THETA_P = 2.78, THETA_D = 1.0)
+                ca = (ca_nmda_val + ca_bap_val) * 50.0 + rng.normal(0, 0.05)
                 ca = max(ca, 0.0)
 
                 # Plasticity
