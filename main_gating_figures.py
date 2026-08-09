@@ -58,12 +58,22 @@ os.makedirs(FIG_DIR, exist_ok=True)
 # ──────────────────────────────────────────────────────────────
 
 # --- Model parameters (Yang 2016 / Graupner-Brunel) ---
+
+# [EXPERIMENTATION] Change these to alter the calcium influx amplitude.
+# Higher NMDA_SCALING increases pre-synaptic calcium, promoting more LTP.
 NMDA_SCALING  = 0.371
 BAP_SCALING   = 0.957
+
+# [EXPERIMENTATION] Change these to alter the learning rate magnitude.
+# GAMMA_D controls how fast weights depress in LTD; GAMMA_P controls how fast they potentiate in LTP.
 GAMMA_D       = 39.949
 GAMMA_P       = 177.552
+
+# [EXPERIMENTATION] Change these to alter the calcium thresholds needed for plasticity.
+# Lowering THETA_P makes it easier to achieve Long-Term Potentiation (LTP).
 THETA_P       = 2.78
 THETA_D       = 1.0
+
 SIGMA         = 3.35
 TAU_RHO       = 346.36        # seconds — slow weight variable time-constant
 W0            = 0.0
