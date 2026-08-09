@@ -472,31 +472,32 @@ def make_figure4():
 
     for trial in range(n_trials):
         context = trial % 2   # alternate A / B
-
         inh = inh_context_A if context == 0 else inh_context_B
 
+        # Rates for this trial
+        rates = [25.0, 5.0] if context == 0 else [5.0, 25.0]
+
         for branch in range(2):
+            # 1. Compute total excitation on this branch from BOTH pathways
+            g_exc_total = 0.0
             for pathway in range(2):
-                # Only the "matching" pathway is active in each context
-                if context == 0:
-                    rate = 25.0 if pathway == 0 else 5.0
-                else:
-                    rate = 5.0  if pathway == 0 else 25.0
+                g_exc_total += 0.5 * 40 * rates[pathway] / 50.0 * W[pathway, branch]
+            
+            g_inh = 0.8 * inh[branch]
 
-                # Effective excitation on this branch
-                g_exc = 0.5 * 40 * rate / 50.0 * W[pathway, branch]
-                g_inh = 0.8 * inh[branch]
+            # 2. Compute the shared dendritic voltage for this branch
+            v_dend = dend_IO(np.atleast_1d(g_exc_total), g_inh)[0]
+            
+            # 3. Compute shared Mg2+ block and bAP calcium
+            mg = 1.0 / (1.0 + (1.0 / 3.57) * np.exp(-0.062 * v_dend))
+            post_rate = max(0.0, (v_dend + 50) / 20.0)
+            ca_bap_val = BAP_SCALING * post_rate / 30.0
 
-                v_dend = dend_IO(np.atleast_1d(g_exc), g_inh)[0]
-
-                # Mg²⁺ block
-                mg = 1.0 / (1.0 + (1.0 / 3.57) * np.exp(-0.062 * v_dend))
-
-                # Calcium
-                s_nmda = 0.06 * rate / (1.0 + 0.06 * rate)
+            # 4. Compute individual calcium and weight updates per pathway
+            for pathway in range(2):
+                s_nmda = 0.06 * rates[pathway] / (1.0 + 0.06 * rates[pathway])
                 ca_nmda_val = NMDA_SCALING * s_nmda * mg * max(v_dend + 10, 0) / 30.0
-                post_rate = max(0.0, (v_dend + 50) / 20.0)
-                ca_bap_val = BAP_SCALING * post_rate / 30.0
+                
                 ca = ca_nmda_val + ca_bap_val + rng.normal(0, 0.05)
                 ca = max(ca, 0.0)
 
@@ -509,8 +510,7 @@ def make_figure4():
                 else:
                     dw = 0.0
 
-                W[pathway, branch] = np.clip(W[pathway, branch] + dw,
-                                             0.05, 2.0)
+                W[pathway, branch] = np.clip(W[pathway, branch] + dw, 0.05, 2.0)
 
         W_history[trial] = W.copy()
 
