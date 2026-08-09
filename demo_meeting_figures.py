@@ -261,12 +261,13 @@ def _draw_circuit(ax):
 
     # --- Nodes ---
     nodes = {
-        "MD":   (0.15, 0.90, "#42A5F5", "MD\nThalamus"),
-        "PYR":  (0.50, 0.55, "#42A5F5", "PFC\nPyramidal"),
-        "VIP":  (0.90, 0.90, GREEN,     "VIP"),
-        "SOM":  (0.90, 0.55, MAGENTA,   "SOM"),
-        "PV":   (0.50, 0.10, MAGENTA,   "PV"),
-        "DEND": (0.50, 0.80, AMBER,     "Dendrite"),
+        "MD":   (0.20, 0.85, "#42A5F5", "MD\nThalamus"),
+        "SENS": (0.20, 0.55, "#42A5F5", "Cortical\nInput"),
+        "PYR":  (0.55, 0.45, "#42A5F5", "PFC\nSoma"),
+        "DEND": (0.55, 0.85, AMBER,     "Dendrite"),
+        "VIP":  (0.85, 0.85, GREEN,     "VIP"),
+        "SOM":  (0.85, 0.60, MAGENTA,   "SOM"),
+        "PV":   (0.55, 0.15, MAGENTA,   "PV"),
     }
 
     for key, (x, y, col, txt) in nodes.items():
@@ -290,12 +291,13 @@ def _draw_circuit(ax):
                                     lw=2.0, connectionstyle=f"arc3,rad={rad}",
                                     linestyle=ls))
 
-    _arrow("MD",  "DEND", "#42A5F5")            # excitatory
-    _arrow("MD",  "PYR",  "#42A5F5", rad=0.3)   # excitatory
-    _arrow("VIP", "SOM",  GREEN)                 # disinhibitory
-    _arrow("SOM", "DEND", MAGENTA)               # inhibitory → dendrite
-    _arrow("PV",  "PYR",  MAGENTA)               # inhibitory → soma
-    _arrow("DEND","PYR",  AMBER,  rad=0.0)       # dendrite → soma
+    _arrow("SENS", "DEND", "#42A5F5")              # cortical -> dendrite
+    _arrow("MD",   "VIP",  "#42A5F5", rad=-0.2)    # MD -> VIP
+    _arrow("MD",   "PV",   "#42A5F5", rad=-0.3)    # MD -> PV
+    _arrow("VIP",  "SOM",  GREEN)                   # VIP -> SOM
+    _arrow("SOM",  "DEND", MAGENTA)                 # SOM -> DEND
+    _arrow("PV",   "PYR",  MAGENTA)                 # PV -> SOMA
+    _arrow("DEND", "PYR",  AMBER, rad=0.0)          # DEND -> SOMA
 
     # Legend
     legend_elements = [
