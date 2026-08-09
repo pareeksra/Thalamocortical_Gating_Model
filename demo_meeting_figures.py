@@ -49,7 +49,7 @@ WHITE   = "#FFFFFF"
 GRAY    = "#888888"
 
 # Output directory
-FIG_DIR = os.path.join(r"c:\Users\ragha\OneDrive\Documents\Minsu", "figures")
+FIG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figures")
 os.makedirs(FIG_DIR, exist_ok=True)
 
 
