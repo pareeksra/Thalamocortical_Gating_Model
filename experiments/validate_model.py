@@ -14,17 +14,18 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import time as timer
 
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src', 'v2'))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'src', 'v2'))
 
 from brian2 import *
 prefs.codegen.target = 'numpy'
 
 from parameters import params, plasticity_params, pv_params, som_params, vip_params, md_params
-from equations import (eqs_soma, eqs_dend, eqs_pv, eqs_som, eqs_vip,
+from equations import (attach_rho_clipper, make_eqs_synapse_plasticity, eqs_soma, eqs_dend, eqs_pv, eqs_som, eqs_vip,
                        eqs_synapse_plasticity, on_pre_plasticity)
 
 # Output directory
-VAL_DIR = os.path.join(os.path.dirname(__file__), 'figures', 'validation')
+VAL_DIR = os.path.join(PROJECT_ROOT, 'figures', 'validation')
 os.makedirs(VAL_DIR, exist_ok=True)
 
 results = {}
@@ -139,22 +140,59 @@ def test2_calcium_plasticity():
     p.update(plasticity_params)
     all_pass = True
 
-    # Minimal post neuron (non-spiking target to host synaptic variables)
+    # Minimal post neuron (non-spiking target to host synaptic variables).
+    # It must also carry the bAP calcium trace, because eqs_synapse_plasticity reads
+    # bAPCa_post as its postsynaptic calcium term. Nothing injects into it here, so it
+    # stays at 0 and c_total == c -- which is exactly what this test wants to measure:
+    # the presynaptic jump and decay in isolation.
+    # The stub previously had `dV/dt = -V/(20*ms)` with V defaulting to 0, so it sat
+    # near 0 mV -- an arbitrary voltage that was harmless while calcium was ungated but
+    # became load-bearing once the Mg2+ gate was added (gate(0 mV) = 0.83 vs
+    # gate(-70 mV) = 0.018). It now relaxes to an explicitly stated holding potential.
     post_eqs = '''
-    dV/dt = -V/(20*ms) : volt
+    dV/dt = (v_hold_post - V)/(20*ms) : volt
     dgTotAMPA/dt = -gTotAMPA/(2*ms) : siemens
+    dbAPCa/dt = (-bAPCa+bAPCa_rise)/tau_Ca_bAP_decay : 1
+    dbAPCa_rise/dt = -bAPCa_rise/tau_Ca_bAP_rise : 1
+    iTotNMDA1 : amp
+    iTotNMDA2 : amp
     '''
+
+    def mg_gate_at(v_mV):
+        return 1.0 / (1.0 + np.exp(-(v_mV - float(p['vHalfNMDA'] / mV))
+                                   / float(p['vSpreadNMDA'] / mV)))
+
+    # 2a probes a branch at rest; 2b-2d need a depolarised branch, because with the gate
+    # in place a resting branch admits almost no NMDA calcium at any presynaptic rate.
+    V_REST_POST = float(p['vRest_pyr'] / mV)
+    V_ACTIVE_POST = -30.0
+    p['v_hold_post'] = V_REST_POST * mV
+    gate_rest, gate_active = mg_gate_at(V_REST_POST), mg_gate_at(V_ACTIVE_POST)
+
+    # Rate thresholds implied by the gate: <c> = C_pre*gate*r*tau_Ca.
+    tau_ca_s = float(p['tau_Ca_NMDA'] / second)
+    r_thD = p['theta_d'] / (p['C_pre'] * gate_active * tau_ca_s)
+    r_thP = p['theta_p'] / (p['C_pre'] * gate_active * tau_ca_s)
+    print(f'      Mg gate: {gate_rest:.4f} at rest ({V_REST_POST:.0f} mV), '
+          f'{gate_active:.4f} at {V_ACTIVE_POST:.0f} mV')
+    print(f'      implied rate thresholds at {V_ACTIVE_POST:.0f} mV: '
+          f'theta_D ~ {r_thD:.0f} Hz, theta_P ~ {r_thP:.0f} Hz')
+    print(f'      (ungated these were 33 / 93 Hz -- the gate moves them by 1/gate, which')
+    print(f'       is why the original 40/100 Hz rates no longer straddle the boundary)')
+    R_LTD = round(0.6 * r_thP / 10) * 10
+    R_LTP = round(1.6 * r_thP / 10) * 10
 
     # -- 2a: Single pre-spike - calcium jump & decay --------------
     print('  2a: Single pre-spike calcium dynamics ...')
     start_scope()
 
     pre = SpikeGeneratorGroup(1, [0], [100 * ms])
-    post = NeuronGroup(1, post_eqs, method='euler')
+    post = NeuronGroup(1, post_eqs, method='euler', namespace=p)
     syn = Synapses(pre, post, model=eqs_synapse_plasticity,
-                   on_pre=on_pre_plasticity, method='euler', namespace=p)
+                   on_pre=on_pre_plasticity, method='heun', namespace=p)
     syn.connect()
     syn.rho = 0.5
+    attach_rho_clipper(syn)
     syn.c = 0.0
 
     mon_2a = StateMonitor(syn, ['c', 'rho', 'w'], record=True, dt=0.1 * ms)
@@ -166,8 +204,10 @@ def test2_calcium_plasticity():
     # Peak calcium in a window right after the spike
     idx_win = (t_2a > 100) & (t_2a < 105)
     c_peak = float(np.max(c_2a[idx_win]))
-    jump_ok = abs(c_peak - p['C_pre']) < 0.15
-    print(f'      Calcium peak after spike: {c_peak:.3f}  (expected ~{p["C_pre"]:.1f})  '
+    expected_2a = p['C_pre'] * gate_rest
+    jump_ok = abs(c_peak - expected_2a) < max(0.05 * expected_2a, 1e-4)
+    print(f'      Calcium peak after spike: {c_peak:.4f}  '
+          f'(expected C_pre*gate = {expected_2a:.4f})  '
           f'-> {"PASS" if jump_ok else "FAIL"}')
     if not jump_ok:
         all_pass = False
@@ -176,25 +216,31 @@ def test2_calcium_plasticity():
     tau_ms = float(p['tau_Ca_NMDA'] / ms)
     idx_decay = np.argmin(np.abs(t_2a - (100.0 + tau_ms)))
     c_at_tau = float(c_2a[idx_decay])
-    expected_decay = float(p['C_pre']) * np.exp(-1)
+    expected_decay = expected_2a * np.exp(-1)
     decay_ok = abs(c_at_tau - expected_decay) / expected_decay < 0.20
     print(f'      Calcium at t+tau ({tau_ms:.0f} ms): {c_at_tau:.3f}  (expected ~{expected_decay:.3f})  '
           f'-> {"PASS" if decay_ok else "FAIL"}')
     if not decay_ok:
         all_pass = False
 
-    # -- 2b: 50 Hz train - threshold crossings --------------------
-    print('  2b: 50 Hz spike train - threshold crossings ...')
+    # -- 2b: threshold crossings at a depolarised branch ----------
+    # Held at V_ACTIVE_POST: with the Mg gate a resting branch cannot cross theta_D at
+    # any presynaptic rate, so the crossing test is only meaningful on an active branch.
+    p['v_hold_post'] = V_ACTIVE_POST * mV
+    R_CROSS = round(1.2 * r_thD / 10) * 10
+    print(f'  2b: {R_CROSS:.0f} Hz spike train at {V_ACTIVE_POST:.0f} mV '
+          f'- threshold crossings ...')
     start_scope()
 
-    spike_times = np.arange(50, 550, 20) * ms  # 50 Hz for 500 ms
+    spike_times = np.arange(50, 550, 1000.0 / R_CROSS) * ms
     spike_idx = np.zeros(len(spike_times), dtype=int)
     pre2 = SpikeGeneratorGroup(1, spike_idx, spike_times)
-    post2 = NeuronGroup(1, post_eqs, method='euler')
+    post2 = NeuronGroup(1, post_eqs, method='euler', namespace=p)
     syn2 = Synapses(pre2, post2, model=eqs_synapse_plasticity,
-                    on_pre=on_pre_plasticity, method='euler', namespace=p)
+                    on_pre=on_pre_plasticity, method='heun', namespace=p)
     syn2.connect()
     syn2.rho = 0.5
+    attach_rho_clipper(syn2)
     syn2.c = 0.0
     mon_2b = StateMonitor(syn2, ['c', 'rho'], record=True, dt=0.1 * ms)
     run(800 * ms)
@@ -204,32 +250,35 @@ def test2_calcium_plasticity():
     crossed_d = bool(np.any(c_2b > p['theta_d']))
     crossed_p = bool(np.any(c_2b > p['theta_p']))
 
-    # Steady-state calcium at 50 Hz ~ C_pre * rate * tau = 1.0 * 50 * 0.03 = 1.5
-    # Should cross theta_d = 1.0 but probably NOT theta_p = 2.78
+    # Steady state ~ C_pre*gate*rate*tau; R_CROSS is set to 1.2x the theta_D rate, so
+    # theta_D should be crossed and theta_P should not.
     print(f'      Crossed theta_d ({p["theta_d"]:.1f}): {crossed_d}  -> {"PASS" if crossed_d else "FAIL"}')
     if not crossed_d:
         all_pass = False
     print(f'      Crossed theta_p ({p["theta_p"]:.2f}): {crossed_p}  (informational)')
 
     # -- 2c: High-rate input - plasticity direction (LTP) ---------
-    print('  2c: 100 Hz input - plasticity direction (LTP expected) ...')
+    p['v_hold_post'] = V_ACTIVE_POST * mV
+    print(f'  2c: {R_LTP:.0f} Hz input at {V_ACTIVE_POST:.0f} mV '
+          f'- plasticity direction (LTP expected) ...')
     start_scope()
 
-    spike_times_hi = np.arange(10, 3010, 10) * ms  # 100 Hz for 3 s
+    spike_times_hi = np.arange(10, 3010, 1000.0 / R_LTP) * ms
     spike_idx_hi = np.zeros(len(spike_times_hi), dtype=int)
     pre3 = SpikeGeneratorGroup(1, spike_idx_hi, spike_times_hi)
-    post3 = NeuronGroup(1, post_eqs, method='euler')
+    post3 = NeuronGroup(1, post_eqs, method='euler', namespace=p)
     syn3 = Synapses(pre3, post3, model=eqs_synapse_plasticity,
-                    on_pre=on_pre_plasticity, method='euler', namespace=p)
+                    on_pre=on_pre_plasticity, method='heun', namespace=p)
     syn3.connect()
     syn3.rho = 0.5
+    attach_rho_clipper(syn3)
     syn3.c = 0.0
     mon_2c = StateMonitor(syn3, ['c', 'rho', 'w'], record=True, dt=1 * ms)
     run(3 * second)
 
     rho_init = 0.5
     rho_final = float(mon_2c.rho[0][-1])
-    # At 100 Hz, steady-state Ca ~ 3.0 -> above theta_p -> gamma_p dominates -> LTP (rho ^)
+    # R_LTP is 1.6x the gate-implied theta_P rate -> gamma_p dominates -> LTP (rho ^)
     ltp_ok = rho_final > rho_init
     print(f'      rho: {rho_init:.2f} -> {rho_final:.3f}  '
           f'({"increase = LTP OK" if ltp_ok else "UNEXPECTED DIRECTION"})  '
@@ -238,17 +287,19 @@ def test2_calcium_plasticity():
         all_pass = False
 
     # -- 2d: Low-rate input - plasticity direction (LTD) ----------
-    print('  2d: 40 Hz input - plasticity direction (LTD expected) ...')
+    print(f'  2d: {R_LTD:.0f} Hz input at {V_ACTIVE_POST:.0f} mV '
+          f'- plasticity direction (LTD expected) ...')
     start_scope()
 
-    spike_times_lo = np.arange(10, 5010, 25) * ms  # 40 Hz for 5 s
+    spike_times_lo = np.arange(10, 5010, 1000.0 / R_LTD) * ms
     spike_idx_lo = np.zeros(len(spike_times_lo), dtype=int)
     pre4 = SpikeGeneratorGroup(1, spike_idx_lo, spike_times_lo)
-    post4 = NeuronGroup(1, post_eqs, method='euler')
+    post4 = NeuronGroup(1, post_eqs, method='euler', namespace=p)
     syn4 = Synapses(pre4, post4, model=eqs_synapse_plasticity,
-                    on_pre=on_pre_plasticity, method='euler', namespace=p)
+                    on_pre=on_pre_plasticity, method='heun', namespace=p)
     syn4.connect()
     syn4.rho = 0.5
+    attach_rho_clipper(syn4)
     syn4.c = 0.0
     mon_2d = StateMonitor(syn4, ['c', 'rho', 'w'], record=True, dt=1 * ms)
     run(5 * second)
@@ -334,7 +385,7 @@ def test3_branch_gating():
     net = Network()
 
     # -- Pyramidal Neuron -----------------------------------------
-    reset_eqs = 'V = vReset_pyr\nbAPCa_rise += norm_factor_Ca'
+    reset_eqs = 'V = vReset_pyr'
     Soma = NeuronGroup(num_pyr, eqs_soma, threshold='V > vThres_pyr',
                        reset=reset_eqs, refractory=p['refracTime_pyr'],
                        method='euler', namespace=p)
@@ -352,7 +403,7 @@ def test3_branch_gating():
         Soma.vAveDend = np.mean(temp_v, axis=1)
         Dend.vSoma = np.repeat(Soma.vShadow[:], num_dend_each)
 
-    bAP_syn = Synapses(Soma, Dend, on_pre='V_post += bAP_amp',
+    bAP_syn = Synapses(Soma, Dend, on_pre='V_post += bAP_amp\nbAPCa_rise_post += norm_factor_Ca',
                        delay=p['bAP_delay'], namespace=p)
     bAP_syn.connect(j='i*num_DendEach + k for k in range(num_DendEach)')
 
@@ -374,14 +425,18 @@ def test3_branch_gating():
     exc_input = PoissonGroup(20, rates=80 * Hz)
 
     syn_exc_b0 = Synapses(exc_input, Dend, model=eqs_synapse_plasticity,
-                          on_pre=on_pre_plasticity, method='euler', namespace=p)
+                          on_pre=on_pre_plasticity, method='heun', namespace=p)
     syn_exc_b0.connect(j='0')   # all 20 inputs -> dendrite 0
     syn_exc_b0.rho = 0.5
+    attach_rho_clipper(syn_exc_b0)
 
-    syn_exc_b1 = Synapses(exc_input, Dend, model=eqs_synapse_plasticity,
-                          on_pre=on_pre_plasticity, method='euler', namespace=p)
+    # Second pathway population -> NMDA slot 2 (Brian 2 permits one writer per summed
+    # variable per target group; the dendrite declares two slots for exactly this).
+    syn_exc_b1 = Synapses(exc_input, Dend, model=make_eqs_synapse_plasticity(2),
+                          on_pre=on_pre_plasticity, method='heun', namespace=p)
     syn_exc_b1.connect(j='1')   # all 20 inputs -> dendrite 1
     syn_exc_b1.rho = 0.5
+    attach_rho_clipper(syn_exc_b1)
 
     net.add([exc_input, syn_exc_b0, syn_exc_b1])
 
@@ -397,19 +452,53 @@ def test3_branch_gating():
     net.run(3 * second, report='text')
 
     # -- Analyze --------------------------------------------------
-    w_b0_final = float(np.mean([mon_w_b0.w[i][-1] for i in range(len(syn_exc_b0))]))
-    w_b1_final = float(np.mean([mon_w_b1.w[i][-1] for i in range(len(syn_exc_b1))]))
+    w_b0_all = np.array([mon_w_b0.w[i][-1] for i in range(len(syn_exc_b0))])
+    w_b1_all = np.array([mon_w_b1.w[i][-1] for i in range(len(syn_exc_b1))])
+    w_b0_final, w_b1_final = float(np.mean(w_b0_all)), float(np.mean(w_b1_all))
+    n0, n1 = len(w_b0_all), len(w_b1_all)
 
-    print(f'  Mean final weight  Branch 0 (inhibited):   {w_b0_final:.3f}')
-    print(f'  Mean final weight  Branch 1 (disinhibited): {w_b1_final:.3f}')
+    print(f'  Branch 0 (inhibited):    mean={w_b0_final:.3f}  sd={np.std(w_b0_all):.3f}  n={n0}')
+    print(f'  Branch 1 (disinhibited): mean={w_b1_final:.3f}  sd={np.std(w_b1_all):.3f}  n={n1}')
 
     if w_b0_final > 0.01:
         ratio = w_b1_final / w_b0_final
     else:
         ratio = float('inf') if w_b1_final > 0.01 else 1.0
 
-    passed = w_b1_final > w_b0_final  # Disinhibited branch should have higher weight
-    print(f'  Ratio (free / inhibited): {ratio:.2f}  -> {"PASS" if passed else "FAIL"}')
+    # Two criteria, both required. The old test asserted only `w_b1 > w_b0`, which on
+    # two statistically identical branches is a coin flip -- observed passing at ratio
+    # 1.02 and failing at 0.99 with no change to the model. A gating test has to demand
+    # an effect that noise cannot supply.
+    MIN_RATIO = 1.10          # disinhibited branch at least 10% stronger
+
+    # PAIRED comparison. Both Synapses objects were built from the same 20-cell
+    # `exc_input` group (all-to-one onto each dendrite), so synapse i on branch 0 and
+    # synapse i on branch 1 are driven by the *same* presynaptic spike train. Pairing
+    # on i cancels that shared drive, which is by far the largest variance component --
+    # the unpaired spread is ~0.9 per synapse because individual bistable synapses sit
+    # near the 0 / w1 rails. Unpaired power at n=20 is only ~13% for a +20% effect;
+    # paired power is far higher, which matters for detecting a genuine fix rather than
+    # just rejecting the broken state.
+    paired = (len(w_b1_all) == len(w_b0_all))
+    if paired:
+        d = w_b1_all - w_b0_all
+        sem_d = float(np.std(d, ddof=1) / np.sqrt(len(d))) if len(d) > 1 else 0.0
+        separation = float(np.mean(d)) / sem_d if sem_d > 1e-12 else 0.0
+        sep_label = 'paired'
+    else:
+        sem = float(np.sqrt(np.var(w_b0_all) / max(n0, 1) + np.var(w_b1_all) / max(n1, 1)))
+        separation = (w_b1_final - w_b0_final) / sem if sem > 1e-12 else 0.0
+        sep_label = 'unpaired'
+
+    ratio_ok = ratio >= MIN_RATIO
+    sep_ok = separation >= 2.0    # difference exceeds ~2 standard errors
+    passed = bool(ratio_ok and sep_ok)
+
+    print(f'  Ratio (free / inhibited): {ratio:.3f}  (need >= {MIN_RATIO:.2f})'
+          f'  -> {"ok" if ratio_ok else "insufficient effect size"}')
+    print(f'  Separation ({sep_label}):    {separation:.2f} SEM  (need >= 2.00)'
+          f'  -> {"ok" if sep_ok else "within noise"}')
+    print(f'  Branch-specific gating:   {"PASS" if passed else "FAIL"}')
 
     # -- Diagnostic plot ------------------------------------------
     fig, axes = plt.subplots(3, 1, figsize=(10, 9), sharex=True)
@@ -491,7 +580,7 @@ def test4_stability():
     net = Network()
 
     # Build full circuit (same as demo_v2_zhang2025.py)
-    reset_eqs = 'V = vReset_pyr\nbAPCa_rise += norm_factor_Ca'
+    reset_eqs = 'V = vReset_pyr'
     Soma = NeuronGroup(num_pyr, eqs_soma, threshold='V > vThres_pyr',
                        reset=reset_eqs, refractory=p['refracTime_pyr'],
                        method='euler', namespace=p)
@@ -509,7 +598,7 @@ def test4_stability():
         Soma.vAveDend = np.mean(temp_v, axis=1)
         Dend.vSoma = np.repeat(Soma.vShadow[:], num_dend_each)
 
-    bAP_syn = Synapses(Soma, Dend, on_pre='V_post += bAP_amp',
+    bAP_syn = Synapses(Soma, Dend, on_pre='V_post += bAP_amp\nbAPCa_rise_post += norm_factor_Ca',
                        delay=p['bAP_delay'], namespace=p)
     bAP_syn.connect(j='i*num_DendEach + k for k in range(num_DendEach)')
 
@@ -517,6 +606,12 @@ def test4_stability():
                            reset='V = vReset_pv', refractory=p['refrac_pv'],
                            method='euler', namespace=p)
     PV_cells.V = p['vRest_pv']
+    # Tonic background drive giving PV a baseline it can be modulated around.
+    BG_pv = PoissonGroup(num_pv, rates=p['rate_bg_pv'])
+    syn_bg_pv = Synapses(BG_pv, PV_cells, on_pre='gTotAMPA_post += weight_bg_pv',
+                         namespace=p)
+    syn_bg_pv.connect(j='i')
+
 
     SOM_cells = NeuronGroup(num_som, eqs_som, threshold='V > vThres_som',
                             reset='V = vReset_som', refractory=p['refrac_som'],
@@ -529,7 +624,8 @@ def test4_stability():
                             method='euler', namespace=p)
     VIP_cells.V = p['vRest_vip']
 
-    MD = PoissonGroup(num_md, rates=20 * Hz)  # Constant moderate rate
+    md_rate_hz = 20.0
+    MD = PoissonGroup(num_md, rates=md_rate_hz * Hz)  # Constant moderate rate
 
     syn_md2pv = Synapses(MD, PV_cells, on_pre='gTotAMPA_post += gAMPA_pv', namespace=p)
     syn_md2pv.connect(p=p['p_md2pv'])
@@ -544,18 +640,19 @@ def test4_stability():
 
     pathway_input = PoissonGroup(30, rates=80 * Hz)
     syn_input = Synapses(pathway_input, Dend, model=eqs_synapse_plasticity,
-                         on_pre=on_pre_plasticity, method='euler', namespace=p)
+                         on_pre=on_pre_plasticity, method='heun', namespace=p)
     syn_input.connect()
     syn_input.rho = 0.5
+    attach_rho_clipper(syn_input)
 
     mon_soma_v = StateMonitor(Soma, 'V', record=True, dt=1 * ms)
-    mon_w = StateMonitor(syn_input, 'w', record=[0], dt=100 * ms)
+    mon_w = StateMonitor(syn_input, ['w', 'rho'], record=[0], dt=100 * ms)
     mon_pv_sp = SpikeMonitor(PV_cells)
     mon_som_sp = SpikeMonitor(SOM_cells)
     mon_pyr_sp = SpikeMonitor(Soma)
 
     net.add([Soma, Dend, Coupling, bAP_syn,
-             PV_cells, SOM_cells, VIP_cells, MD,
+             PV_cells, SOM_cells, VIP_cells, MD, BG_pv, syn_bg_pv,
              syn_md2pv, syn_md2vip, syn_vip2som, syn_som2dend, syn_pv2soma,
              pathway_input, syn_input,
              mon_soma_v, mon_w, mon_pv_sp, mon_som_sp, mon_pyr_sp])
@@ -574,14 +671,30 @@ def test4_stability():
     if has_nan or has_inf:
         all_pass = False
 
+    # -- 4c: derived weight must stay inside [w0, w1] -------------
+    # This is guaranteed by clip(rho) in the w assignment, so on its own it is a weak
+    # check. The informative version is 4b below, on the *state* variable rho.
     w_trace = mon_w.w[0]
-    w_bounded = bool(np.all((w_trace >= -0.1) & (w_trace <= 3.5)))
-    print(f'  Weights bounded [0, 3]: {w_bounded}  (min={np.min(w_trace):.2f}, max={np.max(w_trace):.2f})  '
+    w_bounded = bool(np.all((w_trace >= p['w0'] - 1e-9) & (w_trace <= p['w1'] + 1e-9)))
+    print(f'  Weight w within [{p["w0"]:.1f}, {p["w1"]:.1f}]: {w_bounded}  '
+          f'(min={np.min(w_trace):.3f}, max={np.max(w_trace):.3f})  '
           f'-> {"PASS" if w_bounded else "FAIL"}')
     if not w_bounded:
         all_pass = False
 
-    # Firing rate check (should be physiological: 0-200 Hz)
+    # -- 4b: rho itself must remain inside its double well --------
+    # rho is the integrated state variable. Only `w` is clipped, so if the noise term
+    # or the drift pushes rho outside [0, 1] the escape is invisible in `w`. Assert on
+    # rho directly: leaving [0, 1] means the bistable potential is not confining it.
+    rho_trace = mon_w.rho[0]
+    rho_bounded = bool(np.all((rho_trace >= -1e-9) & (rho_trace <= 1.0 + 1e-9)))
+    print(f'  rho within [0, 1]:      {rho_bounded}  '
+          f'(min={np.min(rho_trace):.4f}, max={np.max(rho_trace):.4f})  '
+          f'-> {"PASS" if rho_bounded else "FAIL (rho escaped the double well)"}')
+    if not rho_bounded:
+        all_pass = False
+
+    # -- 4d: firing rates below a physiological ceiling -----------
     duration = 10.0
     pv_rate = len(mon_pv_sp.t) / duration / num_pv
     som_rate = len(mon_som_sp.t) / duration / num_som
@@ -590,6 +703,26 @@ def test4_stability():
     print(f'  Firing rates (Hz): PV={pv_rate:.1f}, SOM={som_rate:.1f}, Pyr={pyr_rate:.1f}  '
           f'-> {"PASS" if rates_ok else "FAIL (>200 Hz)"}')
     if not rates_ok:
+        all_pass = False
+
+    # -- 4e: the MD->PV arm must actually drive PV ----------------
+    # MD runs at 20 Hz into 20 PV cells at p_md2pv=0.5 for the whole 10 s. The spec
+    # gives PV the role of broad somatic inhibition; a projection that leaves its
+    # target at exactly 0 Hz cannot inhibit anything. Previously this check had only
+    # an upper bound, so total silence scored PASS.
+    pv_driven = pv_rate > 0.0
+    print(f'  PV responds to MD drive: {pv_driven}  (PV={pv_rate:.2f} Hz under '
+          f'{md_rate_hz:.0f} Hz MD)  -> {"PASS" if pv_driven else "FAIL (MD->PV arm inert)"}')
+    if not pv_driven:
+        all_pass = False
+
+    # -- 4f: E/I opposition ---------------------------------------
+    # An actively firing pyramidal cell with a completely silent PV population is the
+    # unopposed-excitation pathology the E/I-balance hypothesis is about.
+    ei_ok = not (pyr_rate > 10.0 and pv_rate <= 0.0)
+    print(f'  E/I opposition present: {ei_ok}  (Pyr={pyr_rate:.1f} Hz vs PV={pv_rate:.2f} Hz)'
+          f'  -> {"PASS" if ei_ok else "FAIL (pyramidal firing is unopposed)"}')
+    if not ei_ok:
         all_pass = False
 
     # -- Diagnostic plot ------------------------------------------
@@ -619,8 +752,21 @@ def test4_stability():
 # TEST 5: Random Seed Reproducibility
 # ================================================================
 def test5_reproducibility():
+    """Seed reproducibility and cross-seed consistency.
+
+    The previous version of this test ran three *different* seeds (0, 42, 84) and
+    checked only that the across-seed CV was below 0.50 -- so it never tested
+    reproducibility at all. Worse, it computed `cv = std/mean if mean > 0 else 0`,
+    which scored a completely silent population as CV = 0 and therefore PASS. Two of
+    its three populations were passing on exactly that basis.
+
+    This version runs seeds [0, 0, 42, 84] and makes three separate assertions:
+      5a  same seed twice  -> bit-identical spike counts (actual reproducibility)
+      5b  every population is non-silent (otherwise 5c is vacuous)
+      5c  across distinct seeds, rate CV < 0.50
+    """
     print('\n' + '=' * 60)
-    print(' TEST 5: Random Seed Reproducibility (3 runs)')
+    print(' TEST 5: Seed Reproducibility & Cross-Seed Consistency (4 runs)')
     print('=' * 60)
 
     p = params.copy()
@@ -651,14 +797,18 @@ def test5_reproducibility():
     som_rates = []
     pyr_rates = []
 
-    for run_i in range(3):
+    # Runs 0 and 1 share a seed -> they must agree exactly (5a).
+    # Runs 0, 2, 3 have distinct seeds -> used for the variability check (5c).
+    seeds = [0, 0, 42, 84]
+
+    for run_i, this_seed in enumerate(seeds):
         start_scope()
-        seed(run_i * 42)
-        np.random.seed(run_i * 42)
+        seed(this_seed)
+        np.random.seed(this_seed)
 
         net = Network()
 
-        reset_eqs = 'V = vReset_pyr\nbAPCa_rise += norm_factor_Ca'
+        reset_eqs = 'V = vReset_pyr'
         Soma = NeuronGroup(num_pyr, eqs_soma, threshold='V > vThres_pyr',
                            reset=reset_eqs, refractory=p['refracTime_pyr'],
                            method='euler', namespace=p)
@@ -676,7 +826,7 @@ def test5_reproducibility():
             Soma.vAveDend = np.mean(temp_v, axis=1)
             Dend.vSoma = np.repeat(Soma.vShadow[:], num_dend_each)
 
-        bAP_syn = Synapses(Soma, Dend, on_pre='V_post += bAP_amp',
+        bAP_syn = Synapses(Soma, Dend, on_pre='V_post += bAP_amp\nbAPCa_rise_post += norm_factor_Ca',
                            delay=p['bAP_delay'], namespace=p)
         bAP_syn.connect(j='i*num_DendEach + k for k in range(num_DendEach)')
 
@@ -684,6 +834,13 @@ def test5_reproducibility():
                                reset='V = vReset_pv', refractory=p['refrac_pv'],
                                method='euler', namespace=p)
         PV_cells.V = p['vRest_pv']
+
+        # Tonic background drive giving PV a baseline it can be modulated around.
+        BG_pv = PoissonGroup(num_pv, rates=p['rate_bg_pv'])
+        syn_bg_pv = Synapses(BG_pv, PV_cells, on_pre='gTotAMPA_post += weight_bg_pv',
+                             namespace=p)
+        syn_bg_pv.connect(j='i')
+
 
         SOM_cells = NeuronGroup(num_som, eqs_som, threshold='V > vThres_som',
                                 reset='V = vReset_som', refractory=p['refrac_som'],
@@ -711,21 +868,22 @@ def test5_reproducibility():
 
         pathway_input = PoissonGroup(30, rates=80 * Hz)
         syn_input = Synapses(pathway_input, Dend, model=eqs_synapse_plasticity,
-                             on_pre=on_pre_plasticity, method='euler', namespace=p)
+                             on_pre=on_pre_plasticity, method='heun', namespace=p)
         syn_input.connect()
         syn_input.rho = 0.5
+        attach_rho_clipper(syn_input)
 
         mon_pv = SpikeMonitor(PV_cells)
         mon_som = SpikeMonitor(SOM_cells)
         mon_pyr = SpikeMonitor(Soma)
 
         net.add([Soma, Dend, Coupling, bAP_syn,
-                 PV_cells, SOM_cells, VIP_cells, MD,
+                 PV_cells, SOM_cells, VIP_cells, MD, BG_pv, syn_bg_pv,
                  syn_md2pv, syn_md2vip, syn_vip2som, syn_som2dend, syn_pv2soma,
                  pathway_input, syn_input,
                  mon_pv, mon_som, mon_pyr])
 
-        print(f'  Run {run_i + 1}/3 (seed={run_i * 42}) ...')
+        print(f'  Run {run_i + 1}/{len(seeds)} (seed={this_seed}) ...')
         net.run(2 * second, report='text')
 
         dur = 2.0
@@ -733,19 +891,58 @@ def test5_reproducibility():
         som_rates.append(len(mon_som.t) / dur / num_som)
         pyr_rates.append(len(mon_pyr.t) / dur / num_pyr)
 
-    # -- Analyze consistency --------------------------------------
+    # -- 5a: same seed must reproduce exactly ---------------------
     all_pass = True
-
+    print()
+    repro_ok = True
     for label, rates in [('PV', pv_rates), ('SOM', som_rates), ('Pyr', pyr_rates)]:
-        arr = np.array(rates)
-        mean_r = np.mean(arr)
-        std_r = np.std(arr)
-        cv = std_r / mean_r if mean_r > 0 else 0
-        ok = cv < 0.50  # Allow up to 50% CV for small stochastic networks
-        print(f'  {label:3s}:  rates = {[f"{r:.1f}" for r in rates]}  '
+        same = abs(rates[0] - rates[1]) < 1e-12
+        print(f'  5a {label:3s} seed 0 twice: {rates[0]:.3f} vs {rates[1]:.3f} Hz'
+              f'  -> {"PASS" if same else "FAIL (not reproducible)"}')
+        if not same:
+            repro_ok = False
+    if not repro_ok:
+        all_pass = False
+
+    # -- 5b/5c: non-vacuity, then cross-seed consistency ----------
+    print()
+    distinct = [0, 2, 3]   # indices of the runs with distinct seeds
+    n_uncovered = 0
+    for label, rates in [('PV', pv_rates), ('SOM', som_rates), ('Pyr', pyr_rates)]:
+        arr = np.array([rates[i] for i in distinct])
+        mean_r = float(np.mean(arr))
+        std_r = float(np.std(arr))
+
+        # 5b: a silent population makes the CV check meaningless -- CV would be 0 and
+        # score PASS, which is what previously hid the inert MD->PV arm. Such a
+        # population is reported as NOT COVERED rather than PASS.
+        #
+        # Note it is not failed either. At this test's 5 Hz MD drive the pyramidal cell
+        # is *correctly* silent: VIP is unrecruited, SOM runs at ~36 Hz, and the
+        # dendritic gate is shut. Failing on that would be a false positive. The PV arm
+        # is asserted in Test 4 (check 4e) instead, under a 20 Hz drive where PV is
+        # genuinely required to respond.
+        if mean_r <= 0.0:
+            print(f'  5b {label:3s}: rates = {[f"{r:.1f}" for r in arr]}  mean=0.00  '
+                  f'-> NOT COVERED (silent; CV undefined, so not asserted here)')
+            n_uncovered += 1
+            continue
+
+        cv = std_r / mean_r
+        ok = cv < 0.50   # Allow up to 50% CV for small stochastic networks
+        print(f'  5c {label:3s}: rates = {[f"{r:.1f}" for r in arr]}  '
               f'mean={mean_r:.1f}  CV={cv:.2f}  -> {"PASS" if ok else "FAIL"}')
         if not ok:
             all_pass = False
+
+    # The consistency check must cover at least one population, otherwise the whole
+    # test is vacuous no matter how it is scored.
+    if n_uncovered >= 3:
+        print('  5b: no population was active -- consistency check covered nothing '
+              '-> FAIL')
+        all_pass = False
+    elif n_uncovered:
+        print(f'  ({n_uncovered} of 3 populations silent and therefore not covered)')
 
     results['Test 5: Reproducibility'] = all_pass
     return all_pass

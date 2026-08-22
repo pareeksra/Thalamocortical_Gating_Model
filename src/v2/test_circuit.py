@@ -1,8 +1,14 @@
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from brian2 import *
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import os
 from MultiCompartmentalModel import Model
+
+FIG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'figures')
 
 def main():
     print("Starting Brian 2 Migration Test...")
@@ -56,9 +62,10 @@ def main():
     plt.title('Plasticity Trace')
     plt.legend()
     
-    os.makedirs('figures', exist_ok=True)
-    plt.savefig('figures/v2_migration_test.png')
-    print("Success! Test figure saved to figures/v2_migration_test.png")
+    os.makedirs(FIG_DIR, exist_ok=True)
+    out = os.path.join(FIG_DIR, 'v2_migration_test.png')
+    plt.savefig(out)
+    print(f"Success! Test figure saved to {out}")
 
 if __name__ == '__main__':
     main()

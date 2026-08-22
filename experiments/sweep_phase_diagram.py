@@ -22,7 +22,8 @@ def run_sim(args):
     
     import sys, os
     import numpy as np
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src', 'v2')))
+    _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.insert(0, os.path.join(_root, 'src', 'v2'))
     
     from brian2 import (prefs, start_scope, Network, NeuronGroup, Synapses, 
                         SpikeMonitor, StateMonitor, PoissonGroup, network_operation,
@@ -32,7 +33,7 @@ def run_sim(args):
     start_scope()
     
     from parameters import params, plasticity_params, pv_params, som_params, vip_params, md_params
-    from equations import (eqs_soma, eqs_dend, eqs_pv, eqs_som, eqs_vip, 
+    from equations import (attach_rho_clipper, eqs_soma, eqs_dend, eqs_pv, eqs_som, eqs_vip, 
                            eqs_synapse_plasticity, on_pre_plasticity)
     
     p = params.copy()
@@ -65,7 +66,7 @@ def run_sim(args):
     
     net = Network()
     
-    reset_eqs = 'V = vReset_pyr\nbAPCa_rise += norm_factor_Ca'
+    reset_eqs = 'V = vReset_pyr'
     Soma = NeuronGroup(num_pyr, eqs_soma, threshold='V > vThres_pyr',
                        reset=reset_eqs, refractory=p['refracTime_pyr'],
                        method='euler', namespace=p)
@@ -83,11 +84,17 @@ def run_sim(args):
         Soma.vAveDend = np.mean(temp_v, axis=1)
         Dend.vSoma = np.repeat(Soma.vShadow[:], num_dend_each)
         
-    bAP = Synapses(Soma, Dend, on_pre='V_post += bAP_amp', delay=p['bAP_delay'], namespace=p)
+    bAP = Synapses(Soma, Dend, on_pre='V_post += bAP_amp\nbAPCa_rise_post += norm_factor_Ca', delay=p['bAP_delay'], namespace=p)
     bAP.connect(j='i*num_DendEach + k for k in range(num_DendEach)')
     
     PV = NeuronGroup(num_pv, eqs_pv, threshold='V > vThres_pv', reset='V = vReset_pv', refractory=p['refrac_pv'], method='euler', namespace=p)
     PV.V = p['vRest_pv']
+    # Tonic background drive giving PV a baseline it can be modulated around.
+    BG_pv = PoissonGroup(num_pv, rates=p['rate_bg_pv'])
+    syn_bg_pv = Synapses(BG_pv, PV, on_pre='gTotAMPA_post += weight_bg_pv',
+                         namespace=p)
+    syn_bg_pv.connect(j='i')
+
     
     SOM = NeuronGroup(num_som, eqs_som, threshold='V > vThres_som', reset='V = vReset_som', refractory=p['refrac_som'], method='euler', namespace=p)
     SOM.V = p['vRest_som']
@@ -111,9 +118,10 @@ def run_sim(args):
     
     pathway_input = PoissonGroup(30, rates=80 * Hz)
     syn_input = Synapses(pathway_input, Dend, model=eqs_synapse_plasticity,
-                         on_pre=on_pre_plasticity, method='euler', namespace=p)
+                         on_pre=on_pre_plasticity, method='heun', namespace=p)
     syn_input.connect()
     syn_input.rho = 0.5
+    attach_rho_clipper(syn_input)
     
     mon_pv = SpikeMonitor(PV)
     mon_som = SpikeMonitor(SOM)
@@ -121,7 +129,7 @@ def run_sim(args):
     mon_w = StateMonitor(syn_input, 'w', record=True, dt=50 * ms)
     
     net.add([Soma, Dend, Coupling, bAP, PV, SOM, VIP, MD,
-             syn_md2pv, syn_md2vip, syn_vip2som, syn_som2dend, syn_pv2soma,
+             BG_pv, syn_bg_pv, syn_md2pv, syn_md2vip, syn_vip2som, syn_som2dend, syn_pv2soma,
              pathway_input, syn_input, mon_pv, mon_som, mon_pyr, mon_w])
     
     # Run 1.5 seconds (0.5s settle, 1.0s measurement)
@@ -186,7 +194,8 @@ def main():
         mat_dw[i, j] = dw
         
     # Plotting
-    os.makedirs('figures', exist_ok=True)
+    fig_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'figures')
+    os.makedirs(fig_dir, exist_ok=True)
     plt.style.use('dark_background')
     
     fig, axes = plt.subplots(2, 2, figsize=(14, 12))
@@ -225,8 +234,9 @@ def main():
             
     plt.suptitle('Phase Diagram of Cognitive Flexibility', fontsize=18, y=0.98)
     plt.tight_layout()
-    plt.savefig('figures/phase_diagram.png', dpi=200)
-    print("Phase diagram saved to figures/phase_diagram.png")
+    out_path = os.path.join(fig_dir, 'phase_diagram.png')
+    plt.savefig(out_path, dpi=200)
+    print(f"Phase diagram saved to {out_path}")
     
 if __name__ == '__main__':
     main()

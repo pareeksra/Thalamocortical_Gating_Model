@@ -1,0 +1,8 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Office temp lock files
+~$*.pptx
+~$*.docx
+~$*.xlsx

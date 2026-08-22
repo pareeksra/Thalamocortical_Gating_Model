@@ -99,6 +99,33 @@ pv_params = {
     'gAMPA_pv': 0.12 * nS,     # MD→PV synapse weight
     'gGABA_pv': 2.0 * nS,     # SOM→PV synapse weight
     'gGABA_pv2soma': 5.0 * nS, # PV→Pyramidal soma
+
+    # ---- Tonic background drive to PV -------------------------------------
+    # PV had no baseline mechanism at all, while SOM has a bias current
+    # (iBaseline_som). Without one, PV had to reach threshold on thalamic drive alone
+    # and was silent across the whole operating range: 0 Hz at 5 and 25 Hz MD, 4 Hz at
+    # 40 Hz, then 132 Hz by 80 Hz.
+    #
+    # A tonic CURRENT cannot fix this. PV's f-I curve is a near-step because
+    # vThres - vReset is only 5 mV with tau_m = 10 ms: rheobase is 20.0 pA, a 10 Hz
+    # baseline needs 20.0003 pA and 40 Hz needs 20.5 pA. There is no tunable range, so
+    # copying SOM's 22 pA would give 74 Hz rather than a baseline (SOM's own tau_m is
+    # twice PV's, which is why the same current behaves completely differently).
+    #
+    # A background CONDUCTANCE does work, and it is this project's own declared
+    # mechanism (rate_bgE / weight_bgE in params, previously never used anywhere).
+    # Poisson conductance fluctuations smooth the f-I curve, so the rate becomes graded
+    # instead of step-like. rate_bg_pv reuses the declared rate_bgE = 500 Hz; the weight
+    # is derived for PV rather than inherited, placing the mean background conductance
+    # (w * rate * tauAMPA_pv = 0.25 nS) just BELOW the ~0.4 nS needed for
+    # V_inf = vThres, so firing is fluctuation-driven.
+    #
+    # Measured result: 7.5 Hz at rest -> 13.6 (MD 5) -> 52.5 (MD 20) -> 129 Hz (MD 40),
+    # monotonic, non-saturating, and inside the 200 Hz ceiling across the operating
+    # range. p_md2pv, n_md and gAMPA_pv are deliberately untouched, so the
+    # many-weak-contacts-to-PV vs few-strong-to-VIP asymmetry is preserved.
+    'rate_bg_pv': 500 * Hz,
+    'weight_bg_pv': 0.25 * nS,
 }
 
 som_params = {

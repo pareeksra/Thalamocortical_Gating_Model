@@ -22,10 +22,12 @@ from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Circle, Rectangl
 from matplotlib.lines import Line2D
 import matplotlib.colors as mcolors
 
+from dendritic_io import dend_IO
+
 # ──────────────────────────────────────────────────────────────
 # Global style
 # ──────────────────────────────────────────────────────────────
-plt.style.use("dark_background")
+plt.style.use("default")
 plt.rcParams.update({
     "font.family":      "serif",
     "font.size":        11,
@@ -38,6 +40,9 @@ plt.rcParams.update({
     "savefig.dpi":      200,
     "savefig.bbox":     "tight",
     "lines.linewidth":  1.8,
+    "axes.grid": True, "grid.alpha": 0.3,
+    "axes.facecolor": "white",
+    "figure.facecolor": "white"
 })
 
 # Colour palette
@@ -49,7 +54,7 @@ WHITE   = "#FFFFFF"
 GRAY    = "#888888"
 
 # Output directory
-FIG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figures")
+FIG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figures", "phenomenological")
 os.makedirs(FIG_DIR, exist_ok=True)
 
 
@@ -111,8 +116,18 @@ def _calcium_trace(delta_t: float, dt: float = DT_SIM,
     ca_bap = np.zeros_like(t)
     mask = t >= t_post
     dt_post = t[mask] - t_post
-    # normalise so peak = BAP_SCALING
-    norm = TAU_CA_DECAY / (TAU_CA_DECAY - TAU_CA_RISE)
+    # Normalise so the peak equals BAP_SCALING.
+    #
+    # The previous constant, TAU_CA_DECAY/(TAU_CA_DECAY - TAU_CA_RISE) = 1.0714, is not
+    # the peak factor for this kernel -- it left the actual peak at 0.824*BAP_SCALING,
+    # i.e. 18% low. The peak of exp(-t/td) - exp(-t/tr) is
+    #     (tr/td)**(tr/(td-tr)) - (tr/td)**(td/(td-tr)),
+    # so the normalisation is its reciprocal. Same class of error as the missing
+    # NORM_BAP in the mechanistic model, but far milder.
+    _x = TAU_CA_RISE / TAU_CA_DECAY
+    _peak = _x ** (TAU_CA_RISE / (TAU_CA_DECAY - TAU_CA_RISE)) - \
+            _x ** (TAU_CA_DECAY / (TAU_CA_DECAY - TAU_CA_RISE))
+    norm = 1.0 / _peak
     ca_bap[mask] = BAP_SCALING * norm * (
         np.exp(-dt_post / TAU_CA_DECAY) - np.exp(-dt_post / TAU_CA_RISE)
     )
@@ -127,36 +142,40 @@ def _compute_alpha(ca: np.ndarray, theta: float, dt: float):
 
 
 def _synapse_change(alpha_d: float, alpha_p: float,
-                    w_pre: float = 0.5):
-    """Graupner-Brunel analytical weight-change formula (Yang 2016 variant).
+                    rho_init: float = RHO_STAR):
+    """Graupner-Brunel analytical weight-change formula (GB 2012, Eq. 6).
 
-    Returns w_post / w_pre ratio.
+    rho(T) = rho_bar + (rho_0 - rho_bar) * exp(-T*(gamma_p*a_p + gamma_d*a_d)/tau)
+
+    `alpha_d` / `alpha_p` are *absolute* times (s) spent above each threshold,
+    accumulated over the whole protocol, so GAMMA_X * alpha_X already carries
+    the protocol duration T and the exponent needs only a division by TAU_RHO.
+
+    Returns w_post / w_pre ratio, where both weights derive from the same
+    rho -> w map, w = W0 + (W1 - W0) * rho.
     """
     gamma_d = GAMMA_D * alpha_d
     gamma_p = GAMMA_P * alpha_p
+    total   = gamma_d + gamma_p
 
-    if (gamma_d + gamma_p) < 1e-12:
+    if total < 1e-12:
         return 1.0          # no plasticity
 
-    rho_bar = gamma_p / (gamma_d + gamma_p)
-    sigma_sq = (SIGMA ** 2) * (alpha_d + alpha_p) / (gamma_d + gamma_p)
-    if sigma_sq < 1e-30:
-        sigma_sq = 1e-30
+    # Attractor the synapse is driven toward (0 = pure LTD, 1 = pure LTP)
+    rho_bar = gamma_p / total
 
-    exp_temp = exp(-(gamma_d + gamma_p) / TAU_RHO)
+    exp_temp = exp(-total / TAU_RHO)
 
-    # Stationary distribution CDF at rho* (bistable boundary)
-    # Approximate the UP / DOWN transition probabilities
-    beta = (W1 - w_pre) / (W1 - W0) if (W1 - W0) != 0 else 0.5
+    # Relax from the *initial* rho toward rho_bar.
+    # (Previously this used beta = (W1 - w_pre)/(W1 - W0), i.e. the COMPLEMENT
+    #  of rho_0, which inverted the LTD arm and made every Dt report LTP.)
+    rho_mean = rho_bar + (rho_init - rho_bar) * exp_temp
 
-    # mean rho after one pairing epoch
-    rho_mean = rho_bar + (beta - rho_bar) * exp_temp
-
-    # Compute weight from rho using linear interpolation
-    w_post_val = W0 + (W1 - W0) * rho_mean
+    w_post = W0 + (W1 - W0) * rho_mean
+    w_pre  = W0 + (W1 - W0) * rho_init
     if w_pre < 1e-12:
-        return w_post_val / 0.5   # avoid /0, use nominal baseline
-    return w_post_val / w_pre
+        return 1.0
+    return w_post / w_pre
 
 
 def stdp_curve(delta_ts):
@@ -178,23 +197,7 @@ def stdp_curve(delta_ts):
 # Dendritic I/O from Yang 2016
 # ──────────────────────────────────────────────────────────────
 
-def dend_IO(exc: np.ndarray, inh: float):
-    """Dendritic branch voltage as a function of excitation and inhibition.
-
-    Parameters
-    ----------
-    exc : array  — total excitatory conductance (nS)
-    inh : float  — total inhibitory conductance (nS)
-
-    Returns
-    -------
-    v : array  — steady-state dendritic membrane voltage (mV)
-    """
-    q = [5.5592051, 9.64361681, 6.5386557, 0.7779744]
-    mid_point = q[0] * (4.0 + inh)
-    spread = q[1] * np.exp(inh / q[2])
-    v = 30.0 * (1.0 + np.tanh((exc - mid_point) / spread)) + q[3] - 70.0
-    return v
+# dend_IO now lives in dendritic_io.py (single canonical definition, imported above).
 
 
 # ══════════════════════════════════════════════════════════════
@@ -404,7 +407,11 @@ def _weight_change_from_ca(ca_level: float):
     """Map a mean calcium level to a weight-change ratio using a
     simplified steady-state version of the Graupner-Brunel rule."""
     if ca_level < THETA_D:
-        return 1.0      # no change
+        # No threshold crossing -> synapse stays at its baseline weight.
+        # (Must return an absolute weight, not the ratio 1.0: the caller
+        #  divides this by the baseline, so returning 1.0 rendered the
+        #  sub-threshold regime as a spurious 0.67x depression.)
+        return W0 + (W1 - W0) * RHO_STAR
     elif ca_level < THETA_P:
         # LTD regime — depression proportional to time above θ_d
         depression = GAMMA_D * (ca_level - THETA_D) / (THETA_P - THETA_D)
@@ -464,78 +471,118 @@ def make_figure3():
 # ══════════════════════════════════════════════════════════════
 
 def make_figure4():
-    print("  → Figure 4: branch-specific learning …")
+    print("  → Figure 4: branch-specific learning (3 Epochs, correct Graupner-Brunel) …")
 
-    rng = np.random.default_rng(42)
-    n_trials = 200
-    dt_trial = 1.0   # abstract trial unit
+    rng_gb = np.random.default_rng(42)
+    n_trials = 300
 
-    # Weights: rows = pathways (A, B), cols = branches (1, 2)
-    W = np.full((2, 2), 0.5)      # start at mid-weight
+    # ρ: bistable Graupner-Brunel weight variable ∈ [0, 1]
+    # W: actual weight derived from ρ via W = W0 + (W1-W0)*ρ
+    RHO_STAR_LOCAL = 0.5
+    rho = np.full((2, 2), RHO_STAR_LOCAL)
+    # W0 and W1 from module-level constants
+    W   = np.zeros((2, 2))
+    for i in range(2):
+        for j in range(2):
+            W[i, j] = W0 + (W1 - W0) * rho[i, j]
+
     W_history = np.zeros((n_trials, 2, 2))
 
-    # Inhibition levels per branch per context
-    #                branch1   branch2
-    inh_context_A = [2.0,      35.0]     # branch 1 disinhibited
-    inh_context_B = [35.0,     2.0]      # branch 2 disinhibited
-
-    # Input rates per pathway per context (Hz-like)
-    rate_A_ctx = [25.0, 25.0]   # pathway A active in context A
-    rate_B_ctx = [25.0, 25.0]   # pathway B active in context B
+    # Conductance scaling (nS per Hz of pre-synaptic drive)
+    G_PER_HZ = 0.10   # nS/Hz
 
     for trial in range(n_trials):
-        context = trial % 2   # alternate A / B
-        inh = inh_context_A if context == 0 else inh_context_B
-
-        # Rates for this trial
-        rates = [25.0, 5.0] if context == 0 else [5.0, 25.0]
+        if trial < 100:
+            rate_A = rng_gb.poisson(0.0)
+            rate_B = rng_gb.poisson(0.0)
+            rates = [rate_A, rate_B]
+            inh   = [35.0, 35.0]
+        elif trial < 200:
+            rate_A = rng_gb.poisson(25.0 * 0.5) / 0.5
+            rate_B = rng_gb.poisson(0.0)
+            rates = [rate_A, rate_B]
+            inh   = [2.0, 35.0]
+        else:
+            rate_A = rng_gb.poisson(0.0)
+            rate_B = rng_gb.poisson(25.0 * 0.5) / 0.5
+            rates = [rate_A, rate_B]
+            inh   = [35.0, 2.0]
 
         for branch in range(2):
-            # 1. Compute total excitation on this branch from BOTH pathways
-            g_exc_total = 0.0
-            for pathway in range(2):
-                g_exc_total += 0.5 * 100 * rates[pathway] / 50.0 * W[pathway, branch]
-            
             g_inh = 0.8 * inh[branch]
 
-            # 2. Compute the shared dendritic voltage for this branch
-            v_dend = dend_IO(np.atleast_1d(g_exc_total), g_inh)[0]
-            
-            # 3. Compute shared Mg2+ block and bAP calcium
-            mg = 1.0 / (1.0 + (1.0 / 3.57) * np.exp(-0.062 * v_dend))
-            post_rate = max(0.0, (v_dend + 50) / 20.0)
-            ca_bap_val = BAP_SCALING * post_rate / 30.0
+            # Total conductance on this branch from ALL pathways
+            g_exc_total = sum(rates[pw] * G_PER_HZ * W[pw, branch]
+                              for pw in range(2))
 
-            # 4. Compute individual calcium and weight updates per pathway
             for pathway in range(2):
-                s_nmda = 0.06 * rates[pathway] / (1.0 + 0.06 * rates[pathway])
-                # Lower the driving force threshold to -60 mV so we actually get NMDA influx
-                ca_nmda_val = NMDA_SCALING * s_nmda * mg * max(v_dend + 60, 0) / 30.0
-                
-                # Scale up by 50.0 to match the peak thresholds (THETA_P = 2.78, THETA_D = 1.0)
-                ca = (ca_nmda_val + ca_bap_val) * 50.0 + rng.normal(0, 0.05)
-                ca = max(ca, 0.0)
+                r_pre = rates[pathway]
+                if r_pre < 1e-6:
+                    continue   # silent pathway — no plasticity
 
-                # Plasticity
-                lr = 0.008
-                if ca > THETA_P:
-                    dw = lr * (ca - THETA_P)
-                elif ca > THETA_D:
-                    dw = -lr * 0.4 * (ca - THETA_D)
+                g_exc_pathway = r_pre * G_PER_HZ * W[pathway, branch]
+
+                # --- Correct Graupner-Brunel calcium ---
+                v_dend = dend_IO(np.atleast_1d(g_exc_total), g_inh)[0]
+
+                # Mg2+ block (voltage-dependent)
+                mg = 1.0 / (1.0 + (1.0 / 3.57) * np.exp(-0.062 * v_dend))
+
+                # NMDA calcium amplitude per pre-spike (Mg-gated)
+                c_nmda_amp = NMDA_SCALING * mg
+
+                # Post-synaptic rate → bAP calcium amplitude
+                r_post    = max(0.0, (v_dend + 55.0) / 10.0)
+
+                # Representative pre-post pairing interval
+                r_pair  = min(r_pre, max(r_post, 1.0))
+                dt_pair = min(0.010, 1.0 / r_pair)
+
+                # Calcium trace for one representative pair.
+                # The Mg2+ block gates the NMDA component ONLY — bAP calcium
+                # enters through voltage-gated Ca channels and is not
+                # Mg-dependent. (Previously the whole trace was scaled by mg,
+                # which incorrectly suppressed bAP calcium on inhibited
+                # branches on top of the genuine NMDA suppression.)
+                _, ca_nmda, ca_bap, _ = _calcium_trace(dt_pair)
+                ca = ca_nmda * mg + ca_bap
+
+                # Alpha = time integral above threshold × number of pairings
+                n_pairings = max(1, int(r_pair * SIM_DURATION))
+                alpha_d = _compute_alpha(ca, THETA_D, DT_SIM) * n_pairings
+                alpha_p = _compute_alpha(ca, THETA_P, DT_SIM) * n_pairings
+
+                # ── Fast Visible Update (ETA_RHO) ──
+                gamma_d = GAMMA_D * alpha_d
+                gamma_p = GAMMA_P * alpha_p
+                total = gamma_d + gamma_p
+
+                if total < 1e-12:
+                    rho_new = float(np.clip(rho[pathway, branch] + rng_gb.normal(0, 0.04 * 0.3), 0.0, 1.0))
                 else:
-                    dw = 0.0
+                    rho_bar = gamma_p / total
+                    ETA_RHO = 0.08
+                    rho_mean = rho[pathway, branch] + ETA_RHO * (rho_bar - rho[pathway, branch])
+                    noise_scale = 0.04 * math.sqrt((alpha_d + alpha_p) / total)
+                    rho_new = float(np.clip(rng_gb.normal(rho_mean, max(noise_scale, 0.02)), 0.0, 1.0))
+                
+                rho[pathway, branch] = rho_new
 
-                W[pathway, branch] = np.clip(W[pathway, branch] + dw, 0.05, 2.0)
+            # Derive weight from ρ
+            for pathway in range(2):
+                W[pathway, branch] = W0 + (W1 - W0) * rho[pathway, branch]
 
         W_history[trial] = W.copy()
 
     # ---- Plot ----
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5),
-                             gridspec_kw={"wspace": 0.35})
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5), gridspec_kw={"wspace": 0.35})
     trials = np.arange(n_trials)
 
-    # Panel A: weight trajectories
     ax = axes[0]
+    ax.axvspan(0, 100, color='gray', alpha=0.1, label='Baseline')
+    ax.axvspan(100, 200, color=CYAN, alpha=0.1, label='Context A')
+    ax.axvspan(200, 300, color=MAGENTA, alpha=0.1, label='Context B')
+
     labels = [("w_A→br1", CYAN,    "-"),
               ("w_A→br2", CYAN,    "--"),
               ("w_B→br1", MAGENTA, "--"),
@@ -543,20 +590,17 @@ def make_figure4():
 
     for idx, (lab, col, ls) in enumerate(labels):
         p, b = divmod(idx, 2)
-        ax.plot(trials, W_history[:, p, b], color=col, ls=ls,
-                lw=2.0, label=lab)
+        ax.plot(trials, W_history[:, p, b], color=col, ls=ls, lw=2.0, label=lab)
 
     ax.set_xlabel("Trial")
     ax.set_ylabel("Synaptic weight")
-    ax.set_title("A  Weight Evolution", loc="left", fontweight="bold")
-    ax.legend(loc="center right", framealpha=0.35, fontsize=9)
+    ax.set_title("A  Weight Evolution (3 Epochs)", loc="left", fontweight="bold")
+    ax.legend(loc="upper left", framealpha=0.35, fontsize=8)
     ax.set_xlim(0, n_trials)
 
-    # Panel B: final weight matrix
     ax = axes[1]
     final_W = W_history[-1]
-    im = ax.imshow(final_W, cmap="inferno", vmin=0, vmax=2.0,
-                   aspect="equal")
+    im = ax.imshow(final_W, cmap="viridis", vmin=0, vmax=2.0, aspect="equal")
     ax.set_xticks([0, 1])
     ax.set_xticklabels(["Branch 1", "Branch 2"])
     ax.set_yticks([0, 1])
@@ -567,8 +611,7 @@ def make_figure4():
         for j in range(2):
             ax.text(j, i, f"{final_W[i, j]:.2f}",
                     ha="center", va="center", fontsize=13,
-                    fontweight="bold",
-                    color="white" if final_W[i, j] < 1.0 else "black")
+                    fontweight="bold", color="white" if final_W[i, j] < 1.0 else "black")
 
     cbar = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
     cbar.set_label("Weight", fontsize=10)

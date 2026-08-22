@@ -16,13 +16,14 @@ import sys, os
 import numpy as np
 import matplotlib.pyplot as plt
 
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src', 'v2'))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'src', 'v2'))
 
 from brian2 import *
 prefs.codegen.target = 'numpy'
 
 from parameters import params, plasticity_params, pv_params, som_params, vip_params, md_params
-from equations import (eqs_soma, eqs_dend, eqs_pv, eqs_som, eqs_vip,
+from equations import (attach_rho_clipper, eqs_soma, eqs_dend, eqs_pv, eqs_som, eqs_vip,
                        eqs_synapse_plasticity, on_pre_plasticity)
 
 def main():
@@ -60,7 +61,7 @@ def main():
 
     # ── 1. Pyramidal Neuron (Soma + Dendrites) ──────────────────
     print('[1/7] Building pyramidal neuron...')
-    reset_eqs = 'V = vReset_pyr\nbAPCa_rise += norm_factor_Ca'
+    reset_eqs = 'V = vReset_pyr'
     Soma = NeuronGroup(num_pyr, eqs_soma, threshold='V > vThres_pyr',
                        reset=reset_eqs, refractory=p['refracTime_pyr'],
                        method='euler', namespace=p)
@@ -80,7 +81,7 @@ def main():
         Dend.vSoma = np.repeat(Soma.vShadow[:], num_dend_each)
 
     # bAP delivery
-    bAP = Synapses(Soma, Dend, on_pre='V_post += bAP_amp', delay=p['bAP_delay'], namespace=p)
+    bAP = Synapses(Soma, Dend, on_pre='V_post += bAP_amp\nbAPCa_rise_post += norm_factor_Ca', delay=p['bAP_delay'], namespace=p)
     bAP.connect(j='i*num_DendEach + k for k in range(num_DendEach)')
 
     net.add([Soma, Dend, SomaDendCoupling, bAP])
@@ -91,7 +92,13 @@ def main():
                      reset='V = vReset_pv', refractory=p['refrac_pv'],
                      method='euler', namespace=p)
     PV.V = p['vRest_pv']
-    net.add(PV)
+
+    # Tonic background drive giving PV a baseline it can be modulated around.
+    BG_pv = PoissonGroup(num_pv, rates=p['rate_bg_pv'])
+    syn_bg_pv = Synapses(BG_pv, PV, on_pre='gTotAMPA_post += weight_bg_pv',
+                         namespace=p)
+    syn_bg_pv.connect(j='i')
+    net.add([PV, BG_pv, syn_bg_pv])
 
     # ── 3. SOM Interneurons ─────────────────────────────────────
     print('[3/7] Building SOM interneurons...')
@@ -143,9 +150,10 @@ def main():
     # Excitatory input pathways → Dendrites (with plasticity)
     pathway_input = PoissonGroup(30, rates=80*Hz)
     syn_input = Synapses(pathway_input, Dend, model=eqs_synapse_plasticity,
-                         on_pre=on_pre_plasticity, method='euler', namespace=p)
+                         on_pre=on_pre_plasticity, method='heun', namespace=p)
     syn_input.connect()
     syn_input.rho = 0.5  # Start at mid-point
+    attach_rho_clipper(syn_input)
 
     net.add([syn_md2pv, syn_md2vip, syn_vip2som, syn_som2dend, syn_pv2soma,
              pathway_input, syn_input])
@@ -219,8 +227,9 @@ def main():
     axes[3].grid(True, alpha=0.2)
 
     plt.tight_layout()
-    os.makedirs('figures', exist_ok=True)
-    save_path = os.path.abspath('figures/demo_zhang2025_context_switch.png')
+    fig_dir = os.path.join(PROJECT_ROOT, 'figures')
+    os.makedirs(fig_dir, exist_ok=True)
+    save_path = os.path.join(fig_dir, 'demo_zhang2025_context_switch.png')
     plt.savefig(save_path, dpi=200)
     print(f'Success! Plot saved to: {save_path}')
 

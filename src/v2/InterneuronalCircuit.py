@@ -14,7 +14,14 @@ import time
 
 # Analytical I/O functions fitted to the multi-compartmental model
 def dend_IO(exc, inh):
-    """Dendritic voltage as a function of excitatory and inhibitory conductance (nS)."""
+    """Dendritic voltage as a function of excitatory and inhibitory conductance (nS).
+
+    DEAD CODE. Nothing imports this module (it also references `p['n_som']`, which does
+    not exist in parameters.py). This is a stale fourth copy of the transfer function;
+    the canonical definition is `dendritic_io.dend_IO` at the project root. Left in
+    place only so that this file remains self-consistent -- do not use it, and do not
+    fix bugs here instead of in the canonical module.
+    """
     q = [5.5592051, 9.64361681, 6.5386557, 0.7779744]
     mid_point = q[0] * (4 + inh)
     spread = q[1] * np.exp(inh / q[2])

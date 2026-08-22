@@ -47,7 +47,6 @@ class Model(Network):
         # We specify the reset explicitly.
         reset_eqs = '''
         V = vReset_pyr
-        bAPCa_rise += norm_factor_Ca
         '''
         
         self.n['Soma'] = NeuronGroup(p['num_Soma'], eqs_soma, threshold='V > vThres_pyr',
@@ -64,14 +63,14 @@ class Model(Network):
         
         # Brian 2 Network Operation for coupling
         if clamped_dendvolt is not None:
-            @network_operation(dt=p['dt'])
+            @network_operation(dt=p['sim_dt'])
             def ClampedDend():
                 self.n['Soma'].vAveDend = clamped_dendvolt
                 # repeat equivalent for Brian 2 variables
                 self.n['Dend'].vSoma = np.repeat(self.n['Soma'].vShadow[:], p['num_DendEach'])
             self.add(ClampedDend)
         else:
-            @network_operation(dt=p['dt'])
+            @network_operation(dt=p['sim_dt'])
             def SomaDendCoupling():
                 temp = self.n['Dend'].V[:].reshape((p['num_Soma'], p['num_DendEach']))
                 self.n['Soma'].vAveDend = np.mean(temp, axis=1)
@@ -79,7 +78,7 @@ class Model(Network):
             self.add(SomaDendCoupling)
             
         # bAP: When soma spikes, deliver voltage kick to dendrite
-        self.n['bAP'] = Synapses(self.n['Soma'], self.n['Dend'], on_pre='V_post += bAP_amp', delay=p['bAP_delay'], namespace=p)
+        self.n['bAP'] = Synapses(self.n['Soma'], self.n['Dend'], on_pre='V_post += bAP_amp\nbAPCa_rise_post += norm_factor_Ca', delay=p['bAP_delay'], namespace=p)
         # Connect soma to its corresponding dendrites
         self.n['bAP'].connect(j='i*num_DendEach + k for k in range(num_DendEach)')
         
@@ -101,18 +100,15 @@ class Model(Network):
         """
         # Create synapses using the native equations
         syn = Synapses(source_group, target_dendrites, model=eqs_synapse_plasticity,
-                       on_pre=on_pre_plasticity, method='euler', namespace=self.p)
+                       on_pre=on_pre_plasticity, method='heun', namespace=self.p)
         syn.connect(p=p_connect)
         syn.rho = 0
         return syn
 
-# Helper IO functions for plotting logic
-def dend_IO(exc, inh):
-    q = [5.5592051, 9.64361681, 6.5386557, 0.7779744]
-    mid_point = q[0] * (4 + inh)
-    spread = q[1] * np.exp(inh / q[2])
-    v = 30 * (1 + np.tanh((exc - mid_point) / spread)) + q[3] - 70
-    return v
+# Helper IO functions for plotting logic.
+# NOTE: the duplicate `dend_IO` that used to live here was removed -- it was imported
+# by nothing. The single canonical definition is in `dendritic_io.py` at the project
+# root. Do not re-add a local copy.
 
 def soma_fv(v):
     dv = v + 70
