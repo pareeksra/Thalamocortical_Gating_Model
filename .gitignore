@@ -6,3 +6,6 @@ __pycache__/
 ~$*.pptx
 ~$*.docx
 ~$*.xlsx
+
+# Local planning notes (not part of the repo)
+ROADMAP.md

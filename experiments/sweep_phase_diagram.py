@@ -23,7 +23,7 @@ def run_sim(args):
     import sys, os
     import numpy as np
     _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sys.path.insert(0, os.path.join(_root, 'src', 'v2'))
+    sys.path.insert(0, os.path.join(_root, 'model'))
     
     from brian2 import (prefs, start_scope, Network, NeuronGroup, Synapses, 
                         SpikeMonitor, StateMonitor, PoissonGroup, network_operation,

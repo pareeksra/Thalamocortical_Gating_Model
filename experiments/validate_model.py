@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 import time as timer
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(PROJECT_ROOT, 'src', 'v2'))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'model'))
 
 from brian2 import *
 prefs.codegen.target = 'numpy'

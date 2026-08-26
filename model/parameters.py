@@ -1,6 +1,9 @@
 from brian2 import *
 
-# Based on data/parameters.txt
+# Parameter values are from Yang, Murray & Wang (2016), Nat. Commun. 7:12815,
+# Methods pp. 10-12. (An earlier note here cited a `data/parameters.txt` that never
+# existed in any commit; the values themselves are Yang's, cited inline below and
+# verified against the paper.)
 params = {
     'sim_dt': 0.02 * ms,
     'record_dt': 0.5 * ms,
@@ -77,7 +80,12 @@ plasticity_params = {
     'rhoStar': 0.5,
     'w0': 0.0,
     'w1': 3.0,
-    'C_pre': 1.0,
+    'C_pre': 1.0,   # legacy: no longer scales calcium (see equations.py Bug-2 note)
+    # Calcium scaling for the Yang Eq. 13 integrated-NMDA-current model:
+    #   tau_Ca * dc/dt = -c + kappa_Ca_NMDA * I_NMDA_local .
+    # Calibrated (Phase 1) so a disinhibited/plateau branch integrates c > theta_p (LTP)
+    # while a shunted branch stays c < theta_d, at Yang's ~80 Hz operating rate.
+    'kappa_Ca_NMDA': 0.26 / pA,
 }
 
 # ============================================================

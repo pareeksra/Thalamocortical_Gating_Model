@@ -16,7 +16,7 @@ project's declared rate_bgE = 500 Hz; weight_bg_pv is derived for PV.
 import builtins, sys, os
 import numpy as np
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src', 'v2'))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'model'))
 from brian2 import *
 prefs.codegen.target = 'numpy'
 

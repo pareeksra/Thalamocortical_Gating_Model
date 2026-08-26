@@ -1,5 +1,9 @@
-# Brian 2 native string equations based on data/equations.txt
-# Notice that parameters are defined in parameters.py and passed into Brian 2 namespace or defined directly.
+# Brian 2 native string equations. Membrane, synapse and calcium equations follow
+# Yang, Murray & Wang (2016), Nat. Commun. 7:12815, Methods pp. 10-12: Eq. 13 (NMDA
+# calcium = leaky integral of I_NMDA), Eq. 14 (VGCC/bAP calcium = per-spike bumps),
+# Eqs. 20-22 (dendritic I/O). An earlier note cited a `data/equations.txt` that never
+# existed in any commit.
+# Parameters are defined in parameters.py and passed into the Brian 2 namespace.
 
 eqs_soma = '''
 dV/dt = (iL + iSyn + iCoupleDend)/cSoma_pyr : volt (unless refractory)
@@ -104,9 +108,17 @@ iClamp : amp
 # Graupner-Brunel Plasticity (Synapses equation):
 eqs_synapse_plasticity_template = '''
 # --- Calcium at this synapse -------------------------------------------------
-# PRESYNAPTIC component: NMDA calcium, local to the synapse, incremented by C_pre on
-# each presynaptic spike (see on_pre_plasticity).
-dc/dt = -c/tau_Ca_NMDA : 1 (clock-driven)
+# NMDA calcium, local to the synapse. This is Yang et al. (2016) Eq. 13:
+#   tau_Ca * dc/dt = -c + kappa_Ca_NMDA * I_NMDA_local ,
+# i.e. calcium is the LEAKY INTEGRAL of the local NMDA current, NOT a fixed per-spike
+# jump. This matters because the NMDA current is regenerative under a dendritic plateau:
+# a disinhibited branch reaches the plateau, sustains a large I_NMDA, and integrates
+# calcium above theta_p (LTP) at realistic input rates; an inhibited (shunted) branch
+# never plateaus, so I_NMDA and calcium stay low. The previous per-spike form
+# (c += C_pre*mg on each spike) was only proportional to spike count and needed
+# unrealistically high rates (~200 Hz) to cross theta_p -- see ROADMAP.md Bug 2.
+# I_NMDA_local = gNMDA*s_nmda*mg_gate*(vE_pyr - V_post)  (inward, >0 since V_post<vE_pyr).
+dc/dt = (-c + kappa_Ca_NMDA*gNMDA*s_nmda*mg_gate*(vE_pyr - V_post))/tau_Ca_NMDA : 1 (clock-driven)
 
 # POSTSYNAPTIC component: the bAP calcium transient of the branch this synapse sits on.
 # It is read from the dendrite rather than injected by an on_post handler, because the
@@ -197,10 +209,13 @@ w = w0 + (w1-w0)*clip(rho, 0.0, 1.0) : 1
 
 # When pre-synaptic spikes arrive:
 on_pre_plasticity = '''
-c += C_pre * mg_gate
 gTotAMPA_post += w * gAMPA
 x_nmda += 1
 '''
+# NOTE: calcium is no longer incremented per spike here. Under the Yang Eq. 13 model
+# (see eqs_synapse_plasticity_template) calcium is the leaky integral of the NMDA
+# current, driven by s_nmda (which x_nmda advances). C_pre is retained in parameters.py
+# only for backward reference; it no longer scales the calcium.
 
 # UNUSABLE as an on_post rule -- kept only for reference.
 #

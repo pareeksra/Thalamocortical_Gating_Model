@@ -13,9 +13,10 @@ vI_pyr = vRest_pyr = -70 mV, making dendritic GABA_A purely shunting. A shunting
 conductance carries no current at rest, so an unexcited branch must sit at rest no
 matter how much inhibition it receives, and inhibition must never depolarise.
 """
-import sys
+import sys, os
 import numpy as np
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'model'))
 from dendritic_io import dend_IO, io_midpoint, io_spread, Q, V_REST
 
 EXC_GRID = np.linspace(0.0, 300.0, 301)      # nS, spans well past every mid-point used

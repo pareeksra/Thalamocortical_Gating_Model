@@ -5,6 +5,7 @@ from pptx.util import Inches, Pt
 import os
 
 def create_presentation():
+    os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     prs = Presentation()
     
     # Define slide layouts
@@ -138,7 +139,7 @@ def create_presentation():
     p.text = "Degrade MD->VIP synapses and observe emergent gating failure (Schizophrenia model)."
     p.level = 1
 
-    prs.save("Thalamocortical_Gating_Project_Summary_v3.pptx")
+    prs.save(os.path.join("docs", "presentations", "Thalamocortical_Gating_Project_Summary_v3.pptx"))
     print("Presentation created successfully as 'Thalamocortical_Gating_Project_Summary_v3.pptx'")
 
 if __name__ == "__main__":

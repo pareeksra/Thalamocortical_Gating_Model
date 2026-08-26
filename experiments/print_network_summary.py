@@ -16,7 +16,7 @@ The network is constructed but never run, so this stays fast.
 import sys, os
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(PROJECT_ROOT, 'src', 'v2'))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'model'))
 
 import builtins
 import numpy as np

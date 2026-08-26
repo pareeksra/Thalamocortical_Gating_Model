@@ -27,6 +27,8 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'model'))
 from dendritic_io import dend_IO
 
 # ──────────────────────────────────────────────────────────────
@@ -41,7 +43,7 @@ plt.rcParams.update({
     "axes.facecolor": "white", "figure.facecolor": "white",
 })
 
-FIG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+FIG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                         "figures", "mechanistic")
 os.makedirs(FIG_DIR, exist_ok=True)
 

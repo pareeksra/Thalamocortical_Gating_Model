@@ -1,5 +1,5 @@
 import os, sys
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'model'))
 
 from brian2 import *
 import numpy as np
@@ -8,7 +8,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from MultiCompartmentalModel import Model
 
-FIG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'figures')
+FIG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'figures')
 
 def main():
     print("Starting Brian 2 Migration Test...")

@@ -10,10 +10,10 @@ The four fitted constants `Q` and the surrounding functional form come from the
 analytical reduction of the Yang et al. (2016) two-layer pyramidal model. Before this
 module existed, the same expression was copy-pasted into four separate files:
 
-    main_gating_figures.py              (vectorised, live)
-    emergent_gating_mechanistic_model.py (scalar via `math`, live)
-    src/v2/MultiCompartmentalModel.py    (vectorised, unused helper)
-    src/v2/InterneuronalCircuit.py       (vectorised, whole file unused)
+    numpy_models/main_gating_figures.py               (vectorised, live)
+    numpy_models/emergent_gating_mechanistic_model.py (scalar via `math`, live)
+    model/MultiCompartmentalModel.py                  (vectorised, unused helper)
+    archive/InterneuronalCircuit.py                   (vectorised, whole file unused)
 
 All four were mathematically identical; they differed only in whether they used
 `numpy` or `math`. This module is the single canonical definition. `dend_IO` is

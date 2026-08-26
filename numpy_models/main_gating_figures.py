@@ -22,6 +22,8 @@ from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Circle, Rectangl
 from matplotlib.lines import Line2D
 import matplotlib.colors as mcolors
 
+import os, sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'model'))
 from dendritic_io import dend_IO
 
 # ──────────────────────────────────────────────────────────────
@@ -54,7 +56,7 @@ WHITE   = "#FFFFFF"
 GRAY    = "#888888"
 
 # Output directory
-FIG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figures", "phenomenological")
+FIG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures", "phenomenological")
 os.makedirs(FIG_DIR, exist_ok=True)
 
 

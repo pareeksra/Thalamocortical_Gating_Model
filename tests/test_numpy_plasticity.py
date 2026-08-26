@@ -16,9 +16,12 @@ published figures. Whether the models' own operating point reaches these regimes
 separate calibration question, still blocked on the parameter-provenance review.
 """
 import builtins
-import sys
+import sys, os
 import numpy as np
 
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(_ROOT, 'numpy_models'))
+sys.path.insert(0, os.path.join(_ROOT, 'model'))
 import emergent_gating_mechanistic_model as M
 import main_gating_figures as P
 
