@@ -1,0 +1,2 @@
+=== Reliability test: 30 Hz (bias=21.32 pA) -- 10 seed(s) to run (of 10, 0 done) ===
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_2', but also exists in the group-specific namespace with the value 20.9 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
