@@ -9,3 +9,117 @@
 [V2] LTP/LTD vs presynaptic rate (Yang Fig. 7b) -- running Brian 2 sweep...
    exc_rate = 20.0 Hz ...
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_2', but also exists in the group-specific namespace with the value 20.9 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+epoch  1: INHIB rho=0.496 (ad=0.98 ap=0.01) | FREE rho=0.775 (ad=2.87 ap=2.13)
+epoch  2: INHIB rho=0.495 (ad=0.66 ap=0.00) | FREE rho=0.851 (ad=2.95 ap=2.15)
+epoch  3: INHIB rho=0.493 (ad=0.83 ap=0.02) | FREE rho=0.874 (ad=2.95 ap=2.16)
+epoch  4: INHIB rho=0.483 (ad=1.23 ap=0.01) | FREE rho=0.891 (ad=2.98 ap=2.36)
+epoch  5: INHIB rho=0.482 (ad=0.78 ap=0.00) | FREE rho=0.885 (ad=2.93 ap=2.15)
+epoch  6: INHIB rho=0.480 (ad=0.88 ap=0.00) | FREE rho=0.880 (ad=2.96 ap=2.11)
+epoch  7: INHIB rho=0.477 (ad=0.90 ap=0.01) | FREE rho=0.882 (ad=2.95 ap=2.16)
+epoch  8: INHIB rho=0.476 (ad=0.75 ap=0.00) | FREE rho=0.883 (ad=2.95 ap=2.18)
+epoch  9: INHIB rho=0.474 (ad=0.85 ap=0.02) | FREE rho=0.883 (ad=2.94 ap=2.14)
+epoch 10: INHIB rho=0.473 (ad=0.74 ap=0.01) | FREE rho=0.884 (ad=2.96 ap=2.20)
+epoch 11: INHIB rho=0.472 (ad=0.74 ap=0.00) | FREE rho=0.880 (ad=2.93 ap=2.09)
+epoch 12: INHIB rho=0.469 (ad=0.88 ap=0.01) | FREE rho=0.883 (ad=2.93 ap=2.15)
+epoch 13: INHIB rho=0.469 (ad=0.64 ap=0.00) | FREE rho=0.880 (ad=2.96 ap=2.13)
+epoch 14: INHIB rho=0.466 (ad=0.91 ap=0.01) | FREE rho=0.879 (ad=2.94 ap=2.12)
+epoch 15: INHIB rho=0.463 (ad=0.96 ap=0.00) | FREE rho=0.880 (ad=2.95 ap=2.12)
+   exc_rate = 40.0 Hz ...
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_4', but also exists in the group-specific namespace with the value 20.9 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+epoch  1: INHIB rho=0.467 (ad=1.83 ap=0.03) | FREE rho=0.840 (ad=2.97 ap=2.66)
+epoch  2: INHIB rho=0.447 (ad=1.56 ap=0.01) | FREE rho=0.901 (ad=3.00 ap=2.69)
+epoch  3: INHIB rho=0.439 (ad=1.26 ap=0.05) | FREE rho=0.909 (ad=3.00 ap=2.61)
+epoch  4: INHIB rho=0.420 (ad=1.58 ap=0.01) | FREE rho=0.914 (ad=3.00 ap=2.70)
+epoch  5: INHIB rho=0.412 (ad=1.23 ap=0.00) | FREE rho=0.911 (ad=3.00 ap=2.61)
+epoch  6: INHIB rho=0.401 (ad=1.39 ap=0.04) | FREE rho=0.912 (ad=3.00 ap=2.64)
+epoch  7: INHIB rho=0.391 (ad=1.33 ap=0.02) | FREE rho=0.913 (ad=3.00 ap=2.66)
+epoch  8: INHIB rho=0.383 (ad=1.26 ap=0.01) | FREE rho=0.914 (ad=3.00 ap=2.68)
+epoch  9: INHIB rho=0.376 (ad=1.29 ap=0.04) | FREE rho=0.912 (ad=3.00 ap=2.64)
+epoch 10: INHIB rho=0.368 (ad=1.36 ap=0.05) | FREE rho=0.914 (ad=3.00 ap=2.69)
+epoch 11: INHIB rho=0.355 (ad=1.56 ap=0.03) | FREE rho=0.915 (ad=3.00 ap=2.69)
+epoch 12: INHIB rho=0.346 (ad=1.36 ap=0.01) | FREE rho=0.914 (ad=3.00 ap=2.67)
+epoch 13: INHIB rho=0.341 (ad=1.14 ap=0.00) | FREE rho=0.912 (ad=3.00 ap=2.63)
+epoch 14: INHIB rho=0.333 (ad=1.40 ap=0.05) | FREE rho=0.914 (ad=3.00 ap=2.69)
+epoch 15: INHIB rho=0.327 (ad=1.34 ap=0.03) | FREE rho=0.913 (ad=3.00 ap=2.66)
+   exc_rate = 60.0 Hz ...
+epoch  1: INHIB rho=0.427 (ad=2.72 ap=0.06) | FREE rho=0.858 (ad=2.96 ap=2.83)
+epoch  2: INHIB rho=0.384 (ad=2.31 ap=0.05) | FREE rho=0.911 (ad=3.00 ap=2.83)
+epoch  3: INHIB rho=0.351 (ad=2.27 ap=0.07) | FREE rho=0.920 (ad=3.00 ap=2.84)
+epoch  4: INHIB rho=0.311 (ad=2.65 ap=0.06) | FREE rho=0.923 (ad=3.00 ap=2.90)
+epoch  5: INHIB rho=0.294 (ad=1.93 ap=0.04) | FREE rho=0.921 (ad=3.00 ap=2.83)
+epoch  6: INHIB rho=0.276 (ad=2.03 ap=0.02) | FREE rho=0.921 (ad=3.00 ap=2.82)
+epoch  7: INHIB rho=0.266 (ad=1.77 ap=0.05) | FREE rho=0.922 (ad=3.00 ap=2.85)
+epoch  8: INHIB rho=0.256 (ad=1.77 ap=0.03) | FREE rho=0.921 (ad=3.00 ap=2.82)
+epoch  9: INHIB rho=0.247 (ad=1.80 ap=0.04) | FREE rho=0.921 (ad=3.00 ap=2.84)
+epoch 10: INHIB rho=0.240 (ad=1.65 ap=0.03) | FREE rho=0.921 (ad=3.00 ap=2.84)
+epoch 11: INHIB rho=0.234 (ad=1.56 ap=0.01) | FREE rho=0.920 (ad=3.00 ap=2.80)
+epoch 12: INHIB rho=0.229 (ad=1.66 ap=0.05) | FREE rho=0.921 (ad=3.00 ap=2.84)
+epoch 13: INHIB rho=0.224 (ad=1.46 ap=0.00) | FREE rho=0.921 (ad=3.00 ap=2.82)
+epoch 14: INHIB rho=0.219 (ad=1.70 ap=0.04) | FREE rho=0.921 (ad=3.00 ap=2.85)
+epoch 15: INHIB rho=0.211 (ad=1.93 ap=0.02) | FREE rho=0.922 (ad=3.00 ap=2.85)
+   exc_rate = 80.0 Hz ...
+epoch  1: INHIB rho=0.422 (ad=2.96 ap=0.13) | FREE rho=0.864 (ad=2.98 ap=2.91)
+epoch  2: INHIB rho=0.354 (ad=2.95 ap=0.04) | FREE rho=0.916 (ad=3.00 ap=2.91)
+epoch  3: INHIB rho=0.314 (ad=2.82 ap=0.11) | FREE rho=0.923 (ad=3.00 ap=2.91)
+epoch  4: INHIB rho=0.272 (ad=2.89 ap=0.03) | FREE rho=0.925 (ad=3.00 ap=2.94)
+epoch  5: INHIB rho=0.244 (ad=2.62 ap=0.02) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch  6: INHIB rho=0.226 (ad=2.61 ap=0.06) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch  7: INHIB rho=0.211 (ad=2.53 ap=0.04) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch  8: INHIB rho=0.198 (ad=2.45 ap=0.03) | FREE rho=0.925 (ad=3.00 ap=2.93)
+epoch  9: INHIB rho=0.192 (ad=2.32 ap=0.06) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 10: INHIB rho=0.188 (ad=2.31 ap=0.07) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch 11: INHIB rho=0.184 (ad=2.41 ap=0.08) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 12: INHIB rho=0.178 (ad=2.28 ap=0.04) | FREE rho=0.925 (ad=3.00 ap=2.93)
+epoch 13: INHIB rho=0.172 (ad=2.08 ap=0.01) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 14: INHIB rho=0.172 (ad=2.28 ap=0.08) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch 15: INHIB rho=0.168 (ad=2.17 ap=0.04) | FREE rho=0.925 (ad=3.00 ap=2.93)
+   exc_rate = 100.0 Hz ...
+epoch  1: INHIB rho=0.438 (ad=2.97 ap=0.26) | FREE rho=0.865 (ad=2.97 ap=2.91)
+epoch  2: INHIB rho=0.374 (ad=3.00 ap=0.14) | FREE rho=0.917 (ad=3.00 ap=2.94)
+epoch  3: INHIB rho=0.329 (ad=2.99 ap=0.15) | FREE rho=0.925 (ad=3.00 ap=2.96)
+epoch  4: INHIB rho=0.294 (ad=2.99 ap=0.15) | FREE rho=0.926 (ad=3.00 ap=2.97)
+epoch  5: INHIB rho=0.262 (ad=2.98 ap=0.09) | FREE rho=0.926 (ad=3.00 ap=2.94)
+epoch  6: INHIB rho=0.233 (ad=2.94 ap=0.05) | FREE rho=0.925 (ad=3.00 ap=2.94)
+epoch  7: INHIB rho=0.218 (ad=2.91 ap=0.10) | FREE rho=0.926 (ad=3.00 ap=2.95)
+epoch  8: INHIB rho=0.201 (ad=2.90 ap=0.06) | FREE rho=0.926 (ad=3.00 ap=2.96)
+epoch  9: INHIB rho=0.189 (ad=2.87 ap=0.06) | FREE rho=0.926 (ad=3.00 ap=2.96)
+epoch 10: INHIB rho=0.179 (ad=2.85 ap=0.05) | FREE rho=0.926 (ad=3.00 ap=2.96)
+epoch 11: INHIB rho=0.170 (ad=2.75 ap=0.04) | FREE rho=0.925 (ad=3.00 ap=2.93)
+epoch 12: INHIB rho=0.168 (ad=2.67 ap=0.08) | FREE rho=0.925 (ad=3.00 ap=2.94)
+epoch 13: INHIB rho=0.160 (ad=2.66 ap=0.02) | FREE rho=0.926 (ad=3.00 ap=2.95)
+epoch 14: INHIB rho=0.159 (ad=2.69 ap=0.06) | FREE rho=0.926 (ad=3.00 ap=2.95)
+epoch 15: INHIB rho=0.155 (ad=2.78 ap=0.05) | FREE rho=0.926 (ad=3.00 ap=2.96)
+   exc_rate = 120.0 Hz ...
+epoch  1: INHIB rho=0.488 (ad=2.98 ap=0.60) | FREE rho=0.868 (ad=2.98 ap=2.96)
+epoch  2: INHIB rho=0.443 (ad=3.00 ap=0.38) | FREE rho=0.918 (ad=3.00 ap=2.96)
+epoch  3: INHIB rho=0.411 (ad=3.00 ap=0.38) | FREE rho=0.925 (ad=3.00 ap=2.96)
+epoch  4: INHIB rho=0.370 (ad=3.00 ap=0.26) | FREE rho=0.926 (ad=3.00 ap=2.97)
+epoch  5: INHIB rho=0.326 (ad=3.00 ap=0.16) | FREE rho=0.926 (ad=3.00 ap=2.96)
+epoch  6: INHIB rho=0.295 (ad=3.00 ap=0.18) | FREE rho=0.926 (ad=3.00 ap=2.96)
+epoch  7: INHIB rho=0.263 (ad=3.00 ap=0.10) | FREE rho=0.927 (ad=3.00 ap=2.97)
+epoch  8: INHIB rho=0.238 (ad=3.00 ap=0.10) | FREE rho=0.927 (ad=3.00 ap=2.98)
+epoch  9: INHIB rho=0.223 (ad=3.00 ap=0.12) | FREE rho=0.927 (ad=3.00 ap=2.98)
+epoch 10: INHIB rho=0.210 (ad=2.99 ap=0.11) | FREE rho=0.927 (ad=3.00 ap=2.97)
+epoch 11: INHIB rho=0.207 (ad=2.99 ap=0.16) | FREE rho=0.927 (ad=3.00 ap=2.97)
+epoch 12: INHIB rho=0.196 (ad=2.99 ap=0.09) | FREE rho=0.927 (ad=3.00 ap=2.97)
+epoch 13: INHIB rho=0.181 (ad=2.98 ap=0.04) | FREE rho=0.926 (ad=3.00 ap=2.96)
+epoch 14: INHIB rho=0.179 (ad=2.97 ap=0.11) | FREE rho=0.927 (ad=3.00 ap=2.98)
+epoch 15: INHIB rho=0.170 (ad=2.96 ap=0.05) | FREE rho=0.926 (ad=3.00 ap=2.96)
+   saved D:\minsu\Thalamocortical_Gating_Project\figures\validation_vs_papers\v2_ltp_vs_rate.png
+   saved D:\minsu\Thalamocortical_Gating_Project\figures\validation_vs_papers\v3_branch_gating.png
+   V3: free=0.925 inh=0.168 ratio=5.5
+
+[V4] MD-drive control of interneuron rates (Zhang qualitative)
+   MD = 0.0 Hz ...
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_5', but also exists in the group-specific namespace with the value 20.9 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+   MD = 5.0 Hz ...
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_8', but also exists in the group-specific namespace with the value 20.9 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+   MD = 10.0 Hz ...
+   MD = 20.0 Hz ...
+   MD = 30.0 Hz ...
+   MD = 40.0 Hz ...
+   saved D:\minsu\Thalamocortical_Gating_Project\figures\validation_vs_papers\v4_md_interneuron_control.png
+   SOM: ['24.7', '24.7', '17.2', '0.0', '0.0', '0.0']
+   PV : ['6.5', '12.9', '21.0', '47.3', '80.9', '119.1']
+
+All validation figures written to D:\minsu\Thalamocortical_Gating_Project\figures\validation_vs_papers

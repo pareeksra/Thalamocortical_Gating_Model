@@ -105,7 +105,7 @@ r.font.size = Pt(13)
 note = doc.add_paragraph()
 note.alignment = WD_ALIGN_PARAGRAPH.CENTER
 r = note.add_run('This is a living document. Sections are dated and appended chronologically; '
-                 'nothing above is rewritten once written. Compiled 2026-08-29.')
+                 'nothing above is rewritten once written. Compiled 2026-08-31.')
 r.italic = True
 r.font.size = Pt(9)
 doc.add_paragraph()
@@ -913,6 +913,195 @@ p("Reading this against the three Step 2d options: option A (raise gGABA at Yang
   "Yang's, not 6x — a substantially smaller, more defensible departure from the paper than "
   "the number this project had been working with. This decision is Raghav's to make; we "
   "have not changed any parameter in response to these results.")
+
+# ===========================================================================
+# 8. 2026-08-31 UPDATE
+# ===========================================================================
+h1('8. 2026-08-31 update — 25 Hz SOM baseline adopted, and Phase 2 rerun honestly '
+   'under the analytical plasticity update')
+
+p("Section 7 ended with a decision left open (which of the Step 2d options to take on the "
+  "SOM-rate gap) and a debt outstanding (both Phase 2 figures retired as stale, generated "
+  "before the plasticity migration and the bug fix — Section 7.2). This entry closes both. "
+  "It records the calibration choice we actually committed to the code, then reports the "
+  "Phase 1 re-confirmation and the first honest rerun of both Phase 2 sweeps under the "
+  "epoch-based analytical update. Every number below is copied from a JSON written by the "
+  "rerun itself (docs/phase2_snr_sweep_results.json, docs/phase2_ketamine_sweep_results.json, "
+  "figures/validation_vs_papers/results.json) or from the parameters.py comment that records "
+  "the calibration.")
+
+h2('8.1 The SOM baseline is now set to ~25 Hz, on a duty-cycle argument')
+
+p("Section 7.3's two sweeps did the deciding. The clean finding there was that gating is "
+  "governed by the temporal duty cycle of dendritic inhibition — whether GABA covers the gap "
+  "between SOM spikes relative to tau_GABA,dend = 20 ms — and not by the time-averaged "
+  "inhibitory charge (cross-referenced: Section 7.3, \"the two sweeps together\"). Yang's own "
+  "~10 Hz rate leaves ~100 ms inter-spike gaps, far longer than the 20 ms GABA decay, so the "
+  "branch reaches its NMDA plateau between spikes no matter how large each GABA event is "
+  "(Sweep 2 topped out at ratio 1.45 even at 6x Yang's conductance). Sweep 1 located the "
+  "fail->pass step between 16.87 Hz (ratio 1.04) and 21.49 Hz (ratio 5.51), with the peak at "
+  "25.29 Hz (ratio 5.58).")
+
+flag("We set the SOM bias current to 20.9 pA, calibrated to 25.29 Hz in Phase-1's reduced "
+     "circuit — the sweep's peak point — rather than to Yang's 10 Hz (model/parameters.py, "
+     "iBaseline_som). This is a ~2.5x departure from Yang's reported rate, but it is now a "
+     "*justified* one: >= ~20 Hz is the rate at which 20 ms of GABA coverage stops being "
+     "outrun by the inter-spike interval, which is a specific biophysical criterion rather "
+     "than an unexplained recalibration. Two honest caveats are recorded in the code and "
+     "kept here: (i) the value is NOT portable across circuits — the same 20.9 pA produces a "
+     "different rate depending on what else is wired to SOM, so full_circuit.py must measure "
+     "its own SOM rate and be checked against the same >= ~20 Hz target rather than "
+     "inheriting the number; and (ii) this is still a departure from the paper we are "
+     "modelling, so the gap is documented, not hidden (Step 2d option C), now with a "
+     "mechanism attached.")
+
+h2('8.2 Phase 1 gating re-confirmed under the 25 Hz default')
+
+p("With the 25 Hz baseline in place, we re-ran the Phase-1 single-neuron analytical "
+  "protocol to confirm the headline branch-specific gating result still holds — this is the "
+  "number Section 2.2 flagged as not yet stable across implementations, so re-pinning it "
+  "under the committed calibration matters.")
+
+table(
+    ['quantity', 'value'],
+    [['free-branch rho (uninhibited)', '0.9249'],
+     ['inhibited-branch rho', '0.1658'],
+     ['gating ratio (free / inhibited)', '5.5786']],
+)
+
+figure('figures/analytical_plasticity_trajectory_som25hz_default.png',
+       f'Figure {fig_num()}. Phase-1 analytical plasticity trajectory under the committed '
+       '25 Hz SOM default: the free branch potentiates to rho ~0.92 while the SOM-inhibited '
+       'branch is held down to rho ~0.17, a gating ratio of 5.58.')
+
+p("This sits essentially on top of the sweep's own peak (ratio 5.58 at 25.29 Hz, Section "
+  "7.3) and is reproduced independently by the paper-replication battery below (V3: ratio "
+  "5.50). For the first time in this project the Phase-1 headline ratio agrees to within "
+  "~1.5% across three separate code paths, which is the stability Section 2.2 said was "
+  "missing. It is an honest ~5.6, not the ~43-62 the earlier bugged/ODE runs reported.")
+
+h2('8.3 Phase 2 rerun — the first honest sweeps under analytical plasticity')
+
+p("Section 7.2 retired both Phase 2 figures because they were generated before the "
+  "plasticity migration (frozen rho, ratios in the old bugged ~62 range). Both scripts were "
+  "migrated to the epoch-loop + analytical-update pattern and rerun from scratch. The point "
+  "of comparison is therefore qualitative: does the *phenomenon* survive an honest "
+  "plasticity model, and where does it now break — not a like-for-like delta against the "
+  "retired numbers.")
+
+h3('8.3a Noise robustness (Phase 2B) — gating collapses as noise starves the SOM rate')
+
+table(
+    ['noise level', '0.0', '0.25', '0.30', '0.35', '0.40', '0.45', '0.50', '>=0.75'],
+    [['gating ratio', '3.30', '2.77', '2.30', '1.73', '1.10', '1.02', '1.00', '~1.00'],
+     ['measured SOM rate (Hz)', '25.3', '42.2', '38.6', '29.7', '16.7', '6.7', '1.8', '~0']],
+)
+
+figure('figures/phase2_snr_curve.png',
+       f'Figure {fig_num()}. Phase 2B: gating ratio vs. injected noise level under the '
+       'analytical update and 25 Hz SOM baseline. Selectivity falls and stays below 1.5 from '
+       'noise level 0.40 onward; the collapse tracks the SOM rate dropping through the '
+       '~20 Hz duty-cycle threshold identified in Section 7.3.')
+
+p("The breaking point is a noise level of ~0.35-0.40: ratio holds above 2 through 0.30 "
+  "(2.30), is marginal at 0.35 (1.73), and has collapsed to 1.10 by 0.40, staying below 1.5 "
+  "thereafter. The mechanism ties directly back to Section 7.3: noise degrades the measured "
+  "SOM rate, and gating fails almost exactly where that rate crosses below the ~20 Hz "
+  "duty-cycle threshold — at noise 0.40 the SOM rate has fallen to 16.7 Hz (below "
+  "threshold, ratio 1.10), while at 0.30 it is still 38.6 Hz (above, ratio 2.30). So Phase "
+  "2B is not an independent robustness result; it is the Section 7.3 duty-cycle finding seen "
+  "again through a different knob. The high ratio_sem at noise 0.0 (1.16 on a mean of 3.30) "
+  "is worth noting — the zero-noise point is the noisiest across seeds, which we have not "
+  "yet diagnosed.")
+
+flag("Breaking point did shift meaningfully vs. the retired figures, but the shift is in "
+     "magnitude, not existence. The phenomenon (noise abolishes branch-specific gating) "
+     "survives the honest plasticity model, but the peak ratio is ~3.3, not the retired "
+     "~62 — the collapse now happens from a realistic ceiling, and it has an explicit cause "
+     "(SOM rate falling through the duty-cycle threshold) rather than being an unexplained "
+     "fall from an inflated number.")
+
+h3('8.3b MD->VIP disinhibition (Phase 2C) — the schizophrenia/ketamine failure mode')
+
+table(
+    ['MD->VIP scale', '1.0 (intact)', '0.66', '0.33', '0.0 (full block)'],
+    [['gating ratio', '1.00', '1.00', '3.29', '3.42'],
+     ['SOM rate (Hz)', '0.0', '1.3', '25.3', '25.3'],
+     ['VIP rate (Hz)', '28.4', '4.0', '0.0', '0.0']],
+)
+
+figure('figures/phase2_ketamine_failure.png',
+       f'Figure {fig_num()}. Phase 2C: gating ratio vs. MD->VIP drive scale. Intact MD->VIP '
+       'drive (scale 1.0) fires VIP at 28 Hz, which silences SOM (0 Hz) and abolishes gating '
+       '(ratio 1.0); attenuating MD->VIP restores SOM to its 25 Hz baseline and recovers '
+       'gating (ratio ~3.4).')
+
+p("The circuit logic reads cleanly: strong MD->VIP drive fires VIP (28 Hz at intact scale), "
+  "VIP inhibits SOM to silence (0 Hz), and with SOM below the duty-cycle threshold gating is "
+  "abolished (ratio 1.00). Attenuating MD->VIP releases SOM back to its 25 Hz baseline and "
+  "gating returns — ratio 3.29 at scale 0.33 and 3.42 at full block. The transition is a "
+  "step between scale 0.66 (ratio 1.00, SOM 1.3 Hz) and 0.33 (ratio 3.29, SOM 25.3 Hz), the "
+  "same near-threshold sharpness seen in Section 7.3's rate sweep. Once again the pass/fail "
+  "line coincides with SOM crossing ~20 Hz — the three Phase-2 knobs (noise, MD->VIP drive, "
+  "and the Section 7.3 direct rate sweep) all break at the same underlying place.")
+
+flag("This is the same qualitative failure mode the retired figure showed (excess MD->VIP "
+     "disinhibition breaks gating — the model's proposed schizophrenia/ketamine analogue), "
+     "so the breaking point did not move in kind: gating is lost once MD->VIP scale exceeds "
+     "~0.33-0.5. What changed is the honest ceiling it falls from (~3.4, not the retired "
+     "~62) and that the failure now has an explicit intermediary — VIP silencing SOM below "
+     "the duty-cycle threshold — rather than an unexplained collapse.")
+
+h2('8.4 Paper-replication battery still sane under the new calibration')
+
+p("Finally, the four-panel validation-against-papers battery was rerun end-to-end under the "
+  "analytical update and 25 Hz baseline (figures/validation_vs_papers/, results.json). The "
+  "question is whether recalibrating SOM broke any of the qualitative behaviours the model "
+  "is supposed to reproduce. It did not — all four remain directionally correct.")
+
+table(
+    ['panel', 'what it checks', 'result — still sane?'],
+    [['V1', 'dendritic input-output vs. dendritic inhibition',
+      'Yes. Half-activation conductance rises monotonically with inhibition '
+      '(22 -> 217 nS as inh goes 0 -> 35 nS); V at a fixed 25 nS drive drops from '
+      '-31 mV (no inh) to -69 mV (35 nS) — inhibition shifts the dendritic threshold '
+      'rightward, as expected.'],
+     ['V2', 'LTP (final rho) vs. presynaptic rate, free vs. inhibited branch',
+      'Yes. Free-branch rho rises with rate (0.88 -> 0.93 over 20-120 Hz) while the '
+      'inhibited branch stays suppressed (0.46 -> ~0.16); the free/inhibited gap widens '
+      'with rate.'],
+     ['V3', 'branch-specific gating ratio at 80 Hz exc / 10 Hz post',
+      'Yes. free 0.925, inhibited 0.168, ratio 5.50 — independently reproduces the '
+      'Phase-1 headline (5.58, Section 8.2) to ~1.5%.'],
+     ['V4', 'MD-driven interneuron recruitment',
+      'Yes. As MD rate goes 0 -> 40 Hz, PV climbs (6.5 -> 119 Hz) and VIP climbs '
+      '(0 -> 86 Hz) while VIP-driven SOM is suppressed (24.7 -> 0 Hz) and pyramidal '
+      'output falls (18 -> 0 Hz) — the disinhibitory motif behaves as designed.']],
+)
+
+figure('figures/validation_vs_papers/v3_branch_gating.png',
+       f'Figure {fig_num()}. Validation panel V3: branch-specific gating under the committed '
+       'calibration reproduces the Phase-1 headline ratio (5.50) via an independent code path.')
+
+p("Nothing in the battery contradicts the 25 Hz recalibration; the recalibration changed the "
+  "operating point, not the qualitative physiology. The one honest reservation carried "
+  "forward from Section 7 is unchanged: these are all self-consistency and directional "
+  "checks against the paper's *reported behaviours*, not a fit to the paper's raw data, and "
+  "the network-scale replication (Yang's ~3,000-neuron network) still hasn't been started "
+  "(Section 6 open item).")
+
+h2('8.5 Where this leaves things')
+
+p("The Section 7.3 decision is now committed in code (25 Hz SOM, with the caveats above), "
+  "the Phase-1 headline ratio is stable at ~5.6 across three code paths for the first time, "
+  "and both Phase 2 sweeps plus the paper battery have been rerun honestly under the "
+  "analytical update — clearing the debt Section 7.2 opened. The recurring structural "
+  "result across every Phase-2 knob is that gating passes or fails at a single place: "
+  "whether SOM stays above the ~20 Hz duty-cycle threshold. The open items that remain are "
+  "the ones this entry did not touch: the non-portability of iBaseline_som into "
+  "full_circuit.py (needs its own rate measurement), the undiagnosed zero-noise variance in "
+  "Phase 2B, Test 5's seed-reproducibility failure (Section 7), and the un-started "
+  "network-scale stage.")
 
 # ===========================================================================
 # SAVE
