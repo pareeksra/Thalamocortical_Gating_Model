@@ -36,6 +36,7 @@ import sys
 
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(PROOT, 'model'))
+sys.path.insert(0, PROOT)
 
 import numpy as np
 from brian2 import *
@@ -44,6 +45,14 @@ from parameters import params, plasticity_params, pv_params, som_params, vip_par
 from equations import (attach_rho_clipper, make_eqs_synapse_plasticity, eqs_soma, eqs_dend,
                         eqs_pv, eqs_som, eqs_vip, eqs_synapse_plasticity,
                         on_pre_plasticity_noisy as on_pre_plasticity)
+from src.v2.plasticity import yang_synapse_update
+
+# 2026-08-30 migration: plasticity here now uses the same analytical epoch update as
+# experiments/phase1_analytical.py (Yang 2016 Eqs. 32-35), NOT the continuous drho/dt ODE
+# -- that ODE is commented out in model/equations.py (rho is a bare parameter there), so
+# the single-shot net.run() this function used to do would otherwise leave rho frozen at
+# its initial 0.5 for both branches (ratio identically 1.0) for every noise_level /
+# md2vip_scale / seed. See docs/Progress_Report.docx Section 7.2 for how this was found.
 
 # Background-noise "fully on" reference levels for SOM and VIP (bg_noise_scale=1.0).
 # PV's own background (rate_bg_pv/weight_bg_pv) is part of the validated model and is
@@ -60,13 +69,21 @@ MAX_VESICLE_CV = 0.30                  # vesicle_cv at noise_level = 1.0
 
 def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
                           md_signal_rate=25.0, noise_level=0.0,
-                          md2vip_scale=1.0, seed_val=42):
-    """Build and run the Phase-2 branch-gating circuit; return measured outcomes.
+                          md2vip_scale=1.0, seed_val=42, n_epochs=15, som_bias_pA=20.9):
+    """Build the Phase-2 branch-gating circuit and run it for n_epochs analytical
+    plasticity epochs (Yang 2016 Eqs. 32-35, src/v2/plasticity.py); return measured
+    outcomes averaged/final over the run.
 
     noise_level in [0, 1] (values above 1 are a deliberate overdrive/stress range)
     jointly scales MD noise rate, vesicle_cv, and SOM/VIP background conductance.
     md2vip_scale in [0, 1] independently scales the MD->VIP synaptic weight, for the
     NMDA-hypofunction / MD->VIP degradation protocol (Phase 2C); 1.0 = intact.
+    som_bias_pA defaults to the 2026-08-30 SOM-rate sweep's calibrated value (20.9 pA,
+    measured 25.29 Hz in Phase-1's reduced circuit, docs/som_rate_sweep_table.csv). At
+    md_signal_rate=0 / noise_level=0 (Phase 2B's baseline condition) nothing else
+    synaptically drives SOM, so this bias produces the same isolated-neuron rate here as
+    in the reduced circuit; this is NOT assumed to hold once MD/VIP or noise actively
+    inhibit or perturb SOM, which is the point of those sweeps.
     """
     seed(seed_val)
     p = dict(params)
@@ -123,12 +140,12 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
 
     SOM = NeuronGroup(p['n_som_spike'], eqs_som, threshold='V>vThres_som', reset='V=vReset_som',
                        refractory=p['refrac_som'], method='euler', namespace=p)
-    # NOT switched to p['iBaseline_som'] (Yang's calibrated 10 Hz) -- confirmed by
-    # direct test to collapse gating (ratio 42.76 -> 1.04, Phase-1's own PASS/FAIL
-    # check flips to FAIL). See diagnosis delivered 2026-08-27; left at the original
-    # value pending a decision on how to reconcile Yang's rate with this model's
-    # calibration. p['iBaseline_som'] is defined and documented for that purpose.
-    SOM.V = p['vRest_som']; SOM.iBaseline_som = 22.0 * pA
+    # SOM bias: see the som_bias_pA docstring above and model/parameters.py's
+    # iBaseline_som comment for the full 2026-08-30 SOM-rate sweep story. This function's
+    # own default (20.9 pA) intentionally overrides p['iBaseline_som'] rather than reading
+    # it, since that parameter's calibration is documented for Phase-1's reduced circuit
+    # specifically and this circuit's own SOM rate should be checked, not assumed.
+    SOM.V = p['vRest_som']; SOM.iBaseline_som = som_bias_pA * pA
     BG_som = PoissonGroup(p['n_som_spike'], rates=bg_rate_som)
     sbg_som = Synapses(BG_som, SOM, on_pre='gTotAMPA_post+=bg_weight_som', namespace={**p, 'bg_weight_som': bg_weight_som})
     sbg_som.connect(j='i')
@@ -171,30 +188,60 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
     net.add([s_vip2som, s_som2dend, s_pv2soma, s_som2pv])
 
     # -- Plastic pathway: independent excitatory input onto each branch --------
+    # acc_eqs/accumulate: same compiled-counter trick as experiments/phase1_analytical.py
+    # -- O(1) memory, integrated at the full sim_dt rather than a coarser record_dt,
+    # reset every epoch so alpha_d/alpha_p measure only the current epoch's calcium.
+    acc_eqs = '\nad_acc : second\nap_acc : second\n'
+    accumulate = ('ad_acc = ad_acc + int(c_total > theta_d)*dt\n'
+                  'ap_acc = ap_acc + int(c_total > theta_p)*dt')
+
     exc0 = PoissonGroup(20, rates=exc_rate * Hz)
-    sb0 = Synapses(exc0, Dend, model=eqs_synapse_plasticity, on_pre=on_pre_plasticity,
+    sb0 = Synapses(exc0, Dend, model=eqs_synapse_plasticity + acc_eqs, on_pre=on_pre_plasticity,
                     method='heun', namespace=p)
     sb0.connect(j='0'); sb0.rho = 0.5; attach_rho_clipper(sb0)
+    sb0.run_regularly(accumulate, when='end')
     exc1 = PoissonGroup(20, rates=exc_rate * Hz)
-    sb1 = Synapses(exc1, Dend, model=make_eqs_synapse_plasticity(2), on_pre=on_pre_plasticity,
-                    method='heun', namespace=p)
+    sb1 = Synapses(exc1, Dend, model=make_eqs_synapse_plasticity(2) + acc_eqs,
+                    on_pre=on_pre_plasticity, method='heun', namespace=p)
     sb1.connect(j='1'); sb1.rho = 0.5; attach_rho_clipper(sb1)
+    sb1.run_regularly(accumulate, when='end')
     net.add([exc0, sb0, exc1, sb1])
 
     mons = {'pv': SpikeMonitor(PV), 'som': SpikeMonitor(SOM), 'vip': SpikeMonitor(VIP),
             'pyr': SpikeMonitor(Soma)}
     net.add(list(mons.values()))
 
-    net.run(T * second)
+    ykw = dict(sigma=float(p['sigma']), tau=float(p['tau'] / second),
+               gamma_d=float(p['gamma_d']), gamma_p=float(p['gamma_p']),
+               w0=float(p['w0']), w1=float(p['w1']), rho_star=float(p['rhoStar']))
 
+    # Epoch loop: rho is held fixed during each T-second epoch while calcium
+    # accumulates, then updated analytically per synapse and written back into Brian 2
+    # (same pattern as experiments/phase1_analytical.py's run_gating_analytical).
+    for e in range(n_epochs):
+        sb0.ad_acc = 0 * second; sb0.ap_acc = 0 * second
+        sb1.ad_acc = 0 * second; sb1.ap_acc = 0 * second
+        net.run(T * second)
+
+        ad0 = np.asarray(sb0.ad_acc[:] / second); ap0 = np.asarray(sb0.ap_acc[:] / second)
+        ad1 = np.asarray(sb1.ad_acc[:] / second); ap1 = np.asarray(sb1.ap_acc[:] / second)
+        r0_syn = np.asarray(sb0.rho[:]); r1_syn = np.asarray(sb1.rho[:])
+        r0_new = np.array([yang_synapse_update(ad0[k], ap0[k], r0_syn[k], **ykw)['rho_new']
+                           for k in range(len(r0_syn))])
+        r1_new = np.array([yang_synapse_update(ad1[k], ap1[k], r1_syn[k], **ykw)['rho_new']
+                           for k in range(len(r1_syn))])
+        sb0.rho[:] = r0_new
+        sb1.rho[:] = r1_new
+
+    T_total = n_epochs * T
     w0 = float(np.mean(sb0.w[:])); w1 = float(np.mean(sb1.w[:]))
     r0 = float(np.mean(sb0.rho[:])); r1 = float(np.mean(sb1.rho[:]))
     ratio = r1 / r0 if r0 > 1e-6 else float('inf')
     n_pv, n_som, n_vip = p['n_pv'], p['n_som_spike'], p['n_vip_spike']
     return dict(
         r0=r0, r1=r1, w0=w0, w1=w1, ratio=ratio,
-        pv_rate=len(mons['pv'].t) / T / n_pv,
-        som_rate=len(mons['som'].t) / T / n_som,
-        vip_rate=len(mons['vip'].t) / T / n_vip,
-        pyr_rate=len(mons['pyr'].t) / T,
+        pv_rate=len(mons['pv'].t) / T_total / n_pv,
+        som_rate=len(mons['som'].t) / T_total / n_som,
+        vip_rate=len(mons['vip'].t) / T_total / n_vip,
+        pyr_rate=len(mons['pyr'].t) / T_total,
     )

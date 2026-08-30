@@ -39,23 +39,55 @@ from full_circuit import build_gating_circuit
 NOISE_LEVELS = [0.0, 0.25, 0.30, 0.35, 0.40, 0.45, 0.5, 0.75, 1.0, 1.5, 2.0]
 N_SEEDS = 3
 T_SIM = 3.0
+# 2026-08-30 migration to analytical plasticity: measured 90 s/epoch steady-state in
+# this circuit (vs. Phase-1's reduced circuit's ~74 s), so 15 epochs x 3 seeds x 11
+# noise levels would run ~12 h. Epochs reduced to 10 -- Step 2c (docs/Progress_Report.docx
+# Section 5.4) showed the ratio is already close to its long-run value by epoch ~10 -- to
+# bring this to ~8 h. Seeds kept at 3: the seed-to-seed disagreement in the "unstable
+# transition zone" is the specific phenomenon this sweep was designed to detect, and a
+# single seed cannot show it at all.
+N_EPOCHS = 10
+RESULTS_PATH = os.path.join(PROOT, 'docs', 'phase2_snr_sweep_results.json')
+
+import json
+
+
+def load_records():
+    if os.path.exists(RESULTS_PATH):
+        with open(RESULTS_PATH) as f:
+            return json.load(f)
+    return []
+
+
+def save_records(records):
+    with open(RESULTS_PATH, 'w') as f:
+        json.dump(records, f, indent=2)
 
 
 def sweep():
-    records = []
-    for nl in NOISE_LEVELS:
+    records = load_records()
+    done = {round(r['noise_level'], 4) for r in records}
+    todo = [nl for nl in NOISE_LEVELS if round(nl, 4) not in done]
+    print(f"=== Phase 2B: {len(todo)} noise level(s) to run (of {len(NOISE_LEVELS)}, "
+          f"{len(records)} already done) ===", flush=True)
+    for nl in todo:
         ratios, r0s, r1s, som_rates = [], [], [], []
         for s in range(N_SEEDS):
             out = build_gating_circuit(T=T_SIM, md_signal_rate=0.0, noise_level=nl,
-                                        seed_val=42 + s)
+                                        n_epochs=N_EPOCHS, seed_val=42 + s)
             ratios.append(out['ratio'])
             r0s.append(out['r0']); r1s.append(out['r1'])
             som_rates.append(out['som_rate'])
+            print(f"  noise_level={nl:.2f} seed={42+s}: ratio={out['ratio']:.3f} "
+                  f"r0={out['r0']:.3f} r1={out['r1']:.3f} SOM={out['som_rate']:.1f} Hz",
+                  flush=True)
         rec = dict(noise_level=nl, ratio_mean=float(np.mean(ratios)),
                    ratio_sem=float(np.std(ratios, ddof=1) / np.sqrt(N_SEEDS)),
                    r0_mean=float(np.mean(r0s)), r1_mean=float(np.mean(r1s)),
                    som_rate_mean=float(np.mean(som_rates)))
         records.append(rec)
+        records.sort(key=lambda r: r['noise_level'])
+        save_records(records)
         print(f"noise_level={nl:.2f}  ratio={rec['ratio_mean']:.2f}+/-{rec['ratio_sem']:.2f}  "
               f"rho0={rec['r0_mean']:.3f}  rho1={rec['r1_mean']:.3f}  "
               f"SOM={rec['som_rate_mean']:.1f} Hz", flush=True)
@@ -121,3 +153,4 @@ if __name__ == '__main__':
         print("\nGating selectivity remained >= 1.5 across the full sweep range.")
     os.makedirs(FIGROOT, exist_ok=True)
     plot(records, os.path.join(FIGROOT, 'phase2_snr_curve.png'))
+    print("\n=== Phase 2B complete ===")

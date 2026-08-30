@@ -36,23 +36,51 @@ MD2VIP_SCALES = [1.0, 0.66, 0.33, 0.0]
 MD_SIGNAL_RATE = 25.0
 N_SEEDS = 3
 T_SIM = 3.0
+# 2026-08-30 migration to analytical plasticity: see phase2_snr_breakdown.py for the
+# same epochs=10 rationale (measured 90 s/epoch steady-state; 15 epochs x 3 seeds x 4
+# scale points would run ~3 h at 15 epochs, ~2 h at 10).
+N_EPOCHS = 10
+RESULTS_PATH = os.path.join(PROOT, 'docs', 'phase2_ketamine_sweep_results.json')
+
+import json
+
+
+def load_records():
+    if os.path.exists(RESULTS_PATH):
+        with open(RESULTS_PATH) as f:
+            return json.load(f)
+    return []
+
+
+def save_records(records):
+    with open(RESULTS_PATH, 'w') as f:
+        json.dump(records, f, indent=2)
 
 
 def sweep():
-    records = []
-    for scale in MD2VIP_SCALES:
+    records = load_records()
+    done = {round(r['md2vip_scale'], 4) for r in records}
+    todo = [s for s in MD2VIP_SCALES if round(s, 4) not in done]
+    print(f"=== Phase 2C: {len(todo)} md2vip_scale point(s) to run (of {len(MD2VIP_SCALES)}, "
+          f"{len(records)} already done) ===", flush=True)
+    for scale in todo:
         ratios, r0s, r1s, som_rates, vip_rates = [], [], [], [], []
         for s in range(N_SEEDS):
             out = build_gating_circuit(T=T_SIM, md_signal_rate=MD_SIGNAL_RATE,
                                         noise_level=0.0, md2vip_scale=scale,
-                                        seed_val=42 + s)
+                                        n_epochs=N_EPOCHS, seed_val=42 + s)
             ratios.append(out['ratio']); r0s.append(out['r0']); r1s.append(out['r1'])
             som_rates.append(out['som_rate']); vip_rates.append(out['vip_rate'])
+            print(f"  scale={scale:.2f} seed={42+s}: ratio={out['ratio']:.3f} "
+                  f"r0={out['r0']:.3f} r1={out['r1']:.3f} SOM={out['som_rate']:.1f} Hz "
+                  f"VIP={out['vip_rate']:.1f} Hz", flush=True)
         rec = dict(md2vip_scale=scale, ratio_mean=float(np.mean(ratios)),
                    r0_mean=float(np.mean(r0s)), r1_mean=float(np.mean(r1s)),
                    som_rate_mean=float(np.mean(som_rates)),
                    vip_rate_mean=float(np.mean(vip_rates)))
         records.append(rec)
+        records.sort(key=lambda r: -r['md2vip_scale'])
+        save_records(records)
         print(f"md2vip_scale={scale:.2f}  ratio={rec['ratio_mean']:.2f}  "
               f"rho0={rec['r0_mean']:.3f}  rho1={rec['r1_mean']:.3f}  "
               f"SOM={rec['som_rate_mean']:.1f} Hz  VIP={rec['vip_rate_mean']:.1f} Hz",
@@ -101,3 +129,4 @@ if __name__ == '__main__':
           f"branch1 rho={fully_blocked['r1_mean']:.3f}, ratio={fully_blocked['ratio_mean']:.2f}")
     os.makedirs(FIGROOT, exist_ok=True)
     plot(records, os.path.join(FIGROOT, 'phase2_ketamine_failure.png'))
+    print("\n=== Phase 2C complete ===")

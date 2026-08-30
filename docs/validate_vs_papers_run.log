@@ -1,0 +1,11 @@
+======================================================================
+ VALIDATION vs Yang 2016 & Zhang 2025 paper figures  (Model A)
+======================================================================
+
+[V1] Dendritic I/O transfer function (Yang Fig. 2c)
+   g_half: {'0.0': 22.2368204, '2.0': 33.3552306, '10.0': 77.8288714, '20.0': 133.4209224, '35.0': 216.8089989}
+   saved D:\minsu\Thalamocortical_Gating_Project\figures\validation_vs_papers\v1_dendritic_io.png
+
+[V2] LTP/LTD vs presynaptic rate (Yang Fig. 7b) -- running Brian 2 sweep...
+   exc_rate = 20.0 Hz ...
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_2', but also exists in the group-specific namespace with the value 20.9 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]

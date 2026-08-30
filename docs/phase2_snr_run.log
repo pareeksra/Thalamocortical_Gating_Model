@@ -1,0 +1,7 @@
+=== Phase 2B: SNR / noise-robustness sweep ===
+=== Phase 2B: 11 noise level(s) to run (of 11, 0 already done) ===
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 20.9 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]

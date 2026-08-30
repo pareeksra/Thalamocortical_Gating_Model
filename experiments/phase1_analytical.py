@@ -35,7 +35,7 @@ from src.v2.plasticity import yang_synapse_update, alpha_above_threshold
 
 
 def run_gating_analytical(n_epochs=20, T=3.0, exc_rate=80.0, post_rate=10.0,
-                          gcouple_nS=0.8, som_bias_pA=25.0, gGABA_nS=None, seed_val=42,
+                          gcouple_nS=0.8, som_bias_pA=20.9, gGABA_nS=None, seed_val=42,
                           verbose=True, resume=True, run_tag=''):
     prefs.codegen.target = 'cython'   # cached compile; ~10x faster than numpy target here
     start_scope()
@@ -207,7 +207,7 @@ def make_trajectory_figure(res, figpath):
 if __name__ == '__main__':
     # usage: phase1_analytical.py [n_epochs] [som_bias_pA] [tag] [gGABA_nS]
     N = int(sys.argv[1]) if len(sys.argv) > 1 else 15
-    som_bias = float(sys.argv[2]) if len(sys.argv) > 2 else 25.0
+    som_bias = float(sys.argv[2]) if len(sys.argv) > 2 else 20.9
     tag = sys.argv[3] if len(sys.argv) > 3 else ''
     gGABA = float(sys.argv[4]) if len(sys.argv) > 4 else None
     print(f"=== Phase 1 ANALYTICAL (Yang 2016 Eqs. 32-35): {N} epochs x 3 s "

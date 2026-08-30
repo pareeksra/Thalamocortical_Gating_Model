@@ -156,17 +156,38 @@ som_params = {
     'tauAMPA_som': 2.0 * ms,
     'tauGABA_som_cell': 20.0 * ms,
     'gGABA_som': 3.0 * nS,    # VIP→SOM synapse weight
-    # Divergence fix (2026-08-27): SOM's bias current, calibrated to Yang et al.'s
-    # reported ~10 Hz baseline rather than the ~36-40 Hz this model previously ran at
-    # (22-25 pA). SOM's f-I curve is a near-step, same mechanism as PV's documented
-    # below: C_som=20 pF, gL_som=1 nS -> tau_m=20 ms, vThres-vReset=5 mV, rheobase
-    # exactly 20.0 pA. Empirically swept in 0.01 pA steps: 20.04 pA gives 10.00 Hz
-    # (matches the analytic LIF ISI formula tau_m*ln[(I/gL-15mV)/(I/gL-20mV)] to within
-    # rounding). This is only 0.04 pA above rheobase -- as fragile to perturbation as
-    # PV's tonic-current problem below -- so Phase 2's SOM background noise channel
-    # (rate_bg_som/weight_bg_som) will move this baseline more easily than the old
-    # 22-25 pA operating point did.
-    'iBaseline_som': 20.04 * pA,
+    # Divergence fix (2026-08-27): SOM's bias current was recalibrated to Yang et al.'s
+    # reported ~10 Hz baseline (20.04 pA; rheobase is exactly 20.0 pA, so this is only
+    # 0.04 pA above threshold). That value was then tested inside the actual analytical
+    # plasticity protocol (docs/gamma_tau_analysis.md Step 2d) and found to abolish
+    # branch-specific gating (ratio 1.02, vs. 2.81 at the model's old 25 pA/~63 Hz
+    # setting) -- Yang's own rate is too slow, relative to tau_GABA,dend=20 ms, to hold
+    # continuous dendritic shunting between SOM spikes (mean ISI 100 ms at 10 Hz).
+    #
+    # Correction (2026-08-30): a SOM-rate sweep (docs/som_rate_sweep_table.csv, Phase-1's
+    # reduced circuit, 15-epoch analytical protocol, gGABA held at Yang's 40 nS total)
+    # found the fail->pass transition is a sharp step between 16.87 Hz (ratio 1.04) and
+    # 21.49 Hz (ratio 5.51), not a gradual climb -- the minimum functional SOM rate is
+    # ~2x Yang's 10 Hz, not the much larger multiple a naive 63 Hz vs 10 Hz comparison
+    # implied. A parallel gGABA sweep at Yang's fixed 10 Hz (docs/gbar_I_sweep_table.csv)
+    # showed conductance alone cannot compensate for too low a rate (ratio only reaches
+    # 1.45 at 6x Yang's gGABA) -- the mechanism is duty-cycle (does GABA cover the gap
+    # between SOM spikes), not total inhibitory charge; see docs/Progress_Report.docx
+    # Section 7.3 for the full argument. Default is now set to the sweep's peak point:
+    # 20.9 pA, measured at 25.29 Hz in this circuit (ratio 5.58, the sweep's best), a
+    # 2.5x departure from Yang's 10 Hz with a concrete biophysical justification (SOM
+    # rate >= ~20 Hz needed so tau_GABA,dend=20 ms of coverage isn't outrun by the
+    # inter-spike interval) rather than an unexplained recalibration.
+    #
+    # NOTE: this bias current is NOT portable across circuits -- the same pA value
+    # produces a different rate depending on what else is wired to the SOM population
+    # (see the divergence note in docs/Progress_Report.docx Section 4.2: 25 pA measured
+    # 63.3 Hz in Phase-1's reduced circuit but only ~36-40 Hz in the full MD/PV/VIP
+    # circuit). 20.9 pA is calibrated for Phase-1's reduced circuit specifically
+    # (phase1_analytical.py, phase1_single_neuron_gating.py); model/full_circuit.py
+    # measures its own SOM rate via SpikeMonitor and should be checked against the
+    # same >=~20 Hz target rather than assumed to inherit this exact pA value.
+    'iBaseline_som': 20.9 * pA,
     # Phase 2: background Poisson conductance (same mechanism as rate_bg_pv /
     # weight_bg_pv below). SOM's only excitatory drive is a constant bias current
     # (iBaseline_som), which produces a near-perfectly regular spike train -- no

@@ -29,7 +29,13 @@ sys.path.insert(0, os.path.join(PROOT, 'experiments'))
 from brian2 import *
 prefs.codegen.target = 'numpy'
 from dendritic_io import dend_IO, io_midpoint
-from phase1_single_neuron_gating import run_gating
+from phase1_analytical import run_gating_analytical
+# 2026-08-30 migration: V2/V3 used to call phase1_single_neuron_gating.run_gating, a
+# single net.run() that read rho straight after -- now broken (rho frozen at 0.5, ratio
+# = 1.0 always) since model/equations.py's drho/dt was commented out in favor of the
+# analytical epoch update. Switched to run_gating_analytical (15 epochs, matching the
+# validated Phase 1 protocol) instead. V1 (no plasticity) and V4 (rates only, never
+# reads rho) are unaffected and untouched.
 
 OUTDIR = os.path.join(PROOT, 'figures', 'validation_vs_papers')
 os.makedirs(OUTDIR, exist_ok=True)
@@ -77,9 +83,11 @@ def v2_v3_plasticity_sweep():
     rho_free, rho_inh = [], []
     for r in rates:
         print(f'   exc_rate = {r} Hz ...', flush=True)
-        d = run_gating(T=3.0, exc_rate=r, post_rate=10.0, gcouple_nS=0.8, seed_val=42)
-        rho_free.append(d['r1'])   # branch 1 = free (disinhibited)
-        rho_inh.append(d['r0'])    # branch 0 = SOM-inhibited
+        d = run_gating_analytical(n_epochs=15, T=3.0, exc_rate=r, post_rate=10.0,
+                                   gcouple_nS=0.8, seed_val=42,
+                                   run_tag=f'validate_rate_{int(r)}')
+        rho_free.append(d['rho1'])   # branch 1 = free (disinhibited)
+        rho_inh.append(d['rho0'])    # branch 0 = SOM-inhibited
     rates = np.array(rates); rho_free = np.array(rho_free); rho_inh = np.array(rho_inh)
 
     fig, ax = plt.subplots(figsize=(7, 5))
@@ -151,7 +159,10 @@ def build_network(p):
     sbg = Synapses(BG, PV, on_pre='gTotAMPA_post+=weight_bg_pv', namespace=p); sbg.connect(j='i')
     SOM = NeuronGroup(p['n_som_spike'], eqs_som, threshold='V>vThres_som', reset='V=vReset_som',
                       refractory=p['refrac_som'], method='euler', namespace=p)
-    SOM.V = p['vRest_som']; SOM.iBaseline_som = 22.0*pA
+    # 2026-08-30: updated to the SOM-rate sweep's calibrated default (see
+    # model/parameters.py's iBaseline_som comment); V4 doesn't read rho so this only
+    # affects the reported SOM/downstream rates, not any plasticity result.
+    SOM.V = p['vRest_som']; SOM.iBaseline_som = 20.9*pA
     VIP = NeuronGroup(p['n_vip_spike'], eqs_vip, threshold='V>vThres_vip', reset='V=vReset_vip',
                       refractory=p['refrac_vip'], method='euler', namespace=p); VIP.V = p['vRest_vip']
     MD = PoissonGroup(p['n_md'], rates=5*Hz)
