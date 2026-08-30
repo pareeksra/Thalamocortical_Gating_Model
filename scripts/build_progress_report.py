@@ -776,6 +776,145 @@ p("Underneath all of this is the honest uncertainty this report tried not to smo
   "specific ratio in this project as a stable, citable result.")
 
 # ===========================================================================
+# 7. 2026-08-30 UPDATE
+# ===========================================================================
+h1('7. 2026-08-30 update — git safety, confirming the Phase 2 migration gap, '
+   'and inhibition sweeps')
+
+p("Three follow-ups from Section 6's open items, done in order.")
+
+h2('7.1 A week of uncommitted work is now in git')
+
+p("Everything documented in Sections 3-6 above — the analytical plasticity "
+  "implementation, the formula-comparison diagnostic, both Phase 2 sweeps, and this "
+  "report itself — had been sitting as untracked or modified files since 2026-08-26/27, "
+  "never committed. It is now: commit 212505b, 36 files changed (3247 insertions).")
+
+h2('7.2 Confirming the Phase 2 migration gap directly')
+
+p("Section 5.3 already flagged, by inference, that `full_circuit.py` and the two Phase 2 "
+  "scripts were not migrated to the analytical plasticity update and that Section 3's "
+  "figures might therefore be stale. We checked this directly rather than leaving it as "
+  "an inference.")
+
+flag("Confirmed. File timestamps establish the order of events precisely: both Phase 2 "
+     "figures (phase2_snr_curve.png, phase2_ketamine_failure.png) were generated on "
+     "2026-08-27 (00:54 and 00:33), and full_circuit.py was itself last edited 2026-08-27 "
+     "03:05 — all before model/equations.py was edited on 2026-08-29 16:35 to comment out "
+     "dρ/dt and declare `rho : 1` as a bare parameter (Section 5.3). Reading "
+     "full_circuit.py's build_gating_circuit() directly confirms it does a single "
+     "net.run(T) and reads sb0.rho/sb1.rho straight afterward, with no epoch loop and no "
+     "call into src/v2/plasticity.py — the exact pattern that needs the epoch-update "
+     "machinery experiments/phase1_analytical.py added. Consequence: rerunning "
+     "phase2_snr_breakdown.py or phase2_schizophrenia_sim.py today, unmodified, would "
+     "hold rho frozen at its initialized 0.5 on both branches for the entire run, at "
+     "every noise_level / md2vip_scale / seed combination — ratio identically 1.0, not "
+     "just numerically close to it. The existing figures (ratio ~62 at zero noise, "
+     "branch-0 rho falling to ~0.01-0.02 under full MD->VIP block) sit in the same range "
+     "as the old 346x-bugged ODE's dynamics (Section 4.3), not the new analytical "
+     "update's honest ~2.81 ceiling (Section 5.4) — consistent with having been generated "
+     "before the bug was even fixed, let alone before the switch to the analytical "
+     "update. Both Phase 2 figures must be treated as retired until full_circuit.py is "
+     "migrated to the same epoch-loop + yang_synapse_update pattern as "
+     "experiments/phase1_analytical.py and both sweeps are rerun.")
+
+p("docs/gamma_tau_analysis.md was also updated with one sentence confirming that its "
+  "opening question (Section 4.3's gamma/tau timescale question — does canonical "
+  "Graupner-Brunel gate given enough time?) is superseded by the switch to the "
+  "analytical epoch-based update, which does not depend on simulation duration for "
+  "convergence.")
+
+h2('7.3 SOM-rate and gGABA inhibition sweeps')
+
+p("Step 2d (Section 5.5) left three options on the table for reconciling Yang's ~10 Hz SOM "
+  "rate with this model's need for far more dendritic shunting to gate. Rather than pick "
+  "one blind, we ran two sweeps, each the full 15-epoch analytical protocol per point "
+  "(three points reused from prior runs, described inline).")
+
+h3('Sweep 1 — SOM rate, gGABA held at Yang-matched 40 nS total')
+
+table(
+    ['measured SOM rate (Hz)', '10.14', '16.87', '21.49', '25.29', '28.80', '33.09',
+     '39.04', '46.49', '55.22', '63.30'],
+    [['ratio (free/inhib)', '1.02', '1.04', '5.51', '5.58', '4.95', '4.29', '3.63',
+      '3.12', '2.91', '2.81']],
+)
+
+figure('figures/som_rate_sweep.png',
+       f'Figure {fig_num()}. Sweep 1: gating ratio and final rho vs. measured SOM rate, '
+       'gGABA held at the Yang-matched 40 nS total. The transition from fail to pass is a '
+       'near step-function between 16.87 and 21.49 Hz, not a gradual climb.')
+
+p("The crossover is sharp, not gradual: ratio sits at ~1.0-1.04 for 10.14-16.87 Hz, then "
+  "jumps to 5.51 at 21.49 Hz — a step, not a slope, consistent with the same near-threshold "
+  "steepness noted in Section 4.2's SOM f-I curve. The minimum functional SOM rate for "
+  "ratio > 2 is therefore roughly 2x Yang's own ~10 Hz, not the far larger multiple the "
+  "original 63 Hz-vs-10 Hz comparison (Section 5.5) implied. Past the crossover, ratio "
+  "*declines* monotonically from a peak of 5.58 at 25.29 Hz back down to 2.81 at 63.3 Hz "
+  "(the project's original working point) — more SOM drive past the crossover does not mean "
+  "more gating; it means less, though still comfortably above threshold.")
+
+h3('Sweep 2 — gGABA, SOM held at Yang\'s ~10.15 Hz')
+
+table(
+    ['gGABA per synapse (nS)', '4.0', '6.0', '8.0', '10.0', '12.0', '14.0', '16.0', '18.0',
+     '20.0', '22.0', '24.0'],
+    [['ratio (free/inhib)', '1.02', '1.04', '1.06', '1.11', '1.12', '1.15', '1.19', '1.23',
+      '1.29', '1.35', '1.45']],
+)
+
+figure('figures/gbar_I_sweep.png',
+       f'Figure {fig_num()}. Sweep 2: gating ratio and final rho vs. gGABA per synapse, SOM '
+       'held at Yang\'s measured ~10.15 Hz. Ratio climbs slowly and smoothly, never '
+       'approaching the ratio=2 criterion even at 6x Yang\'s conductance.')
+
+p("No gGABA value in the tested range — up to 24.0 nS/synapse (240 nS total, 6x Yang's own "
+  "40 nS spec) — recovers gating at Yang's SOM rate. The climb from 1.02 to 1.45 is smooth "
+  "and decelerating, not a step; extrapolating the same trend would need on the order of "
+  "50 nS/synapse (roughly 12x Yang's value) to reach ratio=2, which is well outside any "
+  "range defensible as \"the same synapse, just recalibrated.\"")
+
+h3('The two sweeps together point to a temporal-patterning effect, not a conductance-amount effect')
+
+p("Comparing the two sweeps by time-averaged inhibitory conductance (ḡ_I = rate x "
+  "tau_GABA,dend x gGABA_total) rather than by rate or conductance alone is revealing. "
+  "Sweep 1's crossover sits between 16.87 Hz (ḡ_I ≈ 13.5 nS, fails) and 21.49 Hz "
+  "(ḡ_I ≈ 17.2 nS, ratio 5.51) — only about 1.7-2.1x Yang's own 8.0 nS default, not the 6x "
+  "the Section 5.5 diagnosis estimated from comparing only the 10 Hz and 63 Hz endpoints. "
+  "Sweep 2's best point (24 nS/synapse at 10.16 Hz) reaches ḡ_I ≈ 48.8 nS — nearly 3x "
+  "*higher* than Sweep 1's crossover ḡ_I — and still only manages ratio 1.45.")
+
+flag("Two conditions with comparable, or even reversed, time-averaged inhibitory "
+     "conductance produce opposite gating outcomes depending on whether that conductance "
+     "arrives as frequent small GABA events (high SOM rate) or infrequent large ones (low "
+     "rate, boosted per-synapse gGABA). This points to the dendrite's NMDA plateau being "
+     "sensitive to the temporal duty cycle of inhibition, not just its time-average: with "
+     "tau_GABA,dend = 20 ms and a 10 Hz SOM rate (100 ms mean ISI), the GABA conductance "
+     "fully decays for most of the inter-spike interval, leaving gaps long enough for the "
+     "branch to reach the NMDA plateau and accumulate calcium regardless of how large each "
+     "individual GABA event is. At >=20 Hz (<=50 ms ISI, closer to a few tau_GABA), "
+     "consecutive events overlap enough to hold the branch below plateau continuously. This "
+     "is a genuine mechanistic finding, not just a negative result, and it directly answers "
+     "why Sweep 2 could not compensate for Sweep 1's rate deficit by raising conductance "
+     "alone.")
+
+p("Reading this against the three Step 2d options: option A (raise gGABA at Yang's rate) "
+  "is empirically ruled out within any defensible range — Sweep 2 tops out at ratio 1.45 "
+  "even at 6x conductance, and the trend says reaching ratio=2 this way would need "
+  "roughly 12x. Option B (reduce calcium/NMDA sensitivity so Yang's 8 nS suffices) was not "
+  "directly tested by either sweep, but the temporal-patterning finding gives it a "
+  "concrete mechanistic target: it would need to make the plateau's activation slow or "
+  "inertial enough to bridge a ~100 ms gap between SOM spikes, which is a specific, "
+  "testable hypothesis rather than a blind parameter search. Option C (document the gap) "
+  "is now much better supported than a bare admission of mismatch — the gap has a specific, "
+  "explicable mechanism (duty cycle vs. NMDA plateau kinetics) rather than being an "
+  "unexplained ~6x scaling problem. Sweep 1 also surfaces a fourth possibility the original "
+  "framing didn't consider: the minimum SOM rate for reliable gating is only about 2x "
+  "Yang's, not 6x — a substantially smaller, more defensible departure from the paper than "
+  "the number this project had been working with. This decision is Raghav's to make; we "
+  "have not changed any parameter in response to these results.")
+
+# ===========================================================================
 # SAVE
 # ===========================================================================
 out_path = os.path.join(DOCS, 'Progress_Report.docx')

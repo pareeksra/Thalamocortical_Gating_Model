@@ -1,0 +1,179 @@
+=== Sweep 2: gGABA sweep -- 9 new point(s) to run (of 9 planned, 2 reused) ===
+
+--- point 1/9: gGABA_nS=6.000 ---
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_2', but also exists in the group-specific namespace with the value 20.04 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+epoch  1: INHIB rho=0.753 (ad=2.97 ap=2.00) | FREE rho=0.863 (ad=2.97 ap=2.89)
+epoch  2: INHIB rho=0.840 (ad=3.00 ap=2.09) | FREE rho=0.915 (ad=3.00 ap=2.89)
+epoch  3: INHIB rho=0.876 (ad=3.00 ap=2.26) | FREE rho=0.923 (ad=3.00 ap=2.91)
+epoch  4: INHIB rho=0.893 (ad=3.00 ap=2.38) | FREE rho=0.926 (ad=3.00 ap=2.95)
+epoch  5: INHIB rho=0.889 (ad=3.00 ap=2.25) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch  6: INHIB rho=0.889 (ad=3.00 ap=2.26) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch  7: INHIB rho=0.889 (ad=3.00 ap=2.26) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch  8: INHIB rho=0.885 (ad=3.00 ap=2.20) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch  9: INHIB rho=0.887 (ad=3.00 ap=2.25) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 10: INHIB rho=0.881 (ad=3.00 ap=2.13) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 11: INHIB rho=0.883 (ad=3.00 ap=2.20) | FREE rho=0.923 (ad=3.00 ap=2.87)
+epoch 12: INHIB rho=0.886 (ad=3.00 ap=2.24) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 13: INHIB rho=0.879 (ad=3.00 ap=2.10) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch 14: INHIB rho=0.885 (ad=3.00 ap=2.24) | FREE rho=0.923 (ad=3.00 ap=2.89)
+epoch 15: INHIB rho=0.891 (ad=3.00 ap=2.31) | FREE rho=0.924 (ad=3.00 ap=2.91)
+  -> measured 10.16 Hz, ratio=1.038, rho0=0.891, rho1=0.924
+
+--- point 2/9: gGABA_nS=8.000 ---
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_4', but also exists in the group-specific namespace with the value 20.04 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+epoch  1: INHIB rho=0.723 (ad=2.98 ap=1.82) | FREE rho=0.864 (ad=2.98 ap=2.91)
+epoch  2: INHIB rho=0.807 (ad=3.00 ap=1.87) | FREE rho=0.915 (ad=3.00 ap=2.90)
+epoch  3: INHIB rho=0.843 (ad=3.00 ap=1.95) | FREE rho=0.922 (ad=3.00 ap=2.89)
+epoch  4: INHIB rho=0.860 (ad=3.00 ap=2.01) | FREE rho=0.924 (ad=3.00 ap=2.92)
+epoch  5: INHIB rho=0.865 (ad=3.00 ap=2.01) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch  6: INHIB rho=0.860 (ad=3.00 ap=1.92) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch  7: INHIB rho=0.864 (ad=3.00 ap=2.00) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch  8: INHIB rho=0.864 (ad=3.00 ap=1.98) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch  9: INHIB rho=0.869 (ad=3.00 ap=2.06) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch 10: INHIB rho=0.866 (ad=3.00 ap=1.98) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 11: INHIB rho=0.872 (ad=3.00 ap=2.09) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 12: INHIB rho=0.869 (ad=3.00 ap=2.02) | FREE rho=0.924 (ad=3.00 ap=2.92)
+epoch 13: INHIB rho=0.858 (ad=3.00 ap=1.88) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch 14: INHIB rho=0.867 (ad=3.00 ap=2.05) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 15: INHIB rho=0.873 (ad=3.00 ap=2.10) | FREE rho=0.924 (ad=3.00 ap=2.91)
+  -> measured 10.16 Hz, ratio=1.059, rho0=0.873, rho1=0.924
+
+--- point 3/9: gGABA_nS=12.000 ---
+epoch  1: INHIB rho=0.656 (ad=2.97 ap=1.46) | FREE rho=0.863 (ad=2.97 ap=2.89)
+epoch  2: INHIB rho=0.730 (ad=3.00 ap=1.48) | FREE rho=0.915 (ad=3.00 ap=2.90)
+epoch  3: INHIB rho=0.788 (ad=3.00 ap=1.68) | FREE rho=0.923 (ad=3.00 ap=2.92)
+epoch  4: INHIB rho=0.824 (ad=3.00 ap=1.81) | FREE rho=0.926 (ad=3.00 ap=2.95)
+epoch  5: INHIB rho=0.821 (ad=3.00 ap=1.64) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch  6: INHIB rho=0.819 (ad=3.00 ap=1.63) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch  7: INHIB rho=0.823 (ad=3.00 ap=1.68) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch  8: INHIB rho=0.813 (ad=3.00 ap=1.56) | FREE rho=0.924 (ad=3.00 ap=2.92)
+epoch  9: INHIB rho=0.821 (ad=3.00 ap=1.69) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 10: INHIB rho=0.814 (ad=3.00 ap=1.58) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 11: INHIB rho=0.814 (ad=3.00 ap=1.61) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch 12: INHIB rho=0.819 (ad=3.00 ap=1.66) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 13: INHIB rho=0.805 (ad=3.00 ap=1.50) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch 14: INHIB rho=0.816 (ad=3.00 ap=1.67) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 15: INHIB rho=0.828 (ad=3.00 ap=1.74) | FREE rho=0.924 (ad=3.00 ap=2.91)
+  -> measured 10.16 Hz, ratio=1.116, rho0=0.828, rho1=0.924
+
+--- point 4/9: gGABA_nS=14.000 ---
+epoch  1: INHIB rho=0.637 (ad=2.98 ap=1.37) | FREE rho=0.864 (ad=2.98 ap=2.91)
+epoch  2: INHIB rho=0.707 (ad=3.00 ap=1.39) | FREE rho=0.915 (ad=3.00 ap=2.90)
+epoch  3: INHIB rho=0.760 (ad=3.00 ap=1.53) | FREE rho=0.923 (ad=3.00 ap=2.90)
+epoch  4: INHIB rho=0.775 (ad=3.00 ap=1.47) | FREE rho=0.925 (ad=3.00 ap=2.93)
+epoch  5: INHIB rho=0.784 (ad=3.00 ap=1.48) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch  6: INHIB rho=0.788 (ad=3.00 ap=1.48) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch  7: INHIB rho=0.787 (ad=3.00 ap=1.46) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch  8: INHIB rho=0.789 (ad=3.00 ap=1.48) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch  9: INHIB rho=0.800 (ad=3.00 ap=1.57) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 10: INHIB rho=0.800 (ad=3.00 ap=1.53) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 11: INHIB rho=0.816 (ad=3.00 ap=1.68) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 12: INHIB rho=0.811 (ad=3.00 ap=1.57) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch 13: INHIB rho=0.795 (ad=3.00 ap=1.44) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch 14: INHIB rho=0.802 (ad=3.00 ap=1.57) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 15: INHIB rho=0.805 (ad=3.00 ap=1.57) | FREE rho=0.924 (ad=3.00 ap=2.91)
+  -> measured 10.16 Hz, ratio=1.148, rho0=0.805, rho1=0.924
+
+--- point 5/9: gGABA_nS=16.000 ---
+epoch  1: INHIB rho=0.612 (ad=2.97 ap=1.24) | FREE rho=0.863 (ad=2.97 ap=2.89)
+epoch  2: INHIB rho=0.665 (ad=3.00 ap=1.21) | FREE rho=0.915 (ad=3.00 ap=2.90)
+epoch  3: INHIB rho=0.724 (ad=3.00 ap=1.41) | FREE rho=0.923 (ad=3.00 ap=2.92)
+epoch  4: INHIB rho=0.768 (ad=3.00 ap=1.54) | FREE rho=0.926 (ad=3.00 ap=2.96)
+epoch  5: INHIB rho=0.764 (ad=3.00 ap=1.34) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch  6: INHIB rho=0.765 (ad=3.00 ap=1.37) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch  7: INHIB rho=0.773 (ad=3.00 ap=1.43) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch  8: INHIB rho=0.764 (ad=3.00 ap=1.33) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch  9: INHIB rho=0.768 (ad=3.00 ap=1.39) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 10: INHIB rho=0.765 (ad=3.00 ap=1.35) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 11: INHIB rho=0.765 (ad=3.00 ap=1.36) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch 12: INHIB rho=0.773 (ad=3.00 ap=1.43) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 13: INHIB rho=0.759 (ad=3.00 ap=1.29) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch 14: INHIB rho=0.766 (ad=3.00 ap=1.40) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 15: INHIB rho=0.779 (ad=3.00 ap=1.48) | FREE rho=0.924 (ad=3.00 ap=2.92)
+  -> measured 10.16 Hz, ratio=1.186, rho0=0.779, rho1=0.924
+
+--- point 6/9: gGABA_nS=18.000 ---
+epoch  1: INHIB rho=0.593 (ad=2.98 ap=1.15) | FREE rho=0.864 (ad=2.98 ap=2.91)
+epoch  2: INHIB rho=0.639 (ad=3.00 ap=1.13) | FREE rho=0.915 (ad=3.00 ap=2.90)
+epoch  3: INHIB rho=0.692 (ad=3.00 ap=1.29) | FREE rho=0.923 (ad=3.00 ap=2.90)
+epoch  4: INHIB rho=0.712 (ad=3.00 ap=1.24) | FREE rho=0.925 (ad=3.00 ap=2.93)
+epoch  5: INHIB rho=0.722 (ad=3.00 ap=1.24) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch  6: INHIB rho=0.733 (ad=3.00 ap=1.28) | FREE rho=0.923 (ad=3.00 ap=2.89)
+epoch  7: INHIB rho=0.727 (ad=3.00 ap=1.19) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch  8: INHIB rho=0.729 (ad=3.00 ap=1.24) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch  9: INHIB rho=0.737 (ad=3.00 ap=1.29) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 10: INHIB rho=0.742 (ad=3.00 ap=1.29) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 11: INHIB rho=0.760 (ad=3.00 ap=1.41) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 12: INHIB rho=0.763 (ad=3.00 ap=1.37) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch 13: INHIB rho=0.748 (ad=3.00 ap=1.24) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch 14: INHIB rho=0.749 (ad=3.00 ap=1.30) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 15: INHIB rho=0.753 (ad=3.00 ap=1.33) | FREE rho=0.924 (ad=3.00 ap=2.92)
+  -> measured 10.16 Hz, ratio=1.227, rho0=0.753, rho1=0.924
+
+--- point 7/9: gGABA_nS=20.000 ---
+epoch  1: INHIB rho=0.578 (ad=2.96 ap=1.07) | FREE rho=0.863 (ad=2.97 ap=2.89)
+epoch  2: INHIB rho=0.603 (ad=3.00 ap=0.97) | FREE rho=0.915 (ad=3.00 ap=2.90)
+epoch  3: INHIB rho=0.648 (ad=3.00 ap=1.14) | FREE rho=0.923 (ad=3.00 ap=2.92)
+epoch  4: INHIB rho=0.702 (ad=3.00 ap=1.33) | FREE rho=0.926 (ad=3.00 ap=2.96)
+epoch  5: INHIB rho=0.701 (ad=3.00 ap=1.13) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch  6: INHIB rho=0.700 (ad=2.99 ap=1.13) | FREE rho=0.923 (ad=3.00 ap=2.89)
+epoch  7: INHIB rho=0.708 (ad=3.00 ap=1.18) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch  8: INHIB rho=0.706 (ad=3.00 ap=1.14) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch  9: INHIB rho=0.709 (ad=3.00 ap=1.17) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 10: INHIB rho=0.705 (ad=3.00 ap=1.13) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 11: INHIB rho=0.702 (ad=3.00 ap=1.13) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch 12: INHIB rho=0.710 (ad=3.00 ap=1.19) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 13: INHIB rho=0.700 (ad=3.00 ap=1.09) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch 14: INHIB rho=0.706 (ad=3.00 ap=1.17) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 15: INHIB rho=0.719 (ad=3.00 ap=1.24) | FREE rho=0.925 (ad=3.00 ap=2.92)
+  -> measured 10.16 Hz, ratio=1.286, rho0=0.719, rho1=0.925
+
+--- point 8/9: gGABA_nS=22.000 ---
+epoch  1: INHIB rho=0.557 (ad=2.98 ap=0.97) | FREE rho=0.864 (ad=2.98 ap=2.91)
+epoch  2: INHIB rho=0.580 (ad=3.00 ap=0.91) | FREE rho=0.915 (ad=3.00 ap=2.91)
+epoch  3: INHIB rho=0.621 (ad=3.00 ap=1.06) | FREE rho=0.923 (ad=3.00 ap=2.90)
+epoch  4: INHIB rho=0.643 (ad=3.00 ap=1.05) | FREE rho=0.925 (ad=3.00 ap=2.93)
+epoch  5: INHIB rho=0.652 (ad=3.00 ap=1.03) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch  6: INHIB rho=0.659 (ad=2.99 ap=1.04) | FREE rho=0.923 (ad=3.00 ap=2.89)
+epoch  7: INHIB rho=0.651 (ad=3.00 ap=0.96) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch  8: INHIB rho=0.652 (ad=3.00 ap=1.00) | FREE rho=0.925 (ad=3.00 ap=2.93)
+epoch  9: INHIB rho=0.659 (ad=3.00 ap=1.04) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 10: INHIB rho=0.667 (ad=3.00 ap=1.07) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 11: INHIB rho=0.690 (ad=3.00 ap=1.18) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 12: INHIB rho=0.697 (ad=3.00 ap=1.15) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch 13: INHIB rho=0.684 (ad=3.00 ap=1.03) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch 14: INHIB rho=0.686 (ad=3.00 ap=1.09) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 15: INHIB rho=0.687 (ad=3.00 ap=1.10) | FREE rho=0.925 (ad=3.00 ap=2.92)
+  -> measured 10.16 Hz, ratio=1.346, rho0=0.687, rho1=0.925
+
+--- point 9/9: gGABA_nS=24.000 ---
+epoch  1: INHIB rho=0.545 (ad=2.96 ap=0.90) | FREE rho=0.863 (ad=2.97 ap=2.89)
+epoch  2: INHIB rho=0.548 (ad=3.00 ap=0.77) | FREE rho=0.915 (ad=3.00 ap=2.90)
+epoch  3: INHIB rho=0.571 (ad=3.00 ap=0.90) | FREE rho=0.923 (ad=3.00 ap=2.92)
+epoch  4: INHIB rho=0.622 (ad=3.00 ap=1.10) | FREE rho=0.926 (ad=3.00 ap=2.96)
+epoch  5: INHIB rho=0.622 (ad=3.00 ap=0.92) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch  6: INHIB rho=0.620 (ad=2.99 ap=0.91) | FREE rho=0.923 (ad=3.00 ap=2.89)
+epoch  7: INHIB rho=0.625 (ad=3.00 ap=0.95) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch  8: INHIB rho=0.629 (ad=3.00 ap=0.95) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch  9: INHIB rho=0.630 (ad=3.00 ap=0.95) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 10: INHIB rho=0.626 (ad=3.00 ap=0.92) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 11: INHIB rho=0.623 (ad=3.00 ap=0.91) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch 12: INHIB rho=0.630 (ad=3.00 ap=0.97) | FREE rho=0.924 (ad=3.00 ap=2.92)
+epoch 13: INHIB rho=0.618 (ad=2.99 ap=0.86) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch 14: INHIB rho=0.625 (ad=3.00 ap=0.96) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 15: INHIB rho=0.638 (ad=3.00 ap=1.01) | FREE rho=0.925 (ad=3.00 ap=2.92)
+  -> measured 10.16 Hz, ratio=1.450, rho0=0.638, rho1=0.925
+Wrote D:\minsu\Thalamocortical_Gating_Project\figures\gbar_I_sweep.png
+
+=== Sweep 2 complete ===
+  gGABA=  4.0 nS  ratio=1.020  [fail]
+  gGABA=  6.0 nS  ratio=1.038  [fail]
+  gGABA=  8.0 nS  ratio=1.059  [fail]
+  gGABA= 10.0 nS  ratio=1.110  [fail]
+  gGABA= 12.0 nS  ratio=1.116  [fail]
+  gGABA= 14.0 nS  ratio=1.148  [fail]
+  gGABA= 16.0 nS  ratio=1.186  [fail]
+  gGABA= 18.0 nS  ratio=1.227  [fail]
+  gGABA= 20.0 nS  ratio=1.286  [fail]
+  gGABA= 22.0 nS  ratio=1.346  [fail]
+  gGABA= 24.0 nS  ratio=1.450  [fail]

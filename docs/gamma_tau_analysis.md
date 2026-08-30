@@ -3,6 +3,10 @@
 **Status: open. Result is a partial confirmation, not a clean pass or fail. Do not
 proceed to Step 2 (permanent equation fix + recalibration) until this is resolved.**
 
+**Update:** The continuous ODE timescale question (§1) is superseded by the switch to
+Yang's analytical epoch-based update (§2b), which does not depend on simulation
+duration for convergence.
+
 ## 1. The math
 
 Graupner & Brunel (2012), the calcium-based synaptic plasticity model this project's
