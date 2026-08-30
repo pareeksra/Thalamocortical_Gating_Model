@@ -86,6 +86,13 @@ plasticity_params = {
     # Calibrated (Phase 1) so a disinhibited/plateau branch integrates c > theta_p (LTP)
     # while a shunted branch stays c < theta_d, at Yang's ~80 Hz operating rate.
     'kappa_Ca_NMDA': 0.26 / pA,
+    # Phase 2: stochastic vesicle release on the plastic pathway. Each presynaptic
+    # spike's NMDA contribution (x_nmda += 1) is scaled by a quantal factor drawn as
+    # clip(1 + vesicle_cv*randn(), 0, 2), i.e. a coefficient of variation of vesicle_cv
+    # around a mean of 1. Default 0.0 reproduces the deterministic x_nmda += 1 exactly
+    # (bit-identical to the validated Phase-1/Phase-0 results); Phase 2 scripts opt in
+    # by overriding this to ~0.30.
+    'vesicle_cv': 0.0,
 }
 
 # ============================================================
@@ -143,10 +150,32 @@ som_params = {
     'vRest_som': -70.0 * mV,
     'vThres_som': -50.0 * mV,
     'vReset_som': -55.0 * mV,
+    'vE_som': 0.0 * mV,
     'vI_som': -70.0 * mV,
     'refrac_som': 2.0 * ms,
+    'tauAMPA_som': 2.0 * ms,
     'tauGABA_som_cell': 20.0 * ms,
     'gGABA_som': 3.0 * nS,    # VIP→SOM synapse weight
+    # Divergence fix (2026-08-27): SOM's bias current, calibrated to Yang et al.'s
+    # reported ~10 Hz baseline rather than the ~36-40 Hz this model previously ran at
+    # (22-25 pA). SOM's f-I curve is a near-step, same mechanism as PV's documented
+    # below: C_som=20 pF, gL_som=1 nS -> tau_m=20 ms, vThres-vReset=5 mV, rheobase
+    # exactly 20.0 pA. Empirically swept in 0.01 pA steps: 20.04 pA gives 10.00 Hz
+    # (matches the analytic LIF ISI formula tau_m*ln[(I/gL-15mV)/(I/gL-20mV)] to within
+    # rounding). This is only 0.04 pA above rheobase -- as fragile to perturbation as
+    # PV's tonic-current problem below -- so Phase 2's SOM background noise channel
+    # (rate_bg_som/weight_bg_som) will move this baseline more easily than the old
+    # 22-25 pA operating point did.
+    'iBaseline_som': 20.04 * pA,
+    # Phase 2: background Poisson conductance (same mechanism as rate_bg_pv /
+    # weight_bg_pv below). SOM's only excitatory drive is a constant bias current
+    # (iBaseline_som), which produces a near-perfectly regular spike train -- no
+    # cell driven solely by a constant suprathreshold current has meaningful
+    # trial-to-trial ISI variability. Default 0 Hz / 0 nS leaves eqs_som's new
+    # gTotAMPA term permanently at 0, so existing results are unaffected unless a
+    # Phase 2 script wires this background in and sets it nonzero.
+    'rate_bg_som': 0.0 * Hz,
+    'weight_bg_som': 0.0 * nS,
 }
 
 vip_params = {
@@ -160,6 +189,11 @@ vip_params = {
     'refrac_vip': 2.0 * ms,
     'tauAMPA_vip': 2.0 * ms,
     'gAMPA_vip': 0.5 * nS,    # MD→VIP synapse weight
+    # Phase 2: background Poisson conductance onto VIP (same AMPA channel as the MD
+    # drive; no equation change needed). Default 0 Hz / 0 nS: unless a Phase 2 script
+    # wires this in, VIP's dynamics are exactly as validated.
+    'rate_bg_vip': 0.0 * Hz,
+    'weight_bg_vip': 0.0 * nS,
 }
 
 md_params = {
@@ -173,4 +207,11 @@ md_params = {
     'p_vip2som_spike': 0.6,    # VIP→SOM connection probability
     'p_som2dend_spike': 0.5,   # SOM→Dendrite connection probability
     'p_pv2soma': 0.6,          # PV→Pyramidal soma connection probability
+    # Divergence fix (2026-08-27): Yang et al. wire SOM->PV at P=0.8. gGABA_pv
+    # (pv_params, above) was already labelled "SOM->PV synapse weight" and eqs_pv
+    # already has the gTotGABA channel documented as "GABA from SOM" -- but no
+    # connection probability was declared and no Synapses object was ever built, so
+    # the pathway was silently absent from every network (model/full_circuit.py,
+    # experiments/validate_vs_papers.py). Added here now that it is being wired in.
+    'p_som2pv': 0.8,           # SOM→PV connection probability (Yang et al. 2016)
 }

@@ -170,40 +170,38 @@ dx_nmda/dt = -x_nmda/tauNMDARise : 1 (clock-driven)
 ds_nmda/dt = -s_nmda/tauNMDADecay + alphaNMDA*x_nmda*(1 - s_nmda) : 1 (clock-driven)
 iTotNMDA{nmda_slot}_post = -gNMDA*s_nmda*(V_post - vE_pyr)*mg_gate : amp (summed)
 
-# Bistable weight dynamic components
-# In Brian 2, we can represent heaviside step functions using inequality booleans (e.g., int(c > theta_p))
-# AlphaP and AlphaD in the original loop represented time spent above threshold.
-# Here we represent them as continuous rates.
-#
-# NOTE (unresolved, flagged by the provenance review): these terms carry 1/second where
-# canonical Graupner-Brunel divides the whole right-hand side by tau, which makes them
-# tau/(1 s) = 346x stronger than the double-well term while the noise term sits at
-# canonical amplitude. Left exactly as found -- correcting it is a calibration decision,
-# not part of connecting the calcium pathway.
+# --- Bistable weight state rho -----------------------------------------------
+# rho is now a PARAMETER, set analytically at each epoch boundary by
+# src/v2/plasticity.py:yang_synapse_update() (Yang 2016 Eqs. 32-35), NOT integrated
+# continuously here. During an epoch rho is held fixed, so w (and the AMPA efficacy
+# it scales) is fixed while calcium accumulates; the epoch runner then reads the
+# calcium trace, computes alpha_d/alpha_p, and writes the new rho back in. The
+# ind_p/ind_d threshold indicators are retained for reference/monitoring of when
+# the calcium crosses the plasticity thresholds.
 ind_p = int(c_total > theta_p) : 1
 ind_d = int(c_total > theta_d) : 1
-rate_p = ind_p * 1/second : Hz
-rate_d = ind_d * 1/second : Hz
+rho : 1                       # set per epoch via yang_synapse_update (see src/v2/plasticity.py)
 
-# The bistable double-well potential
-# NOTE ON THE INTEGRATOR: gating the noise makes it state-dependent, i.e. multiplicative,
-# which Brian 2's `euler` state updater refuses. The plastic Synapses objects therefore
-# use method='heun' (stochastic Heun, which supports multiplicative noise). This is a
-# strictly better integrator for this equation, not a workaround.
+# ---------------------------------------------------------------------------
+# Legacy continuous ODE -- superseded by analytical epoch update per Yang 2016
+# Eqs. 32-35. Preserved (commented out, not deleted) for provenance. It carried a
+# documented units problem: the gamma terms used a bare 1/second where canonical
+# Graupner-Brunel divides the whole RHS by tau, making them tau/(1 s) = 346x
+# stronger than the double-well term (see docs/gamma_tau_analysis.md). The
+# analytical formula removes this ambiguity by integrating the epoch in closed form.
 #
-# Noise is GATED on calcium activity via sqrt(ind_p + ind_d). Canonical
-# Graupner-Brunel does this; the previous unconditional sigma*sqrt(1/tau)*xi meant a
-# completely silent synapse random-walked away from its initial value -- measured
-# drifting 0.500 -> 0.784, i.e. potentiation out of no input at all. With the gate a
-# silent synapse holds still, so the inhibited branch is a real control condition.
-drho/dt = -rho*(1-rho)*(0.5-rho)/tau + gamma_p*(1-rho)*rate_p - gamma_d*rho*rate_d + sigma*sqrt(1.0*(ind_p + ind_d))*sqrt(1/tau)*xi : 1 (clock-driven)
+#   rate_p = ind_p * 1/second : Hz
+#   rate_d = ind_d * 1/second : Hz
+#   # Noise was GATED on calcium activity via sqrt(ind_p + ind_d); a silent synapse
+#   # therefore held still instead of random-walking. method='heun' was required for
+#   # the multiplicative (state-dependent) noise term.
+#   drho/dt = -rho*(1-rho)*(0.5-rho)/tau + gamma_p*(1-rho)*rate_p - gamma_d*rho*rate_d + sigma*sqrt(1.0*(ind_p + ind_d))*sqrt(1/tau)*xi : 1 (clock-driven)
+# ---------------------------------------------------------------------------
 
-# Clipping w alone is not enough: it hides excursions of the STATE variable rho, which
-# is what actually integrates. rho was observed at -0.011 and later at +1.562 while w
-# stayed dutifully inside [0, 3]. The double-well term would restore rho on its own, but
-# it is divided by tau = 346 s while the calcium terms are not (see the units note
-# above), so its restoring force is ~5 orders of magnitude too weak to confine rho.
-# `attach_rho_clipper` below clamps rho itself each timestep.
+# w is the AMPA efficacy derived from the bistable state: w0=0 (DOWN) .. w1=3 (UP),
+# Yang's dimensionless multiplier. clip() keeps w well-defined even if rho is set
+# fractionally out of [0,1] by rounding; the analytical update already returns
+# rho in [0,1]. `attach_rho_clipper` remains available as a defensive clamp.
 w = w0 + (w1-w0)*clip(rho, 0.0, 1.0) : 1
 '''
 
@@ -216,6 +214,23 @@ x_nmda += 1
 # (see eqs_synapse_plasticity_template) calcium is the leaky integral of the NMDA
 # current, driven by s_nmda (which x_nmda advances). C_pre is retained in parameters.py
 # only for backward reference; it no longer scales the calcium.
+
+# Phase 2: stochastic vesicle release. Kept as a SEPARATE on_pre string (rather than
+# gating the noise term to 0 inside on_pre_plasticity above) because Brian 2's `randn()`
+# draws from a shared RNG stream: even a call whose result is multiplied by 0 still
+# advances that stream, which silently shifted the Heun noise term in drho/dt and
+# changed already-reported, already-validated gating ratios (measured: Phase-1's
+# free/inhibited ratio moved from 42.76 to 53.57 under seed 42 with no other change).
+# on_pre_plasticity above is therefore untouched -- every script that imports it
+# (phase1_single_neuron_gating.py, validate_vs_papers.py, validate_model.py,
+# demo_v2_zhang2025.py, sweep_phase_diagram.py) reproduces its reported numbers exactly.
+# Only model/full_circuit.py (Phase 2) uses this noisy variant, and Phase 2's circuit is
+# structurally different from all of the above anyway (extra PV/SOM/VIP/MD populations
+# with their own RNG draws), so it was never bit-comparable to begin with.
+on_pre_plasticity_noisy = '''
+gTotAMPA_post += w * gAMPA
+x_nmda += clip(1 + vesicle_cv*randn(), 0, 2)
+'''
 
 # UNUSABLE as an on_post rule -- kept only for reference.
 #
@@ -248,13 +263,16 @@ dgTotGABA/dt = -gTotGABA / tauGABA_pv : siemens
 '''
 
 # SOM Interneuron — Regular-spiking LIF
-# Receives: baseline excitation, GABA from VIP (inhibitory)
+# Receives: baseline excitation, GABA from VIP (inhibitory), optional background
+# AMPA (Phase 2: rate_bg_som/weight_bg_som -- 0 by default, see parameters.py)
 # Projects: GABA onto Pyramidal dendrites
 eqs_som = '''
-dV/dt = (iL + iExc + iGABA) / C_som : volt (unless refractory)
+dV/dt = (iL + iExc + iAMPA + iGABA) / C_som : volt (unless refractory)
 iL = -gL_som * (V - vRest_som) : amp
 iExc = iBaseline_som : amp
+iAMPA = -gTotAMPA * (V - vE_som) : amp
 iGABA = -gTotGABA * (V - vI_som) : amp
+dgTotAMPA/dt = -gTotAMPA / tauAMPA_som : siemens
 dgTotGABA/dt = -gTotGABA / tauGABA_som_cell : siemens
 iBaseline_som : amp
 '''

@@ -1,0 +1,40 @@
+{
+  "protocol": {
+    "T": 3.0,
+    "exc_rate": 80.0,
+    "post_rate": 10.0,
+    "gcouple_nS": 0.8,
+    "som_bias_pA": 25.0,
+    "seed": 42
+  },
+  "theta_d": 1.0,
+  "theta_p": 2.78,
+  "inhibited_branch0": {
+    "branch": "inhibited (branch 0)",
+    "n_syn": 20,
+    "alpha_p_mean": 0.0,
+    "alpha_p_std": 0.0,
+    "alpha_p_min": 0.0,
+    "alpha_p_max": 0.0,
+    "alpha_d_mean": 0.975075,
+    "alpha_d_std": 0.03940598780642354,
+    "alpha_d_min": 0.891,
+    "alpha_d_max": 1.0415,
+    "c_total_mean": 0.9976327766694151,
+    "c_total_max": 2.7751364072371763
+  },
+  "free_branch1": {
+    "branch": "free (branch 1)",
+    "n_syn": 20,
+    "alpha_p_mean": 2.8636749999999997,
+    "alpha_p_std": 0.07138894784908936,
+    "alpha_p_min": 2.6765,
+    "alpha_p_max": 2.952,
+    "alpha_d_mean": 2.96935,
+    "alpha_d_std": 0.011325965742487513,
+    "alpha_d_min": 2.9415,
+    "alpha_d_max": 2.98,
+    "c_total_mean": 3.5401671507027093,
+    "c_total_max": 5.569857949387426
+  }
+}

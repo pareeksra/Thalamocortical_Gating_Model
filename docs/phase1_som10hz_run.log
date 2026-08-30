@@ -1,0 +1,30 @@
+=== Phase 1 ANALYTICAL (Yang 2016 Eqs. 32-35): 15 epochs x 3 s (exc=80 Hz, post=10 Hz, g_c=0.8 nS, SOM_bias=20.04 pA, gGABA=default 4.0 nS, seed 42) ===
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_2', but also exists in the group-specific namespace with the value 20.04 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+epoch  1: INHIB rho=0.794 (ad=2.97 ap=2.27) | FREE rho=0.863 (ad=2.97 ap=2.89)
+epoch  2: INHIB rho=0.877 (ad=3.00 ap=2.43) | FREE rho=0.914 (ad=3.00 ap=2.89)
+epoch  3: INHIB rho=0.903 (ad=3.00 ap=2.57) | FREE rho=0.923 (ad=3.00 ap=2.91)
+epoch  4: INHIB rho=0.914 (ad=3.00 ap=2.72) | FREE rho=0.925 (ad=3.00 ap=2.95)
+epoch  5: INHIB rho=0.907 (ad=3.00 ap=2.52) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch  6: INHIB rho=0.908 (ad=3.00 ap=2.57) | FREE rho=0.923 (ad=3.00 ap=2.87)
+epoch  7: INHIB rho=0.910 (ad=3.00 ap=2.59) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch  8: INHIB rho=0.908 (ad=3.00 ap=2.56) | FREE rho=0.924 (ad=3.00 ap=2.91)
+=== Phase 1 ANALYTICAL (Yang 2016 Eqs. 32-35): 15 epochs x 3 s (exc=80 Hz, post=10 Hz, g_c=0.8 nS, SOM_bias=20.04 pA, gGABA=default 4.0 nS, seed 42) ===
+[resume] 8/15 epochs done; free rho=0.924 inhib rho=0.908
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_2', but also exists in the group-specific namespace with the value 20.04 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+epoch  9: INHIB rho=0.909 (ad=2.97 ap=2.56) | FREE rho=0.923 (ad=2.97 ap=2.85)
+epoch 10: INHIB rho=0.906 (ad=3.00 ap=2.51) | FREE rho=0.923 (ad=3.00 ap=2.88)
+epoch 11: INHIB rho=0.909 (ad=3.00 ap=2.59) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 12: INHIB rho=0.915 (ad=3.00 ap=2.72) | FREE rho=0.926 (ad=3.00 ap=2.95)
+epoch 13: INHIB rho=0.908 (ad=3.00 ap=2.52) | FREE rho=0.924 (ad=3.00 ap=2.88)
+epoch 14: INHIB rho=0.908 (ad=3.00 ap=2.57) | FREE rho=0.923 (ad=3.00 ap=2.87)
+epoch 15: INHIB rho=0.910 (ad=3.00 ap=2.59) | FREE rho=0.924 (ad=3.00 ap=2.90)
+
+--- Final ---
+  SOM firing rate:      10.14 Hz  (bias 20.04 pA, gGABA 4.0 nS)
+  Free branch (1):      rho=0.924  w=2.771  (final alpha_p=2.90 alpha_d=3.00)
+  Inhibited branch (0): rho=0.910  w=2.729  (final alpha_p=2.59 alpha_d=3.00)
+  Ratio (free/inhib):   1.02
+  PASS criteria: free rho>0.7 -> True ; inhibited rho<=0.5 -> False
+  STEP 2d: FAIL
+  Wrote D:\minsu\Thalamocortical_Gating_Project\figures\analytical_plasticity_trajectory_som10hz.png
+  Wrote D:\minsu\Thalamocortical_Gating_Project\figures\analytical_plasticity_trajectory_som10hz.png
