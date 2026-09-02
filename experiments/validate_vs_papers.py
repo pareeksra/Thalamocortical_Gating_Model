@@ -162,7 +162,7 @@ def build_network(p):
     # 2026-08-30: updated to the SOM-rate sweep's calibrated default (see
     # model/parameters.py's iBaseline_som comment); V4 doesn't read rho so this only
     # affects the reported SOM/downstream rates, not any plasticity result.
-    SOM.V = p['vRest_som']; SOM.iBaseline_som = 20.9*pA
+    SOM.V = p['vRest_som']; SOM.iBaseline_som = 21.32*pA
     VIP = NeuronGroup(p['n_vip_spike'], eqs_vip, threshold='V>vThres_vip', reset='V=vReset_vip',
                       refractory=p['refrac_vip'], method='euler', namespace=p); VIP.V = p['vRest_vip']
     MD = PoissonGroup(p['n_md'], rates=5*Hz)

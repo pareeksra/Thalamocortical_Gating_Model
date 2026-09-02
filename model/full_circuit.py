@@ -69,7 +69,7 @@ MAX_VESICLE_CV = 0.30                  # vesicle_cv at noise_level = 1.0
 
 def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
                           md_signal_rate=25.0, noise_level=0.0,
-                          md2vip_scale=1.0, seed_val=42, n_epochs=15, som_bias_pA=20.9):
+                          md2vip_scale=1.0, seed_val=42, n_epochs=15, som_bias_pA=21.32):
     """Build the Phase-2 branch-gating circuit and run it for n_epochs analytical
     plasticity epochs (Yang 2016 Eqs. 32-35, src/v2/plasticity.py); return measured
     outcomes averaged/final over the run.
@@ -78,8 +78,11 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
     jointly scales MD noise rate, vesicle_cv, and SOM/VIP background conductance.
     md2vip_scale in [0, 1] independently scales the MD->VIP synaptic weight, for the
     NMDA-hypofunction / MD->VIP degradation protocol (Phase 2C); 1.0 = intact.
-    som_bias_pA defaults to the 2026-08-30 SOM-rate sweep's calibrated value (20.9 pA,
-    measured 25.29 Hz in Phase-1's reduced circuit, docs/som_rate_sweep_table.csv). At
+    som_bias_pA defaults to the 2026-09-01 full-circuit reliability lock-in value
+    (21.32 pA, measured ~30.07 Hz in this circuit, 20/20 seeds passed at noise=0 --
+    docs/full_circuit_reliability_30hz_results.json). Supersedes the earlier 20.9 pA /
+    25 Hz pick (calibrated in Phase-1's reduced circuit), which failed reproducibly at
+    noise=0 on seed 44 (docs/diag_seed44_results.json, ratio ~1.015). At
     md_signal_rate=0 / noise_level=0 (Phase 2B's baseline condition) nothing else
     synaptically drives SOM, so this bias produces the same isolated-neuron rate here as
     in the reduced circuit; this is NOT assumed to hold once MD/VIP or noise actively

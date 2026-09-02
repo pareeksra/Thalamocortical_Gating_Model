@@ -187,7 +187,19 @@ som_params = {
     # (phase1_analytical.py, phase1_single_neuron_gating.py); model/full_circuit.py
     # measures its own SOM rate via SpikeMonitor and should be checked against the
     # same >=~20 Hz target rather than assumed to inherit this exact pA value.
-    'iBaseline_som': 20.9 * pA,
+    #
+    # UPDATE (2026-09-01): 20.9 pA / 25 Hz was picked from a single seed's sweep peak
+    # in the reduced Phase-1 circuit and did not hold up. A full-circuit, noise=0
+    # reproduction on seeds 42-46 (docs/diag_seed44_results.json) found seed 44 failed
+    # reproducibly (ratio ~1.015, confirmed twice) -- the inhibited branch's rate
+    # climbed to ~0.91, escaping SOM control entirely, rather than the ratio merely
+    # softening. A 20-seed full-circuit reliability sweep at noise=0 (seeds 40-59,
+    # docs/full_circuit_reliability_30hz_results.json) found 30 Hz gives 20/20 passes
+    # (ratio range 3.25-5.07, all > 2.0), a margin of ~9 Hz above the ~21 Hz duty-cycle
+    # cliff described above -- vs. 25 Hz's ~4 Hz margin, which seed 44 fell into.
+    # Baseline is now locked to 30 Hz (measured ~30.07 Hz in the full circuit), still
+    # defensible via the same duty-cycle argument (3x Yang's 10 Hz).
+    'iBaseline_som': 21.32 * pA,
     # Phase 2: background Poisson conductance (same mechanism as rate_bg_pv /
     # weight_bg_pv below). SOM's only excitatory drive is a constant bias current
     # (iBaseline_som), which produces a near-perfectly regular spike train -- no

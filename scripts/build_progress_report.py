@@ -1103,6 +1103,116 @@ p("The Section 7.3 decision is now committed in code (25 Hz SOM, with the caveat
   "Phase 2B, Test 5's seed-reproducibility failure (Section 7), and the un-started "
   "network-scale stage.")
 
+h1('9. 2026-09-02 update — SOM baseline relocked to 30 Hz via a full-circuit '
+   'reliability sweep')
+
+h2('9.1 The reduced-vs-full circuit mismatch, and a new evidence rule')
+
+p("Section 8's reliability claims — Test 5's seed-44 failure and the ~1.5% cross-code-path "
+  "stability figure — were both measured in the reduced Phase-1 circuit "
+  "(phase1_single_neuron_gating.py / phase1_reliability_sweep.py), not in "
+  "model/full_circuit.py, which is the circuit every Phase 2 result and every number in "
+  "this report actually comes from. Section 4.2 had already flagged that the same iBaseline_"
+  "som pA value produces a different SOM rate in the two circuits (25 pA measured 63.3 Hz "
+  "reduced vs. ~36-40 Hz full); the reliability story inherited the same disjunction without "
+  "it being named as a problem. Going forward, the rule is: any reliability or validation "
+  "number cited in this report or to the PI must come from the full circuit. The reduced "
+  "circuit remains useful for fast dev iteration but is retired as evidence (a note to that "
+  "effect is now in phase1_reliability_sweep.py's docstring); "
+  "experiments/full_circuit_reliability_sweep.py is the new script for anything citable.")
+
+h2('9.2 Reproducing the seed-44 failure in the full circuit')
+
+p("Before trusting any new full-circuit sweep, the specific failure that started this — "
+  "Test 5's seed 44 collapsing to ratio ~1.015 — needed to reproduce in the circuit that "
+  "matters. diag_seed44.py reran seeds 42-46 in model/full_circuit.py at noise_level=0, 10 "
+  "analytical-plasticity epochs each, same protocol as the sweeps below.")
+
+table(
+    ['seed', '42', '43', '44', '45', '46'],
+    [['gating ratio', '4.068', '4.808', '1.015', '4.816', '4.381'],
+     ['result', 'PASS', 'PASS', 'FAIL', 'PASS', 'PASS']],
+)
+
+p("Seed 44 failed again, at 1.0153 — essentially identical to the original 1.015 — "
+  "confirming this is a real, reproducible failure rather than a one-off fluke or a Test-5 "
+  "harness artifact. The failure signature is informative: the inhibited branch's rate "
+  "(r0) climbed to 0.9105, matching the free branch (r1=0.9245) almost exactly — SOM lost "
+  "control of the inhibited branch entirely rather than the ratio merely softening. This is "
+  "the same qualitative picture as the noise-driven and MD->VIP-driven collapses in Section "
+  "8.3: once SOM's effective rate falls through the duty-cycle threshold, the branch it was "
+  "gating escapes rather than partially leaking.")
+
+h2('9.3 A 20-seed full-circuit reliability sweep, and the rate decision')
+
+p("With the failure confirmed in the right circuit, the actual reliability question — does "
+  "25 Hz hold up broadly, and if not what does — was answered with a 20-seed sweep (seeds "
+  "40-59, noise_level=0, full circuit) at each candidate rate, parallelized across 8 worker "
+  "processes (experiments/full_circuit_reliability_sweep.py; Brian2's numpy codegen target "
+  "has no shared compile cache, so this parallelizes safely). 30 Hz (21.32 pA) passed cleanly:")
+
+table(
+    ['rate', 'seeds tested', 'passed (ratio>2.0)', 'ratio range'],
+    [['25 Hz (20.90 pA)', '1 (seed 44, historical)', '0/1 — reproduced above', '1.015'],
+     ['30 Hz (21.32 pA)', '40-59 (20 seeds)', '20/20', '3.25 - 5.07']],
+)
+
+p("All 20 seeds passed at 30 Hz, so the 33 Hz fallback was never needed. The margin above "
+  "the ~21 Hz duty-cycle cliff identified in Section 7.3/8.1 is now ~9 Hz, versus the ~4 Hz "
+  "margin 25 Hz carried — seed 44's failure is exactly the kind of near-cliff outlier a 4 Hz "
+  "margin should be expected to produce occasionally. iBaseline_som is now 21.32 pA in "
+  "model/parameters.py (with the reasoning above appended as a comment), synchronized across "
+  "the three other hardcoded defaults (model/full_circuit.py, experiments/"
+  "phase1_analytical.py, experiments/validate_vs_papers.py) that don't read parameters.py.")
+
+flag("This changes the calibration but not the underlying mechanism: 30 Hz is still "
+     "motivated by the same duty-cycle argument as 25 Hz (tau_GABA,dend=20 ms coverage of "
+     "the inter-spike interval), just with a wider safety margin — 3x Yang's 10 Hz baseline "
+     "rather than 2.5x, defensible on the same biophysical grounds.")
+
+h2('9.4 Phase 2 re-validated at the new baseline — breaking points held, baseline got tighter')
+
+p("Both Phase 2 sweeps were rerun in full at 30 Hz. The 25 Hz-era results were archived "
+  "(docs/*_at25hz.json, figures/*_at25hz.png) before rerunning so the comparison below is "
+  "against the actual prior numbers, not a description of them.")
+
+table(
+    ['noise level', '0.0', '0.25', '0.30', '0.35', '0.40', '0.45', '>=0.50'],
+    [['ratio @ 25 Hz (archived)', '3.30', '2.77', '2.30', '1.73', '1.10', '1.02', '~1.00'],
+     ['ratio @ 30 Hz (new)', '4.18', '2.76', '2.31', '1.82', '1.12', '1.02', '~1.00']],
+)
+
+p("The Phase 2B collapse point is unchanged: ratio holds above 2 through noise 0.30, is "
+  "marginal at 0.35, and has collapsed by 0.40 in both datasets. The one real difference is "
+  "the noise=0 baseline itself, which is both higher and far tighter across seeds "
+  "(3.30 +/- 1.16 -> 4.18 +/- 0.52 SEM) — a direct, welcome side effect of moving away from "
+  "25 Hz's thin margin. That zero-noise variance was flagged as undiagnosed in Section 8.3a; "
+  "it has not been root-caused, but it has shrunk substantially now that the baseline sits "
+  "further from the cliff.")
+
+p("Phase 2C (the MD->VIP / schizophrenia-analogue sweep) shows the same pattern: intact "
+  "MD->VIP drive (scale 1.0) and scale 0.66 are both fully collapsed (ratio ~1.00, SOM "
+  "silenced) at either baseline — the transition still sits between scale 0.66 and 0.33. "
+  "The healthy end is again higher at 30 Hz (scale 0.33: 3.29 -> 4.18; full block: 3.42 -> "
+  "4.16), consistent with the same baseline shift seen in Phase 2B.")
+
+flag("Both breaking points held their qualitative shape and approximate location — this was "
+     "a recalibration of the SOM baseline's safety margin, not a change to the gating "
+     "mechanism or its failure modes. The regenerated figures (figures/phase2_snr_curve.png, "
+     "figures/phase2_ketamine_failure.png) now show the 30 Hz data; the 25 Hz-era versions "
+     "are preserved as figures/phase2_snr_curve_at25hz.png and "
+     "figures/phase2_ketamine_failure_at25hz.png for reference.")
+
+h2('9.5 Where this leaves things')
+
+p("30 Hz / 21.32 pA is locked as the SOM baseline, backed by a 20/20 full-circuit reliability "
+  "sweep rather than a single seed's sweep peak. The open items carried forward are largely "
+  "unchanged from Section 8.5: the network-scale stage is still un-started, and the Phase 2B "
+  "zero-noise variance — while smaller now — is still not root-caused. One item from Section "
+  "8.5 is effectively closed: Test 5's seed-reproducibility failure (Section 7) is the same "
+  "phenomenon as seed 44 here, and is now understood (near-cliff SOM margin) and resolved "
+  "(wider margin at 30 Hz) rather than an open question.")
+
 # ===========================================================================
 # SAVE
 # ===========================================================================

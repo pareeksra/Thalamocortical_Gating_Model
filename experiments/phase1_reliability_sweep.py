@@ -1,6 +1,14 @@
 """
 phase1_reliability_sweep.py -- multi-seed reliability test (2026-08-31)
 ========================================================================
+RETIRED AS EVIDENCE (2026-09-01, Raghav's decision): this sweep tests the REDUCED
+Phase-1 circuit (seeds 0-9), which is disjoint in both seed range AND circuit from
+where seed 44 actually collapsed (the FULL circuit, model/full_circuit.py). Its 10/10
+pass results therefore never validated the failure mode it was built to check. Kept
+for fast dev iteration only -- do NOT cite its results as reliability evidence in the
+Progress Report or to Raghav's PI. See experiments/full_circuit_reliability_sweep.py
+for the full-circuit replacement (seeds 40-59, matches the Phase-2B harness exactly).
+
 The 2026-08-30 SOM-rate sweep (docs/som_rate_sweep_table.csv) picked 25.29 Hz as the
 "best" SOM baseline from a SINGLE seed (42) per rate. Phase 2's rerun then showed that
 choice fails at zero added noise in 1/3 seeds (docs/phase2_snr_sweep_results.json,
