@@ -1,0 +1,106 @@
+{
+  "25hz_seed42": {
+    "rate": 25,
+    "seed": 42,
+    "ap0_acc": null,
+    "ap0_from_trace": 0.06875,
+    "ad0_from_trace": 2.705425,
+    "c0_max": 4.245046024174604,
+    "c0_mean": 1.4391079037149384,
+    "theta_p": 2.78,
+    "theta_d": 1.0,
+    "n_som": 1500,
+    "n_exc0": 4846,
+    "som_isi": {
+      "n": 1500,
+      "isi_mean": 0.0019499666444296197,
+      "isi_max": 0.03950000000000031,
+      "isi_max_at": 2.0772
+    },
+    "overlap": {
+      "ltp_in_biggest_gap_frac": 0.0,
+      "biggest_gap": [
+        2.0772,
+        2.1167000000000002
+      ]
+    }
+  },
+  "25hz_seed44": {
+    "rate": 25,
+    "seed": 44,
+    "ap0_acc": null,
+    "ap0_from_trace": 1.2234500000000001,
+    "ad0_from_trace": 2.96925,
+    "c0_max": 5.666170476340321,
+    "c0_mean": 2.7266588582332023,
+    "theta_p": 2.78,
+    "theta_d": 1.0,
+    "n_som": 1500,
+    "n_exc0": 4858,
+    "som_isi": {
+      "n": 1500,
+      "isi_mean": 0.0019499666444296197,
+      "isi_max": 0.03950000000000031,
+      "isi_max_at": 2.0772
+    },
+    "overlap": {
+      "ltp_in_biggest_gap_frac": 0.013451029844472467,
+      "biggest_gap": [
+        2.0772,
+        2.1167000000000002
+      ]
+    }
+  },
+  "30hz_seed42": {
+    "rate": 30,
+    "seed": 42,
+    "ap0_acc": null,
+    "ap0_from_trace": 0.0461,
+    "ad0_from_trace": 2.1556749999999996,
+    "c0_max": 4.196384798996589,
+    "c0_mean": 1.3062693221907926,
+    "theta_p": 2.78,
+    "theta_d": 1.0,
+    "n_som": 1780,
+    "n_exc0": 4846,
+    "som_isi": {
+      "n": 1780,
+      "isi_mean": 0.0016422709387296233,
+      "isi_max": 0.03320000000000034,
+      "isi_max_at": 2.0143
+    },
+    "overlap": {
+      "ltp_in_biggest_gap_frac": 0.0,
+      "biggest_gap": [
+        2.0143,
+        2.0475000000000003
+      ]
+    }
+  },
+  "30hz_seed44": {
+    "rate": 30,
+    "seed": 44,
+    "ap0_acc": null,
+    "ap0_from_trace": 0.46637500000000004,
+    "ad0_from_trace": 2.968825,
+    "c0_max": 4.605792603829844,
+    "c0_mean": 2.1316195716051567,
+    "theta_p": 2.78,
+    "theta_d": 1.0,
+    "n_som": 1780,
+    "n_exc0": 4858,
+    "som_isi": {
+      "n": 1780,
+      "isi_mean": 0.0016422709387296233,
+      "isi_max": 0.03320000000000034,
+      "isi_max_at": 2.0143
+    },
+    "overlap": {
+      "ltp_in_biggest_gap_frac": 0.0,
+      "biggest_gap": [
+        2.0143,
+        2.0475000000000003
+      ]
+    }
+  }
+}
