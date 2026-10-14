@@ -36,11 +36,22 @@ from src.v2.plasticity import yang_synapse_update, alpha_above_threshold
 
 def run_gating_analytical(n_epochs=20, T=3.0, exc_rate=80.0, post_rate=10.0,
                           gcouple_nS=0.8, som_bias_pA=21.32, gGABA_nS=None, seed_val=42,
-                          verbose=True, resume=True, run_tag=''):
+                          verbose=True, resume=True, run_tag='', param_overrides=None):
     prefs.codegen.target = 'cython'   # cached compile; ~10x faster than numpy target here
     start_scope()
     seed(seed_val)
     p = dict(params); p.update(plasticity_params); p.update(som_params)
+    # param_overrides (2026-10-14): override any parameters.py value before derived
+    # quantities (norm factors) and the gGABA/gcouple assignments below, so overriding
+    # a raw constant (e.g. tauGABA for the duty-cycle divergence sweep) propagates
+    # everywhere it is used. Values must be plain Brian 2 quantities matching the
+    # original units. The explicit args below (gGABA_nS, gcouple_nS, som_bias_pA) still
+    # take precedence for the quantities they set, by design.
+    if param_overrides:
+        for k, v in param_overrides.items():
+            if k not in p:
+                raise KeyError(f"param_overrides key '{k}' is not a known model parameter")
+            p[k] = v
     ndend = 2
     p['num_Soma'] = 1; p['num_DendEach'] = ndend; p['num_Dend'] = ndend
     p['gEachCouple_pyr'] = gcouple_nS * nS

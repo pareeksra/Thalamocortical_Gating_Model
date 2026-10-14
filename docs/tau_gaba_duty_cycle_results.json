@@ -1,0 +1,78 @@
+{
+  "10.0": {
+    "tau_ms": 10.0,
+    "crossover_rate_hz": 35.36,
+    "rate_x_tau_Hz_ms": 353.6,
+    "points": [
+      {
+        "som_rate_hz": 25.29,
+        "ratio": 1.005,
+        "bias_pA": 20.9
+      },
+      {
+        "som_rate_hz": 33.04,
+        "ratio": 1.024,
+        "bias_pA": 21.6
+      },
+      {
+        "som_rate_hz": 39.0,
+        "ratio": 3.531,
+        "bias_pA": 22.2
+      },
+      {
+        "som_rate_hz": 63.21,
+        "ratio": 3.673,
+        "bias_pA": 25.0
+      },
+      {
+        "som_rate_hz": 99.92,
+        "ratio": 2.53,
+        "bias_pA": 30.0
+      }
+    ]
+  },
+  "20.0": {
+    "tau_ms": 20.0,
+    "crossover_rate_hz": 18.21,
+    "rate_x_tau_Hz_ms": 364.2,
+    "points": [
+      {
+        "som_rate_hz": 16.83,
+        "ratio": 1.041,
+        "bias_pA": 20.3
+      },
+      {
+        "som_rate_hz": 21.46,
+        "ratio": 4.261,
+        "bias_pA": 20.6
+      },
+      {
+        "som_rate_hz": 25.29,
+        "ratio": 4.525,
+        "bias_pA": 20.9
+      }
+    ]
+  },
+  "40.0": {
+    "tau_ms": 40.0,
+    "crossover_rate_hz": 12.43,
+    "rate_x_tau_Hz_ms": 497.4,
+    "points": [
+      {
+        "som_rate_hz": 10.12,
+        "ratio": 1.2,
+        "bias_pA": 20.04
+      },
+      {
+        "som_rate_hz": 16.83,
+        "ratio": 3.52,
+        "bias_pA": 20.3
+      },
+      {
+        "som_rate_hz": 19.29,
+        "ratio": 3.072,
+        "bias_pA": 20.45
+      }
+    ]
+  }
+}
