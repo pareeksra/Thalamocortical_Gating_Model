@@ -1,0 +1,45 @@
+
+=== tau_GABA,dend = 10.0 ms ===
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_2', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+  bias 20.04 pA -> SOM  10.16 Hz  ratio  1.003  fail
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_4', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+  bias  20.3 pA -> SOM  16.87 Hz  ratio  1.003  fail
+  bias 20.45 pA -> SOM  19.31 Hz  ratio  1.003  fail
+  bias  20.6 pA -> SOM  21.49 Hz  ratio  1.003  fail
+  bias 20.75 pA -> SOM  23.44 Hz  ratio  1.002  fail
+  bias  20.9 pA -> SOM  25.29 Hz  ratio  1.004  fail
+  bias  21.2 pA -> SOM  28.80 Hz  ratio  1.008  fail
+  bias  21.6 pA -> SOM  33.09 Hz  ratio  1.021  fail
+  bias  22.2 pA -> SOM  39.04 Hz  ratio  5.278  PASS
+  bias  23.0 pA -> SOM  46.49 Hz  ratio  5.696  PASS
+  --> crossover SOM rate (ratio=2.0): 34.46 Hz
+
+=== tau_GABA,dend = 20.0 ms ===
+  bias 20.04 pA -> SOM  10.16 Hz  ratio  1.014  fail
+  bias  20.3 pA -> SOM  16.87 Hz  ratio  1.039  fail
+  bias 20.45 pA -> SOM  19.31 Hz  ratio  1.112  fail
+  bias  20.6 pA -> SOM  21.49 Hz  ratio  5.512  PASS
+  bias 20.75 pA -> SOM  23.44 Hz  ratio  5.803  PASS
+  --> crossover SOM rate (ratio=2.0): 19.75 Hz
+
+=== tau_GABA,dend = 30.0 ms ===
+  bias 20.04 pA -> SOM  10.16 Hz  ratio  1.036  fail
+  bias  20.3 pA -> SOM  16.87 Hz  ratio  5.574  PASS
+  bias 20.45 pA -> SOM  19.31 Hz  ratio  4.949  PASS
+  --> crossover SOM rate (ratio=2.0): 11.58 Hz
+
+=== tau_GABA,dend = 40.0 ms ===
+  bias 20.04 pA -> SOM  10.16 Hz  ratio  1.166  fail
+  bias  20.3 pA -> SOM  16.87 Hz  ratio  4.249  PASS
+  bias 20.45 pA -> SOM  19.31 Hz  ratio  3.679  PASS
+  --> crossover SOM rate (ratio=2.0): 11.97 Hz
+
+Saved /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/docs/tau_gaba_duty_cycle_results.json and /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/docs/tau_gaba_duty_cycle_table.csv
+
+=== DUTY-CYCLE TEST: does critical rate scale ~1/tau? ===
+ tau(ms)  crit rate(Hz)  rate*tau(Hz*ms)
+    10.0          34.46            344.6
+    20.0          19.75            395.0
+    30.0          11.58            347.4
+    40.0          11.97            478.8
+If rate*tau is ~constant across tau, gating is set by inhibition COVERAGE (duty cycle), not rate -- this is the resolution of the Yang divergence.

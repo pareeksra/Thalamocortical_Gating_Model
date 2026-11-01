@@ -1,0 +1,7 @@
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_2', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+SOM rate: 30.1 Hz
+End of A: branch0(free,learned)=0.925  branch1(gated)=0.231
+End of B: branch0(now gated)=0.280  branch1(free,learned)=0.925
+Branch-0 (context A memory) retention after training B: 30.3%
+VERDICT: CATASTROPHIC-FORGETTING
+Saved figures/retention_forgetting_inhibonly.png and docs/retention_results_inhibonly.json

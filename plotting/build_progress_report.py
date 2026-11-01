@@ -25,7 +25,11 @@ from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GDRIVE_PATH = r'G:\My Drive\Progress_Report.docx'
+# NOTE (2026-09-03): this detailed lab-notebook now writes to *_Detailed.docx. The short,
+# PI-facing focused report (scripts/build_pi_report.py) owns Progress_Report.docx -- which is
+# the filename the shared Google Drive link points at -- so re-running this script can no
+# longer overwrite the short version the PI reads.
+GDRIVE_PATH = r'G:\My Drive\Progress_Report_Detailed.docx'
 FIG = os.path.join(PROOT, 'figures')
 DOCS = os.path.join(PROOT, 'docs')
 
@@ -91,6 +95,24 @@ def fig_num():
     FIG_N[0] += 1
     return FIG_N[0]
 
+def sp(label, text):
+    """Plain-summary 'Label: text' line, label bold. Used only in Section 0."""
+    para = doc.add_paragraph()
+    run = para.add_run(label + ' '); run.bold = True
+    para.add_run(text)
+    return para
+
+def sfig(relpath, caption, width_in=5.4):
+    """Plain-summary figure with an italic caption, NO 'Figure N' number, so the main
+    report's figure numbering (fig_num) is left untouched."""
+    full = os.path.join(PROOT, relpath)
+    if not os.path.exists(full):
+        return
+    doc.add_picture(full, width=Inches(width_in))
+    doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+    cap = doc.add_paragraph(); cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    r = cap.add_run(caption); r.italic = True; r.font.size = Pt(9)
+
 # ===========================================================================
 # TITLE
 # ===========================================================================
@@ -116,6 +138,129 @@ p("This report tells the story of the thalamocortical gating project in the orde
   "didn't, and what we're still unsure about. Where we found a number in one file that "
   "disagreed with a number in another, we say so rather than picking the one that looks "
   "better.")
+
+# ===========================================================================
+# 0. PLAIN-LANGUAGE SUMMARY (added 2026-09-03, for a first read-through)
+# ===========================================================================
+h1('0. Plain-language summary — read this first')
+p("This is a short, plain walkthrough of the whole project, in the order things happened: "
+  "what broke, how we fixed it, what the result was, and how it compares to the source paper "
+  "where that comparison is actually valid. The detailed, dated lab-notebook (Sections 1 "
+  "onward) has the full numbers behind each point.", italic=True)
+
+p("The goal. We are testing one idea: can the MD thalamus control WHICH dendritic branch of a "
+  "pyramidal neuron is allowed to learn, so that different contexts write onto different "
+  "branches instead of overwriting the same synapses? To test it we combined two papers that "
+  "don't overlap — Yang, Murray & Wang (2016), which has the single-neuron gating mechanism "
+  "(dendrite + calcium + plasticity) but no thalamus, and Zhang et al. (2025), which has the "
+  "MD-thalamus-to-interneuron wiring but no dendrites or plasticity.")
+p("The model. A spiking network (Brian 2): one pyramidal neuron with two dendritic branches, "
+  "plus 20 each of the PV, SOM and VIP interneurons, with MD thalamus as an input. SOM inhibits "
+  "one branch; VIP inhibits SOM (disinhibition); PV inhibits the soma. Getting this small "
+  "circuit to gate correctly took fixing a series of bugs, described below in the order we hit "
+  "them.")
+
+h2('0.1  The dendritic input-output curve had a sign error')
+sp('What broke:', "The formula for how a branch responds to input implied that adding inhibition "
+   "to an unstimulated branch would DEPOLARISE it (by up to ~30 mV) — impossible here, since "
+   "inhibition in this model is purely shunting.")
+sp('Fix & result:', "Re-referenced the curve to rest; resting error went from ~30 mV to exactly "
+   "0.00 mV, without changing any fitted constant.")
+
+h2('0.2  The PV interneuron had no stable baseline rate')
+sp('What broke:', "PV cells have an almost knife-edge response (a 5 mV window), so a fixed input "
+   "current makes them either silent or saturated.")
+sp('Fix & result:', "Drove PV with a background noisy conductance just below threshold, so it "
+   "fires in a graded, fluctuation-driven way — only on a real signal.")
+
+h2('0.3  The core gating mechanism — two bugs that had to be fixed together')
+sp('Bug A (calcium):', "Learning is triggered by calcium crossing 2.78. The old calcium model "
+   "was built so it could never exceed 1.328 — below threshold — making strengthening (LTP) "
+   "mathematically impossible. We replaced it with Yang's actual calcium model (a leaky "
+   "integrator of the NMDA current), which can accumulate past threshold.")
+sp('Bug B (soma too fast):', "Yang holds the cell body at ~10 Hz; ours fired at ~201 Hz because "
+   "the dendrite-to-soma coupling was set to 4.0 nS instead of Yang's 0.8 nS. At the wrong "
+   "value a background signal identical on both branches swamped the branch-specific one. We "
+   "measured that gating is destroyed once the soma fires above ~74 Hz.")
+sp('Fix:', "Used the correct 0.8 nS coupling and pinned the soma at ~10 Hz, exactly as Yang's "
+   "protocol does.")
+sp('Result:', "First clean separation — the free branch learned (state ~0.78), the inhibited "
+   "branch did not (~0.02).")
+sp('Comparison to the paper (the strong one):', "We measured the branch's half-activation at five "
+   "inhibition levels against Yang's own formula g-half = 5.56 x (4 + g_inhibition). Measured "
+   "values (22.24, 33.36, 77.83, 133.42, 216.81 nS) match to the digit at every level — and this "
+   "check does not depend on the plasticity equation, so it is the cleanest evidence the fix "
+   "landed us in Yang's actual regime.")
+sfig('figures/paper_replications/replicated_YANG2016_fig2c_dendritic_IO.png',
+     'Our model (points) vs. Yang’s formula (line): dendritic half-activation shifts with '
+     'inhibition exactly as the paper predicts.')
+
+h2('0.4  A known open issue: reproducibility')
+sp('What’s wrong:', "The same seed does not yet give byte-identical output; rates shift "
+   "slightly between runs. Still undiagnosed — flagged, not hidden — so any single headline "
+   "number is approximate until it's fixed.")
+
+h2('0.5  A missing connection from Yang’s circuit')
+sp('What broke:', "Yang includes a SOM->PV inhibitory connection (probability 0.8) that our code "
+   "never actually wired — the parameter existed but no synapse used it, so that inhibition was "
+   "always zero.")
+sp('Fix & paper comparison:', "Wired SOM->PV at Yang's probability of 0.8; our circuit now "
+   "matches the paper on this connection.")
+
+h2('0.6  The plasticity rule was running ~346x too strong')
+sp('What broke:', "The learning equation has a ~346 s time constant that was accidentally left "
+   "out of part of the equation, making the learning terms ~346x too strong. That inflated "
+   "factor is the only reason a 3-second run showed any learning.")
+sp('Process:', "Corrected the equation: at 3 s it barely separated the branches (ratio 1.51 vs "
+   "the inflated 42.76); run for 300 s (~1.7 hrs compute) it wandered 1.5–2.8 and never settled.")
+sp('Fix:', "Yang's paper doesn't integrate this equation step-by-step — it uses a closed-form "
+   "shortcut (Eqs. 32-35) from the time calcium spends above each threshold. We implemented that "
+   "directly.")
+sp('Result:', "Honest gating ratio 2.81 (free ~0.92, inhibited ~0.33), built over repeated "
+   "epochs. Much lower than 42.76 — and that's the point: 42.76 was the bug, 2.81 is real.")
+sfig('figures/analytical_plasticity_trajectory.png',
+     'Learning over epochs with the corrected, paper-faithful equation: free branch rises and '
+     'holds, inhibited branch drifts down. Final ratio 2.81.')
+
+h2('0.7  Choosing the SOM firing rate, and checking it holds up')
+sp('What broke:', "Yang reports SOM firing at ~10 Hz. At 10 Hz our gating collapsed (ratio 1.02, "
+   "both branches learned the same) — at that rate the inhibition can't hold the inhibited "
+   "branch below the learning threshold in our spiking model.")
+sp('Process (two sweeps):', "(1) Sweeping SOM rate: gating switches on sharply between 17 and "
+   "21 Hz, peaks at 25 Hz (ratio 5.58), then gently declines. (2) Sweeping the inhibitory "
+   "conductance with SOM at 10 Hz barely helped — even at 6x Yang's conductance the ratio only "
+   "reached 1.45. So it is SOM's RATE that matters, not the raw conductance.")
+sp('Stress test:', "25 Hz looked best on one seed, but across 20 random seeds two failed "
+   "(~10%). At 30 Hz all 20 passed (ratios 3.25–5.07), so we set the SOM baseline to 30 Hz — "
+   "reliable, not lucky.")
+sfig('figures/reliability_full_circuit.png',
+     '20-seed reliability: 25 Hz fails 2 of 20 (red); 30 Hz passes all 20. Current model: 30 Hz.')
+sp('Comparison to the paper (stated honestly):', "This is a real divergence: our spiking model "
+   "needs SOM firing at least ~2x faster than Yang's ~10 Hz to gate at all. We are transparent "
+   "about it rather than forcing a match; it likely reflects a difference in calcium/NMDA "
+   "sensitivity between our spiking neurons and Yang's rate model, and is an open question.")
+
+h2('0.8  Two things we then asked of the working model')
+sp('Noise robustness:', "Added three kinds of biological noise together and raised them; gating "
+   "holds, then degrades, then collapses past a breaking point — robust to realistic, not "
+   "unlimited, noise.")
+sp('A disease model (ketamine / schizophrenia):', "Ketamine-type drugs block NMDA on VIP "
+   "interneurons, a standard schizophrenia circuit model; we simulated it by blocking MD->VIP. "
+   "Below ~50% block, MD can still choose which branch learns; above ~50%, SOM returns to "
+   "baseline and permanently shuts its branch regardless of MD. It's the CONTROL over learning "
+   "that breaks — a loss of context-dependent flexibility.")
+sfig('figures/phase2_ketamine_failure.png',
+     'Blocking MD->VIP: gating is intact below ~50% block and collapses above it, as SOM '
+     'returns to its baseline rate.')
+
+h2('0.9  Where it stands, and what’s next')
+sp('Working now:', "the single-neuron gating mechanism is fixed and faithful to Yang where we "
+   "can check it (the dendritic I/O formula match), the plasticity uses Yang's real equation, "
+   "and the SOM baseline (30 Hz) gates reliably across 20 seeds.")
+sp('Open / next:', "(1) the reproducibility issue; (2) the SOM-rate divergence from Yang's "
+   "~10 Hz; (3) scaling from this 1-neuron / 2-branch circuit to a proper network (Yang's "
+   "~3000 neurons), where the project's novel prediction — MD-gated plasticity supporting "
+   "learning without catastrophic forgetting — would actually be tested.")
 
 # ===========================================================================
 # 1. WHAT WE SET OUT TO DO
@@ -1216,7 +1361,7 @@ p("30 Hz / 21.32 pA is locked as the SOM baseline, backed by a 20/20 full-circui
 # ===========================================================================
 # SAVE
 # ===========================================================================
-out_path = os.path.join(DOCS, 'Progress_Report.docx')
+out_path = os.path.join(DOCS, 'Progress_Report_Detailed.docx')
 doc.save(out_path)
 print(f"Wrote {out_path}")
 

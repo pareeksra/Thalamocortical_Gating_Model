@@ -1,0 +1,859 @@
+=== Full-circuit reliability test: 25 Hz (bias=20.9 pA) -- 0/20 already done, running 20 more across 8 worker processes ===
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '2.7316252592124757'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=44: ratio=1.0153  r0(inhib)=0.9105  r1(free)=0.9245  SOM=25.27 Hz  [FAIL]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.6015145558083108'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=46: ratio=4.6165  r0(inhib)=0.2005  r1(free)=0.9256  SOM=25.27 Hz  [PASS]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_8', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_8', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.6822524004351223'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=42: ratio=4.0678  r0(inhib)=0.2274  r1(free)=0.9251  SOM=25.27 Hz  [PASS]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_8', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.6585620633755911'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=40: ratio=4.2108  r0(inhib)=0.2195  r1(free)=0.9243  SOM=25.27 Hz  [PASS]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_8', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5516618790060601'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=41: ratio=5.0326  r0(inhib)=0.1839  r1(free)=0.9254  SOM=25.27 Hz  [PASS]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5592228421117355'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=47: ratio=4.9581  r0(inhib)=0.1864  r1(free)=0.9242  SOM=25.27 Hz  [PASS]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_8', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5754345048935674'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=45: ratio=4.8159  r0(inhib)=0.1918  r1(free)=0.9237  SOM=25.27 Hz  [PASS]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_8', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5484217006967925'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=43: ratio=5.0570  r0(inhib)=0.1828  r1(free)=0.9244  SOM=25.27 Hz  [PASS]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_8', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_8', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_14_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_15_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_15". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5717222392401176'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=49: ratio=4.8536  r0(inhib)=0.1906  r1(free)=0.9250  SOM=25.27 Hz  [PASS]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_15". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.6076357247778736'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=50: ratio=4.5689  r0(inhib)=0.2025  r1(free)=0.9254  SOM=25.27 Hz  [PASS]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_15". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5620772798262743'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=48: ratio=4.9363  r0(inhib)=0.1874  r1(free)=0.9249  SOM=25.27 Hz  [PASS]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_15". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5446086685250534'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=51: ratio=5.0946  r0(inhib)=0.1815  r1(free)=0.9248  SOM=25.27 Hz  [PASS]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_15". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '2.708868525396486'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=53: ratio=1.0243  r0(inhib)=0.9030  r1(free)=0.9249  SOM=25.27 Hz  [FAIL]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_15". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5555401735238024'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=55: ratio=4.9942  r0(inhib)=0.1852  r1(free)=0.9248  SOM=25.27 Hz  [PASS]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_15". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5843743398945602'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=54: ratio=4.7454  r0(inhib)=0.1948  r1(free)=0.9244  SOM=25.27 Hz  [PASS]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_15". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.7944613643420884'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=52: ratio=3.4926  r0(inhib)=0.2648  r1(free)=0.9249  SOM=25.27 Hz  [PASS]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_12_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    Came across an abstract code block that may not be well-defined: the outcome may depend on the order of execution. You can ignore this warning if you are sure that the order of operations does not matter. 3 lines of abstract code, first line is: 'w := w0 + (_lio_1 * clip(_w_synapses_13_rho, 0.0, 1.0)) (constant) (subexpression)'
+ [brian2.codegen.generators.base]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.582259503245006'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=58: ratio=4.7681  r0(inhib)=0.1941  r1(free)=0.9254  SOM=25.27 Hz  [PASS]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5850326346840438'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=57: ratio=4.7441  r0(inhib)=0.1950  r1(free)=0.9251  SOM=25.27 Hz  [PASS]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5462027586339422'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=56: ratio=5.0823  r0(inhib)=0.1821  r1(free)=0.9253  SOM=25.27 Hz  [PASS]
+WARNING    The name "w0" refers to different objects in different namespaces used for resolving names in the context of group "synapses_13". Will use the object from the group-specific namespace with the value 0.0, but the name also refers to a variable in the run namespace with value '0.5658122126198906'. [brian2.groups.group.Group.resolve.resolution_conflict]
+  seed=59: ratio=4.9009  r0(inhib)=0.1886  r1(free)=0.9243  SOM=25.27 Hz  [PASS]
+
+=== full_circuit_reliability 25Hz complete: 18/20 passed (ratio>2.0) ===
