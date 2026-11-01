@@ -65,7 +65,8 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                          som_phase='random', md2vip_scale=1.0, bap_source='poisson',
                          param_overrides=None, rho_init=0.5,
                          soma_drive_hz=0.0, soma_drive_nS=0.0, n_soma_drive=100,
-                         soma_inh_hz=0.0, soma_inh_nS=0.0, n_soma_inh=100):
+                         soma_inh_hz=0.0, soma_inh_nS=0.0, n_soma_inh=100,
+                         overlap=0.0, n_pattern=20):
     """Run the analytical-plasticity epoch loop under a context schedule.
 
     schedule : list of ints (0 or 1) -- the active context for each T-second epoch.
@@ -75,6 +76,12 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         With 'soma', give the soma a drive (soma_drive_hz x n_soma_drive Poisson AMPA
         inputs of soma_drive_nS each) so it fires near Yang's ~10 Hz; the dendrites alone
         (0.8 nS coupling) do not make it fire.
+    input_mode='patterns' (2026-11-02, docs/PLAN_overlapping_inputs.md): ONE afferent pool
+        whose every neuron makes a plastic synapse on BOTH branches (inputs not pre-sorted
+        by branch). Context 0 activates pattern A = afferents [0, n_pattern); context 1
+        activates pattern B = n_pattern afferents, round(overlap*n_pattern) of them shared
+        with A. Each traj record then also holds per-synapse rho ('rho0_syn', 'rho1_syn',
+        index = afferent index); the result holds 'idx_A' / 'idx_B'.
     soma_inh_hz / soma_inh_nS / n_soma_inh : optional inhibitory Poisson input onto the
         soma (GABA, tauGABA_soma). Together with the excitatory drive this gives a
         BALANCED, fluctuation-driven soma (2026-11-02): mean input just below threshold,
@@ -169,17 +176,37 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
     acc_eqs = '\nad_acc : second\nap_acc : second\n'
     accumulate = ('ad_acc = ad_acc + int(c_total > theta_d)*dt\n'
                   'ap_acc = ap_acc + int(c_total > theta_p)*dt')
-    exc0 = PoissonGroup(20, rates=exc_rate * Hz)
-    exc1 = PoissonGroup(20, rates=exc_rate * Hz)
-    sb0 = Synapses(exc0, Dend, model=eqs_synapse_plasticity + acc_eqs, on_pre=on_pre_plasticity,
-                   method='heun', namespace=p)
-    sb0.connect(j='0'); sb0.rho = rho_init; attach_rho_clipper(sb0)
-    sb0.run_regularly(accumulate, when='end')
-    sb1 = Synapses(exc1, Dend, model=make_eqs_synapse_plasticity(2) + acc_eqs,
-                   on_pre=on_pre_plasticity, method='heun', namespace=p)
-    sb1.connect(j='1'); sb1.rho = rho_init; attach_rho_clipper(sb1)
-    sb1.run_regularly(accumulate, when='end')
-    net.add([exc0, exc1, sb0, sb1])
+    if input_mode not in ('context', 'always', 'patterns'):
+        raise ValueError(f"input_mode must be 'context', 'always' or 'patterns', got {input_mode!r}")
+    if input_mode == 'patterns':
+        n_sh = int(round(overlap * n_pattern))
+        n_aff = 2 * n_pattern - n_sh
+        idx_A = np.arange(0, n_pattern)
+        idx_B = np.arange(n_pattern - n_sh, 2 * n_pattern - n_sh)
+        AFF = PoissonGroup(n_aff, rates=0 * Hz)
+        sb0 = Synapses(AFF, Dend, model=eqs_synapse_plasticity + acc_eqs, on_pre=on_pre_plasticity,
+                       method='heun', namespace=p)
+        sb0.connect(i=np.arange(n_aff), j=0); sb0.rho = rho_init; attach_rho_clipper(sb0)
+        sb0.run_regularly(accumulate, when='end')
+        sb1 = Synapses(AFF, Dend, model=make_eqs_synapse_plasticity(2) + acc_eqs,
+                       on_pre=on_pre_plasticity, method='heun', namespace=p)
+        sb1.connect(i=np.arange(n_aff), j=1); sb1.rho = rho_init; attach_rho_clipper(sb1)
+        sb1.run_regularly(accumulate, when='end')
+        for sb in (sb0, sb1):   # synapse k must be afferent k (per-synapse rho indexing)
+            assert np.array_equal(np.asarray(sb.i[:]), np.arange(n_aff))
+        net.add([AFF, sb0, sb1])
+    else:
+        exc0 = PoissonGroup(20, rates=exc_rate * Hz)
+        exc1 = PoissonGroup(20, rates=exc_rate * Hz)
+        sb0 = Synapses(exc0, Dend, model=eqs_synapse_plasticity + acc_eqs, on_pre=on_pre_plasticity,
+                       method='heun', namespace=p)
+        sb0.connect(j='0'); sb0.rho = rho_init; attach_rho_clipper(sb0)
+        sb0.run_regularly(accumulate, when='end')
+        sb1 = Synapses(exc1, Dend, model=make_eqs_synapse_plasticity(2) + acc_eqs,
+                       on_pre=on_pre_plasticity, method='heun', namespace=p)
+        sb1.connect(j='1'); sb1.rho = rho_init; attach_rho_clipper(sb1)
+        sb1.run_regularly(accumulate, when='end')
+        net.add([exc0, exc1, sb0, sb1])
 
     m_som, m_vip, m_pv, m_pyr = SpikeMonitor(SOM), SpikeMonitor(VIP), SpikeMonitor(PV), SpikeMonitor(Soma)
     net.add([m_som, m_vip, m_pv, m_pyr])
@@ -198,8 +225,9 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         if input_mode == 'context':
             exc0.rates = (exc_rate if ctx == 0 else 0.0) * Hz
             exc1.rates = (exc_rate if ctx == 1 else 0.0) * Hz
-        elif input_mode != 'always':
-            raise ValueError(f"input_mode must be 'context' or 'always', got {input_mode!r}")
+        elif input_mode == 'patterns':
+            active = idx_A if ctx == 0 else idx_B
+            AFF.rates = np.where(np.isin(np.arange(n_aff), active), exc_rate, 0.0) * Hz
         for sb in (sb0, sb1):
             sb.ad_acc = 0 * second; sb.ap_acc = 0 * second
         n_s0, n_v0, n_p0, n_y0 = m_som.num_spikes, m_vip.num_spikes, m_pv.num_spikes, m_pyr.num_spikes
@@ -213,6 +241,8 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                               for k in range(len(r))])
             sb.rho[:] = r_new
             rec[f'rho{b}'] = float(r_new.mean()); rec[f'ad{b}'] = float(ad.mean()); rec[f'ap{b}'] = float(ap.mean())
+            if input_mode == 'patterns':
+                rec[f'rho{b}_syn'] = r_new.tolist()
         # per-channel rates over this epoch
         st = np.asarray(m_som.t / second); si = np.asarray(m_som.i)
         vt = np.asarray(m_vip.t / second); vi = np.asarray(m_vip.i)
@@ -225,5 +255,8 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         isi = np.diff(yt)
         rec['pyr_cv'] = float(isi.std() / isi.mean()) if len(isi) >= 5 else float('nan')
         traj.append(rec)
-    return dict(traj=traj, n_som_syn_per_branch=n_som_syn, seed=seed_val,
-                rho0=traj[-1]['rho0'], rho1=traj[-1]['rho1'])
+    out = dict(traj=traj, n_som_syn_per_branch=n_som_syn, seed=seed_val,
+               rho0=traj[-1]['rho0'], rho1=traj[-1]['rho1'])
+    if input_mode == 'patterns':
+        out.update(idx_A=idx_A.tolist(), idx_B=idx_B.tolist(), overlap=overlap)
+    return out
