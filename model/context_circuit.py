@@ -46,12 +46,26 @@ from circuit_helpers import add_compiled_coupling, som_initial_voltages
 from src.v2.plasticity import yang_synapse_update
 
 
+# Calibrated balanced, fluctuation-driven somatic drive + PV->soma weight for
+# bap_source='soma' (2026-11-02, experiments/soma_balanced_calibration.py, seeds 42-44).
+# Inhibitory background g_I = 5 nS (2x leak), excitation at 0.6x the threshold level.
+# Soma ~9-15 Hz in a context at MD->PV x1 (Yang's ~10 Hz), ISI CV ~1.1, graded decline
+# over MD->PV x0 -> x3 (~21 -> 18 -> 12 -> 5 -> 2 Hz). gGABA_pv2soma = 0.1 nS here vs the
+# global 5 nS, which silences a driven soma once PV is active. Use as:
+#   run_context_protocol(..., bap_source='soma', **BALANCED_SOMA_KW,
+#                        param_overrides={'gGABA_pv2soma': BALANCED_SOMA_G_PV2SOMA, ...})
+BALANCED_SOMA_KW = dict(soma_drive_hz=18.0, soma_drive_nS=0.5, n_soma_drive=100,
+                        soma_inh_hz=5.0, soma_inh_nS=1.0, n_soma_inh=100)
+BALANCED_SOMA_G_PV2SOMA = 0.1 * nS
+
+
 def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple_nS=0.8,
                          md_on_rate=25.0, md_off_rate=0.0, som_bias_pA=21.32,
                          input_mode='context', inhibition=True, seed_val=42,
                          som_phase='random', md2vip_scale=1.0, bap_source='poisson',
                          param_overrides=None, rho_init=0.5,
-                         soma_drive_hz=0.0, soma_drive_nS=0.0, n_soma_drive=100):
+                         soma_drive_hz=0.0, soma_drive_nS=0.0, n_soma_drive=100,
+                         soma_inh_hz=0.0, soma_inh_nS=0.0, n_soma_inh=100):
     """Run the analytical-plasticity epoch loop under a context schedule.
 
     schedule : list of ints (0 or 1) -- the active context for each T-second epoch.
@@ -61,6 +75,12 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         With 'soma', give the soma a drive (soma_drive_hz x n_soma_drive Poisson AMPA
         inputs of soma_drive_nS each) so it fires near Yang's ~10 Hz; the dendrites alone
         (0.8 nS coupling) do not make it fire.
+    soma_inh_hz / soma_inh_nS / n_soma_inh : optional inhibitory Poisson input onto the
+        soma (GABA, tauGABA_soma). Together with the excitatory drive this gives a
+        BALANCED, fluctuation-driven soma (2026-11-02): mean input just below threshold,
+        firing driven by fluctuations, so extra PV inhibition scales the rate gradually
+        instead of switching it off (a purely excitatory mean-driven drive is switch-like;
+        docs/audit/pv_soma_calibration.json). traj records pyr_cv (ISI CV) per epoch.
     Returns dict(traj=[per-epoch records], summary...)."""
     seed(seed_val)
     p = dict(params)
@@ -102,6 +122,12 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         s_sd = Synapses(SD, Soma, on_pre='gTotAMPA_post += soma_drive_w', namespace=p)
         s_sd.connect()
         net.add([SD, s_sd])
+    if soma_inh_hz > 0:
+        p['soma_inh_w'] = soma_inh_nS * nS
+        SI = PoissonGroup(n_soma_inh, rates=soma_inh_hz * Hz)
+        s_si = Synapses(SI, Soma, on_pre='gTotGABA_post += soma_inh_w', namespace=p)
+        s_si.connect()
+        net.add([SI, s_si])
     if bap_source not in ('poisson', 'soma'):
         raise ValueError(f"bap_source must be 'poisson' or 'soma', got {bap_source!r}")
     bAP = Synapses(bap_pre, Dend, on_pre='V_post+=bAP_amp\nbAPCa_rise_post+=norm_factor_Ca',
@@ -195,6 +221,9 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
             rec[f'vip{ch}_hz'] = float(np.sum((vt >= t_start) & (vip_ch[vi] == ch)) / T / n_vip)
         rec['pv_hz'] = (m_pv.num_spikes - n_p0) / T / n_pv
         rec['pyr_hz'] = (m_pyr.num_spikes - n_y0) / T
+        yt = np.asarray(m_pyr.t / second); yt = yt[yt >= t_start]
+        isi = np.diff(yt)
+        rec['pyr_cv'] = float(isi.std() / isi.mean()) if len(isi) >= 5 else float('nan')
         traj.append(rec)
     return dict(traj=traj, n_som_syn_per_branch=n_som_syn, seed=seed_val,
                 rho0=traj[-1]['rho0'], rho1=traj[-1]['rho1'])

@@ -144,6 +144,25 @@ def test_plasticity_update():
     check('potentiation-dominated raises rho', up(3.0, 2.9, 0.5)['rho_new'] > 0.5)
 
 
+def test_balanced_soma_preset():
+    """(slow) The calibrated balanced-soma preset fires near Yang's ~10 Hz irregularly, and
+    PV (MD->PV x1 vs x3) lowers the somatic rate gradually rather than silencing it."""
+    print('\n[6] (slow) balanced somatic drive preset (fresh processes)')
+    res = {}
+    for x in (1.0, 3.0):
+        res[x] = _fresh(
+            "from brian2 import prefs, nS; prefs.codegen.target='cython'\n"
+            "from context_circuit import run_context_protocol, BALANCED_SOMA_KW, BALANCED_SOMA_G_PV2SOMA\n"
+            f"r=run_context_protocol([0,0], T=3.0, input_mode='always', seed_val=43, bap_source='soma', **BALANCED_SOMA_KW, "
+            f"param_overrides={{'gAMPA_pv': 0.12*{x}*nS, 'gGABA_pv2soma': BALANCED_SOMA_G_PV2SOMA}})\n"
+            "t=r['traj']; print('RESULT '+json.dumps(dict(pyr=sum(e['pyr_hz'] for e in t)/2, cv=t[-1]['pyr_cv'], pv=sum(e['pv_hz'] for e in t)/2)))")
+    a, b = res[1.0], res[3.0]
+    check('soma fires 5-15 Hz at MD->PV x1', 5.0 <= a['pyr'] <= 15.0, f"{a['pyr']:.1f} Hz (PV {a['pv']:.0f} Hz)")
+    check('irregular, fluctuation-driven firing (ISI CV >= 0.7)', a['cv'] >= 0.7, f"CV {a['cv']:.2f}")
+    check('stronger MD->PV lowers somatic rate gradually (x3 < x1, not abolished to 0)',
+          0.0 < b['pyr'] < a['pyr'], f"x1 {a['pyr']:.1f} Hz -> x3 {b['pyr']:.1f} Hz (PV {b['pv']:.0f} Hz)")
+
+
 if __name__ == '__main__':
     test_som_phase_modes()
     test_phase_init_does_not_touch_brian_rng()
@@ -151,5 +170,6 @@ if __name__ == '__main__':
     test_plasticity_update()
     if '--slow' in sys.argv:
         test_full_circuit_legacy_equivalence()
+        test_balanced_soma_preset()
     print(f"\n{'ALL PASSED' if not FAILS else 'FAILED: ' + ', '.join(FAILS)}")
     sys.exit(1 if FAILS else 0)

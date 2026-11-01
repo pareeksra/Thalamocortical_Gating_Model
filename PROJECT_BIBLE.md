@@ -507,8 +507,12 @@ input context-sparsity** (§7.9).
 > test: now MD-driven, 5 seeds, with control) are resolved. New open items:
 > - PV arm: the input side was RECALIBRATED 2026-11-02 (`weight_bg_pv` 0.29 nS,
 >   `gGABA_pv` 0.05 nS). PV is now ~7 Hz at rest and graded with MD (see the audit doc).
->   The output side (PV→soma 5 nS) is still switch-like on a driven soma, and needs a
->   decision on the somatic drive model.
+>   Output side: a balanced, fluctuation-driven somatic drive plus PV→soma 0.1 nS gives
+>   graded somatic inhibition (`BALANCED_SOMA_KW` in `model/context_circuit.py`).
+>   Tested result: MD→PV does NOT protect memories via fewer bAPs (retention 0.37–0.39
+>   over the physiological range). The erasing LTD is NMDA-driven, so input sparsity
+>   remains the only protector. Heavy runs can go to `toothless` (`~/tcg/`,
+>   `~/miniconda3/envs/myenv/bin/python`, verified bit-identical).
 > - Yang's 10 Hz needs ~1.5× gGABA (because of the dendrite's weaker shunting).
 > - No experiment yet shows inhibition gating mattering for retention; that needs
 >   overlapping inputs.
