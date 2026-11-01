@@ -115,7 +115,13 @@ pv_params = {
     'tauAMPA_pv': 2.0 * ms,
     'tauGABA_pv': 10.0 * ms,
     'gAMPA_pv': 0.12 * nS,     # MD→PV synapse weight
-    'gGABA_pv': 2.0 * nS,     # SOM→PV synapse weight
+    # SOM->PV per-synapse weight. RECALIBRATED 2026-11-02 (was 2.0 nS; see the PV block
+    # below and docs/audit/pv_calibration_fine_seed*.json). Yang 2016 leaves the SOM->PV
+    # strength free (varied in Fig. 6b); only P_SOM->PV = 0.8 is fixed. At 2.0 nS the
+    # ~16 active SOM inputs at 30 Hz gave ~9.6 nS of mean shunt (~10x PV's leak) and PV
+    # was silent whenever SOM was active, contradicting Yang ("PV activities never reach
+    # zero") and making Zhang's MD->PV arm inert.
+    'gGABA_pv': 0.05 * nS,    # SOM→PV synapse weight
     'gGABA_pv2soma': 5.0 * nS, # PV→Pyramidal soma
 
     # ---- Tonic background drive to PV -------------------------------------
@@ -142,8 +148,20 @@ pv_params = {
     # monotonic, non-saturating, and inside the 200 Hz ceiling across the operating
     # range. p_md2pv, n_md and gAMPA_pv are deliberately untouched, so the
     # many-weak-contacts-to-PV vs few-strong-to-VIP asymmetry is preserved.
+    #
+    # RECALIBRATED 2026-11-02 (experiments/pv_calibration.py). The 0.25 nS value above was
+    # tuned BEFORE SOM->PV was wired (2026-08-27) and never re-tuned. Joint 2-knob sweep
+    # (weight_bg_pv x gGABA_pv; MD->PV p/n/g untouched; desynchronised 30 Hz SOM; seeds
+    # 42-44) against targets set before running:
+    #   T1 baseline (MD 0, SOM on) 5-10 Hz;  T2 graded, monotonic MD response, >=3x by
+    #   MD 40, no step; T3 SOM silenced releases PV, <= 60 Hz.
+    # Passing ridge: (0.28, 0.03), (0.29, 0.05), (0.30, 0.05) nS -- all 3 seeds. Chosen:
+    # its centre, 0.29 / 0.05 nS -> PV 7.0 (6.6-7.5) Hz at rest, 7->11->18->39->63->94 Hz
+    # over MD 0-40 Hz with SOM active, 20 Hz with SOM silenced. CAVEAT: PV is
+    # fluctuation-driven, so the ridge is narrow (+/-0.01 nS on weight_bg_pv moves the
+    # baseline by ~2-4 Hz); treat these as a coupled pair, not independent constants.
     'rate_bg_pv': 500 * Hz,
-    'weight_bg_pv': 0.25 * nS,
+    'weight_bg_pv': 0.29 * nS,
 }
 
 som_params = {

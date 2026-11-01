@@ -505,7 +505,10 @@ input context-sparsity** (§7.9).
 > [AUDIT] Items 3 (ratio discrepancy: all three numbers predate the plasticity refactor),
 > 5 (MD context protocol: now in Model A, `model/context_circuit.py`) and 8 (forgetting
 > test: now MD-driven, 5 seeds, with control) are resolved. New open items:
-> - The PV arm is inert: SOM→PV inhibition dominates MD→PV drive.
+> - PV arm: the input side was RECALIBRATED 2026-11-02 (`weight_bg_pv` 0.29 nS,
+>   `gGABA_pv` 0.05 nS). PV is now ~7 Hz at rest and graded with MD (see the audit doc).
+>   The output side (PV→soma 5 nS) is still switch-like on a driven soma, and needs a
+>   decision on the somatic drive model.
 > - Yang's 10 Hz needs ~1.5× gGABA (because of the dendrite's weaker shunting).
 > - No experiment yet shows inhibition gating mattering for retention; that needs
 >   overlapping inputs.

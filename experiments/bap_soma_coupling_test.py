@@ -26,8 +26,8 @@ PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT]
 OUT = os.path.join(PROOT, 'docs', 'audit', 'bap_soma_coupling.json')
 DRIVE_HZ = 10.0           # per input, 100 inputs
-CAL_W = [0.15, 0.2, 0.25, 0.3, 0.35, 0.4]
-PV_SCALE = [0.0, 1.0, 6.0, 20.0, 40.0]
+CAL_W = [0.25, 0.3, 0.35, 0.4, 0.5, 0.6, 0.8]   # 2026-11-02: re-calibrated with PV active (PV recalibration)
+PV_SCALE = [0.0, 0.5, 1.0, 2.0, 3.0]
 
 
 def _run(kind, w, pv_scale, bap, n_ep):
