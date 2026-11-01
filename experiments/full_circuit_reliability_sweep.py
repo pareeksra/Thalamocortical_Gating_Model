@@ -76,7 +76,7 @@ def _run_one_seed(rate_label, bias, seed_val):
     # which is why build_gating_circuit is imported at module scope, not in here).
     r = build_gating_circuit(T=T_SIM, md_signal_rate=0.0, noise_level=0.0,
                               n_epochs=N_EPOCHS, seed_val=seed_val, som_bias_pA=bias)
-    passed = r['ratio'] > 2.0
+    passed = r['gated']  # 2026-11-01: r1>0.65 AND r0<0.5 AND ratio>=2 (ratio alone is ~1/r0, audit P4)
     return dict(seed=seed_val, bias_pA=bias, som_rate_hz=round(r['som_rate'], 3),
                 r0=round(r['r0'], 4), r1=round(r['r1'], 4),
                 ratio=round(r['ratio'], 4), passed=passed)
@@ -92,7 +92,7 @@ def run_rate(rate_label, n_workers=DEFAULT_WORKERS):
           f"{n_workers} worker processes ===", flush=True)
 
     if todo:
-        with ProcessPoolExecutor(max_workers=n_workers) as ex:
+        with ProcessPoolExecutor(max_workers=n_workers, max_tasks_per_child=1) as ex:  # fresh process per seed (Brian2 RNG, audit 2026-11-01)
             futures = {ex.submit(_run_one_seed, rate_label, bias, s): s for s in todo}
             for fut in as_completed(futures):
                 s = futures[fut]
@@ -110,7 +110,7 @@ def run_rate(rate_label, n_workers=DEFAULT_WORKERS):
 
     n_pass = sum(1 for r in results if r['passed'])
     print(f"\n=== full_circuit_reliability {rate_label}Hz complete: "
-          f"{n_pass}/{len(results)} passed (ratio>2.0) ===", flush=True)
+          f"{n_pass}/{len(results)} passed (r1>0.65, r0<0.5, ratio>=2) ===", flush=True)
     return n_pass, len(results)
 
 

@@ -60,39 +60,81 @@ def v1_dendritic_io():
     ax.text(25.5, -68, "Yang g_E,max = 25 nS", rotation=90, va='bottom', fontsize=8, color='0.4')
     ax.set_xlabel('Excitatory conductance $g_E$ (nS)')
     ax.set_ylabel('Dendritic voltage $V_D$ (mV)')
-    ax.set_title('V1  Dendritic I/O  (Model A)  vs  Yang 2016 Fig. 2c\n'
-                 r'$g_{1/2}=5.56\,(4+g_{inh})$; markers = half-activation', fontsize=10)
+    # 2026-11-01 (audit Problem 6): this panel plots Yang's FITTED formula (dendritic_io),
+    # not Model A -- the Brian 2 dendrite does not use dend_IO. It is a reference curve,
+    # not a test. The real test is v1_measured() below (experiments/v1_dendrite_io_measured.py).
+    ax.set_title('V1 reference: Yang 2016 Eq. 20-22 fit (NOT a model measurement)\n'
+                 r'$g_{1/2}=5.56\,(4+g_{inh})$; see v1_dendritic_io_measured.png for Model A', fontsize=10)
     ax.legend(fontsize=8, loc='lower right')
     ax.grid(alpha=0.25)
     fig.tight_layout()
     p = os.path.join(OUTDIR, 'v1_dendritic_io.png')
     fig.savefig(p, dpi=200); plt.close(fig)
-    results['V1'] = {'inh_levels_nS': inh_levels,
+    results['V1_reference_formula'] = {'note': 'Yang fit evaluated directly; not a model test',
+                     'inh_levels_nS': inh_levels,
                      'g_half_nS': {str(g): float(io_midpoint(g)) for g in inh_levels},
                      'V_at_25nS_mV': {str(g): float(dend_IO(25.0, g)) for g in inh_levels}}
-    print('   g_half:', results['V1']['g_half_nS'])
+    print('   g_half (formula):', results['V1_reference_formula']['g_half_nS'])
     print('   saved', p)
 
 # ---------------------------------------------------------------------------
 # V2 -- LTP/LTD vs presynaptic rate; inhibition shifts the threshold (Yang Fig. 7b)
 # V3 -- Branch-specific gating bar (Yang Fig. 7d-e), taken from the 80 Hz operating point
 # ---------------------------------------------------------------------------
+def v1_measured():
+    print('\n[V1] Dendritic I/O MEASURED on the Brian 2 dendrite (Yang Fig. 2c)')
+    import v1_dendrite_io_measured as v1m
+    v1m.main()
+    results['V1'] = json.load(open(os.path.join(PROOT, 'docs', 'audit', 'v1_dendrite_io.json')))
+
+
+V2_RATES = [2.0, 5.0, 10.0, 20.0, 40.0, 80.0, 120.0, 160.0, 240.0]
+V2_SOM = {15: 20.20522, 30: 21.319034}     # SOM rate (Hz) -> bias (pA), desynchronised
+
+
+def _v2_point(args):
+    r, som_hz = args
+    d = run_gating_analytical(n_epochs=15, T=3.0, exc_rate=r, post_rate=10.0, gcouple_nS=0.8,
+                              som_bias_pA=V2_SOM[som_hz], seed_val=42, verbose=False,
+                              resume=False, run_tag=f'validate_rate_{int(r)}_som{som_hz}')
+    try:
+        os.remove(os.path.join(PROOT, 'docs', f'phase1_analytical_state_validate_rate_{int(r)}_som{som_hz}.json'))
+    except OSError:
+        pass
+    return r, som_hz, d['rho1'], d['rho0']
+
+
+def _crossing(x, y, level=0.5):
+    for k in range(len(x) - 1):
+        if (y[k] - level) * (y[k + 1] - level) < 0:
+            return float(x[k] + (level - y[k]) * (x[k + 1] - x[k]) / (y[k + 1] - y[k]))
+    return None
+
+
 def v2_v3_plasticity_sweep():
+    # 2026-11-01 (audit Problem 7): the old sweep (20-120 Hz, one SOM level) had the free
+    # branch already potentiated at 20 Hz and the inhibited branch only depressing, so no
+    # LTP threshold existed to shift. Now: 2-240 Hz, two SOM inhibition levels, and the
+    # LTP threshold (rate where rho crosses 0.5) is measured for each curve.
     print('\n[V2] LTP/LTD vs presynaptic rate (Yang Fig. 7b) -- running Brian 2 sweep...')
-    rates = [20.0, 40.0, 60.0, 80.0, 100.0, 120.0]
-    rho_free, rho_inh = [], []
-    for r in rates:
-        print(f'   exc_rate = {r} Hz ...', flush=True)
-        d = run_gating_analytical(n_epochs=15, T=3.0, exc_rate=r, post_rate=10.0,
-                                   gcouple_nS=0.8, seed_val=42,
-                                   run_tag=f'validate_rate_{int(r)}')
-        rho_free.append(d['rho1'])   # branch 1 = free (disinhibited)
-        rho_inh.append(d['rho0'])    # branch 0 = SOM-inhibited
-    rates = np.array(rates); rho_free = np.array(rho_free); rho_inh = np.array(rho_inh)
+    from concurrent.futures import ProcessPoolExecutor
+    jobs = [(r, s) for s in V2_SOM for r in V2_RATES]
+    with ProcessPoolExecutor(max_workers=int(os.environ.get('V2_WORKERS', 9)),
+                             max_tasks_per_child=1) as ex:
+        out = list(ex.map(_v2_point, jobs))
+    rates = np.array(V2_RATES)
+    curves = {'free': np.array([o[2] for o in out if o[1] == 30])}
+    for s in V2_SOM:
+        curves[f'SOM {s} Hz'] = np.array([o[3] for o in out if o[1] == s])
+    rho_free = curves['free']; rho_inh = curves['SOM 30 Hz']
+    thresholds = {k: _crossing(rates, v) for k, v in curves.items()}
+    print('   LTP thresholds (rate where rho crosses 0.5):', thresholds)
 
     fig, ax = plt.subplots(figsize=(7, 5))
     ax.plot(rates, rho_free, 'o-', color='#2E7D32', lw=2, label='Disinhibited (free) branch')
-    ax.plot(rates, rho_inh, 's-', color='#C62828', lw=2, label='SOM-inhibited branch')
+    ax.plot(rates, curves['SOM 15 Hz'], 's-', color='#EF6C00', lw=2, label='SOM 15 Hz (weaker inhibition)')
+    ax.plot(rates, rho_inh, 's-', color='#C62828', lw=2, label='SOM 30 Hz (baseline inhibition)')
+    ax.set_xscale('log')
     ax.axhline(0.5, ls='--', color='0.5', lw=1)
     ax.text(rates.min(), 0.51, r'$\rho^\ast=0.5$ (start)', fontsize=8, color='0.4')
     ax.set_xlabel('Presynaptic pathway rate (Hz)   [post fixed at Yang 10 Hz]')
@@ -124,8 +166,9 @@ def v2_v3_plasticity_sweep():
     fig.savefig(p3, dpi=200); plt.close(fig)
     print('   saved', p3)
 
-    results['V2'] = {'rates_Hz': rates.tolist(),
-                     'rho_free': rho_free.tolist(), 'rho_inh': rho_inh.tolist()}
+    results['V2'] = {'rates_Hz': rates.tolist(), 'som_phase': 'random',
+                     **{f'rho_{k}': v.tolist() for k, v in curves.items()},
+                     'ltp_threshold_Hz': thresholds}
     results['V3'] = {'exc_Hz': 80, 'post_Hz': 10, 'rho_free': rf, 'rho_inh': ri, 'ratio': ratio}
     print(f'   V3: free={rf:.3f} inh={ri:.3f} ratio={ratio:.1f}')
 
@@ -147,12 +190,11 @@ def build_network(p):
     Soma.V = p['vRest_pyr']; Soma.vShadow = p['vRest_pyr']; Soma.vAveDend = p['vRest_pyr']
     Dend = NeuronGroup(ndend, eqs_dend, method='euler', namespace=p)
     Dend.V = p['vRest_pyr']; Dend.vSoma = p['vRest_pyr']
-    @network_operation(dt=p['sim_dt'])
-    def coupling():
-        Soma.vAveDend = np.mean(Dend.V[:]); Dend.vSoma = np.repeat(Soma.vShadow[:], ndend)
     bAP = Synapses(Soma, Dend, on_pre='V_post+=bAP_amp\nbAPCa_rise_post+=norm_factor_Ca',
                    delay=p['bAP_delay'], namespace=p); bAP.connect(j='k for k in range(2)')
-    net.add([Soma, Dend, coupling, bAP])
+    net.add([Soma, Dend, bAP])
+    from circuit_helpers import add_compiled_coupling, som_initial_voltages
+    add_compiled_coupling(net, Soma, Dend, ndend, p)
     PV = NeuronGroup(p['n_pv'], eqs_pv, threshold='V>vThres_pv', reset='V=vReset_pv',
                      refractory=p['refrac_pv'], method='euler', namespace=p); PV.V = p['vRest_pv']
     BG = PoissonGroup(p['n_pv'], rates=p['rate_bg_pv'])
@@ -162,7 +204,8 @@ def build_network(p):
     # 2026-08-30: updated to the SOM-rate sweep's calibrated default (see
     # model/parameters.py's iBaseline_som comment); V4 doesn't read rho so this only
     # affects the reported SOM/downstream rates, not any plasticity result.
-    SOM.V = p['vRest_som']; SOM.iBaseline_som = 21.32*pA
+    # 2026-11-01: desynchronised SOM (audit Problem 1), seed-42 phases
+    SOM.V = som_initial_voltages(p['n_som_spike'], p, 21.32, 'random', 42); SOM.iBaseline_som = 21.32*pA
     VIP = NeuronGroup(p['n_vip_spike'], eqs_vip, threshold='V>vThres_vip', reset='V=vReset_vip',
                       refractory=p['refrac_vip'], method='euler', namespace=p); VIP.V = p['vRest_vip']
     MD = PoissonGroup(p['n_md'], rates=5*Hz)
@@ -172,10 +215,13 @@ def build_network(p):
     s3 = Synapses(VIP, SOM, on_pre='gTotGABA_post+=gGABA_som', namespace=p); s3.connect(p=p['p_vip2som_spike'])
     s4 = Synapses(SOM, Dend, on_pre='gTotGABA_post+=gGABA', namespace=p); s4.connect(p=p['p_som2dend_spike'])
     s5 = Synapses(PV, Soma, on_pre='gTotGABA_post+=gGABA_pv2soma', namespace=p); s5.connect(p=p['p_pv2soma'])
+    # 2026-11-01 (audit): SOM->PV (p=0.8, the 2026-08-27 divergence fix) is wired in every
+    # canonical builder but was missing here, so V4's PV rates were not those of the model.
+    s6 = Synapses(SOM, PV, on_pre='gTotGABA_post+=gGABA_pv', namespace=p); s6.connect(p=p['p_som2pv'])
     path = PoissonGroup(30, rates=80*Hz)
     sp = Synapses(path, Dend, model=eqs_synapse_plasticity, on_pre=on_pre_plasticity,
                   method='heun', namespace=p); sp.connect(); sp.rho = 0.5; attach_rho_clipper(sp)
-    net.add([s1, s2, s3, s4, s5, path, sp])
+    net.add([s1, s2, s3, s4, s5, s6, path, sp])
     mons = {'pv': SpikeMonitor(PV), 'som': SpikeMonitor(SOM),
             'vip': SpikeMonitor(VIP), 'pyr': SpikeMonitor(Soma)}
     net.add(list(mons.values()))
@@ -226,6 +272,7 @@ if __name__ == '__main__':
     print(' VALIDATION vs Yang 2016 & Zhang 2025 paper figures  (Model A)')
     print('=' * 70)
     v1_dendritic_io()
+    v1_measured()
     v2_v3_plasticity_sweep()
     v4_md_sweep()
     with open(os.path.join(OUTDIR, 'results.json'), 'w') as f:

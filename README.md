@@ -1,5 +1,14 @@
 # Thalamocortical Gating & Cognitive Flexibility Model
 
+> **Audit 2026-11-01/02 — see `docs/AUDIT_2026-11-01.md`.** The SOM population fired in
+> lockstep in all earlier results. This revises two of the three findings:
+> - gating follows mean inhibition, not "coverage";
+> - the 25 Hz seed failures disappear when SOM is desynchronised.
+>
+> MD now selects the branch (`model/context_circuit.py`). Retention comes from input
+> sparsity alone. V1 is now a real measurement. Older numbers in this README that
+> conflict with the audit are superseded.
+
 A computational study that grafts the **cell-type-specific mediodorsal-thalamic (MD)
 projections of Zhang et al. (2025)** onto the **dendritic disinhibitory gating circuit
 and Graupner–Brunel calcium plasticity of Yang et al. (2016)**, to ask whether MD drive

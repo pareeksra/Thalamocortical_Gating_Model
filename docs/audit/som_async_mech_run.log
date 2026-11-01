@@ -1,0 +1,12 @@
+mech: 10 jobs to run (0 already done), 4 workers
+  mech_g6.0_random           SOM  10.04 Hz  r0 0.374  r1 0.925  ratio   2.47  GATED  (67.2 s)
+  mech_g12.0_random          SOM  10.04 Hz  r0 0.195  r1 0.925  ratio   4.75  GATED  (67.4 s)
+  mech_g8.0_random           SOM  10.04 Hz  r0 0.161  r1 0.925  ratio   5.73  GATED  (67.4 s)
+  mech_tau30.0_random        SOM  10.04 Hz  r0 0.162  r1 0.925  ratio   5.71  GATED  (68.6 s)
+  mech_g6.0_sync             SOM  10.02 Hz  r0 0.892  r1 0.924  ratio   1.04  not gated  (72.2 s)
+  mech_g8.0_sync             SOM  10.02 Hz  r0 0.871  r1 0.924  ratio   1.06  not gated  (72.6 s)
+  mech_tau40.0_random        SOM  10.04 Hz  r0 0.167  r1 0.925  ratio   5.55  GATED  (73.6 s)
+  mech_g12.0_sync            SOM  10.02 Hz  r0 0.829  r1 0.924  ratio   1.12  not gated  (74.9 s)
+  mech_tau30.0_sync          SOM  10.02 Hz  r0 0.892  r1 0.924  ratio   1.04  not gated  (56.9 s)
+  mech_tau40.0_sync          SOM  10.02 Hz  r0 0.804  r1 0.925  ratio   1.15  not gated  (58.2 s)
+done

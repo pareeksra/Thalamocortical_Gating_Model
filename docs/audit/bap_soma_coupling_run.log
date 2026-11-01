@@ -1,0 +1,17 @@
+  calib w=0.15 nS -> soma 0.0 Hz, PV 0.0 Hz
+  calib w=0.20 nS -> soma 11.0 Hz, PV 0.0 Hz
+  calib w=0.25 nS -> soma 33.5 Hz, PV 0.0 Hz
+  calib w=0.30 nS -> soma 52.5 Hz, PV 0.0 Hz
+  calib w=0.35 nS -> soma 68.0 Hz, PV 0.0 Hz
+  calib w=0.40 nS -> soma 86.5 Hz, PV 0.0 Hz
+chosen soma drive weight 0.2 nS (11.0 Hz)
+  bAP=soma     MD->PV x0  : soma   6.7 Hz  PV    0.0 Hz | free rho0 0.922  gated rho1 0.209 (gated ad=1.89 ap=0.00)
+  bAP=soma     MD->PV x1  : soma   6.7 Hz  PV    0.0 Hz | free rho0 0.922  gated rho1 0.209 (gated ad=1.89 ap=0.00)
+  bAP=soma     MD->PV x6  : soma   6.4 Hz  PV    0.1 Hz | free rho0 0.922  gated rho1 0.210 (gated ad=1.89 ap=0.00)
+  bAP=soma     MD->PV x20 : soma   0.0 Hz  PV  187.8 Hz | free rho0 0.923  gated rho1 0.274 (gated ad=1.29 ap=0.00)
+  bAP=soma     MD->PV x40 : soma   0.0 Hz  PV  530.6 Hz | free rho0 0.923  gated rho1 0.275 (gated ad=1.28 ap=0.00)
+  bAP=poisson  MD->PV x0  : soma   6.6 Hz  PV    0.0 Hz | free rho0 0.924  gated rho1 0.200 (gated ad=2.37 ap=0.04)
+  bAP=poisson  MD->PV x1  : soma   6.6 Hz  PV    0.0 Hz | free rho0 0.924  gated rho1 0.200 (gated ad=2.37 ap=0.04)
+  bAP=poisson  MD->PV x6  : soma   6.1 Hz  PV    0.1 Hz | free rho0 0.924  gated rho1 0.200 (gated ad=2.36 ap=0.04)
+  bAP=poisson  MD->PV x20 : soma   0.0 Hz  PV  191.3 Hz | free rho0 0.926  gated rho1 0.213 (gated ad=2.08 ap=0.03)
+  bAP=poisson  MD->PV x40 : soma   0.0 Hz  PV  538.6 Hz | free rho0 0.926  gated rho1 0.213 (gated ad=2.07 ap=0.03)

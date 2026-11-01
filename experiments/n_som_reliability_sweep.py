@@ -75,7 +75,7 @@ def _run_one_seed(cfg, seed_val):
         seed_val=seed_val, som_bias_pA=SOM_BIAS_PA,
         param_overrides={'n_som_spike': int(c['n_som']), 'gGABA': c['gGABA_nS'] * nS},
     )
-    passed = r['ratio'] > 2.0
+    passed = r['gated']  # 2026-11-01: r1>0.65 AND r0<0.5 AND ratio>=2 (ratio alone is ~1/r0, audit P4)
     return dict(seed=seed_val, n_som=c['n_som'], gGABA_nS=c['gGABA_nS'],
                 som_rate_hz=round(r['som_rate'], 3),
                 r0=round(r['r0'], 4), r1=round(r['r1'], 4),
@@ -91,7 +91,7 @@ def run_cfg(cfg, n_workers=DEFAULT_WORKERS):
           f"25 Hz bias {SOM_BIAS_PA} pA) -- {len(done)}/{len(SEEDS)} done, running "
           f"{len(todo)} across {n_workers} workers ===", flush=True)
     if todo:
-        with ProcessPoolExecutor(max_workers=n_workers) as ex:
+        with ProcessPoolExecutor(max_workers=n_workers, max_tasks_per_child=1) as ex:  # fresh process per seed (Brian2 RNG, audit 2026-11-01)
             futs = {ex.submit(_run_one_seed, cfg, s): s for s in todo}
             for fut in as_completed(futs):
                 s = futs[fut]

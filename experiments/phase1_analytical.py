@@ -32,11 +32,13 @@ from parameters import params, plasticity_params, som_params
 from equations import (attach_rho_clipper, make_eqs_synapse_plasticity, eqs_soma,
                        eqs_dend, eqs_som, eqs_synapse_plasticity, on_pre_plasticity)
 from src.v2.plasticity import yang_synapse_update, alpha_above_threshold
+from circuit_helpers import add_compiled_coupling, som_initial_voltages
 
 
 def run_gating_analytical(n_epochs=20, T=3.0, exc_rate=80.0, post_rate=10.0,
                           gcouple_nS=0.8, som_bias_pA=21.32, gGABA_nS=None, seed_val=42,
-                          verbose=True, resume=True, run_tag='', param_overrides=None):
+                          verbose=True, resume=True, run_tag='', param_overrides=None,
+                          som_phase='random', coupling='compiled'):
     prefs.codegen.target = 'cython'   # cached compile; ~10x faster than numpy target here
     start_scope()
     seed(seed_val)
@@ -76,11 +78,18 @@ def run_gating_analytical(n_epochs=20, T=3.0, exc_rate=80.0, post_rate=10.0,
     Dend = NeuronGroup(ndend, eqs_dend, method='euler', namespace=p)
     Dend.V = p['vRest_pyr']; Dend.vSoma = p['vRest_pyr']
 
-    @network_operation(dt=p['sim_dt'])
-    def Coupling():
-        Soma.vAveDend = np.mean(Dend.V[:])
-        Dend.vSoma = np.repeat(Soma.vShadow[:], ndend)
-    net.add([Soma, Dend, Coupling])
+    net.add([Soma, Dend])
+    # coupling='compiled' (2026-11-01 default): summed-variable coupling, see
+    # model/circuit_helpers.py. 'python' = the legacy network_operation, kept for the
+    # equivalence test (tests/test_audit_fixes.py).
+    if coupling == 'compiled':
+        add_compiled_coupling(net, Soma, Dend, ndend, p)
+    else:
+        @network_operation(dt=p['sim_dt'])
+        def Coupling():
+            Soma.vAveDend = np.mean(Dend.V[:])
+            Dend.vSoma = np.repeat(Soma.vShadow[:], ndend)
+        net.add(Coupling)
 
     post_src = PoissonGroup(1, rates=post_rate * Hz)
     bAP = Synapses(post_src, Dend, on_pre='V_post+=bAP_amp\nbAPCa_rise_post+=norm_factor_Ca',
@@ -90,7 +99,10 @@ def run_gating_analytical(n_epochs=20, T=3.0, exc_rate=80.0, post_rate=10.0,
 
     SOM = NeuronGroup(10, eqs_som, threshold='V>vThres_som', reset='V=vReset_som',
                       refractory=p['refrac_som'], method='euler', namespace=p)
-    SOM.V = p['vRest_som']; SOM.iBaseline_som = som_bias_pA * pA
+    # som_phase (2026-11-01): 'random' desynchronises the SOM cells (new default);
+    # 'sync' = legacy all-at-vRest lockstep. See model/circuit_helpers.py.
+    SOM.V = som_initial_voltages(len(SOM), p, som_bias_pA, som_phase, seed_val)
+    SOM.iBaseline_som = som_bias_pA * pA
     s2d = Synapses(SOM, Dend, on_pre='gTotGABA_post+=gGABA', namespace=p)
     s2d.connect(j='0')
     som_spikes = SpikeMonitor(SOM)   # to confirm the actual SOM firing rate
@@ -103,7 +115,9 @@ def run_gating_analytical(n_epochs=20, T=3.0, exc_rate=80.0, post_rate=10.0,
     # alpha_d / alpha_p (time c_total spends above each threshold) are accumulated per
     # synapse in COMPILED run_regularly counters, reset each epoch. This replaces a
     # StateMonitor: it is O(1) memory (no growing trace) and integrates at the full
-    # sim_dt = 0.02 ms rather than the coarser record_dt, so the alpha estimate is if
+    # simulation step (NOTE 2026-11-01: that is Brian 2's DEFAULT 0.1 ms -- defaultclock.dt is
+    # never set and sim_dt=0.02 ms only ever clocked the legacy coupling operation; see
+    # docs/audit/dt_convergence.json for the 0.02 vs 0.1 ms check) rather than the coarser record_dt, so the alpha estimate is if
     # anything more accurate. c_total = c + bAPCa_post is evaluated inline with correct
     # postsynaptic indexing inside the generated code.
     acc_eqs = '\nad_acc : second\nap_acc : second\n'

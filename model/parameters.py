@@ -5,6 +5,9 @@ from brian2 import *
 # existed in any commit; the values themselves are Yang's, cited inline below and
 # verified against the paper.)
 params = {
+    # NOTE (audit 2026-11-01): sim_dt is NOT the integration step. defaultclock.dt is never set,
+    # so every NeuronGroup/Synapses runs at Brian 2's default 0.1 ms; sim_dt only clocked the
+    # retired Python coupling operation. docs/audit/dt_convergence.json checks 0.02 vs 0.1 ms.
     'sim_dt': 0.02 * ms,
     'record_dt': 0.5 * ms,
     'num_DendEach': 10,

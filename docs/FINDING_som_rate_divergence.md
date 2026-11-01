@@ -1,5 +1,15 @@
 # Resolving the SOM-rate divergence from Yang 2016
 
+> **REVISED 2026-11-02 (docs/AUDIT_2026-11-01.md, P1 + P6).** Every run behind this finding
+> had the SOM population firing in perfect lockstep, so the "coverage (rate x tau)" law
+> describes the gap between synchronous volleys, not a property of event-driven calcium.
+> With desynchronised SOM (now the default): the gating threshold falls from ~20-30 Hz to
+> ~13-15 Hz, and at 10 Hz raising gGABA (6-12 nS) OR tau (30-40 ms) restores gating. In
+> lockstep neither does. So gating follows MEAN inhibitory conductance. The residual gap
+> to Yang's 10 Hz comes from Model A's dendrite being much less shunted by inhibition than
+> Yang's fitted I/O (measured V1). The text below is kept for provenance.
+
+
 *2026-10-14. The reviewer question: "Yang gets gating at ~10 Hz SOM; why does this
 spiking model need ~2× that?"*
 

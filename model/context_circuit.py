@@ -1,0 +1,200 @@
+"""
+context_circuit.py -- MD-driven, branch-SELECTIVE context circuit (audit Problem 2,
+2026-11-01).
+
+Why this exists. Every headline Model A result before 2026-11-01 ran with MD switched
+OFF (md_signal_rate=0): which branch was gated was hard-wired (SOM -> branch 0 only), and
+in model/full_circuit.py MD can only remove branch 0's gate globally. MD never *chose*
+a branch, so the project's core hypothesis ("MD selects which branch learns") had not
+been tested in the canonical simulator. This builder makes MD the context selector.
+
+Architecture (one pyramidal cell, 2 branches, one disinhibitory channel per branch):
+
+    MD_k (Poisson, n_md)  --AMPA p_md2vip-->  VIP_k (n_vip)  --GABA p_vip2som-->  SOM_k (n_som)
+    SOM_k --GABA p_som2dend--> branch k           (the gate; SOM_k only reaches branch k)
+    MD_0 + MD_1  --AMPA p_md2pv-->  PV (n_pv)  --GABA p_pv2soma-->  soma
+    SOM_0 + SOM_1 --GABA p_som2pv--> PV ;  background Poisson -> PV (validated model)
+    exc_k (20 Poisson @ exc_rate)  --plastic (Yang analytical rule)-->  branch k
+
+Context k = MD_k firing at md_on_rate, MD_other at md_off_rate. MD_k -> VIP_k silences
+SOM_k, opening branch k; SOM_other keeps its baseline (bias current, ~30 Hz) and shunts
+the other branch. Branch-specific VIP->SOM channels are a modelling ASSUMPTION (the same
+one Model C's 3-epoch protocol made); Zhang 2025 gives the cell-type wiring, not the
+branch-level map.
+
+Input gating (the other half of a "context", FINDING_catastrophic_forgetting):
+    input_mode='context'  exc_k on only while context k is active (idle input silent)
+    input_mode='always'   both inputs always on (inhibition-only context switch)
+Inhibition can be removed entirely with inhibition=False (SOM -> dendrite weight 0),
+which is the control the original forgetting test lacked.
+
+All parameters come from model/parameters.py (Yang/Zhang values); SOM cells are
+desynchronised (som_phase='random', see circuit_helpers.py); coupling is compiled.
+"""
+import os, sys
+PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(PROOT, 'model')); sys.path.insert(0, PROOT)
+
+import numpy as np
+from brian2 import (Network, NeuronGroup, PoissonGroup, Synapses, SpikeMonitor, seed,
+                    second, ms, mV, pA, nS, Hz)
+
+from parameters import params, plasticity_params, pv_params, som_params, vip_params, md_params
+from equations import (attach_rho_clipper, make_eqs_synapse_plasticity, eqs_soma, eqs_dend,
+                       eqs_pv, eqs_som, eqs_vip, eqs_synapse_plasticity, on_pre_plasticity)
+from circuit_helpers import add_compiled_coupling, som_initial_voltages
+from src.v2.plasticity import yang_synapse_update
+
+
+def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple_nS=0.8,
+                         md_on_rate=25.0, md_off_rate=0.0, som_bias_pA=21.32,
+                         input_mode='context', inhibition=True, seed_val=42,
+                         som_phase='random', md2vip_scale=1.0, bap_source='poisson',
+                         param_overrides=None, rho_init=0.5,
+                         soma_drive_hz=0.0, soma_drive_nS=0.0, n_soma_drive=100):
+    """Run the analytical-plasticity epoch loop under a context schedule.
+
+    schedule : list of ints (0 or 1) -- the active context for each T-second epoch.
+    bap_source : 'poisson' (Yang protocol: bAPs from an independent post_rate Poisson
+        source -- the soma's own spikes do not reach the dendrites) or 'soma' (bAPs are
+        the soma's own spikes, so PV/soma activity can influence plasticity; audit P8).
+        With 'soma', give the soma a drive (soma_drive_hz x n_soma_drive Poisson AMPA
+        inputs of soma_drive_nS each) so it fires near Yang's ~10 Hz; the dendrites alone
+        (0.8 nS coupling) do not make it fire.
+    Returns dict(traj=[per-epoch records], summary...)."""
+    seed(seed_val)
+    p = dict(params)
+    for d in (plasticity_params, pv_params, som_params, vip_params, md_params):
+        p.update(d)
+    if param_overrides:
+        for k, v in param_overrides.items():
+            if k not in p:
+                raise KeyError(f"param_overrides key '{k}' is not a known model parameter")
+            p[k] = v
+    ndend = 2
+    p['num_Soma'] = 1; p['num_DendEach'] = ndend; p['num_Dend'] = ndend
+    p['gEachCouple_pyr'] = gcouple_nS * nS; p['gTotCouple_pyr'] = p['gEachCouple_pyr'] * ndend
+    t = p['tau_Ca_bAP_rise'] / p['tau_Ca_bAP_decay']; p['norm_factor_Ca'] = t ** (1 / (t - 1))
+    t = p['tauGABABRise'] / p['tauGABABDecay']; p['norm_factor_GABAB'] = t ** (1 / (t - 1))
+    n_md, n_pv, n_som, n_vip = p['n_md'], p['n_pv'], p['n_som_spike'], p['n_vip_spike']
+    p['gGABA_dend_eff'] = p['gGABA'] if inhibition else 0 * nS
+    p['gAMPA_vip_eff'] = p['gAMPA_vip'] * md2vip_scale
+    p['n_som_ch'] = n_som; p['n_vip_ch'] = n_vip; p['n_md_ch'] = n_md
+
+    net = Network()
+    Soma = NeuronGroup(1, eqs_soma, threshold='V>vThres_pyr', reset='V=vReset_pyr',
+                       refractory=p['refracTime_pyr'], method='euler', namespace=p)
+    Soma.V = p['vRest_pyr']; Soma.vShadow = p['vRest_pyr']; Soma.vAveDend = p['vRest_pyr']
+    Dend = NeuronGroup(ndend, eqs_dend, method='euler', namespace=p)
+    Dend.V = p['vRest_pyr']; Dend.vSoma = p['vRest_pyr']
+    net.add([Soma, Dend])
+    add_compiled_coupling(net, Soma, Dend, ndend, p)
+
+    if bap_source == 'poisson':
+        post_src = PoissonGroup(1, rates=post_rate * Hz)
+        net.add(post_src)
+        bap_pre = post_src
+    elif bap_source == 'soma':
+        bap_pre = Soma
+    if soma_drive_hz > 0:
+        p['soma_drive_w'] = soma_drive_nS * nS
+        SD = PoissonGroup(n_soma_drive, rates=soma_drive_hz * Hz)
+        s_sd = Synapses(SD, Soma, on_pre='gTotAMPA_post += soma_drive_w', namespace=p)
+        s_sd.connect()
+        net.add([SD, s_sd])
+    if bap_source not in ('poisson', 'soma'):
+        raise ValueError(f"bap_source must be 'poisson' or 'soma', got {bap_source!r}")
+    bAP = Synapses(bap_pre, Dend, on_pre='V_post+=bAP_amp\nbAPCa_rise_post+=norm_factor_Ca',
+                   delay=p['bAP_delay'], namespace=p)
+    bAP.connect(j='k for k in range(2)')
+    net.add(bAP)
+
+    # interneurons: one SOM and one VIP channel per branch (index // n gives the channel)
+    PV = NeuronGroup(n_pv, eqs_pv, threshold='V>vThres_pv', reset='V=vReset_pv',
+                     refractory=p['refrac_pv'], method='euler', namespace=p)
+    PV.V = p['vRest_pv']
+    BG_pv = PoissonGroup(n_pv, rates=p['rate_bg_pv'])
+    sbg_pv = Synapses(BG_pv, PV, on_pre='gTotAMPA_post+=weight_bg_pv', namespace=p)
+    sbg_pv.connect(j='i')
+    SOM = NeuronGroup(2 * n_som, eqs_som, threshold='V>vThres_som', reset='V=vReset_som',
+                      refractory=p['refrac_som'], method='euler', namespace=p)
+    SOM.V = som_initial_voltages(2 * n_som, p, som_bias_pA, som_phase, seed_val)
+    SOM.iBaseline_som = som_bias_pA * pA
+    VIP = NeuronGroup(2 * n_vip, eqs_vip, threshold='V>vThres_vip', reset='V=vReset_vip',
+                      refractory=p['refrac_vip'], method='euler', namespace=p)
+    VIP.V = p['vRest_vip']
+    MD = PoissonGroup(2 * n_md, rates=0 * Hz)
+    net.add([PV, BG_pv, sbg_pv, SOM, VIP, MD])
+
+    s_md2pv = Synapses(MD, PV, on_pre='gTotAMPA_post+=gAMPA_pv', namespace=p)
+    s_md2pv.connect(p=p['p_md2pv'])
+    s_md2vip = Synapses(MD, VIP, on_pre='gTotAMPA_post+=gAMPA_vip_eff', namespace=p)
+    s_md2vip.connect(condition='i // n_md_ch == j // n_vip_ch', p=p['p_md2vip'])
+    s_vip2som = Synapses(VIP, SOM, on_pre='gTotGABA_post+=gGABA_som', namespace=p)
+    s_vip2som.connect(condition='i // n_vip_ch == j // n_som_ch', p=p['p_vip2som_spike'])
+    s_som2dend = Synapses(SOM, Dend, on_pre='gTotGABA_post+=gGABA_dend_eff', namespace=p)
+    s_som2dend.connect(condition='i // n_som_ch == j', p=p['p_som2dend_spike'])
+    s_pv2soma = Synapses(PV, Soma, on_pre='gTotGABA_post+=gGABA_pv2soma', namespace=p)
+    s_pv2soma.connect(p=p['p_pv2soma'])
+    s_som2pv = Synapses(SOM, PV, on_pre='gTotGABA_post+=gGABA_pv', namespace=p)
+    s_som2pv.connect(p=p['p_som2pv'])
+    net.add([s_md2pv, s_md2vip, s_vip2som, s_som2dend, s_pv2soma, s_som2pv])
+
+    acc_eqs = '\nad_acc : second\nap_acc : second\n'
+    accumulate = ('ad_acc = ad_acc + int(c_total > theta_d)*dt\n'
+                  'ap_acc = ap_acc + int(c_total > theta_p)*dt')
+    exc0 = PoissonGroup(20, rates=exc_rate * Hz)
+    exc1 = PoissonGroup(20, rates=exc_rate * Hz)
+    sb0 = Synapses(exc0, Dend, model=eqs_synapse_plasticity + acc_eqs, on_pre=on_pre_plasticity,
+                   method='heun', namespace=p)
+    sb0.connect(j='0'); sb0.rho = rho_init; attach_rho_clipper(sb0)
+    sb0.run_regularly(accumulate, when='end')
+    sb1 = Synapses(exc1, Dend, model=make_eqs_synapse_plasticity(2) + acc_eqs,
+                   on_pre=on_pre_plasticity, method='heun', namespace=p)
+    sb1.connect(j='1'); sb1.rho = rho_init; attach_rho_clipper(sb1)
+    sb1.run_regularly(accumulate, when='end')
+    net.add([exc0, exc1, sb0, sb1])
+
+    m_som, m_vip, m_pv, m_pyr = SpikeMonitor(SOM), SpikeMonitor(VIP), SpikeMonitor(PV), SpikeMonitor(Soma)
+    net.add([m_som, m_vip, m_pv, m_pyr])
+
+    ykw = dict(sigma=float(p['sigma']), tau=float(p['tau'] / second),
+               gamma_d=float(p['gamma_d']), gamma_p=float(p['gamma_p']),
+               w0=float(p['w0']), w1=float(p['w1']), rho_star=float(p['rhoStar']))
+    som_ch = np.arange(2 * n_som) // n_som
+    vip_ch = np.arange(2 * n_vip) // n_vip
+    md_ch = np.arange(2 * n_md) // n_md
+    n_som_syn = [int(np.sum(np.asarray(s_som2dend.j[:]) == b)) for b in range(2)]
+
+    traj = []
+    for e, ctx in enumerate(schedule):
+        MD.rates = np.where(md_ch == ctx, md_on_rate, md_off_rate) * Hz
+        if input_mode == 'context':
+            exc0.rates = (exc_rate if ctx == 0 else 0.0) * Hz
+            exc1.rates = (exc_rate if ctx == 1 else 0.0) * Hz
+        elif input_mode != 'always':
+            raise ValueError(f"input_mode must be 'context' or 'always', got {input_mode!r}")
+        for sb in (sb0, sb1):
+            sb.ad_acc = 0 * second; sb.ap_acc = 0 * second
+        n_s0, n_v0, n_p0, n_y0 = m_som.num_spikes, m_vip.num_spikes, m_pv.num_spikes, m_pyr.num_spikes
+        t_start = float(net.t / second)
+        net.run(T * second)
+        rec = dict(epoch=e + 1, context=int(ctx))
+        for b, sb in ((0, sb0), (1, sb1)):
+            ad = np.asarray(sb.ad_acc[:] / second); ap = np.asarray(sb.ap_acc[:] / second)
+            r = np.asarray(sb.rho[:])
+            r_new = np.array([yang_synapse_update(ad[k], ap[k], r[k], **ykw)['rho_new']
+                              for k in range(len(r))])
+            sb.rho[:] = r_new
+            rec[f'rho{b}'] = float(r_new.mean()); rec[f'ad{b}'] = float(ad.mean()); rec[f'ap{b}'] = float(ap.mean())
+        # per-channel rates over this epoch
+        st = np.asarray(m_som.t / second); si = np.asarray(m_som.i)
+        vt = np.asarray(m_vip.t / second); vi = np.asarray(m_vip.i)
+        for ch in (0, 1):
+            rec[f'som{ch}_hz'] = float(np.sum((st >= t_start) & (som_ch[si] == ch)) / T / n_som)
+            rec[f'vip{ch}_hz'] = float(np.sum((vt >= t_start) & (vip_ch[vi] == ch)) / T / n_vip)
+        rec['pv_hz'] = (m_pv.num_spikes - n_p0) / T / n_pv
+        rec['pyr_hz'] = (m_pyr.num_spikes - n_y0) / T
+        traj.append(rec)
+    return dict(traj=traj, n_som_syn_per_branch=n_som_syn, seed=seed_val,
+                rho0=traj[-1]['rho0'], rho1=traj[-1]['rho1'])

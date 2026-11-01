@@ -1,5 +1,13 @@
 # The 25 Hz gating failure is a small-N disinhibition-variance artifact
 
+> **REVISED 2026-11-02 (docs/AUDIT_2026-11-01.md, P1).** The seed-44/53 failures at
+> 25 Hz require the legacy SOM lockstep (all cells spiking together). With desynchronised
+> SOM (now the default), the original N = 20 circuit passes 20/20 seeds at 25 Hz (and
+> 30 Hz). The lockstep re-run reproduces 18/20 with exactly seeds 44 and 53 failing. The
+> N = 100 rescue below was real, but it rescued a lockstep circuit. The 30 Hz lock is no
+> longer needed for reliability. The text below is kept for provenance.
+
+
 *2026-10-14. Commits `5dac844` (mechanism + sweeps), `85f8bce` (figure).*
 *Figure: `figures/n_som_disinhibition_variance.png`.*
 
