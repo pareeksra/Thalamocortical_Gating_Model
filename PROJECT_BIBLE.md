@@ -515,8 +515,12 @@ input context-sparsity** (§7.9).
 > - Overlapping inputs (`docs/PLAN_overlapping_inputs.md`): MD gating is the ONLY source of
 >   context separation (discriminability ≈ 0.65·(1−f); 0 without gating), paid for by
 >   erosion of shared afferents (retention ≈ 1 − 0.6·f). It is a separation/retention
->   trade-off set by overlap. Untested next: repeated A/B alternation, a functional recall
->   readout. Heavy runs can go to `toothless` (`~/tcg/`,
+>   trade-off set by overlap.
+> - Repeated alternation (`docs/PLAN_alternation.md`): the loss is cyclic, not cumulative.
+>   Fast saturating LTP restores shared synapses on each return. Their branch assignment
+>   follows the most RECENT context; with long blocks and high overlap, the older pattern
+>   prefers the wrong branch. Untested next: a functional recall readout (plasticity
+>   frozen). Heavy runs can go to `toothless` (`~/tcg/`,
 >   `~/miniconda3/envs/myenv/bin/python`, verified bit-identical).
 > - Yang's 10 Hz needs ~1.5× gGABA (because of the dendrite's weaker shunting).
 > - No experiment yet shows inhibition gating mattering for retention; that needs
