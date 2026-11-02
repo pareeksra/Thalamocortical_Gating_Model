@@ -1,0 +1,25 @@
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('legacy', 'context', 42): end A rho0 0.925 rho1 0.500 | end B rho0 0.925 rho1 0.926 | retention 1.000 (127.8 s)
+('legacy', 'context', 44): end A rho0 0.926 rho1 0.500 | end B rho0 0.926 rho1 0.925 | retention 1.000 (129.1 s)
+('legacy', 'always', 44): end A rho0 0.926 rho1 0.235 | end B rho0 0.368 rho1 0.925 | retention 0.398 (129.2 s)
+('legacy', 'always', 43): end A rho0 0.926 rho1 0.287 | end B rho0 0.323 rho1 0.926 | retention 0.349 (130.1 s)
+('legacy', 'always', 42): end A rho0 0.925 rho1 0.213 | end B rho0 0.340 rho1 0.926 | retention 0.367 (130.3 s)
+('legacy', 'context', 43): end A rho0 0.926 rho1 0.500 | end B rho0 0.925 rho1 0.926 | retention 0.999 (131.0 s)
+('yang', 'always', 44): end A rho0 0.928 rho1 0.297 | end B rho0 0.394 rho1 0.927 | retention 0.425 (139.3 s)
+('yang', 'always', 43): end A rho0 0.928 rho1 0.299 | end B rho0 0.907 rho1 0.928 | retention 0.977 (139.5 s)
+('yang', 'context', 43): end A rho0 0.928 rho1 0.333 | end B rho0 0.926 rho1 0.928 | retention 0.998 (141.1 s)
+('yang', 'always', 42): end A rho0 0.927 rho1 0.298 | end B rho0 0.548 rho1 0.928 | retention 0.591 (141.6 s)
+('yang', 'context', 42): end A rho0 0.927 rho1 0.333 | end B rho0 0.927 rho1 0.928 | retention 1.000 (143.1 s)
+('yang', 'context', 44): end A rho0 0.928 rho1 0.333 | end B rho0 0.927 rho1 0.927 | retention 0.999 (143.8 s)
+done
