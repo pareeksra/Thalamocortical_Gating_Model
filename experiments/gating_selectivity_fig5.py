@@ -20,14 +20,14 @@ axes are mapped onto channel specificity:
 Synapse versions: old (w scales AMPA, rho 0.5) and yang (w scales NMDA, AMPA off, w = 1).
 Run:     <py> -I experiments/gating_selectivity_fig5.py run [n_workers]
 Analyse: <py> -I experiments/gating_selectivity_fig5.py analyse
-Out:     docs/audit/gating_selectivity_fig5.json, figures/gating_selectivity_fig5.png
+Out:     results/current/gating_selectivity_fig5.json, figures/gating_selectivity_fig5.png
 """
 import os, sys, json, time
 import numpy as np
 from concurrent.futures import ProcessPoolExecutor, as_completed
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT]
-OUT = os.path.join(PROOT, 'docs', 'audit', 'gating_selectivity_fig5.json')
+OUT = os.path.join(PROOT, 'results', 'current', 'gating_selectivity_fig5.json')
 SEEDS = [42, 43, 44, 45, 46]
 VERS = ['old', 'yang']
 MD2SOM_NS = 2.25

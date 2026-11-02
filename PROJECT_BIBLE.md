@@ -16,7 +16,7 @@
 > **Local path (Linux):** `/run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project`
 > (an NTFS "New Volume" mount — the old Windows `D:/minsu/...` drive).
 
-> **⚠ AUDIT 2026-11-01/02. Read `docs/AUDIT_2026-11-01.md` first.** Eight logic problems
+> **⚠ AUDIT 2026-11-01/02. Read `docs/reports/AUDIT_2026-11-01.md` first.** Eight logic problems
 > were found and fixed. The changes that alter the science:
 > - **SOM fired in perfect lockstep in every prior run.** With desynchronised SOM (now the
 >   default), gating follows mean inhibitory conductance, not "coverage". The 25 Hz
@@ -54,7 +54,7 @@
 > [AUDIT] The forgetting sentence below is superseded. Input sparsity alone prevents
 > forgetting; inhibition is not needed for it. The SOM-rate explanation is also
 > superseded (lockstep artefact plus weaker dendritic shunting). See
-> `docs/AUDIT_2026-11-01.md`.
+> `docs/reports/AUDIT_2026-11-01.md`.
 
 Can the **mediodorsal thalamus (MD)** control *which dendritic branch* of a prefrontal
 pyramidal neuron is allowed to learn, so that different contexts write onto different
@@ -147,7 +147,7 @@ projections. The marker→target pairing is verified against Zhang and is **not 
 ## 4. The plan (the phase roadmap)
 
 Organizing principle: **don't build on a broken foundation.** Fix and verify each level
-against the source papers before moving up. (Full version: `docs/ROADMAP.md`.)
+against the source papers before moving up. (Full version: `docs/reports/ROADMAP.md`.)
 
 - **Phase 0 — Foundation & hygiene.** One parameter source; freeze the two NumPy models;
   make results reproducible. *(Done.)*
@@ -177,7 +177,7 @@ figure is essential to reading it.
 |---|---|---|---|
 | **A — Brian 2 spiking network** | `model/`, `experiments/`, `src/v2/` | The full spiking circuit: multi-compartment pyramidal cell, PV/SOM/VIP LIF interneurons, MD as a `PoissonGroup`, Graupner–Brunel plasticity. The only model with connection *probabilities*, and the only one whose plasticity actually works. | **CANONICAL. Use this.** |
 | **B — Phenomenological (NumPy)** | `numpy_models/main_gating_figures.py` | Proof-of-concept of Yang. Uses *hardcoded* dendritic inhibition instead of simulating interneurons. Produces documentation Figures 1–4. | **Frozen. Plasticity inert** (random walk). |
-| **C — Emergent mechanistic (NumPy)** | `numpy_models/emergent_gating_mechanistic_model.py` | Stochastic trial-based model where inhibition *emerges* from noisy interneuron rates driven by Poisson MD. Produces `figures/mechanistic/`. | **Frozen. Plasticity inert.** |
+| **C — Emergent mechanistic (NumPy)** | `numpy_models/emergent_gating_mechanistic_model.py` | Stochastic trial-based model where inhibition *emerges* from noisy interneuron rates driven by Poisson MD. Produces `figures/pre_audit/mechanistic/`. | **Frozen. Plasticity inert.** |
 
 **Why B and C are inert (do not "fix" them without reading this).** Both replace
 Graupner–Brunel's bistable ρ dynamics with a monostable relaxation (because the true
@@ -189,7 +189,7 @@ frozen as illustrative sketches.** Everything going forward is Model A only.
 
 > **One caveat on Model A's layout:** the modern canonical code lives in `model/` and
 > `src/v2/plasticity.py`. The old `src/v2/equations.py` / `parameters.py` /
-> `MultiCompartmentalModel.py` paths referenced in `docs/REPAIR_LOG.md` were an earlier
+> `MultiCompartmentalModel.py` paths referenced in `docs/reports/REPAIR_LOG.md` were an earlier
 > layout; the live files are now under `model/`. When REPAIR_LOG says `src/v2/equations.py`,
 > read `model/equations.py`.
 
@@ -271,7 +271,7 @@ verified against the paper):**
 
 > [AUDIT] Simulation step: every group integrates at Brian 2's default **0.1 ms**
 > (`defaultclock.dt` is never set; `sim_dt` = 0.02 ms clocked only the retired Python
-> coupling). It was checked to be dt-converged (`docs/audit/dt_convergence.json`).
+> coupling). It was checked to be dt-converged (`results/current/dt_convergence.json`).
 > Coupling is now compiled (`model/circuit_helpers.py`) and bit-identical to the legacy
 > path. SOM cells start at random phases of their cycle (`som_phase='random'`);
 > `'sync'` reproduces the legacy lockstep. bAPs come from an external Poisson source, so
@@ -292,12 +292,12 @@ verified against the paper):**
 ## 7. The full history: what we tried, what broke, what we did
 
 Every episode has the same shape: **what we were checking → what happened → what we
-concluded → what we changed → how we verified.** Sources: `docs/PROJECT_STORY.md`,
-`docs/NARRATIVE_WALKTHROUGH.md`, `docs/REPAIR_LOG.md`, and the three `docs/FINDING_*.md`.
+concluded → what we changed → how we verified.** Sources: `docs/reports/PROJECT_STORY.md`,
+`docs/reports/NARRATIVE_WALKTHROUGH.md`, `docs/reports/REPAIR_LOG.md`, and the three `docs/FINDING_*.md`.
 
 ### 7.0 The repair pass (before any real experiment)
 
-An audit of the inherited code (`docs/REPAIR_LOG.md`) found dead/wrong pieces:
+An audit of the inherited code (`docs/reports/REPAIR_LOG.md`) found dead/wrong pieces:
 - **`dend_IO` sign defect:** the raw fit implied *more* inhibition could *depolarize* an
   unexcited branch by up to 29.89 mV — impossible for shunting GABA_A. Fixed by
   re-referencing the sigmoid to rest; resting error → exactly 0.00 mV, fitted constants
@@ -377,9 +377,9 @@ this is a **stochastic escape**, not a mean-rate miss. A 20-seed sweep (40–59)
 ### 7.5 FINDING: the 25 Hz failure is a small-N disinhibition-variance artifact
 
 > [AUDIT] Superseded. The failure needs SOM lockstep. With desynchronised SOM, N = 20 is
-> 20/20 at 25 Hz (`docs/audit/som_async_full.json`).
+> 20/20 at 25 Hz (`results/current/som_async_full.json`).
 
-(`docs/FINDING_disinhibition_variance.md`.) We then root-caused *why* seeds 44/53 fail.
+(`docs/reports/FINDING_disinhibition_variance.md`.) We then root-caused *why* seeds 44/53 fail.
 It is **not** rate and **not** a timing gap. With only 20 SOM cells at p = 0.5, the
 inhibited branch gets GABA from a small *integer* number of synapses, quantized in ~1.98 nS
 steps. Low-draw seeds (~6 synapses, ≈12 nS) can't shunt the branch → voltage rises ~12 mV →
@@ -400,7 +400,7 @@ help; it takes a substantial N to pull the whole gGABA distribution off the ~12 
 > weaker shunting (measured V1). The working-tree τ table (345/395/347/479 Hz·ms) also
 > never showed a constant product at 40 ms.
 
-(`docs/FINDING_som_rate_divergence.md`.) The reviewer question: Yang gates at ~10 Hz SOM,
+(`docs/reports/FINDING_som_rate_divergence.md`.) The reviewer question: Yang gates at ~10 Hz SOM,
 we need ~18–21 Hz at the *same* τ_GABA,dend = 20 ms — why? **Answer: gating is set by
 inhibition *coverage* (rate × τ), not rate.** In a spiking model dendritic calcium is
 event-driven, so any within-ISI window the GABA tail doesn't cover lets calcium cross θ_p —
@@ -411,7 +411,7 @@ the divergence is a quantified consequence of event-driven calcium, **not a bug.
 
 ### 7.7 Reproducibility (Test 5) — investigated and resolved
 
-(`docs/PROJECT_STORY.md` §10.) Test 5 reported the same seed giving different PV rates.
+(`docs/reports/PROJECT_STORY.md` §10.) Test 5 reported the same seed giving different PV rates.
 Root-caused (`experiments/test5_pv_diag.py`): **results are exactly reproducible per seed**
 when each run is a fresh process (bit-identical across processes). The non-determinism was a
 Brian2 **in-process** quirk — `PoissonGroup` spike generation isn't reset by `seed()` across
@@ -434,11 +434,11 @@ to the fresh-subprocess check and now **passes**.
 ### 7.9 FINDING: catastrophic forgetting — found, then fixed (the central claim)
 
 > [AUDIT] The missing control (idle input off, NO inhibition) retains equally well:
-> 99.9–100% over 5 seeds, MD-driven (`docs/audit/retention_md_context.json`), and 99.8%
+> 99.9–100% over 5 seeds, MD-driven (`results/current/retention_md_context.json`), and 99.8%
 > in the original script. "Needs BOTH" is not supported. Input sparsity alone protects,
 > and inhibition on an active-input branch erases.
 
-(`docs/FINDING_catastrophic_forgetting.md`.) First-ever run of the project's headline claim.
+(`docs/reports/FINDING_catastrophic_forgetting.md`.) First-ever run of the project's headline claim.
 Protocol: learn A (branch 0 free) → switch → learn B (branch 1 free) → is A retained?
 - **Inhibition-only context switch** (branch-0 input stays ON during B): **30% retention —
   CATASTROPHIC FORGETTING.** Diagnosis: gating ≠ protection. A gated branch has calcium
@@ -458,7 +458,7 @@ inputs context-SPARSE, not just branch-gated** — or it will forget at scale.
 
 ### 7.10 Appendix work — Yang Supplementary Figs 1 & 2
 
-(`experiments/yang_supp_replication.py`, `docs/Yang_Supp_Comparison.pptx`.) Faithful
+(`experiments/yang_supp_replication.py`, `docs/meetings/Yang_Supp_Comparison.pptx`.) Faithful
 single-dendrite replication of Yang's Supp Figs 1f/1g/1h and 2a/2b/2c/2d — the NMDA-plateau
 mechanism our model depends on — matched panel-by-panel against the real PDF. (Not
 reproduced: Supp 1a–d full Branco morphology; Supp 2e–h stochastic switching.)
@@ -481,14 +481,14 @@ resolved. Forgetting mechanism resolved in miniature (needs both input- and inhi
 SOM-rate divergence from Yang quantitatively explained.
 
 **Committed and pushed** through `7118644` (2026-10-15): all findings, the before/after proof
-figure (`figures/before_after_proof.png`), and the 9-slide PI deck
-(`docs/PI_Meeting_2026-10-15.pptx`) with speaker notes.
+figure (`figures/pre_audit/before_after_proof.png`), and the 9-slide PI deck
+(`docs/meetings/PI_Meeting_2026-10-15.pptx`) with speaker notes.
 
 **Uncommitted working-tree state (as of 2026-11-01):** a large set of untracked analysis
 scripts and result JSONs exists beyond the last commit (e.g. `experiments/seed44_escape_analysis.py`,
 `experiments/across_seed_diag.py`, `experiments/model_explorer.py`,
 `experiments/gating_selectivity_readout.py`, `experiments/yang_supp_replication.py`,
-`docs/PROJECT_STORY.md`, `docs/NARRATIVE_WALKTHROUGH.md`, many `docs/phase1_analytical_state_*.json`,
+`docs/reports/PROJECT_STORY.md`, `docs/reports/NARRATIVE_WALKTHROUGH.md`, many `docs/phase1_analytical_state_*.json`,
 retention figures, supp-panel figures, and several `.docx`/`.pptx`/`.odp` deliverables).
 **Before building forward, run `git status` and decide what to commit** — this file does not
 assume any of it is saved.
@@ -512,11 +512,11 @@ input context-sparsity** (§7.9).
 >   Tested result: MD→PV does NOT protect memories via fewer bAPs (retention 0.37–0.39
 >   over the physiological range). The erasing LTD is NMDA-driven, so input sparsity
 >   remains the only protector.
-> - Overlapping inputs (`docs/PLAN_overlapping_inputs.md`): MD gating is the ONLY source of
+> - Overlapping inputs (`docs/reports/PLAN_overlapping_inputs.md`): MD gating is the ONLY source of
 >   context separation (discriminability ≈ 0.65·(1−f); 0 without gating), paid for by
 >   erosion of shared afferents (retention ≈ 1 − 0.6·f). It is a separation/retention
 >   trade-off set by overlap.
-> - Repeated alternation (`docs/PLAN_alternation.md`): the loss is cyclic, not cumulative.
+> - Repeated alternation (`docs/reports/PLAN_alternation.md`): the loss is cyclic, not cumulative.
 >   Fast saturating LTP restores shared synapses on each return. Their branch assignment
 >   follows the most RECENT context; with long blocks and high overlap, the older pattern
 >   prefers the wrong branch. Untested next: a functional recall readout (plasticity
@@ -627,7 +627,7 @@ input context-sparsity** (§7.9).
 | `experiments/bap_soma_coupling_test.py` | Somatic bAPs; does the PV arm reach plasticity. |
 | `experiments/dt_convergence_check.py` | 0.1 vs 0.02 ms convergence. |
 | `tests/test_audit_fixes.py` | Regression tests for the audit fixes (`--slow` adds the full-circuit legacy-equivalence check). |
-| `docs/AUDIT_2026-11-01.md`, `docs/audit/` | The audit record and all its raw data/logs. |
+| `docs/reports/AUDIT_2026-11-01.md`, `results/current/` | The audit record and all its raw data/logs. |
 
 Rewritten: `phase1_single_neuron_gating.py` (analytical wrapper), `demo_v2_zhang2025.py`
 (context circuit), `sweep_phase_diagram.py` (canonical full circuit), V1/V2/V4 in
@@ -682,7 +682,7 @@ seed-44 diagnostics, phase1 analytical state dumps (`phase1_analytical_state_*.j
 retention results, determinism checks. These are the evidence behind the findings.
 
 **Deliverables:** `PI_Meeting_2026-10-15.pptx` (+ `.odp`), `Progress_Report.docx` /
-`Progress_Report_Detailed.docx`, `Validation_Report.docx`, `PI_Story.docx`,
+`Progress_Report_Detailed.docx`, `docs/meetings/Validation_Report.docx`, `PI_Story.docx`,
 `Results_Summary.pptx` / `Results_Summary_PI.pptx`, `Yang_Supp_Comparison.pptx`,
 `presentations/*.pptx` (v1–v3 summaries), `project_documentation.tex` (LaTeX write-up).
 

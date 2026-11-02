@@ -12,11 +12,11 @@ Two panels:
 Panel A uses the epoch-0 gGABA0 measurements (1-epoch probe, docs embedded below so
 the figure is self-contained from committed data). Panel B reads the committed full
 10-epoch sweeps:
-  docs/full_circuit_reliability_25hz_results.json   (baseline N=20)
-  docs/n_som_reliability_n100_results.json          (N=100, this work)
+  results/pre_audit/full_circuit_reliability_25hz_results.json   (baseline N=20)
+  results/pre_audit/n_som_reliability_n100_results.json          (N=100, this work)
 
 Run: <venv>/python -I plotting/n_som_variance_figure.py
-Out: figures/n_som_disinhibition_variance.png
+Out: figures/pre_audit/n_som_disinhibition_variance.png
 """
 import os, sys, json
 import numpy as np
@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIG_DIR = os.path.join(PROOT, 'figures')
-DOCS = os.path.join(PROOT, 'docs')
+DOCS = os.path.join(PROOT, 'results', 'pre_audit')
 
 # --- CVD-safe categorical pair (Okabe-Ito: blue #0072B2, vermillion #D55E00) -----
 C_N20 = '#D55E00'   # baseline, the fragile condition
@@ -120,7 +120,7 @@ def main():
     fig.suptitle('25 Hz gating failure is a small-N disinhibition-variance artifact, '
                  'not a firing-rate problem', fontsize=12.5, fontweight='bold', y=1.02)
     fig.tight_layout()
-    out = os.path.join(FIG_DIR, 'n_som_disinhibition_variance.png')
+    out = os.path.join(FIG_DIR, 'pre_audit/n_som_disinhibition_variance.png')
     fig.savefig(out, dpi=150, bbox_inches='tight', facecolor='white')
     print(f'Saved {out}')
     print(f'  baseline N=20: {base[0]}/{base[1]} pass, fails {base[2]}')

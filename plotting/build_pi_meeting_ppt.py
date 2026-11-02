@@ -6,7 +6,7 @@ results each as text-left / figure-right. Matches the house style of
 plotting/build_results_ppt.py (16:9, blank layout, black/grey on white).
 
 Run: <venv>/python -I plotting/build_pi_meeting_ppt.py
-Out: docs/PI_Meeting_2026-10-15.pptx
+Out: docs/meetings/PI_Meeting_2026-10-15.pptx
 """
 import os
 from pptx import Presentation
@@ -16,7 +16,7 @@ from pptx.enum.text import PP_ALIGN
 
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIG = os.path.join(PROOT, 'figures')
-OUT = os.path.join(PROOT, 'docs', 'PI_Meeting_2026-10-15.pptx')
+OUT = os.path.join(PROOT, 'docs', 'meetings', 'PI_Meeting_2026-10-15.pptx')
 
 WHITE = RGBColor(0xFF, 0xFF, 0xFF)
 BLACK = RGBColor(0x11, 0x11, 0x11)

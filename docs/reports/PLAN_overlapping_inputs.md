@@ -69,7 +69,7 @@ If the anchors fail, stop and debug before interpreting anything.
 
 ## Results (2026-11-02; 50 runs, run locally)
 
-Data: `docs/audit/overlap_experiment.json`. Figure: `figures/overlap_experiment.png`.
+Data: `results/current/overlap_experiment.json`. Figure: `figures/overlap_experiment.png`.
 Code: `experiments/overlap_experiment.py`, `context_circuit(input_mode='patterns')`.
 
 **Implementation checks.**

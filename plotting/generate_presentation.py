@@ -32,7 +32,7 @@ def create_presentation():
     p = tf.add_paragraph()
     p.text = "• VIP successfully suppresses SOM, dropping dendritic inhibition organically to ~2 nS."
     
-    img_path = os.path.join("figures", "mechanistic", "fig_emergent_inhibition.png")
+    img_path = os.path.join("figures", "pre_audit/mechanistic", "pre_audit/fig_emergent_inhibition.png")
     if os.path.exists(img_path):
         slide.shapes.add_picture(img_path, Inches(1.5), Inches(3.0), height=Inches(4.0))
 
@@ -50,7 +50,7 @@ def create_presentation():
     p = tf.add_paragraph()
     p.text = "• Context B (200-299): MD activates VIP 2. Branch 2 learns."
     
-    img_path = os.path.join("figures", "mechanistic", "fig_self_organized_branching.png")
+    img_path = os.path.join("figures", "pre_audit/mechanistic", "pre_audit/fig_self_organized_branching.png")
     if os.path.exists(img_path):
         slide.shapes.add_picture(img_path, Inches(1.5), Inches(3.2), height=Inches(4.0))
 
@@ -68,7 +68,7 @@ def create_presentation():
     p = tf.add_paragraph()
     p.text = "• PV GS = 0.00 (Global, non-selective drive)"
     
-    img_path = os.path.join("figures", "mechanistic", "fig_gating_selectivity.png")
+    img_path = os.path.join("figures", "pre_audit/mechanistic", "pre_audit/fig_gating_selectivity.png")
     if os.path.exists(img_path):
         slide.shapes.add_picture(img_path, Inches(1.5), Inches(3.2), width=Inches(7.0))
 
@@ -76,7 +76,7 @@ def create_presentation():
     slide = prs.slides.add_slide(title_only_layout)
     slide.shapes.title.text = "4. Phenomenological Model: Calcium Plasticity"
     
-    img_path = os.path.join("figures", "phenomenological", "fig1_calcium_plasticity.png")
+    img_path = os.path.join("figures", "pre_audit/phenomenological", "pre_audit/fig1_calcium_plasticity.png")
     if os.path.exists(img_path):
         slide.shapes.add_picture(img_path, Inches(1.0), Inches(1.5), width=Inches(8.0))
 
@@ -84,7 +84,7 @@ def create_presentation():
     slide = prs.slides.add_slide(title_only_layout)
     slide.shapes.title.text = "5. Phenomenological Model: Dendritic Gating"
     
-    img_path = os.path.join("figures", "phenomenological", "fig2_dendritic_gating.png")
+    img_path = os.path.join("figures", "pre_audit/phenomenological", "pre_audit/fig2_dendritic_gating.png")
     if os.path.exists(img_path):
         slide.shapes.add_picture(img_path, Inches(1.0), Inches(1.5), width=Inches(8.0))
 
@@ -92,7 +92,7 @@ def create_presentation():
     slide = prs.slides.add_slide(title_only_layout)
     slide.shapes.title.text = "6. Phenomenological Model: Inhibition vs Plasticity"
     
-    img_path = os.path.join("figures", "phenomenological", "fig3_weight_change_vs_rate.png")
+    img_path = os.path.join("figures", "pre_audit/phenomenological", "pre_audit/fig3_weight_change_vs_rate.png")
     if os.path.exists(img_path):
         slide.shapes.add_picture(img_path, Inches(2.0), Inches(1.5), height=Inches(5.0))
 
@@ -108,7 +108,7 @@ def create_presentation():
     p = tf.add_paragraph()
     p.text = "• Proves the mathematical concept of Graupner-Brunel plasticity."
     
-    img_path = os.path.join("figures", "phenomenological", "fig4_branch_specific_learning.png")
+    img_path = os.path.join("figures", "pre_audit/phenomenological", "pre_audit/fig4_branch_specific_learning.png")
     if os.path.exists(img_path):
         slide.shapes.add_picture(img_path, Inches(1.0), Inches(3.0), width=Inches(8.0))
 

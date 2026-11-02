@@ -225,7 +225,7 @@ def make_fig1():
     fig.suptitle('Replication of Yang (2016) Supplementary Fig. 1 (reduced model, panels f–h): '
                  'inhibition gates NMDAR but not AMPAR dendritic input', fontsize=11)
     fig.tight_layout(rect=[0, 0, 1, 0.94])
-    out = os.path.join(PROOT, 'figures', 'yang_supp1_replication.png')
+    out = os.path.join(PROOT, 'figures', 'pre_audit', 'yang_supp1_replication.png')
     fig.savefig(out, dpi=150); plt.close(fig); print(f"Saved {out}", flush=True)
 
 
@@ -265,7 +265,7 @@ def make_fig2():
     fig.suptitle('Replication of Yang (2016) Supplementary Fig. 2 (panels a–d): '
                  'NMDA saturation enables strong inhibitory control; bistability', fontsize=11)
     fig.tight_layout(rect=[0, 0, 1, 0.94])
-    out = os.path.join(PROOT, 'figures', 'yang_supp2_replication.png')
+    out = os.path.join(PROOT, 'figures', 'pre_audit', 'yang_supp2_replication.png')
     fig.savefig(out, dpi=150); plt.close(fig); print(f"Saved {out}", flush=True)
 
 

@@ -1,18 +1,18 @@
 """
 build_progress_report.py
 =========================
-Builds docs/Progress_Report.docx: a chronological, first-person-plural lab-notebook
+Builds docs/meetings/Progress_Report.docx: a chronological, first-person-plural lab-notebook
 narrative of the project, written for a PI. Every number in this script is copied from
-a source file in the repo (README.md, docs/gamma_tau_analysis.md,
-figures/paper_replications/measured_results.json, docs/phase1_alpha_operating_points.json,
-docs/formula_comparison_table.csv, docs/gamma_tau_300s_checkpoints.json) or read directly
+a source file in the repo (README.md, docs/reports/gamma_tau_analysis.md,
+figures/pre_audit/paper_replications/measured_results.json, results/pre_audit/phase1_alpha_operating_points.json,
+results/pre_audit/formula_comparison_table.csv, results/pre_audit/gamma_tau_300s_checkpoints.json) or read directly
 off a figure when no raw-data file exists for it (flagged inline where that happens).
 
 This is a LIVING DOCUMENT: re-running this script regenerates the report from scratch.
 To add a new dated entry, append a new `log_entry(...)` call and a new section at the
 bottom (see the "CHANGE LOG" section) rather than editing history in place.
 
-Saved to TWO locations on every run: the local repo copy (docs/Progress_Report.docx) and
+Saved to TWO locations on every run: the local repo copy (docs/meetings/Progress_Report.docx) and
 Raghav's Google Drive sync folder (G:/My Drive/Progress_Report.docx), per his instruction
 that both stay in sync after every append. If the Drive path is unreachable (drive not
 mounted, sync client not running), the local copy still saves and the script reports the
@@ -31,7 +31,7 @@ PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # longer overwrite the short version the PI reads.
 GDRIVE_PATH = r'G:\My Drive\Progress_Report_Detailed.docx'
 FIG = os.path.join(PROOT, 'figures')
-DOCS = os.path.join(PROOT, 'docs')
+DOCS = os.path.join(PROOT, 'docs', 'meetings')
 
 doc = Document()
 
@@ -191,7 +191,7 @@ sp('Comparison to the paper (the strong one):', "We measured the branch's half-a
    "values (22.24, 33.36, 77.83, 133.42, 216.81 nS) match to the digit at every level — and this "
    "check does not depend on the plasticity equation, so it is the cleanest evidence the fix "
    "landed us in Yang's actual regime.")
-sfig('figures/paper_replications/replicated_YANG2016_fig2c_dendritic_IO.png',
+sfig('figures/pre_audit/paper_replications/replicated_YANG2016_fig2c_dendritic_IO.png',
      'Our model (points) vs. Yang’s formula (line): dendritic half-activation shifts with '
      'inhibition exactly as the paper predicts.')
 
@@ -218,7 +218,7 @@ sp('Fix:', "Yang's paper doesn't integrate this equation step-by-step — it use
    "directly.")
 sp('Result:', "Honest gating ratio 2.81 (free ~0.92, inhibited ~0.33), built over repeated "
    "epochs. Much lower than 42.76 — and that's the point: 42.76 was the bug, 2.81 is real.")
-sfig('figures/analytical_plasticity_trajectory.png',
+sfig('figures/pre_audit/analytical_plasticity_trajectory.png',
      'Learning over epochs with the corrected, paper-faithful equation: free branch rises and '
      'holds, inhibited branch drifts down. Final ratio 2.81.')
 
@@ -233,7 +233,7 @@ sp('Process (two sweeps):', "(1) Sweeping SOM rate: gating switches on sharply b
 sp('Stress test:', "25 Hz looked best on one seed, but across 20 random seeds two failed "
    "(~10%). At 30 Hz all 20 passed (ratios 3.25–5.07), so we set the SOM baseline to 30 Hz — "
    "reliable, not lucky.")
-sfig('figures/reliability_full_circuit.png',
+sfig('figures/pre_audit/reliability_full_circuit.png',
      '20-seed reliability: 25 Hz fails 2 of 20 (red); 30 Hz passes all 20. Current model: 30 Hz.')
 sp('Comparison to the paper (stated honestly):', "This is a real divergence: our spiking model "
    "needs SOM firing at least ~2x faster than Yang's ~10 Hz to gate at all. We are transparent "
@@ -249,7 +249,7 @@ sp('A disease model (ketamine / schizophrenia):', "Ketamine-type drugs block NMD
    "Below ~50% block, MD can still choose which branch learns; above ~50%, SOM returns to "
    "baseline and permanently shuts its branch regardless of MD. It's the CONTROL over learning "
    "that breaks — a loss of context-dependent flexibility.")
-sfig('figures/phase2_ketamine_failure.png',
+sfig('figures/pre_audit/phase2_ketamine_failure.png',
      'Blocking MD->VIP: gating is intact below ~50% block and collapses above it, as SOM '
      'returns to its baseline rate.')
 
@@ -328,7 +328,7 @@ p("Everything from here on is about Model A, because it's the only one where pla
 h1('2. Phase 1 — building and validating the single-neuron gating mechanism')
 
 p("Model A's connectivity, as built, looks like this:")
-figure('figures/network_architecture.png',
+figure('figures/pre_audit/network_architecture.png',
        f'Figure {fig_num()}. Model A network connectivity: MD thalamus and cortical '
        'pathway as Poisson inputs, VIP/SOM/PV interneurons, and the plastic pathway onto '
        'the two dendritic branches. Weights and connection probabilities read from '
@@ -368,7 +368,7 @@ h2('2.2 Quantitative replication against both papers')
 
 p("`experiments/validate_vs_papers.py` reruns four specific comparisons against the source "
   "papers and saves the raw numbers to "
-  "`figures/paper_replications/measured_results.json`. We pulled them directly from that "
+  "`figures/pre_audit/paper_replications/measured_results.json`. We pulled them directly from that "
   "file rather than from any narrative description of it.")
 
 h3('V1 — dendritic input-output function (Yang Fig. 2c)')
@@ -381,7 +381,7 @@ table(
 p("This matches Yang's formula to the digit at every level — the paper_replications README "
   "calls this an exact match, and the arithmetic checks out (5.56·4 = 22.24, 5.56·6 = 33.36, "
   "and so on).")
-figure('figures/paper_replications/replicated_YANG2016_fig2c_dendritic_IO.png',
+figure('figures/pre_audit/paper_replications/replicated_YANG2016_fig2c_dendritic_IO.png',
        f'Figure {fig_num()}. Dendritic depolarization vs. excitatory conductance at five '
        'inhibition levels, replicating Yang Fig. 2c. Half-activation shifts with inhibition '
        'exactly as predicted by Eq. 22 (table above).')
@@ -400,14 +400,14 @@ p("The free branch crosses ρ = 0.5 (into the LTP regime) somewhere around 20 Hz
   "potentiation, it removes the branch from the game entirely across the whole range. That's "
   "the qualitative effect Yang reports (a directional match, not an exact numeric one, since "
   "Yang's Fig. 7b is itself qualitative).")
-figure('figures/paper_replications/replicated_YANG2016_fig7b_LTP_vs_rate.png',
+figure('figures/pre_audit/paper_replications/replicated_YANG2016_fig7b_LTP_vs_rate.png',
        f'Figure {fig_num()}. Steady-state ρ vs. presynaptic pathway rate for the free and '
        'SOM-inhibited branches, replicating Yang Fig. 7b.')
 
 h3('V3 — branch-specific gating at Yang\'s operating point (Yang Fig. 7d-e)')
 p("At exc = 80 Hz / post = 10 Hz — Yang's own operating point — validate_vs_papers.py "
   "measured ρ_free = 0.7917, ρ_inhibited = 0.01221, a free/inhibited ratio of 64.83.")
-figure('figures/paper_replications/replicated_YANG2016_fig7de_branch_gating.png',
+figure('figures/pre_audit/paper_replications/replicated_YANG2016_fig7de_branch_gating.png',
        f'Figure {fig_num()}. Branch-specific gating at Yang\'s operating point (exc 80 Hz, '
        'post 10 Hz): free branch ρ=0.792, inhibited branch ρ=0.012, ratio 64.8.')
 
@@ -426,7 +426,7 @@ p("As MD drive rises, VIP rises (0 → 93 Hz), which suppresses SOM (36 → 0 Hz
   "Hz), the separate gain-control arm. This is a qualitative check only: Zhang's model is a "
   "trained rate RNN doing a cognitive task, and we're only borrowing its connectivity "
   "labels, not reproducing any of its behavioral results.")
-figure('figures/paper_replications/replicated_ZHANG2025_MD_interneuron_control.png',
+figure('figures/pre_audit/paper_replications/replicated_ZHANG2025_MD_interneuron_control.png',
        f'Figure {fig_num()}. Population firing rates of VIP, SOM, PV, and the pyramidal '
        'soma as a function of MD drive, replicating the qualitative direction of Zhang\'s '
        'MD→PV / MD→VIP wiring.')
@@ -435,7 +435,7 @@ flag("Three different measurements of what is nominally the same headline number
      "Phase-1 free/inhibited ratio) disagree with each other by close to 50%. The README's "
      "top-line banner reports ratio ~43 (ρ_free ≈ 0.78, ρ_inhibited ≈ 0.02), from "
      "`phase1_single_neuron_gating.py`. `validate_vs_papers.py`'s V3 measurement (above, and "
-     "also quoted in Validation_Report.docx) gives ratio 64.83 (ρ_free = 0.7917, "
+     "also quoted in docs/meetings/Validation_Report.docx) gives ratio 64.83 (ρ_free = 0.7917, "
      "ρ_inhibited = 0.01221) at the same nominal operating point. And our own re-measurement "
      "of the pre-refactor equations in the γ/τ audit (Section 4 below) gives yet a third "
      "value, ratio 42.76 (ρ_free = 0.779, ρ_inhibited = 0.018) — close to the README's number "
@@ -481,7 +481,7 @@ p("Reading the curve: gating selectivity starts around 62 at noise = 0, drifts d
   "sharply: by noise = 0.45 the mean ratio has dropped below 1.5 (the script's own breaking-"
   "point threshold) and stays essentially at 1 — no gating — all the way out to noise = 2.0.")
 
-figure('figures/phase2_snr_curve.png',
+figure('figures/pre_audit/phase2_snr_curve.png',
        f'Figure {fig_num()}. Branch-specific gating selectivity vs. noise level (n=3 seeds '
        'per point). Selectivity falls from ~62 at zero noise through an unstable transition '
        'zone (noise 0.30-0.40) to full collapse (ratio < 1.5) at noise = 0.45 and beyond.')
@@ -518,7 +518,7 @@ p("The interesting thing here is not that the circuit's output gets weaker under
   "is stuck closed no matter what MD says. That's the schizophrenia-relevant reading: a loss "
   "of context-dependent flexibility, not a global silencing of learning.")
 
-figure('figures/phase2_ketamine_failure.png',
+figure('figures/pre_audit/phase2_ketamine_failure.png',
        f'Figure {fig_num()}. Left: steady-state ρ for the free and SOM-targeted branches vs. '
        'MD→VIP synaptic block. Right: SOM and VIP population rates over the same sweep, at '
        'MD = 25 Hz. Branch-specific gating is intact below ~50% block and collapses above it, '
@@ -557,7 +557,7 @@ p("Yang 2016 sets SOM neurons' baseline firing rate at about 10 Hz via a 150 pA 
   "current (Methods p. 11). The project's SOM cells were running at roughly 36–40 Hz under "
   "a 22 pA bias current — about four times too fast. This mattered for more than just "
   "accuracy: a too-fast interneuron baseline was part of what drove the older bAP-swamping "
-  "problem documented in `docs/REPAIR_LOG.md`.")
+  "problem documented in `docs/reports/REPAIR_LOG.md`.")
 
 p("We recalibrated the bias current analytically and then swept it empirically: SOM's "
   "f-I curve is a near-step function (C_som = 20 pF, g_L,som = 1 nS gives τ_m = 20 ms, and "
@@ -580,7 +580,7 @@ flag("Recalibrating the SOM rate to match Yang's 10 Hz turned out not to be a cl
 flag("The same nominal bias current produces very different firing rates depending on which "
      "circuit it sits in. The README reports 22–25 pA giving ~36–40 Hz, measured in the full "
      "circuit and in `demo_v2_zhang2025.py`. Our own measurement of Phase-1's own reduced "
-     "two-branch circuit at 25 pA (`docs/gamma_tau_analysis.md`, Section 3) gives 63.3 Hz — "
+     "two-branch circuit at 25 pA (`docs/reports/gamma_tau_analysis.md`, Section 3) gives 63.3 Hz — "
      "not 36-40 Hz — for what is nominally the same current. A SOM bias current is therefore "
      "not a portable number; it has to be recalibrated for whatever surrounding network it's "
      "embedded in, which is worth keeping in mind before quoting any interneuron rate out of "
@@ -621,7 +621,7 @@ table(
 )
 
 p("Over 300 simulated seconds (checkpointed every 30 s; full precision in "
-  "`docs/gamma_tau_300s_checkpoints.json`), the canonical form's ratio oscillated rather "
+  "`results/pre_audit/gamma_tau_300s_checkpoints.json`), the canonical form's ratio oscillated rather "
   "than converging:")
 
 table(
@@ -669,7 +669,7 @@ p("Before committing to the full implementation, we ran a cheap diagnostic. One 
 
 p("We first measured, rather than assumed, the calcium-threshold-crossing times "
   "(α_d, α_p) that Phase-1's actual circuit produces over its 3-second protocol "
-  "(`docs/phase1_alpha_operating_points.json`):")
+  "(`results/pre_audit/phase1_alpha_operating_points.json`):")
 
 table(
     ['branch', 'α_d (s)', 'α_p (s)'],
@@ -703,7 +703,7 @@ p("For the coarse free/inhibited ratio, the two formulas were nearly interchange
   "epoch (0.5 → 0.496, essentially no change) because the epoch is far too short relative to "
   "τ for the synapse to actually flip DOWN.")
 
-figure('figures/formula_comparison.png',
+figure('figures/pre_audit/formula_comparison.png',
        f'Figure {fig_num()}. Left/middle: ρ_new vs. calcium-threshold time for the '
        'potentiation and depression arms, linear relaxation vs. Yang Eqs. 32-35. Right: '
        'the signed difference (ρ_Yang − ρ_linear) across the full (α_d, α_p) plane, with '
@@ -808,7 +808,7 @@ p("Final: free ρ = 0.924 (w = 2.771), inhibited ρ = 0.329 (w = 0.986), ratio =
   "importantly — this is not a repeat of the old 346x bug: the ratio here grows honestly "
   "from an actual difference in how much calcium each branch accumulates.")
 
-figure('figures/analytical_plasticity_trajectory.png',
+figure('figures/pre_audit/analytical_plasticity_trajectory.png',
        f'Figure {fig_num()}. Epoch-by-epoch ρ trajectory (mean ± SD over 20 synapses per '
        'branch) under the analytical Yang plasticity, SOM bias = 25 pA. Free branch '
        'saturates near 0.92 by epoch 3; inhibited branch declines monotonically toward '
@@ -846,7 +846,7 @@ p("At 10.14 Hz, the inhibited branch's α_p jumps from essentially zero to 2.59 
   "that the same qualitative failure reappears under the new analytical plasticity, for a "
   "reason we could pin down precisely (below).")
 
-figure('figures/analytical_plasticity_trajectory_som10hz.png',
+figure('figures/pre_audit/analytical_plasticity_trajectory_som10hz.png',
        f'Figure {fig_num()}. Same protocol as Figure {FIG_N[0]-1}, SOM bias lowered to 20.04 '
        'pA (measured 10.14 Hz). The two branches\' trajectories overlap almost completely — '
        'gating is abolished (ratio 1.02).')
@@ -963,7 +963,7 @@ flag("Confirmed. File timestamps establish the order of events precisely: both P
      "migrated to the same epoch-loop + yang_synapse_update pattern as "
      "experiments/phase1_analytical.py and both sweeps are rerun.")
 
-p("docs/gamma_tau_analysis.md was also updated with one sentence confirming that its "
+p("docs/reports/gamma_tau_analysis.md was also updated with one sentence confirming that its "
   "opening question (Section 4.3's gamma/tau timescale question — does canonical "
   "Graupner-Brunel gate given enough time?) is superseded by the switch to the "
   "analytical epoch-based update, which does not depend on simulation duration for "
@@ -985,7 +985,7 @@ table(
       '3.12', '2.91', '2.81']],
 )
 
-figure('figures/som_rate_sweep.png',
+figure('figures/pre_audit/som_rate_sweep.png',
        f'Figure {fig_num()}. Sweep 1: gating ratio and final rho vs. measured SOM rate, '
        'gGABA held at the Yang-matched 40 nS total. The transition from fail to pass is a '
        'near step-function between 16.87 and 21.49 Hz, not a gradual climb.')
@@ -1008,7 +1008,7 @@ table(
       '1.29', '1.35', '1.45']],
 )
 
-figure('figures/gbar_I_sweep.png',
+figure('figures/pre_audit/gbar_I_sweep.png',
        f'Figure {fig_num()}. Sweep 2: gating ratio and final rho vs. gGABA per synapse, SOM '
        'held at Yang\'s measured ~10.15 Hz. Ratio climbs slowly and smoothly, never '
        'approaching the ratio=2 criterion even at 6x Yang\'s conductance.')
@@ -1071,7 +1071,7 @@ p("Section 7 ended with a decision left open (which of the Step 2d options to ta
   "It records the calibration choice we actually committed to the code, then reports the "
   "Phase 1 re-confirmation and the first honest rerun of both Phase 2 sweeps under the "
   "epoch-based analytical update. Every number below is copied from a JSON written by the "
-  "rerun itself (docs/phase2_snr_sweep_results.json, docs/phase2_ketamine_sweep_results.json, "
+  "rerun itself (results/pre_audit/phase2_snr_sweep_results.json, results/pre_audit/phase2_ketamine_sweep_results.json, "
   "figures/validation_vs_papers/results.json) or from the parameters.py comment that records "
   "the calibration.")
 
@@ -1114,7 +1114,7 @@ table(
      ['gating ratio (free / inhibited)', '5.5786']],
 )
 
-figure('figures/analytical_plasticity_trajectory_som25hz_default.png',
+figure('figures/pre_audit/analytical_plasticity_trajectory_som25hz_default.png',
        f'Figure {fig_num()}. Phase-1 analytical plasticity trajectory under the committed '
        '25 Hz SOM default: the free branch potentiates to rho ~0.92 while the SOM-inhibited '
        'branch is held down to rho ~0.17, a gating ratio of 5.58.')
@@ -1142,7 +1142,7 @@ table(
      ['measured SOM rate (Hz)', '25.3', '42.2', '38.6', '29.7', '16.7', '6.7', '1.8', '~0']],
 )
 
-figure('figures/phase2_snr_curve.png',
+figure('figures/pre_audit/phase2_snr_curve.png',
        f'Figure {fig_num()}. Phase 2B: gating ratio vs. injected noise level under the '
        'analytical update and 25 Hz SOM baseline. Selectivity falls and stays below 1.5 from '
        'noise level 0.40 onward; the collapse tracks the SOM rate dropping through the '
@@ -1175,7 +1175,7 @@ table(
      ['VIP rate (Hz)', '28.4', '4.0', '0.0', '0.0']],
 )
 
-figure('figures/phase2_ketamine_failure.png',
+figure('figures/pre_audit/phase2_ketamine_failure.png',
        f'Figure {fig_num()}. Phase 2C: gating ratio vs. MD->VIP drive scale. Intact MD->VIP '
        'drive (scale 1.0) fires VIP at 28 Hz, which silences SOM (0 Hz) and abolishes gating '
        '(ratio 1.0); attenuating MD->VIP restores SOM to its 25 Hz baseline and recovers '
@@ -1343,10 +1343,10 @@ p("Phase 2C (the MD->VIP / schizophrenia-analogue sweep) shows the same pattern:
 
 flag("Both breaking points held their qualitative shape and approximate location — this was "
      "a recalibration of the SOM baseline's safety margin, not a change to the gating "
-     "mechanism or its failure modes. The regenerated figures (figures/phase2_snr_curve.png, "
-     "figures/phase2_ketamine_failure.png) now show the 30 Hz data; the 25 Hz-era versions "
-     "are preserved as figures/phase2_snr_curve_at25hz.png and "
-     "figures/phase2_ketamine_failure_at25hz.png for reference.")
+     "mechanism or its failure modes. The regenerated figures (figures/pre_audit/phase2_snr_curve.png, "
+     "figures/pre_audit/phase2_ketamine_failure.png) now show the 30 Hz data; the 25 Hz-era versions "
+     "are preserved as figures/pre_audit/phase2_snr_curve_at25hz.png and "
+     "figures/pre_audit/phase2_ketamine_failure_at25hz.png for reference.")
 
 h2('9.5 Where this leaves things')
 

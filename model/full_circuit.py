@@ -53,7 +53,7 @@ from circuit_helpers import add_compiled_coupling, som_initial_voltages
 # -- that ODE is commented out in model/equations.py (rho is a bare parameter there), so
 # the single-shot net.run() this function used to do would otherwise leave rho frozen at
 # its initial 0.5 for both branches (ratio identically 1.0) for every noise_level /
-# md2vip_scale / seed. See docs/Progress_Report.docx Section 7.2 for how this was found.
+# md2vip_scale / seed. See docs/meetings/Progress_Report.docx Section 7.2 for how this was found.
 
 # Background-noise "fully on" reference levels for SOM and VIP (bg_noise_scale=1.0).
 # PV's own background (rate_bg_pv/weight_bg_pv) is part of the validated model and is
@@ -84,9 +84,9 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
     NMDA-hypofunction / MD->VIP degradation protocol (Phase 2C); 1.0 = intact.
     som_bias_pA defaults to the 2026-09-01 full-circuit reliability lock-in value
     (21.32 pA, measured ~30.07 Hz in this circuit, 20/20 seeds passed at noise=0 --
-    docs/full_circuit_reliability_30hz_results.json). Supersedes the earlier 20.9 pA /
+    results/pre_audit/full_circuit_reliability_30hz_results.json). Supersedes the earlier 20.9 pA /
     25 Hz pick (calibrated in Phase-1's reduced circuit), which failed reproducibly at
-    noise=0 on seed 44 (docs/diag_seed44_results.json, ratio ~1.015). At
+    noise=0 on seed 44 (results/pre_audit/diag_seed44_results.json, ratio ~1.015). At
     md_signal_rate=0 / noise_level=0 (Phase 2B's baseline condition) nothing else
     synaptically drives SOM, so this bias produces the same isolated-neuron rate here as
     in the reduced circuit; this is NOT assumed to hold once MD/VIP or noise actively
@@ -247,7 +247,7 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
     # can be compared between a passing and a failing seed. Monitors are passive (they
     # draw no RNG and add no synapses), so when monitor_epoch0=False the RNG stream and
     # all returned numbers are byte-identical to before -- verified against the committed
-    # docs/across_seed_diag_results.json (seed 42 ratio 4.068, seeds 44/53 fail).
+    # results/pre_audit/across_seed_diag_results.json (seed 42 ratio 4.068, seeds 44/53 fail).
     ep0_mon = None
     if monitor_epoch0:
         # c_total = c + bAPCa_post is a per-synapse subexpression that mixes a synapse

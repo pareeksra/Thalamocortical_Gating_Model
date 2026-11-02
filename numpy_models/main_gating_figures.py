@@ -56,7 +56,7 @@ WHITE   = "#FFFFFF"
 GRAY    = "#888888"
 
 # Output directory
-FIG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures", "phenomenological")
+FIG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "figures", "pre_audit/phenomenological")
 os.makedirs(FIG_DIR, exist_ok=True)
 
 
@@ -256,7 +256,7 @@ def make_figure1():
                  fontweight="bold")
     ax.legend(loc="upper left", framealpha=0.4, fontsize=8)
 
-    fig.savefig(os.path.join(FIG_DIR, "fig1_calcium_plasticity.png"))
+    fig.savefig(os.path.join(FIG_DIR, "pre_audit/fig1_calcium_plasticity.png"))
     plt.close(fig)
     print("    ✓ saved fig1_calcium_plasticity.png")
 
@@ -359,7 +359,7 @@ def make_figure2():
                 arrowprops=dict(arrowstyle="->", color=GREEN, lw=1.5),
                 xytext=(15, -45))
 
-    fig.savefig(os.path.join(FIG_DIR, "fig2_dendritic_gating.png"))
+    fig.savefig(os.path.join(FIG_DIR, "pre_audit/fig2_dendritic_gating.png"))
     plt.close(fig)
     print("    ✓ saved fig2_dendritic_gating.png")
 
@@ -463,7 +463,7 @@ def make_figure3():
     ax.set_xlim(0, 50)
     ax.set_ylim(0, 2.5)
 
-    fig.savefig(os.path.join(FIG_DIR, "fig3_weight_change_vs_rate.png"))
+    fig.savefig(os.path.join(FIG_DIR, "pre_audit/fig3_weight_change_vs_rate.png"))
     plt.close(fig)
     print("    ✓ saved fig3_weight_change_vs_rate.png")
 
@@ -618,7 +618,7 @@ def make_figure4():
     cbar = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
     cbar.set_label("Weight", fontsize=10)
 
-    fig.savefig(os.path.join(FIG_DIR, "fig4_branch_specific_learning.png"))
+    fig.savefig(os.path.join(FIG_DIR, "pre_audit/fig4_branch_specific_learning.png"))
     plt.close(fig)
     print("    ✓ saved fig4_branch_specific_learning.png")
 

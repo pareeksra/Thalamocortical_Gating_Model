@@ -1,5 +1,5 @@
 """
-overlap_experiment.py -- overlapping-inputs experiment (plan: docs/PLAN_overlapping_inputs.md).
+overlap_experiment.py -- overlapping-inputs experiment (plan: docs/reports/PLAN_overlapping_inputs.md).
 
 Contexts A and B share a fraction f of their 20 afferents; every afferent has a plastic
 synapse on both branches. Context A (MD_0 on, pattern A) x 8 epochs, then context B
@@ -8,14 +8,14 @@ f {0, .25, .5, .75, 1} x seeds 42-46. Fresh process per run.
 
 Run:     <py> -I experiments/overlap_experiment.py run [n_workers]
 Analyse: <py> -I experiments/overlap_experiment.py analyse
-Out:     docs/audit/overlap_experiment.json, figures/overlap_experiment.png
+Out:     results/current/overlap_experiment.json, figures/overlap_experiment.png
 """
 import os, sys, json, time
 import numpy as np
 from concurrent.futures import ProcessPoolExecutor, as_completed
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT]
-OUT = os.path.join(PROOT, 'docs', 'audit', 'overlap_experiment.json')
+OUT = os.path.join(PROOT, 'results', 'current', 'overlap_experiment.json')
 OVERLAPS = [0.0, 0.25, 0.5, 0.75, 1.0]
 GATING = ['md', 'none']
 SEEDS = [42, 43, 44, 45, 46]

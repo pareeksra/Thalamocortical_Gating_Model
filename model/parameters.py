@@ -7,7 +7,7 @@ from brian2 import *
 params = {
     # NOTE (audit 2026-11-01): sim_dt is NOT the integration step. defaultclock.dt is never set,
     # so every NeuronGroup/Synapses runs at Brian 2's default 0.1 ms; sim_dt only clocked the
-    # retired Python coupling operation. docs/audit/dt_convergence.json checks 0.02 vs 0.1 ms.
+    # retired Python coupling operation. results/current/dt_convergence.json checks 0.02 vs 0.1 ms.
     'sim_dt': 0.02 * ms,
     'record_dt': 0.5 * ms,
     'num_DendEach': 10,
@@ -116,7 +116,7 @@ pv_params = {
     'tauGABA_pv': 10.0 * ms,
     'gAMPA_pv': 0.12 * nS,     # MD→PV synapse weight
     # SOM->PV per-synapse weight. RECALIBRATED 2026-11-02 (was 2.0 nS; see the PV block
-    # below and docs/audit/pv_calibration_fine_seed*.json). Yang 2016 leaves the SOM->PV
+    # below and results/current/pv_calibration_fine_seed*.json). Yang 2016 leaves the SOM->PV
     # strength free (varied in Fig. 6b); only P_SOM->PV = 0.8 is fixed. At 2.0 nS the
     # ~16 active SOM inputs at 30 Hz gave ~9.6 nS of mean shunt (~10x PV's leak) and PV
     # was silent whenever SOM was active, contradicting Yang ("PV activities never reach
@@ -180,20 +180,20 @@ som_params = {
     # Divergence fix (2026-08-27): SOM's bias current was recalibrated to Yang et al.'s
     # reported ~10 Hz baseline (20.04 pA; rheobase is exactly 20.0 pA, so this is only
     # 0.04 pA above threshold). That value was then tested inside the actual analytical
-    # plasticity protocol (docs/gamma_tau_analysis.md Step 2d) and found to abolish
+    # plasticity protocol (docs/reports/gamma_tau_analysis.md Step 2d) and found to abolish
     # branch-specific gating (ratio 1.02, vs. 2.81 at the model's old 25 pA/~63 Hz
     # setting) -- Yang's own rate is too slow, relative to tau_GABA,dend=20 ms, to hold
     # continuous dendritic shunting between SOM spikes (mean ISI 100 ms at 10 Hz).
     #
-    # Correction (2026-08-30): a SOM-rate sweep (docs/som_rate_sweep_table.csv, Phase-1's
+    # Correction (2026-08-30): a SOM-rate sweep (results/pre_audit/som_rate_sweep_table.csv, Phase-1's
     # reduced circuit, 15-epoch analytical protocol, gGABA held at Yang's 40 nS total)
     # found the fail->pass transition is a sharp step between 16.87 Hz (ratio 1.04) and
     # 21.49 Hz (ratio 5.51), not a gradual climb -- the minimum functional SOM rate is
     # ~2x Yang's 10 Hz, not the much larger multiple a naive 63 Hz vs 10 Hz comparison
-    # implied. A parallel gGABA sweep at Yang's fixed 10 Hz (docs/gbar_I_sweep_table.csv)
+    # implied. A parallel gGABA sweep at Yang's fixed 10 Hz (results/pre_audit/gbar_I_sweep_table.csv)
     # showed conductance alone cannot compensate for too low a rate (ratio only reaches
     # 1.45 at 6x Yang's gGABA) -- the mechanism is duty-cycle (does GABA cover the gap
-    # between SOM spikes), not total inhibitory charge; see docs/Progress_Report.docx
+    # between SOM spikes), not total inhibitory charge; see docs/meetings/Progress_Report.docx
     # Section 7.3 for the full argument. Default is now set to the sweep's peak point:
     # 20.9 pA, measured at 25.29 Hz in this circuit (ratio 5.58, the sweep's best), a
     # 2.5x departure from Yang's 10 Hz with a concrete biophysical justification (SOM
@@ -202,7 +202,7 @@ som_params = {
     #
     # NOTE: this bias current is NOT portable across circuits -- the same pA value
     # produces a different rate depending on what else is wired to the SOM population
-    # (see the divergence note in docs/Progress_Report.docx Section 4.2: 25 pA measured
+    # (see the divergence note in docs/meetings/Progress_Report.docx Section 4.2: 25 pA measured
     # 63.3 Hz in Phase-1's reduced circuit but only ~36-40 Hz in the full MD/PV/VIP
     # circuit). 20.9 pA is calibrated for Phase-1's reduced circuit specifically
     # (phase1_analytical.py, phase1_single_neuron_gating.py); model/full_circuit.py
@@ -211,11 +211,11 @@ som_params = {
     #
     # UPDATE (2026-09-01): 20.9 pA / 25 Hz was picked from a single seed's sweep peak
     # in the reduced Phase-1 circuit and did not hold up. A full-circuit, noise=0
-    # reproduction on seeds 42-46 (docs/diag_seed44_results.json) found seed 44 failed
+    # reproduction on seeds 42-46 (results/pre_audit/diag_seed44_results.json) found seed 44 failed
     # reproducibly (ratio ~1.015, confirmed twice) -- the inhibited branch's rate
     # climbed to ~0.91, escaping SOM control entirely, rather than the ratio merely
     # softening. A 20-seed full-circuit reliability sweep at noise=0 (seeds 40-59,
-    # docs/full_circuit_reliability_30hz_results.json) found 30 Hz gives 20/20 passes
+    # results/pre_audit/full_circuit_reliability_30hz_results.json) found 30 Hz gives 20/20 passes
     # (ratio range 3.25-5.07, all > 2.0), a margin of ~9 Hz above the ~21 Hz duty-cycle
     # cliff described above -- vs. 25 Hz's ~4 Hz margin, which seed 44 fell into.
     # Baseline is now locked to 30 Hz (measured ~30.07 Hz in the full circuit), still

@@ -1,6 +1,6 @@
 # Does the forgetting mechanism work in miniature? Yes — but only with the complete definition of "context"
 
-> **REVISED 2026-11-02 (docs/AUDIT_2026-11-01.md, P3).** The control this finding lacked,
+> **REVISED 2026-11-02 (docs/reports/AUDIT_2026-11-01.md, P3).** The control this finding lacked,
 > "idle input OFF, NO inhibition", retains the memory just as well. The MD-driven 2x2 over
 > 5 seeds gives 99.9-100% for both "input-only" and "both"; the original reduced circuit
 > gives 99.8%. Corrected claim: protection comes ENTIRELY from input sparsity.
@@ -11,7 +11,7 @@
 
 *2026-10-15. First run of the project's central claim (ROADMAP Phase 3 / REPAIR_LOG
 item 5 / README: "context-specific learning without catastrophic forgetting").*
-*Figure: `figures/retention_forgetting.png`.*
+*Figure: `figures/pre_audit/retention_forgetting.png`.*
 
 ## The test
 

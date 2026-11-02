@@ -20,13 +20,13 @@ Protocol: model/context_circuit.py, 8 epochs context A (MD_0 on -> branch 0 free
 process.
 
 Run:  <venv>/python -I experiments/retention_md_context.py [n_workers]
-Out:  docs/audit/retention_md_context.json
+Out:  results/current/retention_md_context.json
 """
 import os, sys, json, time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT]
-OUT = os.path.join(PROOT, 'docs', 'audit', 'retention_md_context.json')
+OUT = os.path.join(PROOT, 'results', 'current', 'retention_md_context.json')
 N_EP = 8
 CONDS = {'both': ('context', True), 'inhibonly': ('always', True),
          'inputonly': ('context', False), 'neither': ('always', False)}

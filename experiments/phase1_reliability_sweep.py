@@ -9,9 +9,9 @@ for fast dev iteration only -- do NOT cite its results as reliability evidence i
 Progress Report or to Raghav's PI. See experiments/full_circuit_reliability_sweep.py
 for the full-circuit replacement (seeds 40-59, matches the Phase-2B harness exactly).
 
-The 2026-08-30 SOM-rate sweep (docs/som_rate_sweep_table.csv) picked 25.29 Hz as the
+The 2026-08-30 SOM-rate sweep (results/pre_audit/som_rate_sweep_table.csv) picked 25.29 Hz as the
 "best" SOM baseline from a SINGLE seed (42) per rate. Phase 2's rerun then showed that
-choice fails at zero added noise in 1/3 seeds (docs/phase2_snr_sweep_results.json,
+choice fails at zero added noise in 1/3 seeds (results/pre_audit/phase2_snr_sweep_results.json,
 noise_level=0.0: seeds 42/43 ratio 4.07/4.81, seed 44 ratio 1.015 -- complete collapse).
 25 Hz sits too close to Sweep 1's ~21 Hz duty-cycle cliff for ordinary Poisson trial-to-
 trial variability to be safe.
@@ -40,7 +40,7 @@ from phase1_analytical import run_gating_analytical
 BIAS_BY_RATE = {25: 20.90, 28: 21.20, 30: 21.32, 33: 21.60, 35: 21.80}
 SEEDS = list(range(10))
 N_EPOCHS = 15
-RESULTS_DIR = os.path.join(PROOT, 'docs')
+RESULTS_DIR = os.path.join(PROOT, 'results', 'pre_audit')
 
 
 def results_path(rate_label):

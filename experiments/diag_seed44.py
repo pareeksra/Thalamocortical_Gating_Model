@@ -2,7 +2,7 @@
 noise_level=0 reproduces in the FULL circuit, and how marginal 25 Hz is.
 Runs the exact Phase-2B baseline call for seeds 42-46.
 
-Checkpoints per-seed to docs/diag_seed44_results.json (2026-09-01 revision: the first
+Checkpoints per-seed to results/pre_audit/diag_seed44_results.json (2026-09-01 revision: the first
 run was killed by a system restart after finishing 3/5 seeds with nothing persisted,
 since the original version only wrote the JSON once at the very end. Re-run is now
 resumable -- safe to relaunch after a kill, already-done seeds are skipped)."""
@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.join(PROOT, 'model'))
 from full_circuit import build_gating_circuit
 
 SEEDS = [42, 43, 44, 45, 46]
-RESULTS_PATH = os.path.join(PROOT, 'docs', 'diag_seed44_results.json')
+RESULTS_PATH = os.path.join(PROOT, 'results', 'pre_audit', 'diag_seed44_results.json')
 
 
 def load_results():

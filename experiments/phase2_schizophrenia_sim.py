@@ -40,7 +40,7 @@ T_SIM = 3.0
 # same epochs=10 rationale (measured 90 s/epoch steady-state; 15 epochs x 3 seeds x 4
 # scale points would run ~3 h at 15 epochs, ~2 h at 10).
 N_EPOCHS = 10
-RESULTS_PATH = os.path.join(PROOT, 'docs', 'phase2_ketamine_sweep_results.json')
+RESULTS_PATH = os.path.join(PROOT, 'results', 'pre_audit', 'phase2_ketamine_sweep_results.json')
 
 import json
 
@@ -128,5 +128,5 @@ if __name__ == '__main__':
           f"(baseline, VIP-independent), branch0 rho={fully_blocked['r0_mean']:.3f}, "
           f"branch1 rho={fully_blocked['r1_mean']:.3f}, ratio={fully_blocked['ratio_mean']:.2f}")
     os.makedirs(FIGROOT, exist_ok=True)
-    plot(records, os.path.join(FIGROOT, 'phase2_ketamine_failure.png'))
+    plot(records, os.path.join(FIGROOT, 'pre_audit/phase2_ketamine_failure.png'))
     print("\n=== Phase 2C complete ===")

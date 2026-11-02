@@ -10,7 +10,7 @@ Every number here was verified against the repo (REPAIR_LOG.md, gamma_tau_analys
 the sweep/reliability JSONs, build_progress_report.py) in the 2026-09-03 session.
 Invalid or mis-attributed paper comparisons are intentionally omitted.
 
-Output: docs/PI_Story.docx (+ Google Drive mirror if reachable).
+Output: docs/meetings/PI_Story.docx (+ Google Drive mirror if reachable).
 """
 import os
 from docx import Document
@@ -146,7 +146,7 @@ labelled('Comparison to the paper (this is the strong one):',
     "values (22.24, 33.36, 77.83, 133.42, 216.81 nS) match Yang's formula to the digit at every "
     "level. This check does not depend on the plasticity equation, so it is the cleanest "
     "evidence the fix landed the model in Yang's actual operating regime.")
-figure('figures/paper_replications/replicated_YANG2016_fig2c_dendritic_IO.png',
+figure('figures/pre_audit/paper_replications/replicated_YANG2016_fig2c_dendritic_IO.png',
        'Our model (points) vs. Yang\u2019s formula (line): dendritic half-activation shifts with '
        'inhibition exactly as the paper predicts, at all five levels.')
 
@@ -199,7 +199,7 @@ labelled('Result:',
     "With the honest equation, the gating ratio is 2.81 (free branch weight-state ~0.92, "
     "inhibited ~0.33), built up over repeated learning epochs. Much lower than the old 42.76 - "
     "and that's the point: 42.76 was an artifact of the bug, 2.81 is real.")
-figure('figures/analytical_plasticity_trajectory.png',
+figure('figures/pre_audit/analytical_plasticity_trajectory.png',
        'Learning over epochs with the corrected, paper-faithful equation: the free branch rises '
        'and holds, the inhibited branch drifts down. Final ratio 2.81.')
 
@@ -217,7 +217,7 @@ labelled('The process - two sweeps:',
     "instead, with SOM held at 10 Hz: this barely helped at all - even at 6x Yang's conductance "
     "the ratio only reached 1.45. Conclusion: it is SOM's firing RATE that matters for gating, "
     "not the raw amount of inhibitory conductance.")
-figure('figures/som_rate_sweep.png',
+figure('figures/pre_audit/som_rate_sweep.png',
        'Sweep 1: gating vs. SOM firing rate. Sharp switch-on near 21 Hz, peak at 25 Hz, gentle '
        'decline after - not a straight line.')
 labelled('Then we stress-tested it:',
@@ -225,7 +225,7 @@ labelled('Then we stress-tested it:',
     "(a ~10% failure rate) collapsed to ratio ~1.02. Re-running the same 20 seeds at 30 Hz "
     "passed all 20 (ratios 3.25-5.07). So we set the SOM baseline to 30 Hz - it's the value "
     "that gates reliably, not just on a lucky seed.")
-figure('figures/reliability_full_circuit.png',
+figure('figures/pre_audit/reliability_full_circuit.png',
        '20-seed reliability: 25 Hz fails 2 of 20 seeds (red); 30 Hz passes all 20. Current '
        'model uses 30 Hz.')
 labelled('Comparison to the paper (stated honestly):',
@@ -241,7 +241,7 @@ labelled('Noise robustness:',
     "We added three kinds of biological noise together and increased them. Gating holds, then "
     "degrades, then collapses past a breaking point - i.e. the mechanism is robust to a "
     "realistic amount of noise but not unlimited noise.")
-figure('figures/phase2_snr_curve.png',
+figure('figures/pre_audit/phase2_snr_curve.png',
        'Gating selectivity falls as noise rises, collapsing past a breaking point.')
 labelled('A disease model (ketamine / schizophrenia):',
     "Ketamine-type drugs block NMDA receptors on VIP interneurons - a standard circuit model of "
@@ -250,7 +250,7 @@ labelled('A disease model (ketamine / schizophrenia):',
     "to its baseline and permanently shuts its branch regardless of the MD signal. The "
     "interesting part is that it's the CONTROL over learning that breaks, not learning itself - "
     "a loss of context-dependent flexibility, which is the schizophrenia-relevant reading.")
-figure('figures/phase2_ketamine_failure.png',
+figure('figures/pre_audit/phase2_ketamine_failure.png',
        'Blocking MD->VIP: branch-specific gating is intact below ~50% block and collapses above '
        'it, as SOM returns to its baseline rate.')
 
@@ -268,7 +268,7 @@ para([("Open items we're carrying forward: ", True),
        "tested.")])
 
 # ===========================================================================
-out_path = os.path.join(PROOT, 'docs', 'PI_Story.docx')
+out_path = os.path.join(PROOT, 'docs', 'meetings', 'PI_Story.docx')
 doc.save(out_path)
 print(f"Saved {out_path}")
 try:

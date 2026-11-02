@@ -34,7 +34,7 @@ G_SOM2DEND = float(params['gGABA'] / nS)
 G_PV2SOMA = float(pv_params['gGABA_pv2soma'] / nS)
 G_COUPLE_VIVO = float(params['gEachCouple_pyr_vivo'] / nS)
 
-OUT_PATH = os.path.join(PROOT, 'figures', 'network_architecture.png')
+OUT_PATH = os.path.join(PROOT, 'figures', 'pre_audit', 'network_architecture.png')
 
 plt.rcParams.update({
     "font.family": "sans-serif",

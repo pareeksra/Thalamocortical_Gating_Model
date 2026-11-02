@@ -14,7 +14,7 @@ plus the plasticity on the SOM-targeted branch (d_rho_inh) and the free branch.
 Each grid point runs in a fresh process.
 
 Run:  <venv>/python -I experiments/sweep_phase_diagram.py [--grid 5] [--cores 10] [--epochs 8]
-Out:  figures/phase_diagram.png, docs/audit/phase_diagram.json
+Out:  figures/phase_diagram.png, results/current/phase_diagram.json
 """
 import sys, os, argparse, json, time
 import numpy as np
@@ -53,8 +53,8 @@ def main():
     with ProcessPoolExecutor(max_workers=a.cores, max_tasks_per_child=1) as ex:
         res = list(ex.map(run_point, tasks))
     print(f'{N}x{N} sweep in {time.time() - t0:.0f} s')
-    os.makedirs(os.path.join(PROOT, 'docs', 'audit'), exist_ok=True)
-    json.dump(res, open(os.path.join(PROOT, 'docs', 'audit', 'phase_diagram.json'), 'w'), indent=1)
+    os.makedirs(os.path.join(PROOT, 'results', 'current'), exist_ok=True)
+    json.dump(res, open(os.path.join(PROOT, 'results', 'current', 'phase_diagram.json'), 'w'), indent=1)
 
     import matplotlib
     matplotlib.use('Agg')

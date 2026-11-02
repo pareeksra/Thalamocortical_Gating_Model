@@ -345,7 +345,7 @@ rates and applies Gaussian $\rho$ noise and the accelerated $\eta_\rho=0.08$ upd
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{figures/phenomenological/fig4_branch_specific_learning.png}
+    \includegraphics[width=0.85\textwidth]{figures/pre_audit/phenomenological/fig4_branch_specific_learning.png}
     \caption{Phenomenological branch-learning figure (hardcoded inhibition 1.6 / 28.0~nS).
     Does not currently show branch-specific learning --- see the box below.}
     \label{fig:phenom_learning}
@@ -364,13 +364,13 @@ $\eta_\rho=0.08$ in place of $\tau_\rho$.
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{figures/mechanistic/fig_emergent_rates.png}
+        \includegraphics[width=\textwidth]{figures/pre_audit/mechanistic/fig_emergent_rates.png}
         \caption{Stochastic interneuron firing rates}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{figures/mechanistic/fig_self_organized_branching.png}
+        \includegraphics[width=\textwidth]{figures/pre_audit/mechanistic/fig_self_organized_branching.png}
         \caption{Weight trajectories under emergent inhibition}
     \end{subfigure}
     \caption{Output from the emergent mechanistic model. Panel (a) --- the interneuron
@@ -415,7 +415,7 @@ inert in Model C).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figures/mechanistic/fig_gating_selectivity.png}
+    \includegraphics[width=0.75\textwidth]{figures/pre_audit/mechanistic/fig_gating_selectivity.png}
     \caption{Gating Selectivity indices for the three interneuron classes.}
     \label{fig:gs_scores}
 \end{figure}
@@ -496,11 +496,11 @@ Brian 2, create an env and point at its interpreter.
     \ref{fig:architecture}
       & \texttt{generate\_network\_synapse\_figure.py} & 3 s & \texttt{figures/} \\
     1--4, \ref{fig:phenom_learning}
-      & \texttt{main\_gating\_figures.py} & 3 s & \texttt{figures/phenomenological/} \\
+      & \texttt{main\_gating\_figures.py} & 3 s & \texttt{figures/pre_audit/phenomenological/} \\
     \ref{fig:mechanistic_output}, \ref{fig:gs_scores}
-      & \texttt{emergent\_gating\_mechanistic\_model.py} & 4 s & \texttt{figures/mechanistic/} \\
+      & \texttt{emergent\_gating\_mechanistic\_model.py} & 4 s & \texttt{figures/pre_audit/mechanistic/} \\
     validation
-      & \texttt{experiments/validate\_model.py} & $\approx$17 min & \texttt{figures/validation/} \\
+      & \texttt{experiments/validate\_model.py} & $\approx$17 min & \texttt{figures/pre_audit/validation/} \\
     phase diagram
       & \texttt{experiments/sweep\_phase\_diagram.py} & $\approx$3 min & \texttt{figures/phase\_diagram.png} \\
     context switch

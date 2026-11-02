@@ -71,7 +71,7 @@ figure documented elsewhere in this repo comes from a different script conventio
 | Canonical (γ/τ), T=3 s | 0.424 | 0.638 | 1.51 |
 
 **300-second trajectory** (canonical form, same seed/protocol, checkpointed every 30 s;
-full precision in `docs/gamma_tau_300s_checkpoints.json`):
+full precision in `results/pre_audit/gamma_tau_300s_checkpoints.json`):
 
 | t (s) | ρ₀ | ρ₁ | ratio |
 |---|---|---|---|
@@ -152,8 +152,8 @@ fundamentally different from Yang's real erf-based bistable switching formula?*
 Scripts (both standalone, neither touches `equations.py`):
 `docs/extract_phase1_alpha.py` (measures the real α operating points) and
 `docs/formula_comparison.py` (the two-formula comparison, table, and figure).
-Artifacts: `docs/phase1_alpha_operating_points.json`,
-`docs/formula_comparison_table.csv`, `figures/formula_comparison.png`.
+Artifacts: `results/pre_audit/phase1_alpha_operating_points.json`,
+`results/pre_audit/formula_comparison_table.csv`, `figures/pre_audit/formula_comparison.png`.
 
 ## 2a.1 The two formulas, on the same Yang parameters
 
@@ -198,7 +198,7 @@ points the formulas are anchored to; the sweep covers the whole [0,3]² plane be
 - **gating ratio (free/inhibited):** linear **1.70**, Yang **1.74** — essentially identical
   (same for ρ and for w, since w = 3ρ here).
 
-## 2a.4 What the sweep shows (see `formula_comparison_table.csv`, `figures/formula_comparison.png`)
+## 2a.4 What the sweep shows (see `formula_comparison_table.csv`, `figures/pre_audit/formula_comparison.png`)
 
 1. **For the headline gating *ratio*, Model C's approximation was accidentally good enough.**
    At Phase-1's operating points the single-epoch free/inhibited ratio is ~1.70 either way.
@@ -311,14 +311,14 @@ imported into the Eq. 34–35 path; `src/v2/plasticity.py` hard-defaults to `w1 
   read per-synapse α_d/α_p from compiled `run_regularly` counters (`c_total>θ` integrated at
   the full 0.02 ms `sim_dt`, reset each epoch — O(1) memory, no StateMonitor) →
   `yang_synapse_update` per synapse → write ρ (hence w) back into Brian 2. Cython codegen;
-  per-epoch state is checkpointed to `docs/phase1_analytical_state.json` and auto-resumed,
+  per-epoch state is checkpointed to `results/pre_audit/phase1_analytical_state.json` and auto-resumed,
   so the multi-epoch run survives process/time limits (each 3 s epoch is ~74 s wall-clock,
   dominated by the Python soma-dendrite `Coupling` network_operation). Verified bit-identical
   between numpy and Cython targets and between the StateMonitor and counter α-extraction.
 
 ## 2c — Multi-epoch validation (15 × 3 s epochs, exc=80 Hz, post=10 Hz, g_c=0.8 nS, seed 42)
 
-**Result: PASS.** Figure: `figures/analytical_plasticity_trajectory.png`.
+**Result: PASS.** Figure: `figures/pre_audit/analytical_plasticity_trajectory.png`.
 
 | epoch | 0 | 1 | 2 | 3 | 5 | 8 | 11 | 13 | 15 |
 |---|---|---|---|---|---|---|---|---|---|
@@ -346,7 +346,7 @@ Final: free **ρ = 0.924** (w = 2.771), inhibited **ρ = 0.329** (w = 0.986), **
 
 **Result: FAIL.** Lowering the SOM bias from Phase-1's 25 pA to the calibrated 20.04 pA
 abolishes gating under the analytical plasticity. Figure:
-`figures/analytical_plasticity_trajectory_som10hz.png`; log `docs/phase1_som10hz_run.log`.
+`figures/pre_audit/analytical_plasticity_trajectory_som10hz.png`; log `results/pre_audit/phase1_som10hz_run.log`.
 Same 15-epoch analytical protocol, only `som_bias_pA` changed.
 
 | quantity | 25 pA (Step 2c, PASS) | 20.04 pA (Step 2d, FAIL) |

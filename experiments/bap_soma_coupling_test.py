@@ -18,13 +18,13 @@ This script:
      partly by bAP calcium -- is visible.
 
 Run:  <venv>/python -I experiments/bap_soma_coupling_test.py [n_workers]
-Out:  docs/audit/bap_soma_coupling.json
+Out:  results/current/bap_soma_coupling.json
 """
 import os, sys, json
 from concurrent.futures import ProcessPoolExecutor
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT]
-OUT = os.path.join(PROOT, 'docs', 'audit', 'bap_soma_coupling.json')
+OUT = os.path.join(PROOT, 'results', 'current', 'bap_soma_coupling.json')
 DRIVE_HZ = 10.0           # per input, 100 inputs
 CAL_W = [0.25, 0.3, 0.35, 0.4, 0.5, 0.6, 0.8]   # 2026-11-02: re-calibrated with PV active (PV recalibration)
 PV_SCALE = [0.0, 0.5, 1.0, 2.0, 3.0]

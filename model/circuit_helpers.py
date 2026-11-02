@@ -2,7 +2,7 @@
 circuit_helpers.py
 ==================
 Shared building blocks for the Model A (Brian 2) circuit builders, added in the
-2026-11-01 audit-repair pass (see docs/AUDIT_2026-11-01.md).
+2026-11-01 audit-repair pass (see docs/reports/AUDIT_2026-11-01.md).
 
 1. add_compiled_coupling -- soma<->dendrite voltage coupling as compiled summed
    variables, replacing the per-script Python `@network_operation(dt=sim_dt)`.

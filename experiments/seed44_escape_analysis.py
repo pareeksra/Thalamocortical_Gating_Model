@@ -25,9 +25,9 @@ escape was found), md_signal_rate=0, noise_level=0 -- Phase 2B's baseline condit
 matching diag_seed44.py exactly except for the added monitors and single-epoch run.
 
 Compares seed 44 (fails, ratio ~1.02) against seed 42 (passes, ratio ~4.07) as the
-reference in docs/diag_seed44_results.json.
+reference in results/pre_audit/diag_seed44_results.json.
 
-Output: figures/seed44_escape_mechanism.png -- 2x2 grid:
+Output: figures/pre_audit/seed44_escape_mechanism.png -- 2x2 grid:
   row 1: SOM population ISI histogram (seed 42 left, seed 44 right)
   row 2: branch-0 (inhibited) mean synaptic calcium trace vs theta_p, with SOM spike
          raster ticks along the top, same seeds/columns
@@ -206,7 +206,7 @@ if __name__ == '__main__':
     fig.suptitle('Seed-44 stochastic escape: SOM ISI structure and branch-0 calcium '
                   '(25 Hz SOM baseline, noise=0, T=3s single epoch)')
     fig.tight_layout()
-    out_path = os.path.join(PROOT, 'figures', 'seed44_escape_mechanism.png')
+    out_path = os.path.join(PROOT, 'figures', 'pre_audit', 'seed44_escape_mechanism.png')
     fig.savefig(out_path, dpi=150)
     print(f"Saved {out_path}", flush=True)
 

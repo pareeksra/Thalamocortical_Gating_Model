@@ -18,14 +18,14 @@ Each job runs in its OWN fresh process (max_tasks_per_child=1): Brian 2 PoissonG
 streams are reproducible per seed only across processes.
 
 Run:  <venv>/python -I experiments/som_async_sweep.py reduced|full|tau [n_workers]
-Out:  docs/audit/som_async_<mode>.json (checkpointed per job; safe to re-launch)
+Out:  results/current/som_async_<mode>.json (checkpointed per job; safe to re-launch)
 """
 import os, sys, json, time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT, os.path.join(PROOT, 'experiments')]
-OUT = os.path.join(PROOT, 'docs', 'audit')
+OUT = os.path.join(PROOT, 'results', 'current')
 os.makedirs(OUT, exist_ok=True)
 
 # Bias (pA) -> exact free-running SOM rate (Hz), from the LIF period formula
@@ -46,7 +46,7 @@ def _job(spec):
                                   run_tag=f"audit_{spec['key']}", param_overrides=po,
                                   som_phase=spec['phase'])
         try:
-            os.remove(os.path.join(PROOT, 'docs', f"phase1_analytical_state_audit_{spec['key']}.json"))
+            os.remove(os.path.join(PROOT, 'results', 'pre_audit', f"phase1_analytical_state_audit_{spec['key']}.json"))
         except OSError:
             pass
         res = dict(r0=r['rho0'], r1=r['rho1'], ratio=r['ratio'], som_rate=r['som_rate_hz'])

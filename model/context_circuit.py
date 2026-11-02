@@ -87,13 +87,13 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         With 'soma', give the soma a drive (soma_drive_hz x n_soma_drive Poisson AMPA
         inputs of soma_drive_nS each) so it fires near Yang's ~10 Hz; the dendrites alone
         (0.8 nS coupling) do not make it fire.
-    input_mode='patterns' (2026-11-02, docs/PLAN_overlapping_inputs.md): ONE afferent pool
+    input_mode='patterns' (2026-11-02, docs/reports/PLAN_overlapping_inputs.md): ONE afferent pool
         whose every neuron makes a plastic synapse on BOTH branches (inputs not pre-sorted
         by branch). Context 0 activates pattern A = afferents [0, n_pattern); context 1
         activates pattern B = n_pattern afferents, round(overlap*n_pattern) of them shared
         with A. Each traj record then also holds per-synapse rho ('rho0_syn', 'rho1_syn',
         index = afferent index); the result holds 'idx_A' / 'idx_B'.
-    Recall options (2026-11-02, docs/PLAN_recall.md):
+    Recall options (2026-11-02; see docs/reports/PLAN_alternation.md and experiments/nmda_plastic_check.py):
     plastic=False   freeze plasticity (rho is not updated after epochs).
     rho_init_syn    (rho_branch0, rho_branch1) per-synapse initial rho arrays
                     ('patterns' mode only), e.g. a state saved from a learning run.
@@ -102,7 +102,7 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
     record_dend     record each branch's voltage and NMDA-calcium per epoch:
                     dV{b} (mean V, mV), plat{b} (fraction of time V > -40 mV),
                     dV{b}_pct (5/25/50/75/95th percentiles of V).
-    Control-specificity options (Yang 2016 Fig. 5 analogue, docs/PLAN_gating_selectivity.md):
+    Control-specificity options (Yang 2016 Fig. 5 analogue, experiments/gating_selectivity_fig5.py):
     stim            per-epoch list: which input pathway is on (0, 1 or None), independent
                     of the context ('context' mode only; default: pathway = context).
     md_vip_frac     q in (0, 1]: MD_k targets a fraction q of ALL VIP cells, own channel
@@ -123,7 +123,7 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         BALANCED, fluctuation-driven soma (2026-11-02): mean input just below threshold,
         firing driven by fluctuations, so extra PV inhibition scales the rate gradually
         instead of switching it off (a purely excitatory mean-driven drive is switch-like;
-        docs/audit/pv_soma_calibration.json). traj records pyr_cv (ISI CV) per epoch.
+        results/current/pv_soma_calibration.json). traj records pyr_cv (ISI CV) per epoch.
     Returns dict(traj=[per-epoch records], summary...)."""
     seed(seed_val)
     p = dict(params)

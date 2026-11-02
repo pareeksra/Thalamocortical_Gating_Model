@@ -12,7 +12,7 @@ called "gating selectivity" or "ratio" up to now is rho_free/rho_inhibited -- a 
 learned synaptic WEIGHTS, a learning outcome, not a firing-rate readout. The two are
 different quantities and are not inter-convertible by any algebraic rescale (in
 particular applying (r-1)/(r+1) to the weight ratio is NOT Yang's S -- see
-docs/PROJECT_STORY.md and this session's discussion).
+docs/reports/PROJECT_STORY.md and this session's discussion).
 
 To get a Yang-comparable number we must actually MEASURE the soma's free output rate.
 That requires un-pinning the soma: Phase-1's learning protocol fixes the post rate at
@@ -26,7 +26,7 @@ Design (stated explicitly because it defines what the number means):
 - Reduced Phase-1 circuit: 1 soma, 2 dendritic branches, 10 SOM -> branch 0 only.
 - Weights are FROZEN at their post-learning values (rho is a bare parameter here, not
   evolved) -- so this isolates the readout from the learning dynamics. Learned values are
-  taken from the committed analytical Phase-1 result (docs/gamma_tau_analysis.md 2c /
+  taken from the committed analytical Phase-1 result (docs/reports/gamma_tau_analysis.md 2c /
   memory): free branch rho ~ 0.92, inhibited branch rho ~ 0.33. Both are swept for
   sensitivity below.
 - The plastic pathway (20 Poisson inputs at exc_rate) drives ONE branch at a time; we
@@ -49,7 +49,7 @@ once un-pinned (the whole model was calibrated with the soma pinned at 10 Hz). I
 r_on ~ r_off ~ 0, that is a real null result about output-level gating and is reported
 as such, not massaged.
 
-Output: docs/gating_selectivity_readout_results.json and a printed table.
+Output: results/pre_audit/gating_selectivity_readout_results.json and a printed table.
 """
 import os, sys, json
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -170,7 +170,7 @@ if __name__ == '__main__':
     print(f"Reminder: different setup (single neuron vs. network/task), so treat as a "
           f"unit-matched sanity check, not a controlled replication.")
 
-    out = os.path.join(PROOT, 'docs', 'gating_selectivity_readout_results.json')
+    out = os.path.join(PROOT, 'results', 'pre_audit', 'gating_selectivity_readout_results.json')
     with open(out, 'w') as f:
         json.dump(results, f, indent=2)
     print(f"\nSaved {out}")

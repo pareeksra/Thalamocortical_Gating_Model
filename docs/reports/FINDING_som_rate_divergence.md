@@ -1,6 +1,6 @@
 # Resolving the SOM-rate divergence from Yang 2016
 
-> **REVISED 2026-11-02 (docs/AUDIT_2026-11-01.md, P1 + P6).** Every run behind this finding
+> **REVISED 2026-11-02 (docs/reports/AUDIT_2026-11-01.md, P1 + P6).** Every run behind this finding
 > had the SOM population firing in perfect lockstep, so the "coverage (rate x tau)" law
 > describes the gap between synchronous volleys, not a property of event-driven calcium.
 > With desynchronised SOM (now the default): the gating threshold falls from ~20-30 Hz to
@@ -23,7 +23,7 @@ Yang, Murray & Wang (2016) obtain pathway-specific dendritic gating with:
   text: "...inhibitory synapses, tGABA,dend = 20 ms").
 
 This spiking reimplementation uses the **identical tau_GABA,dend = 20 ms** but needs
-**~18–21 Hz** for gating (`docs/som_rate_sweep_table.csv`: fails at 16.9 Hz ratio 1.04,
+**~18–21 Hz** for gating (`results/pre_audit/som_rate_sweep_table.csv`: fails at 16.9 Hz ratio 1.04,
 passes at 21.5 Hz ratio 5.5). Same inhibitory time constant, ~2× the SOM rate. That
 is exactly what a careful reviewer will flag.
 
@@ -49,7 +49,7 @@ Identical SOM spike train; only the GABA decay tail changes; gating flips:
 
 Doubling tau rescues gating at a rate that fails with the shorter tail — with no
 change to the SOM rate. Inhibition *coverage*, not rate, is the control variable.
-(A companion result already on file, `docs/gbar_I_sweep_table.csv`, shows the dual:
+(A companion result already on file, `results/pre_audit/gbar_I_sweep_table.csv`, shows the dual:
 at fixed 10 Hz, raising gGABA to 6× only reaches ratio 1.45 — total inhibitory
 *charge* cannot substitute for coverage either.)
 

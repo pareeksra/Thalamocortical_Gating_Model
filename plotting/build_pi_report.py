@@ -17,7 +17,7 @@ from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOCS = os.path.join(PROOT, 'docs')
+DOCS = os.path.join(PROOT, 'docs', 'meetings')
 GDRIVE_PATH = r'G:\My Drive\Progress_Report.docx'
 
 doc = Document()
@@ -105,7 +105,7 @@ table(['Inhibition g_inh (nS)', '0', '2', '10', '20', '35'],
        ['Yang’s formula (nS)', '22.24', '33.36', '77.84', '133.44', '216.84']])
 p("Matches to the digit at every level. This check does not depend on the plasticity equation, "
   "so it is the cleanest evidence the fix put the model in Yang's actual operating regime.")
-figure('figures/paper_replications/replicated_YANG2016_fig2c_dendritic_IO.png',
+figure('figures/pre_audit/paper_replications/replicated_YANG2016_fig2c_dendritic_IO.png',
        'Our model (points) vs. Yang’s formula (line): half-activation shifts with inhibition '
        'exactly as the paper predicts.')
 
@@ -135,7 +135,7 @@ sp('Fix & result.', "Yang's paper does not integrate this equation step-by-step 
    "threshold. We implemented that directly. With the honest equation the gating ratio is 2.81 "
    "(free branch ~0.92, inhibited ~0.33), built up over repeated learning epochs — much lower "
    "than the bug's 42.76, and real.")
-figure('figures/analytical_plasticity_trajectory.png',
+figure('figures/pre_audit/analytical_plasticity_trajectory.png',
        'Learning over epochs with the corrected equation: free branch rises and holds, '
        'inhibited branch drifts down. Final ratio 2.81.')
 
@@ -151,7 +151,7 @@ table(['SOM rate (Hz)', '10.1', '16.9', '21.5', '25.3', '28.8', '33.1', '39.0', 
 p("The switch-on is sharp, not gradual: the ratio sits near 1.0 up to ~17 Hz, then jumps to "
   "5.51 at 21 Hz and peaks at 5.58 at 25 Hz, before gently declining at higher rates. So more "
   "SOM drive past the peak does not mean more gating.")
-figure('figures/som_rate_sweep.png',
+figure('figures/pre_audit/som_rate_sweep.png',
        'Sweep 1: gating vs. SOM firing rate. Sharp switch-on near 21 Hz, peak at 25 Hz, gentle '
        'decline after.')
 
@@ -162,7 +162,7 @@ p("Increasing the raw strength of the inhibitory synapse barely helped: even at 
   "(6x Yang's conductance) the ratio only reached 1.45, never approaching a working value. "
   "Conclusion from the two sweeps together: it is SOM's firing RATE that controls gating, not "
   "the raw amount of inhibitory conductance.")
-figure('figures/gbar_I_sweep.png',
+figure('figures/pre_audit/gbar_I_sweep.png',
        'Sweep 2: raising inhibitory conductance at 10 Hz SOM barely moves the ratio, even at 6x '
        'Yang’s value.')
 
@@ -174,7 +174,7 @@ table(['SOM baseline', 'Seeds passing', 'Ratio range', 'Failures'],
        ['30 Hz', '20 / 20', '3.25 to 5.07', 'none']])
 p("At 25 Hz a real ~10% of seeds failed; at 30 Hz all 20 passed. So we set the SOM baseline to "
   "30 Hz — the value that gates reliably, not just on a lucky seed. This is the current setting.")
-figure('figures/reliability_full_circuit.png',
+figure('figures/pre_audit/reliability_full_circuit.png',
        '20-seed reliability: 25 Hz fails 2 of 20 (red); 30 Hz passes all 20.')
 sp('Honest note on the paper.', "Our spiking model needs SOM firing at least ~2x faster than "
    "Yang's ~10 Hz to gate at all. We report this divergence rather than force a match; it likely "
@@ -192,7 +192,7 @@ sp('A disease model (ketamine / schizophrenia).', "Ketamine-type drugs block NMD
    "learns; above ~50%, SOM returns to its baseline and permanently shuts its branch regardless "
    "of the MD signal. It is the CONTROL over learning that breaks — a loss of context-dependent "
    "flexibility, which is the schizophrenia-relevant reading.")
-figure('figures/phase2_ketamine_failure.png',
+figure('figures/pre_audit/phase2_ketamine_failure.png',
        'Blocking MD->VIP: gating is intact below ~50% block and collapses above it, as SOM '
        'returns to its baseline rate.')
 

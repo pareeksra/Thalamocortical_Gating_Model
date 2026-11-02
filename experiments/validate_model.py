@@ -25,7 +25,7 @@ from equations import (attach_rho_clipper, make_eqs_synapse_plasticity, eqs_soma
                        eqs_synapse_plasticity, on_pre_plasticity)
 
 # Output directory
-VAL_DIR = os.path.join(PROJECT_ROOT, 'figures', 'validation')
+VAL_DIR = os.path.join(PROJECT_ROOT, 'figures', 'pre_audit', 'validation')
 os.makedirs(VAL_DIR, exist_ok=True)
 
 results = {}
@@ -1023,6 +1023,6 @@ if __name__ == '__main__':
     if n_pass == n_total:
         print('\n  All tests passed. Model is ready for parameter sweeps.')
     else:
-        print('\n  Some tests failed. Review figures/validation/ for diagnostics.')
+        print('\n  Some tests failed. Review figures/pre_audit/validation/ for diagnostics.')
 
     print(f'\n  Diagnostic plots saved to: {os.path.abspath(VAL_DIR)}/')

@@ -3,9 +3,9 @@ build_results_ppt.py
 =====================
 Plain results deck, per Raghav's spec: no theme, no background art, no AI-generated
 images -- just the real result figures already in figures/, one per slide, with a short
-numeric caption. Follows the same episode order as docs/PROJECT_STORY.md.
+numeric caption. Follows the same episode order as docs/reports/PROJECT_STORY.md.
 
-Saved to docs/Results_Summary.pptx (and G:/My Drive if reachable, matching
+Saved to docs/meetings/Results_Summary.pptx (and G:/My Drive if reachable, matching
 build_progress_report.py's convention).
 """
 import os
@@ -16,7 +16,7 @@ from pptx.dml.color import RGBColor
 
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIG = os.path.join(PROOT, 'figures')
-DOCS = os.path.join(PROOT, 'docs')
+DOCS = os.path.join(PROOT, 'docs', 'meetings')
 OUT_NAME = 'Results_Summary_PI.pptx'
 GDRIVE_PATH = os.path.join(r'G:\My Drive', OUT_NAME)
 
@@ -192,7 +192,7 @@ text_slide("The question and the approach", [
     "behavior; not yet at Yang's ~3000-neuron network scale.",
 ])
 
-figure_slide("Model architecture", "figures/network_architecture.png", [
+figure_slide("Model architecture", "figures/pre_audit/network_architecture.png", [
     "Model A connectivity.",
     "",
     "MD thalamus (Poisson input) drives PV and VIP.",
@@ -206,7 +206,7 @@ figure_slide("Model architecture", "figures/network_architecture.png", [
 
 # --- Bug 1 / Bug 2 ---------------------------------------------------------
 figure_slide("Bug 1 + Bug 2 fix - validation",
-             "figures/paper_replications/replicated_YANG2016_fig2c_dendritic_IO.png", [
+             "figures/pre_audit/paper_replications/replicated_YANG2016_fig2c_dendritic_IO.png", [
     "Bug 1: coupling constant was 4.0 nS,",
     "should have been Yang's 0.8 nS.",
     "-> soma fired at 201 Hz instead of ~10 Hz.",
@@ -239,7 +239,7 @@ text_slide("Bug 1 + Bug 2 - sanity check number", [
 
 # --- Paper replication battery ---------------------------------------------
 figure_slide("V2 - LTP threshold shifts with rate (Yang Fig. 7b)",
-             "figures/paper_replications/replicated_YANG2016_fig7b_LTP_vs_rate.png", [
+             "figures/pre_audit/paper_replications/replicated_YANG2016_fig7b_LTP_vs_rate.png", [
     "Presynaptic rate (Hz):",
     "  20    40    60    80   100   120",
     "",
@@ -254,7 +254,7 @@ figure_slide("V2 - LTP threshold shifts with rate (Yang Fig. 7b)",
 ])
 
 figure_slide("V3 - gating at Yang's own operating point",
-             "figures/paper_replications/replicated_YANG2016_fig7de_branch_gating.png", [
+             "figures/pre_audit/paper_replications/replicated_YANG2016_fig7de_branch_gating.png", [
     "exc = 80 Hz, post = 10 Hz",
     "(Yang's own stated operating point)",
     "",
@@ -270,7 +270,7 @@ figure_slide("V3 - gating at Yang's own operating point",
 ])
 
 figure_slide("V4 - does MD control the interneurons the way Zhang says?",
-             "figures/paper_replications/replicated_ZHANG2025_MD_interneuron_control.png", [
+             "figures/pre_audit/paper_replications/replicated_ZHANG2025_MD_interneuron_control.png", [
     "MD drive (Hz):    0    5   10   20   30   40",
     "",
     "PV rate (Hz):    7.1 13.4 22.2 52.3 83.7 126.7",
@@ -288,7 +288,7 @@ figure_slide("V4 - does MD control the interneurons the way Zhang says?",
 
 # --- gamma/tau bug + plasticity refactor -----------------------------------
 figure_slide("The 346x plasticity-timescale bug",
-             "figures/formula_comparison.png", [
+             "figures/pre_audit/formula_comparison.png", [
     "tau = 346.36 s (Yang's own published time",
     "constant) - but the project's ODE only",
     "divided part of the equation by tau.",
@@ -308,7 +308,7 @@ figure_slide("The 346x plasticity-timescale bug",
 ])
 
 figure_slide("Multi-epoch result with Yang's real equation",
-             "figures/analytical_plasticity_trajectory.png", [
+             "figures/pre_audit/analytical_plasticity_trajectory.png", [
     "Yang's closed-form epoch update",
     "(his Eqs. 32-35), not a continuous ODE.",
     "",
@@ -325,7 +325,7 @@ figure_slide("Multi-epoch result with Yang's real equation",
 
 # --- SOM rate sweeps ---------------------------------------------------------
 figure_slide("Sweep 1 - SOM firing rate (this is where 25 Hz comes from)",
-             "figures/som_rate_sweep.png", [
+             "figures/pre_audit/som_rate_sweep.png", [
     "gGABA held fixed at Yang-matched 40 nS.",
     "",
     "SOM rate (Hz): 10  17  21  25  29  33  39  46  55  63",
@@ -338,7 +338,7 @@ figure_slide("Sweep 1 - SOM firing rate (this is where 25 Hz comes from)",
 ])
 
 figure_slide("Sweep 2 - GABA conductance amount (this one failed)",
-             "figures/gbar_I_sweep.png", [
+             "figures/pre_audit/gbar_I_sweep.png", [
     "SOM held at Yang's own ~10.15 Hz.",
     "gGABA per synapse swept 4 -> 24 nS.",
     "",
@@ -381,7 +381,7 @@ comparison_table_slide(
 )
 
 # --- Noise + ketamine (current, 30 Hz reruns) -------------------------------
-figure_slide("Noise robustness", "figures/phase2_snr_curve.png", [
+figure_slide("Noise robustness", "figures/pre_audit/phase2_snr_curve.png", [
     "How much biological noise can gating",
     "tolerate before it stops working?",
     "",
@@ -395,7 +395,7 @@ figure_slide("Noise robustness", "figures/phase2_snr_curve.png", [
 ])
 
 figure_slide("Ketamine / NMDA-hypofunction simulation",
-             "figures/phase2_ketamine_failure.png", [
+             "figures/pre_audit/phase2_ketamine_failure.png", [
     "Models a standard schizophrenia-dysfunction",
     "circuit disruption: block NMDA on VIP,",
     "i.e. block MD -> VIP synapse (0% -> 100%).",
@@ -413,7 +413,7 @@ figure_slide("Ketamine / NMDA-hypofunction simulation",
 
 # --- This session's work: 25 vs 30 Hz reliability + seed44 -----------------
 figure_slide("Reliability check: does 25 Hz actually hold up?",
-             "figures/reliability_full_circuit.png", [
+             "figures/pre_audit/reliability_full_circuit.png", [
     "20 seeds (40-59), full circuit, noise = 0.",
     "",
     "25 Hz:  18 / 20 seeds pass",
@@ -429,7 +429,7 @@ figure_slide("Reliability check: does 25 Hz actually hold up?",
 ])
 
 figure_slide("What actually differs in a failing seed?",
-             "figures/seed44_escape_mechanism.png", [
+             "figures/pre_audit/seed44_escape_mechanism.png", [
     "Seed 42 (pass, ratio 4.07) vs.",
     "seed 44 (fail, ratio 1.02), both at 25 Hz.",
     "",

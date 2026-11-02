@@ -1,6 +1,6 @@
 # The 25 Hz gating failure is a small-N disinhibition-variance artifact
 
-> **REVISED 2026-11-02 (docs/AUDIT_2026-11-01.md, P1).** The seed-44/53 failures at
+> **REVISED 2026-11-02 (docs/reports/AUDIT_2026-11-01.md, P1).** The seed-44/53 failures at
 > 25 Hz require the legacy SOM lockstep (all cells spiking together). With desynchronised
 > SOM (now the default), the original N = 20 circuit passes 20/20 seeds at 25 Hz (and
 > 30 Hz). The lockstep re-run reproduces 18/20 with exactly seeds 44 and 53 failing. The
@@ -9,7 +9,7 @@
 
 
 *2026-10-14. Commits `5dac844` (mechanism + sweeps), `85f8bce` (figure).*
-*Figure: `figures/n_som_disinhibition_variance.png`.*
+*Figure: `figures/pre_audit/n_som_disinhibition_variance.png`.*
 
 ## Summary
 
@@ -97,17 +97,17 @@ the original 25 Hz baseline.
 
 ```bash
 # full 10-epoch reliability at N=100 (weight-compensated), seeds 40-59, 25 Hz
-python -I experiments/n_som_reliability_sweep.py n100 4      # -> docs/n_som_reliability_n100_results.json
-# baseline is the committed docs/full_circuit_reliability_25hz_results.json
+python -I experiments/n_som_reliability_sweep.py n100 4      # -> results/pre_audit/n_som_reliability_n100_results.json
+# baseline is the committed results/pre_audit/full_circuit_reliability_25hz_results.json
 
 # sub-epoch E/I-balance diagnostic (why branch-0 calcium is elevated)
-python -I experiments/epoch0_timing_diag.py                  # -> docs/epoch0_timing_diag_results.json
+python -I experiments/epoch0_timing_diag.py                  # -> results/pre_audit/epoch0_timing_diag_results.json
 
 # fast N-size proxy sweep (1-epoch ap0 > 0.67)
 python -I experiments/n_som_variance_test.py <seed> <n_som> <gGABA_nS>
 
 # regenerate the figure
-python -I plotting/n_som_variance_figure.py                  # -> figures/n_som_disinhibition_variance.png
+python -I plotting/n_som_variance_figure.py                  # -> figures/pre_audit/n_som_disinhibition_variance.png
 ```
 
 The mechanism diagnostics rely on the `monitor_epoch0` hook added to

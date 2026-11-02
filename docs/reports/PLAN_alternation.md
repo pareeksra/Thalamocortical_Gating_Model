@@ -1,6 +1,6 @@
 # Plan — repeated A/B alternation with overlapping inputs (2026-11-02)
 
-Follow-up to `docs/PLAN_overlapping_inputs.md`, which tested a single A→B sequence.
+Follow-up to `docs/reports/PLAN_overlapping_inputs.md`, which tested a single A→B sequence.
 
 ## Question
 
@@ -62,7 +62,7 @@ If the f = 0 anchor or the no-gating control fails, stop and debug.
 
 ## Results (2026-11-02; 65 runs, run locally)
 
-Data: `docs/audit/alternation_experiment.json` (summary: `_summary.json`). Figure:
+Data: `results/current/alternation_experiment.json` (summary: `_summary.json`). Figure:
 `figures/alternation_experiment.png`. Code: `experiments/alternation_experiment.py`.
 
 **Anchors pass.**

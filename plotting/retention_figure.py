@@ -8,8 +8,8 @@ Right (input-gated): context switches BOTH disinhibition AND which input is acti
        (A's input silent during B) -> branch 0's calcium drops below theta_d, the Yang
        update holds rho -> A retained ~100% while B learns on branch 1.
 
-Reads docs/retention_results_{inhibonly,inputgated}.json.
-Run: <venv>/python -I plotting/retention_figure.py  -> figures/retention_forgetting.png
+Reads results/pre_audit/retention_results_{inhibonly,inputgated}.json.
+Run: <venv>/python -I plotting/retention_figure.py  -> figures/pre_audit/retention_forgetting.png
 """
 import os, sys, json
 import matplotlib
@@ -40,8 +40,8 @@ def panel(ax, d, title):
 
 
 def main():
-    di = json.load(open(os.path.join(PROOT, 'docs', 'retention_results_inhibonly.json')))
-    dg = json.load(open(os.path.join(PROOT, 'docs', 'retention_results_inputgated.json')))
+    di = json.load(open(os.path.join(PROOT, 'results', 'pre_audit', 'retention_results_inhibonly.json')))
+    dg = json.load(open(os.path.join(PROOT, 'results', 'pre_audit', 'retention_results_inputgated.json')))
     fig, (axL, axR) = plt.subplots(1, 2, figsize=(11, 4.4), sharey=True)
     panel(axL, di, f"A  Inhibition-only context switch\n"
                    f"   (A's input stays on) -> FORGETS ({di['rho0_retention_frac']*100:.0f}%)")
@@ -52,7 +52,7 @@ def main():
     fig.suptitle('No catastrophic forgetting requires context-specific INPUT, not just '
                  'branch-specific gating', fontsize=12.5, fontweight='bold', y=1.03)
     fig.tight_layout()
-    out = os.path.join(PROOT, 'figures', 'retention_forgetting.png')
+    out = os.path.join(PROOT, 'figures', 'pre_audit', 'retention_forgetting.png')
     fig.savefig(out, dpi=150, bbox_inches='tight', facecolor='white')
     print(f'Saved {out}')
     print(f"  inhibition-only: {di['rho0_retention_frac']*100:.1f}% retained ({di['verdict']})")

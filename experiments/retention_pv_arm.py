@@ -2,7 +2,7 @@
 retention_pv_arm.py -- does MD->PV (Zhang's MD^GRIK4 arm) protect learned memories by
 lowering somatic firing, hence bAP calcium, on idle branches? (2026-11-02)
 
-Background. docs/AUDIT_2026-11-01.md P3: with the idle context's input still active,
+Background. docs/reports/AUDIT_2026-11-01.md P3: with the idle context's input still active,
 SOM gating of a branch pushes its calcium into the LTD band (part of it bAP calcium) and
 the memory is erased (retention 32-40%). bAPs come from somatic spikes; PV inhibits the
 soma. If MD->PV lowers the somatic rate in a graded way, it lowers bAP calcium and should
@@ -16,13 +16,13 @@ input_mode='always' (the forgetting case), MD->PV scale x0, x0.5, x1, x2, x3, se
 Reference: input_mode='context' at x1 (soma), the input-sparse case that retains.
 
 Run:  <py> -I experiments/retention_pv_arm.py <gI> <e_scale> <g_pv2soma> [n_workers]
-Out:  docs/audit/retention_pv_arm.json
+Out:  results/current/retention_pv_arm.json
 """
 import os, sys, json, time
 from concurrent.futures import ProcessPoolExecutor
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT, os.path.join(PROOT, 'experiments')]
-OUT = os.path.join(PROOT, 'docs', 'audit', 'retention_pv_arm.json')
+OUT = os.path.join(PROOT, 'results', 'current', 'retention_pv_arm.json')
 PV_X = [0.0, 0.5, 1.0, 2.0, 3.0]
 SEEDS = [42, 43, 44, 45, 46]
 N_EP = 8

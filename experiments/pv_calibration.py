@@ -1,5 +1,5 @@
 """
-pv_calibration.py -- recalibrate the PV arm (open item from docs/AUDIT_2026-11-01.md, P8).
+pv_calibration.py -- recalibrate the PV arm (open item from docs/reports/AUDIT_2026-11-01.md, P8).
 
 Problem. PV's background drive (rate_bg_pv = 500 Hz, weight_bg_pv = 0.25 nS) was calibrated
 BEFORE SOM->PV was wired (2026-08-27: p = 0.8, gGABA_pv = 2.0 nS) and never re-tuned.
@@ -24,7 +24,7 @@ shared, desynchronised 20-cell SOM population (som_phase='random', 21.32 pA -> 3
 SOM-silenced conditions get no SOM input. 3 s per run, rates from the last 2.5 s.
 
 Run:  <venv>/python -I experiments/pv_calibration.py [seed]
-Out:  docs/audit/pv_calibration_seed<seed>.json
+Out:  results/current/pv_calibration_seed<seed>.json
 """
 import os, sys, json, itertools
 import numpy as np
@@ -126,9 +126,9 @@ def main():
               + ' '.join(f'{x:6.1f}' for x in e['pv_vs_md_som_on'])
               + f" | {e['pv_md0_som_off']:6.1f} | {'Y' if e['T1'] else '.'}  {'Y' if e['T2'] else '.'}  "
               f"{'Y' if e['T3'] else '.'} {'<== ALL' if e['all'] else ''}")
-    os.makedirs(os.path.join(PROOT, 'docs', 'audit'), exist_ok=True)
+    os.makedirs(os.path.join(PROOT, 'results', 'current'), exist_ok=True)
     json.dump(dict(seed=sd, som_rate=som_rate, md_rates=MD_RATES, grid=ev),
-              open(os.path.join(PROOT, 'docs', 'audit', f"pv_calibration_{'fine_' if fine else ''}seed{sd}.json"), 'w'), indent=1)
+              open(os.path.join(PROOT, 'results', 'current', f"pv_calibration_{'fine_' if fine else ''}seed{sd}.json"), 'w'), indent=1)
 
 
 if __name__ == '__main__':

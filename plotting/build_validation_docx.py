@@ -1,11 +1,11 @@
 """
 build_validation_docx.py
 =========================
-Assemble docs/Validation_Report.docx: a Methods/Results-style validation report
+Assemble docs/meetings/Validation_Report.docx: a Methods/Results-style validation report
 comparing Model A (Brian 2) against the figures of Yang, Murray & Wang (2016)
 and Zhang et al. (2025). Text and figures are generated fresh from
 figures/validation_vs_papers/results.json (written by
-experiments/validate_vs_papers.py) and figures/network_architecture.png
+experiments/validate_vs_papers.py) and figures/pre_audit/network_architecture.png
 (written by experiments/generate_network_diagram.py). Numbers are measured,
 not estimated or invented for presentation.
 
@@ -104,7 +104,7 @@ para('The model consists of a single pyramidal soma coupled to two dendritic '
      '10-12. Dendritic calcium follows their Eq. 13 (a leaky integral of the '
      'local NMDA current) plus their Eq. 14 (a per-spike back-propagating '
      'action potential transient).')
-add_fig(os.path.join(FIGROOT, 'network_architecture.png'),
+add_fig(os.path.join(FIGROOT, 'pre_audit/network_architecture.png'),
         'Figure 1. Model A network connectivity. Connection probabilities and '
         'synaptic weights are read from model/parameters.py.',
         from_vdir=False)
@@ -252,6 +252,6 @@ para('Zhang, X., Mukherjee, A., Halassa, M. M., and Chen, Z. S. (2025). '
      'Mediodorsal thalamus regulates task uncertainty to enable cognitive '
      'flexibility. Nature Communications, 16, 2640.')
 
-out = os.path.join(PROOT, 'docs', 'Validation_Report.docx')
+out = os.path.join(PROOT, 'docs', 'meetings', 'Validation_Report.docx')
 doc.save(out)
 print('Saved', out)

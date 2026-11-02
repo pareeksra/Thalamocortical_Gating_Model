@@ -10,11 +10,11 @@ and records the gating ratio + both branches' final rho.
 Goal: find the crossover SOM rate below which gating (ratio > 2) fails.
 
 Two endpoints are already computed (reused, not rerun):
-  - bias=20.04 pA -> ~10.14 Hz, ratio=1.02  (docs/phase1_som10hz_run.log, Step 2d)
-  - bias=25.00 pA -> ~63.3  Hz, ratio=2.81  (docs/phase1_analytical_run.log, Step 2c)
+  - bias=20.04 pA -> ~10.14 Hz, ratio=1.02  (results/pre_audit/phase1_som10hz_run.log, Step 2d)
+  - bias=25.00 pA -> ~63.3  Hz, ratio=2.81  (results/pre_audit/phase1_analytical_run.log, Step 2c)
 
-Output: docs/som_rate_sweep_results.json, docs/som_rate_sweep_table.csv,
-figures/som_rate_sweep.png
+Output: results/pre_audit/som_rate_sweep_results.json, results/pre_audit/som_rate_sweep_table.csv,
+figures/pre_audit/som_rate_sweep.png
 """
 import sys, os, json, csv
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,17 +26,17 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from phase1_analytical import run_gating_analytical
 
-RESULTS_PATH = os.path.join(PROOT, 'docs', 'som_rate_sweep_results.json')
-TABLE_PATH = os.path.join(PROOT, 'docs', 'som_rate_sweep_table.csv')
-FIG_PATH = os.path.join(PROOT, 'figures', 'som_rate_sweep.png')
+RESULTS_PATH = os.path.join(PROOT, 'results', 'pre_audit', 'som_rate_sweep_results.json')
+TABLE_PATH = os.path.join(PROOT, 'results', 'pre_audit', 'som_rate_sweep_table.csv')
+FIG_PATH = os.path.join(PROOT, 'figures', 'pre_audit', 'som_rate_sweep.png')
 
 # Reused points -- already run under the identical protocol (15 epochs, T=3s,
 # exc=80Hz, post=10Hz, g_c=0.8nS, gGABA=4.0nS default, seed 42). Not rerun.
 REUSED = [
     dict(som_bias_pA=20.04, gGABA_nS=4.0, som_rate_hz=10.14, rho0=0.910, rho1=0.924,
-         ratio=1.02, source='docs/phase1_som10hz_run.log (Step 2d)'),
+         ratio=1.02, source='results/pre_audit/phase1_som10hz_run.log (Step 2d)'),
     dict(som_bias_pA=25.00, gGABA_nS=4.0, som_rate_hz=63.30, rho0=0.329, rho1=0.924,
-         ratio=2.81, source='docs/phase1_analytical_run.log (Step 2c)'),
+         ratio=2.81, source='results/pre_audit/phase1_analytical_run.log (Step 2c)'),
 ]
 
 # New bias points spanning the same range as the reused endpoints (20.04, 25.00 pA).

@@ -1,6 +1,6 @@
 """
 alternation_experiment.py -- repeated A/B alternation with overlapping inputs
-(plan: docs/PLAN_alternation.md).
+(plan: docs/reports/PLAN_alternation.md).
 
 32 epochs (T = 3 s) alternating context A (MD_0, pattern A) and B (MD_1, pattern B) in blocks
 of L epochs. MD gating x f {0,.25,.5,.75,1} x L {1,4} x seeds 42-46, plus a no-gating
@@ -8,14 +8,14 @@ control (f {0,.5,1}, L = 4). Fresh process per run.
 
 Run:     <py> -I experiments/alternation_experiment.py run [n_workers]
 Analyse: <py> -I experiments/alternation_experiment.py analyse
-Out:     docs/audit/alternation_experiment.json, figures/alternation_experiment.png
+Out:     results/current/alternation_experiment.json, figures/alternation_experiment.png
 """
 import os, sys, json, time
 import numpy as np
 from concurrent.futures import ProcessPoolExecutor, as_completed
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT, os.path.join(PROOT, 'experiments')]
-OUT = os.path.join(PROOT, 'docs', 'audit', 'alternation_experiment.json')
+OUT = os.path.join(PROOT, 'results', 'current', 'alternation_experiment.json')
 OVERLAPS = [0.0, 0.25, 0.5, 0.75, 1.0]
 SEEDS = [42, 43, 44, 45, 46]
 BLOCKS = [1, 4]

@@ -46,7 +46,7 @@ def run_gating(T=3.0, exc_rate=80.0, post_rate=10.0, gcouple_nS=0.8,
                               run_tag=f'p1gating_{exc_rate:g}_{post_rate:g}_{seed_val}',
                               som_phase=som_phase)
     try:
-        os.remove(os.path.join(PROOT, 'docs',
+        os.remove(os.path.join(PROOT, 'results', 'pre_audit',
                                f'phase1_analytical_state_p1gating_{exc_rate:g}_{post_rate:g}_{seed_val}.json'))
     except OSError:
         pass

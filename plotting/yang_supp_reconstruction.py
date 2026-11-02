@@ -22,7 +22,7 @@ s ~0.4) are recovered.
 
 Examples
 --------
-  # Yang defaults -> figures/yang_supp1_reconstruction.png, ..._supp2_...
+  # Yang defaults -> figures/pre_audit/yang_supp1_reconstruction.png, ..._supp2_...
   py docs/yang_supp_reconstruction.py
 
   # override individual parameters

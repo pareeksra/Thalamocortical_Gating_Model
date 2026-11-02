@@ -1,6 +1,6 @@
 """
 test_audit_fixes.py -- regression tests for the 2026-11-01 audit-repair pass
-(docs/AUDIT_2026-11-01.md). Fast tests run by default; `--slow` adds the full-circuit
+(docs/reports/AUDIT_2026-11-01.md). Fast tests run by default; `--slow` adds the full-circuit
 legacy-equivalence check (~2 min).
 
 Run:  /home/raghav/myenv/bin/python tests/test_audit_fixes.py [--slow]

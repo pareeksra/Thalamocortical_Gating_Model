@@ -28,7 +28,7 @@ the model should overwrite (this is the "what forgetting looks like" reference).
 approximated by leaving branch 0 free in both phases (no context switch) and checking
 it simply stays up (the trivial no-interference case), plus the key cross-branch test.
 
-Output: docs/retention_results.json + figures/retention_forgetting.png
+Output: results/pre_audit/retention_results_<mode>.json + figures/pre_audit/retention_forgetting.png
 Run: <venv>/python -I experiments/retention_catastrophic_forgetting.py [inputgated|inhibonly|inputonly]
 
 2026-11-01 (audit Problem 3): added mode 'inputonly' -- the idle input is silenced but
@@ -173,7 +173,7 @@ def main(gate_input=True, inhibit=True):
         rho0_endB=round(rho0_endB, 4), rho1_endB=round(rho1_endB, 4),
         rho0_retention_frac=round(retention, 4), verdict=verdict, traj=traj)
     mode = ('inputgated' if inhibit else 'inputonly') if gate_input else 'inhibonly'
-    json.dump(out, open(os.path.join(PROOT, 'docs', f'retention_results_{mode}.json'), 'w'), indent=2)
+    json.dump(out, open(os.path.join(PROOT, 'results', 'pre_audit', f'retention_results_{mode}.json'), 'w'), indent=2)
 
     print(f"SOM rate: {som_rate:.1f} Hz")
     print(f"End of A: branch0(free,learned)={rho0_endA:.3f}  branch1(gated)={rho1_endA:.3f}")

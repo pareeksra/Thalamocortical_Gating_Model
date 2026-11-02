@@ -85,7 +85,7 @@ def v1_measured():
     print('\n[V1] Dendritic I/O MEASURED on the Brian 2 dendrite (Yang Fig. 2c)')
     import v1_dendrite_io_measured as v1m
     v1m.main()
-    results['V1'] = json.load(open(os.path.join(PROOT, 'docs', 'audit', 'v1_dendrite_io.json')))
+    results['V1'] = json.load(open(os.path.join(PROOT, 'results', 'current', 'v1_dendrite_io.json')))
 
 
 V2_RATES = [2.0, 5.0, 10.0, 20.0, 40.0, 80.0, 120.0, 160.0, 240.0]
@@ -98,7 +98,7 @@ def _v2_point(args):
                               som_bias_pA=V2_SOM[som_hz], seed_val=42, verbose=False,
                               resume=False, run_tag=f'validate_rate_{int(r)}_som{som_hz}')
     try:
-        os.remove(os.path.join(PROOT, 'docs', f'phase1_analytical_state_validate_rate_{int(r)}_som{som_hz}.json'))
+        os.remove(os.path.join(PROOT, 'results', 'pre_audit', f'phase1_analytical_state_validate_rate_{int(r)}_som{som_hz}.json'))
     except OSError:
         pass
     return r, som_hz, d['rho1'], d['rho0']

@@ -10,7 +10,7 @@ global MD channel, MD could not select a branch in any case.
 This version uses model/context_circuit.py: one MD -> VIP -> SOM channel per branch.
 Context A (MD_0 on) disinhibits branch 0; context B (MD_1 on) disinhibits branch 1. Inputs
 are context-sparse (the idle branch's input is silent), the condition under which learning
-is retained (docs/audit/retention_md_context.json).
+is retained (results/current/retention_md_context.json).
 
 Run:  <venv>/python experiments/demo_v2_zhang2025.py [seed]
 Out:  figures/demo_zhang2025_context_switch.png

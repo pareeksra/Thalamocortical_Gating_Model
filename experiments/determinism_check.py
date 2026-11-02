@@ -75,7 +75,7 @@ if __name__ == '__main__':
     else:
         print("  RESULT: IDENTICAL across different seeds -- comparison is vacuous / seed ignored! [FLAG]", flush=True)
 
-    out = os.path.join(PROOT, 'docs', 'determinism_check_results.json')
+    out = os.path.join(PROOT, 'results', 'pre_audit', 'determinism_check_results.json')
     json.dump({'A_seed42': {k: A[k] for k in SUMMARY_KEYS},
                'B_seed42': {k: B[k] for k in SUMMARY_KEYS},
                'C_seed43': {k: C[k] for k in SUMMARY_KEYS},

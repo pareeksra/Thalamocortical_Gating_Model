@@ -6,8 +6,8 @@ supplementary panels (left) vs. our model's replication (right). Ordered so the 
 RELEVANT TO OUR MODEL come first, then the ones generated only to VALIDATE Yang's
 modelling choices (which our model doesn't itself use).
 
-Panels: figures/supp_panels/{pap_,our_}*.png (built by the crop step).
-Output: docs/Yang_Supp_Comparison.pptx (+ Google Drive mirror if reachable).
+Panels: figures/pre_audit/supp_panels/{pap_,our_}*.png (built by the crop step).
+Output: docs/meetings/Yang_Supp_Comparison.pptx (+ Google Drive mirror if reachable).
 """
 import os
 from pptx import Presentation
@@ -17,7 +17,7 @@ from pptx.dml.color import RGBColor
 from PIL import Image
 
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PAN = os.path.join(PROOT, 'figures', 'supp_panels')
+PAN = os.path.join(PROOT, 'figures', 'pre_audit', 'supp_panels')
 GDRIVE = r'G:\My Drive\Yang_Supp_Comparison.pptx'
 
 WHITE = RGBColor(0xFF, 0xFF, 0xFF)
@@ -140,7 +140,7 @@ compare_slide(
     "the saturated value toward the plateau threshold. Theory panel underpinning gating.")
 
 # ---------------------------------------------------------------------------
-out = os.path.join(PROOT, 'docs', 'Yang_Supp_Comparison.pptx')
+out = os.path.join(PROOT, 'docs', 'meetings', 'Yang_Supp_Comparison.pptx')
 prs.save(out)
 print(f"Saved {out}")
 try:

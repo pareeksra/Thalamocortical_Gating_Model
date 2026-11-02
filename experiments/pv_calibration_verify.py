@@ -3,7 +3,7 @@ pv_calibration_verify.py -- after the 2026-11-02 PV recalibration (weight_bg_pv 
 nS, gGABA_pv 2.0 -> 0.05 nS), check (fresh process per run):
 
   A. gating unchanged: full circuit (md = 0, desynchronised SOM 30 Hz), seeds 40-59.
-     Compare with docs/audit/som_async_full.json (pre-recalibration: 20/20).
+     Compare with results/current/som_async_full.json (pre-recalibration: 20/20).
   B. MD-driven retention unchanged: context circuit, 'both' and 'inhibonly', seeds 42-44.
   C. PV arm now reaches plasticity through somatic bAPs: context circuit,
      bap_source='soma', soma drive 100 x 10 Hz x 0.2 nS, input on both branches,
@@ -11,13 +11,13 @@ nS, gGABA_pv 2.0 -> 0.05 nS), check (fresh process per run):
   D. PV is graded inside the context circuit: PV rate per epoch in context A.
 
 Run:  <venv>/python -I experiments/pv_calibration_verify.py [n_workers]
-Out:  docs/audit/pv_calibration_verify.json
+Out:  results/current/pv_calibration_verify.json
 """
 import os, sys, json
 from concurrent.futures import ProcessPoolExecutor
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT]
-OUT = os.path.join(PROOT, 'docs', 'audit', 'pv_calibration_verify.json')
+OUT = os.path.join(PROOT, 'results', 'current', 'pv_calibration_verify.json')
 
 
 def _job(spec):

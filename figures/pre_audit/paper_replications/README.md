@@ -35,7 +35,7 @@ rate RNN (we borrow only its wiring labels) → **qualitative/mechanistic** chec
   (Yang P=0.8) defined but unwired.
 - Zhang's PFC→MD loop and MD→Exc projection are omitted; MD here is a bare Poisson input.
 
-## Note on the older `figures/phenomenological/` and `figures/mechanistic/` PNGs
+## Note on the older `figures/pre_audit/phenomenological/` and `figures/pre_audit/mechanistic/` PNGs
 
 Those come from the NumPy figure models (B, C), whose plasticity is inert (random-walk /
 surrogate). They are **not** valid replications — use the files in this folder instead.

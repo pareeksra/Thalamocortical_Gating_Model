@@ -7,7 +7,7 @@ sys.path.insert(0, os.path.join(PROOT, 'model'))
 from full_circuit import build_gating_circuit
 CFG = dict(T=3.0, md_signal_rate=0.0, noise_level=0.0, n_epochs=3, som_bias_pA=21.32)
 KEYS = ['r0','r1','w0','w1','ratio','pv_rate','som_rate','vip_rate','pyr_rate']
-base = json.load(open(os.path.join(PROOT,'docs','determinism_check_results.json')))['A_seed42']
+base = json.load(open(os.path.join(PROOT,'results', 'pre_audit','determinism_check_results.json')))['A_seed42']
 now = build_gating_circuit(seed_val=42, **CFG)
 print("=== cross-session seed-42 bit-identity (now vs stored earlier session) ===", flush=True)
 allmatch = True

@@ -8,13 +8,13 @@ Protocols (16 epochs x 3 s, seeds 42-44):
   always   both inputs on; context A x 8 then B x 8 (gating ratio after A; retention after B)
   context  only the active context's input on; A x 8 then B x 8
 Run:  <py> -I experiments/nmda_plastic_check.py [n_workers]
-Out:  docs/audit/nmda_plastic_check.json
+Out:  results/current/nmda_plastic_check.json
 """
 import os, sys, json, time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT]
-OUT = os.path.join(PROOT, 'docs', 'audit', 'nmda_plastic_check.json')
+OUT = os.path.join(PROOT, 'results', 'current', 'nmda_plastic_check.json')
 
 
 def _job(ver, mode, s):

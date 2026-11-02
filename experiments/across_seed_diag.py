@@ -22,14 +22,14 @@ Reads the trace to answer:
   - Is the escape driven by a large branch-0 alpha_p (calcium above LTP threshold) in a
     specific early epoch?
 
-Output: docs/across_seed_diag_results.json + printed per-epoch tables.
+Output: results/pre_audit/across_seed_diag_results.json + printed per-epoch tables.
 """
 import os, sys, json
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(PROOT, 'model'))
 from full_circuit import build_gating_circuit
 
-SEEDS = [42, 44, 53]     # 42 passes; 44, 53 fail (docs/full_circuit_reliability_25hz_results.json)
+SEEDS = [42, 44, 53]     # 42 passes; 44, 53 fail (results/pre_audit/full_circuit_reliability_25hz_results.json)
 SOM_BIAS = 20.9          # the 25 Hz condition where the failure lives
 N_EPOCHS = 10
 
@@ -55,7 +55,7 @@ for s in SEEDS:
               f"{t['ap1']:>6.3f}{cross}", flush=True)
     results[s]['first_epoch_rho0_over_0.5'] = first_cross
 
-out = os.path.join(PROOT, 'docs', 'across_seed_diag_results.json')
+out = os.path.join(PROOT, 'results', 'pre_audit', 'across_seed_diag_results.json')
 with open(out, 'w') as f:
     json.dump(results, f, indent=2)
 print(f"\nSaved {out}", flush=True)

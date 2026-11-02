@@ -4,11 +4,11 @@ full_circuit_reliability_sweep.py -- multi-seed reliability test IN THE FULL CIR
 2026-09-01 decision (Raghav): the reduced-vs-full circuit mismatch in
 phase1_reliability_sweep.py (seeds 0-9, reduced Phase-1 circuit) meant that sweep never
 actually validated against the failure it was built to fix -- seed 44's collapse
-(docs/phase2_snr_sweep_results.json, noise_level=0.0: ratio 1.015) was found in the FULL
+(results/pre_audit/phase2_snr_sweep_results.json, noise_level=0.0: ratio 1.015) was found in the FULL
 circuit (model/full_circuit.py), a disjoint seed AND a disjoint circuit. Going forward,
 all reliability/validation numbers cited in the Progress Report or to Raghav's PI must
 come from the full circuit. phase1_reliability_sweep.py is retired as evidence (kept for
-fast dev iteration only, not deleted) -- see docs/diag_seed44_results.json for the
+fast dev iteration only, not deleted) -- see results/pre_audit/diag_seed44_results.json for the
 reproduction that motivated this script.
 
 Runs the exact Phase-2B baseline call (T=3.0, md_signal_rate=0, noise_level=0,
@@ -49,7 +49,7 @@ BIAS_BY_RATE = {25: 20.90, 28: 21.20, 30: 21.32, 33: 21.60, 35: 21.80}
 SEEDS = list(range(40, 60))  # 40-59, 20 seeds
 T_SIM = 3.0
 N_EPOCHS = 10
-RESULTS_DIR = os.path.join(PROOT, 'docs')
+RESULTS_DIR = os.path.join(PROOT, 'results', 'pre_audit')
 DEFAULT_WORKERS = 8
 
 

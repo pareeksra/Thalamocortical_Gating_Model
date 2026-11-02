@@ -4,7 +4,7 @@ the PV -> soma weight, so PV inhibition scales somatic firing gradually (Yang Fi
 Eqs. 29-30) instead of switching it off (2026-11-02).
 
 Why. With a purely excitatory, mean-driven somatic drive, PV -> soma is switch-like at
-every weight tested (docs/audit/pv_soma_calibration.json): the soma is a threshold LIF and
+every weight tested (results/current/pv_soma_calibration.json): the soma is a threshold LIF and
 PV spans ~30x (7 -> 220 Hz) over MD->PV x0..x3. A high-conductance, balanced drive (mean
 voltage just under threshold, firing driven by fluctuations) is the standard way to make
 inhibition act gradually on an integrate-and-fire neuron.
@@ -25,7 +25,7 @@ Targets (stated before running):
   S3  fluctuation-driven: ISI CV >= 0.7 at x1
 
 Run:  <py> -I experiments/soma_balanced_calibration.py [n_workers] [seed]
-Out:  docs/audit/soma_balanced_calibration_seed<seed>.json
+Out:  results/current/soma_balanced_calibration_seed<seed>.json
 """
 import os, sys, json, itertools
 from concurrent.futures import ProcessPoolExecutor
@@ -84,9 +84,9 @@ def main():
         rows.append(dict(gi=gi, es=es, g=g, soma=s, cv_x1=cv, S1=S1, S2=S2, S3=S3, all=S1 and S2 and S3))
         print(f"{gi:>4} {es:>5} {g:>5} | " + ' '.join(f'{v:5.1f}' for v in s) + f" | {cv:5.2f} | "
               f"{'Y' if S1 else '.'}  {'Y' if S2 else '.'}  {'Y' if S3 else '.'} {'<== ALL' if S1 and S2 and S3 else ''}")
-    os.makedirs(os.path.join(PROOT, 'docs', 'audit'), exist_ok=True)
+    os.makedirs(os.path.join(PROOT, 'results', 'current'), exist_ok=True)
     json.dump(dict(seed=sd, raw=res, grid=rows),
-              open(os.path.join(PROOT, 'docs', 'audit', f"soma_balanced_calibration_{'fine_' if fine else ''}seed{sd}.json"), 'w'),
+              open(os.path.join(PROOT, 'results', 'current', f"soma_balanced_calibration_{'fine_' if fine else ''}seed{sd}.json"), 'w'),
               indent=1, default=float)
 
 

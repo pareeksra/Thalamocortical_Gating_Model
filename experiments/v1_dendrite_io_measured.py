@@ -19,7 +19,7 @@ For each g_inh the half-activation g_1/2 is read off the measured curve (V halfw
 the curve's min and max) and compared with Yang's law g_1/2 = 5.56*(4 + g_inh).
 
 Run:  <venv>/python experiments/v1_dendrite_io_measured.py
-Out:  figures/validation_vs_papers/v1_dendritic_io_measured.png, docs/audit/v1_dendrite_io.json
+Out:  figures/validation_vs_papers/v1_dendritic_io_measured.png, results/current/v1_dendrite_io.json
 """
 import os, sys, json
 import numpy as np
@@ -110,8 +110,8 @@ def main():
     os.makedirs(os.path.join(PROOT, 'figures', 'validation_vs_papers'), exist_ok=True)
     fp = os.path.join(PROOT, 'figures', 'validation_vs_papers', 'v1_dendritic_io_measured.png')
     fig.savefig(fp, dpi=150, facecolor='white')
-    os.makedirs(os.path.join(PROOT, 'docs', 'audit'), exist_ok=True)
-    json.dump(out, open(os.path.join(PROOT, 'docs', 'audit', 'v1_dendrite_io.json'), 'w'), indent=1)
+    os.makedirs(os.path.join(PROOT, 'results', 'current'), exist_ok=True)
+    json.dump(out, open(os.path.join(PROOT, 'results', 'current', 'v1_dendrite_io.json'), 'w'), indent=1)
     print(f"{'g_inh':>6} {'g1/2 meas':>10} {'g1/2 Yang':>10} {'V range (mV)':>18}")
     for g in INH:
         o = out[str(g)]

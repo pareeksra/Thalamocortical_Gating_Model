@@ -47,7 +47,7 @@ SOM_BIAS_PA = 20.9        # 25 Hz condition
 SEEDS = list(range(40, 60))   # canonical 20 seeds
 T_SIM = 3.0
 N_EPOCHS = 10
-RESULTS_DIR = os.path.join(PROOT, 'docs')
+RESULTS_DIR = os.path.join(PROOT, 'results', 'pre_audit')
 DEFAULT_WORKERS = 4
 
 

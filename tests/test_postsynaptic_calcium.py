@@ -281,7 +281,7 @@ def test_downstream_plasticity_access():
     print(f'         severed      mean drho = {d_off.mean():+.4f}  '
           f'(per-seed {np.array2string(d_off, precision=3)})')
     # 2026-11-01 (audit): the old 0.02 magnitude threshold was calibrated against the
-    # retired drho/dt ODE, whose gamma terms ran 346x too strong (docs/gamma_tau_analysis.md).
+    # retired drho/dt ODE, whose gamma terms ran 346x too strong (docs/reports/gamma_tau_analysis.md).
     # Under Yang's analytical update with the real tau = 346 s, 2 s of post-only LTD-band
     # calcium moves rho by only ~1e-3 -- so assert the SIGN on every seed, not a magnitude.
     check('postsynaptic calcium alone drives rho DOWN on every seed (theta_D crossed -> LTD)',

@@ -16,11 +16,11 @@ Pipeline (Model A's plasticity, refactored):
   Repeat for N epochs so plasticity compounds across epochs.
 
 Outputs the epoch-by-epoch rho trajectory (both branches) to
-figures/analytical_plasticity_trajectory.png and prints final rho / ratio.
+figures/pre_audit/analytical_plasticity_trajectory.png and prints final rho / ratio.
 """
 import sys, os, json
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATE_PATH = os.path.join(PROOT, 'docs', 'phase1_analytical_state.json')
+STATE_PATH = os.path.join(PROOT, 'results', 'pre_audit', 'phase1_analytical_state.json')
 sys.path.insert(0, os.path.join(PROOT, 'model'))
 sys.path.insert(0, PROOT)
 import numpy as np
@@ -117,7 +117,7 @@ def run_gating_analytical(n_epochs=20, T=3.0, exc_rate=80.0, post_rate=10.0,
     # StateMonitor: it is O(1) memory (no growing trace) and integrates at the full
     # simulation step (NOTE 2026-11-01: that is Brian 2's DEFAULT 0.1 ms -- defaultclock.dt is
     # never set and sim_dt=0.02 ms only ever clocked the legacy coupling operation; see
-    # docs/audit/dt_convergence.json for the 0.02 vs 0.1 ms check) rather than the coarser record_dt, so the alpha estimate is if
+    # results/current/dt_convergence.json for the 0.02 vs 0.1 ms check) rather than the coarser record_dt, so the alpha estimate is if
     # anything more accurate. c_total = c + bAPCa_post is evaluated inline with correct
     # postsynaptic indexing inside the generated code.
     acc_eqs = '\nad_acc : second\nap_acc : second\n'

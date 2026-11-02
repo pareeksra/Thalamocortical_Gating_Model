@@ -3,10 +3,10 @@
 One continuous narrative, in order, so you can read it front-to-back without jumping between
 files. Same shape throughout: **what we were trying to do → what happened when we ran it → what
 we concluded → what we changed → how we checked it actually worked.** Every number here is
-sourced from the repo (mostly `scripts/build_progress_report.py`, `docs/REPAIR_LOG.md`,
-`docs/gamma_tau_analysis.md`, and this session's own reliability-sweep results) — nothing new is
+sourced from the repo (mostly `scripts/build_progress_report.py`, `docs/reports/REPAIR_LOG.md`,
+`docs/reports/gamma_tau_analysis.md`, and this session's own reliability-sweep results) — nothing new is
 being asserted, this is the existing evidence retold as one story instead of nine report
-sections. This document supersedes `docs/NARRATIVE_WALKTHROUGH.md` for the "whole project" view;
+sections. This document supersedes `docs/reports/NARRATIVE_WALKTHROUGH.md` for the "whole project" view;
 that file still exists but everything in it is folded in here, plus the parts before and after it.
 
 ---
@@ -49,7 +49,7 @@ revisited.
 
 ## 1. Before Phase 1 even started: a structural repair pass
 
-Before running any real gating experiment, an audit of the existing code (`docs/REPAIR_LOG.md`)
+Before running any real gating experiment, an audit of the existing code (`docs/reports/REPAIR_LOG.md`)
 found several pieces that were either dead code or subtly wrong. Worth knowing about because
 Phase 1's Bug 2 (next section) is really the tail end of this same repair effort:
 
@@ -306,7 +306,7 @@ Reported as real-but-partially-characterized, not oversold.
 We reproduced Yang's actual Supplementary Figures 1 and 2 with a faithful single-dendrite
 spiking simulation (`experiments/yang_supp_replication.py`) using his own equations and our
 Yang-calibrated constants, and compared panel-by-panel against the real supplementary PDF. A
-plain side-by-side deck is in `docs/Yang_Supp_Comparison.pptx` (paper left, our model right).
+plain side-by-side deck is in `docs/meetings/Yang_Supp_Comparison.pptx` (paper left, our model right).
 
 Not every panel is equally relevant to *our* project — some are the mechanism our model is
 built on, others are Yang justifying his own modelling choices. We split them accordingly:
@@ -328,8 +328,8 @@ built on, others are Yang justifying his own modelling choices. We split them ac
 Faithful replication verdict: panels 1f/1g/1h and 2a/2b/2c/2d match Yang qualitatively and
 near-quantitatively. **Not reproduced:** Supp Fig 1a-d (the fully reconstructed Branco NEURON
 morphology — not in this project) and Supp Fig 2e-h (stochastic-switching panels — deferred).
-Figures: `figures/yang_supp1_replication.png`, `figures/yang_supp2_replication.png`; cropped
-panels in `figures/supp_panels/`.
+Figures: `figures/pre_audit/yang_supp1_replication.png`, `figures/pre_audit/yang_supp2_replication.png`; cropped
+panels in `figures/pre_audit/supp_panels/`.
 
 ---
 

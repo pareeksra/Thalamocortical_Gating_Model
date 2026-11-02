@@ -201,7 +201,7 @@ if __name__ == '__main__':
         name, vals = _parse_kv(item)
         f, o = _split(name, vals[0]); base_func.update(f); base_over.update(o)
 
-    DOCS = os.path.join(PROOT, 'docs'); FIG = os.path.join(PROOT, 'figures')
+    DOCS = os.path.join(PROOT, 'results', 'pre_audit'); FIG = os.path.join(PROOT, 'figures')
 
     if args.sweep:
         name, values = _parse_kv(args.sweep)

@@ -19,11 +19,11 @@ differs is the FORMULA, not the constants:
     gamma_d = 39.949, gamma_p = 177.552, theta_d = 1.0, theta_p = 2.78.
 
 The alpha operating points come from Phase-1's actual calcium traces, measured by
-docs/extract_phase1_alpha.py (docs/phase1_alpha_operating_points.json).
+docs/extract_phase1_alpha.py (results/pre_audit/phase1_alpha_operating_points.json).
 
 Run: python docs/formula_comparison.py
-Outputs: prints a table, writes docs/formula_comparison_table.csv and
-docs/figures/formula_comparison.png.
+Outputs: prints a table, writes results/pre_audit/formula_comparison_table.csv and
+figures/pre_audit/formula_comparison.png.
 """
 import os, json
 import numpy as np
@@ -199,7 +199,7 @@ def main():
     # ---- figure ----
     figdir = os.path.join(os.path.dirname(HERE), 'figures')
     os.makedirs(figdir, exist_ok=True)
-    figpath = os.path.join(figdir, 'formula_comparison.png')
+    figpath = os.path.join(figdir, 'pre_audit/formula_comparison.png')
     _make_figure(ops, figpath)
     print(f"Wrote {figpath}")
     return pts, ratio_lin, ratio_yang

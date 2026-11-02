@@ -57,7 +57,7 @@ GAMMA_P  = 177.552     # potentiation strength gamma_p (1/s)
 THETA_D  = 1.0         # depression (LTD) calcium threshold
 THETA_P  = 2.78        # potentiation (LTP) calcium threshold
 W0       = 0.0         # DOWN-state weight
-W1       = 3.0         # UP-state weight (Yang's value; see docs/gamma_tau_analysis.md 2b.1)
+W1       = 3.0         # UP-state weight (Yang's value; see docs/reports/gamma_tau_analysis.md 2b.1)
 RHO_STAR = 0.5         # unstable fixed point / decision barrier
 
 _TINY = 1e-12

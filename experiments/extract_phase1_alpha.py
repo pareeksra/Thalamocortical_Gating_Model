@@ -17,7 +17,7 @@ StateMonitors on ind_p / ind_d so we can read off the (alpha_d, alpha_p) that
 Phase-1 actually produces. Those operating points anchor the formula sweep in
 formula_comparison.py.
 
-Output: prints a summary and writes docs/phase1_alpha_operating_points.json.
+Output: prints a summary and writes results/pre_audit/phase1_alpha_operating_points.json.
 """
 import sys, os, json
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

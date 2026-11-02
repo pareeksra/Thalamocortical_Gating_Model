@@ -1,6 +1,6 @@
 # Thalamocortical Gating & Cognitive Flexibility Model
 
-> **Audit 2026-11-01/02 — see `docs/AUDIT_2026-11-01.md`.** The SOM population fired in
+> **Audit 2026-11-01/02 — see `docs/reports/AUDIT_2026-11-01.md`.** The SOM population fired in
 > lockstep in all earlier results. This revises two of the three findings:
 > - gating follows mean inhibition, not "coverage";
 > - the 25 Hz seed failures disappear when SOM is desynchronised.
@@ -171,7 +171,7 @@ produced a figure is essential to reading it.
 |---|---|---|
 | **A. Brian 2 spiking network** | `model/`, `experiments/` | The full spiking circuit: multi-compartment pyramidal cell, PV/SOM/VIP LIF interneurons, MD as a `PoissonGroup`, native Brian 2 Graupner–Brunel synapses. The only model with connection *probabilities*, and the only one whose single-synapse LTP/LTD works. |
 | **B. Phenomenological (NumPy)** | `numpy_models/main_gating_figures.py` | Proof-of-concept of Yang et al. (2016). Uses **hardcoded** dendritic inhibition instead of simulating interneurons. Produces documentation Figures 1–4. Plasticity currently inert (bugs 1 & 2). |
-| **C. Emergent mechanistic (NumPy)** | `numpy_models/emergent_gating_mechanistic_model.py` | Stochastic trial-based model where inhibition *emerges* from noisy interneuron rates driven by Poisson MD spike counts. Produces the four `figures/mechanistic/` figures. Plasticity currently inert (bugs 1 & 2). |
+| **C. Emergent mechanistic (NumPy)** | `numpy_models/emergent_gating_mechanistic_model.py` | Stochastic trial-based model where inhibition *emerges* from noisy interneuron rates driven by Poisson MD spike counts. Produces the four `figures/pre_audit/mechanistic/` figures. Plasticity currently inert (bugs 1 & 2). |
 
 Models B and C are pure NumPy — they do **not** import `model/` and do not use Brian 2.
 Both replace Graupner–Brunel's bistable ρ dynamics with a **monostable relaxation** toward
@@ -181,59 +181,33 @@ no double well.
 
 ## Repository layout
 
+Reorganised 2026-11-02. The parent folder `minsu/` also holds `papers/` (Yang 2016 + supplement,
+Zhang 2025), `reference_code/pfc-md/` (Zhang 2025's public code) and `old/`.
+
 ```
-model/                               Model A — core Brian 2 library (importable modules)
-  parameters.py                      All biological parameters (see table below)
-  equations.py                       Membrane ODEs + Graupner-Brunel synapse equations
-  dendritic_io.py                    Canonical Yang 2016 Eq. 20-22 transfer function
-                                     (was copy-pasted into 4 files; now the single source)
-  MultiCompartmentalModel.py         Model class wrapping soma + dendrite construction
+model/            Model A: Brian 2 library (parameters, equations, circuit builders;
+                  context_circuit.py is the MD context circuit used by all current experiments)
+src/v2/           Analytical Yang plasticity update (plasticity.py) and legacy v2 modules
+experiments/      Runnable experiments (Brian 2). Current audit-era work includes
+                  som_async_sweep, retention_md_context, pv_calibration*, soma_balanced_calibration,
+                  retention_pv_arm, overlap_experiment, alternation_experiment,
+                  nmda_plastic_check, gating_selectivity_fig5
+tests/            Unit/regression tests (test_audit_fixes.py: run with --slow for full checks)
+plotting/         Figure and document builders (pptx/docx)
+numpy_models/     Models B & C (frozen NumPy figure models)
+archive/          Dead code kept for reference
 
-experiments/                         Model A — runnable experiments (Brian 2)
-  phase1_single_neuron_gating.py     Headline result: branch-specific gating (PASS, ratio ~43)
-  validate_vs_papers.py              V1-V4 replication vs Yang/Zhang figures (~10 min)
-  validate_model.py                  6-test verification suite (~17 min; last recorded 4/6, stale)
-  demo_v2_zhang2025.py               MD drive context simulation (5 Hz -> 40 Hz)
-  sweep_phase_diagram.py             2D sweep over MD->PV vs MD->VIP weights
-  print_network_summary.py           Live introspection of the built network
-  generate_network_synapse_figure.py Draws the network architecture diagram (hand-drawn)
+docs/
+  reports/        Write-ups: AUDIT_2026-11-01.md, FINDING_*, PLAN_* (with results), REPAIR_LOG,
+                  PROJECT_STORY, NARRATIVE_WALKTHROUGH, gamma_tau_analysis, ROADMAP (git-ignored)
+  meetings/       PI meeting decks, speaker notes, reports (.pptx/.docx/.tex), presentations/
 
-numpy_models/                        Models B & C — pure-NumPy figure models (no Brian 2)
-  main_gating_figures.py             Model B — phenomenological figures (~3 s)
-  emergent_gating_mechanistic_model.py Model C — stochastic mechanistic figures (~4 s)
+results/
+  current/        Data from the 2026-11-01 audit onward (json/log), one file per experiment
+  pre_audit/      Data from before the audit (SOM-lockstep era; kept for provenance)
 
-tests/                               Unit tests (run any with `python tests/<name>.py`)
-  test_dendritic_io.py               9 assertions on the transfer function
-  test_dendritic_nmda.py             NMDA-calcium plasticity tests
-  test_postsynaptic_calcium.py       (1 assertion is stale-by-design; see Known gaps)
-  test_pv_arm.py                     PV interneuron arm
-  test_numpy_plasticity.py           Models B & C plasticity characterisation
-  test_circuit.py                    Brian 2 migration smoke test (~46 s)
-
-scripts/                             Utilities (not part of the model)
-  generate_presentation.py           Builds the .pptx deck (needs python-pptx; not installed)
-  build_validation_docx.py           Assembles docs/Validation_Report.docx (needs python-docx)
-
-docs/                                Documentation and deliverables
-  REPAIR_LOG.md                      Detailed record of the audit-and-repair pass
-  ROADMAP.md                         Planning notes (git-ignored)
-  project_documentation.tex          LaTeX write-up
-  Validation_Report.docx             Generated validation report
-  presentations/                     .pptx summary decks (v1..v3)
-
-archive/                             Dead code kept for reference
-  InterneuronalCircuit.py            LEGACY / UNUSED — imported by nothing
-
-figures/                             All generated output figures
-  phenomenological/                  Model B output (fig1..fig4)
-  mechanistic/                       Model C output (4 figures)
-  validation/                        validate_model.py diagnostics (test1..test4)
-  validation_vs_papers/              validate_vs_papers.py output (v1..v4 + results.json)
-  paper_replications/                Curated presentation bundle of the replication figures
-  phase_diagram.png                  sweep_phase_diagram.py output
-  demo_zhang2025_context_switch.png  demo_v2_zhang2025.py output
-  network_synaptic_architecture.png  generate_network_synapse_figure.py output
-  v2_migration_test.png              test_circuit.py output
+figures/          Current figures (audit onward) at the top level, validation_vs_papers/
+  pre_audit/      Figures from before the audit (incl. Models B & C output)
 ```
 
 All scripts resolve their own paths, so they can be run from anywhere (e.g.
@@ -280,7 +254,7 @@ outputs are measured, not estimated.
 python experiments/print_network_summary.py
 ```
 
-**2. Verification suite** — ~17 min. Writes `figures/validation/test{1..4}.png`.
+**2. Verification suite** — ~17 min. Writes `figures/pre_audit/validation/test{1..4}.png`.
 
 ```bash
 python experiments/validate_model.py       # long; background it
@@ -291,7 +265,7 @@ Branch-Specific Gating` and `Test 5: Reproducibility` failing. **This has not be
 since the calcium/coupling fixes landed**, so treat 4/6 as stale. Note that Test 3 builds
 an *old* configuration (SOM-only, unpinned post rate, soma ~200 Hz) that the dedicated
 `experiments/phase1_single_neuron_gating.py` was written to supersede — Test 3 needs to be
-rewritten to pin the post rate at Yang's 10 Hz (see `docs/REPAIR_LOG.md` §6). Re-running the
+rewritten to pin the post rate at Yang's 10 Hz (see `docs/reports/REPAIR_LOG.md` §6). Re-running the
 suite and porting the Phase-1 protocol into Test 3 is the next verification task.
 
 **3. MD drive simulation** — ~3 min. Writes `figures/demo_zhang2025_context_switch.png`.
@@ -326,8 +300,8 @@ python experiments/sweep_phase_diagram.py
 ### Models B and C — NumPy figure models
 
 ```bash
-python numpy_models/main_gating_figures.py                # ~3 s -> figures/phenomenological/
-python numpy_models/emergent_gating_mechanistic_model.py  # ~4 s -> figures/mechanistic/
+python numpy_models/main_gating_figures.py                # ~3 s -> figures/pre_audit/phenomenological/
+python numpy_models/emergent_gating_mechanistic_model.py  # ~4 s -> figures/pre_audit/mechanistic/
 ```
 
 Model C prints Gating Selectivity indices (seed 42): **VIP = 0.84, SOM = −0.66,
@@ -388,7 +362,7 @@ a dendritic NMDA conductance with a voltage-dependent Mg²⁺ gate (the summed v
 read as `c_total = c + bAPCa_post`. (The old per-spike `c += C_pre · mg_gate` form is
 retired; `C_pre` is kept in `parameters.py` only for backward reference.) Noise on ρ is
 gated on calcium activity (integrated with `method='heun'`), and a clipper holds ρ in
-[0, 1]. See `docs/REPAIR_LOG.md` for the wiring history.
+[0, 1]. See `docs/reports/REPAIR_LOG.md` for the wiring history.
 
 | Parameter | Value | Parameter | Value |
 |---|---|---|---|
@@ -410,7 +384,7 @@ Each was verified by execution.
   Test 3 has not been updated.** Phase-1 gives free/inhibited ratio ~43 at Yang's 10 Hz
   post rate. The old `validate_model.py` Test 3 still uses the unpinned-post-rate
   configuration in which the branch-uniform bAP calcium swamps the selective NMDA signal
-  above ~74 Hz somatic rate (`docs/REPAIR_LOG.md` §6); it needs rewriting to Yang's 10 Hz
+  above ~74 Hz somatic rate (`docs/reports/REPAIR_LOG.md` §6); it needs rewriting to Yang's 10 Hz
   protocol and re-running.
 - **Models B and C produce no plasticity** — every Graupner–Brunel update falls to the
   calcium-inactive branch (peak calcium ≈ 0.02 vs θ_d = 1.0). Their "learning" figures are

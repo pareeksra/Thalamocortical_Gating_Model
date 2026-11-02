@@ -10,7 +10,7 @@ acts as an on/off switch, not Yang's graded somatic inhibition (Yang Fig. 6: a u
 increase in somatic inhibition improves gating selectivity; Eq. 29-30 linear PV).
 
 This only matters when bAPs come from the soma; with the canonical Poisson bAP source the
-somatic rate cannot change plasticity (verified: docs/audit/pv_calibration_verify.json A).
+somatic rate cannot change plasticity (verified: results/current/pv_calibration_verify.json A).
 
 Targets (stated before running), context circuit, context A (MD_0 at 25 Hz), seed 42:
   S1  soma rate 5-15 Hz at MD->PV x1 (Yang's ~10 Hz postsynaptic rate)
@@ -20,7 +20,7 @@ Knobs: gGABA_pv2soma (PV->soma per-synapse) x soma_drive_nS (the somatic Poisson
 introduced for bap_source='soma'; 100 inputs at 10 Hz). p_pv2soma = 0.6 (Yang) untouched.
 
 Run:  <venv>/python -I experiments/pv_soma_calibration.py [n_workers]
-Out:  docs/audit/pv_soma_calibration.json
+Out:  results/current/pv_soma_calibration.json
 """
 import os, sys, json, itertools
 from concurrent.futures import ProcessPoolExecutor
@@ -58,8 +58,8 @@ def main():
             rows.append(dict(g=g, w=w, soma=[s0, s1, s3], pv_x1=R[(g, w, 1.0)]['pv'], S1=S1, S2=S2))
             print(f"{g:>6} {w:>5} | {s0:7.1f} {s1:6.1f} {s3:6.1f}   ({R[(g, w, 1.0)]['pv']:5.1f}) | "
                   f"{'Y' if S1 else '.'}  {'Y' if S2 else '.'} {'<== BOTH' if S1 and S2 else ''}")
-    os.makedirs(os.path.join(PROOT, 'docs', 'audit'), exist_ok=True)
-    json.dump(dict(raw=res, grid=rows), open(os.path.join(PROOT, 'docs', 'audit', 'pv_soma_calibration.json'), 'w'),
+    os.makedirs(os.path.join(PROOT, 'results', 'current'), exist_ok=True)
+    json.dump(dict(raw=res, grid=rows), open(os.path.join(PROOT, 'results', 'current', 'pv_soma_calibration.json'), 'w'),
               indent=1, default=float)
 
 
