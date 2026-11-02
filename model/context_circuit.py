@@ -76,7 +76,8 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                          soma_inh_hz=0.0, soma_inh_nS=0.0, n_soma_inh=100,
                          overlap=0.0, n_pattern=20,
                          plastic=True, rho_init_syn=None, cue=None, record_dend=False,
-                         nmda_plastic=False):
+                         nmda_plastic=False, stim=None, md_vip_frac=None, p_vip2som_cross=None,
+                         md2som_frac=0.0, md2som_nS=0.5):
     """Run the analytical-plasticity epoch loop under a context schedule.
 
     schedule : list of ints (0 or 1) -- the active context for each T-second epoch.
@@ -101,6 +102,17 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
     record_dend     record each branch's voltage and NMDA-calcium per epoch:
                     dV{b} (mean V, mV), plat{b} (fraction of time V > -40 mV),
                     dV{b}_pct (5/25/50/75/95th percentiles of V).
+    Control-specificity options (Yang 2016 Fig. 5 analogue, docs/PLAN_gating_selectivity.md):
+    stim            per-epoch list: which input pathway is on (0, 1 or None), independent
+                    of the context ('context' mode only; default: pathway = context).
+    md_vip_frac     q in (0, 1]: MD_k targets a fraction q of ALL VIP cells, own channel
+                    first (q <= 0.5 stays inside channel k; q > 0.5 spills into the other
+                    channel). Weight scaled by 0.5/q so total control drive is constant.
+    p_vip2som_cross VIP_k -> SOM_j (j != k) connection probability; VIP->SOM weight scaled
+                    by p_own/(p_own + p_cross) so each SOM's total VIP inhibition is constant.
+    md2som_frac     fraction of the OTHER channel's SOM cells that MD_k excites directly
+                    (Yang's scheme 2), weight md2som_nS, probability p_md2vip.
+    Custom wiring draws from a dedicated RNG (default_rng(20000 + seed)).
     nmda_plastic    Yang 2016 form: the plastic weight scales the NMDA conductance
                     (g = w x gNMDA, w = w0 + (w1-w0) rho, so rho = 1/3 gives Yang's 2.5 nS)
                     in both the NMDA current and its calcium. Combine with
@@ -185,10 +197,45 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
 
     s_md2pv = Synapses(MD, PV, on_pre='gTotAMPA_post+=gAMPA_pv', namespace=p)
     s_md2pv.connect(p=p['p_md2pv'])
+    wrng = np.random.default_rng(20000 + seed_val)
     s_md2vip = Synapses(MD, VIP, on_pre='gTotAMPA_post+=gAMPA_vip_eff', namespace=p)
-    s_md2vip.connect(condition='i // n_md_ch == j // n_vip_ch', p=p['p_md2vip'])
-    s_vip2som = Synapses(VIP, SOM, on_pre='gTotGABA_post+=gGABA_som', namespace=p)
-    s_vip2som.connect(condition='i // n_vip_ch == j // n_som_ch', p=p['p_vip2som_spike'])
+    if md_vip_frac is None:
+        s_md2vip.connect(condition='i // n_md_ch == j // n_vip_ch', p=p['p_md2vip'])
+    else:
+        q = float(md_vip_frac); p['gAMPA_vip_eff'] = p['gAMPA_vip_eff'] * 0.5 / q
+        ii, jj = [], []
+        for k in (0, 1):
+            own = np.arange(k * n_vip, (k + 1) * n_vip); oth = np.arange((1 - k) * n_vip, (2 - k) * n_vip)
+            n_t = int(round(q * 2 * n_vip))
+            tgt = (wrng.choice(own, n_t, replace=False) if n_t <= n_vip else
+                   np.concatenate([own, wrng.choice(oth, n_t - n_vip, replace=False)]))
+            for m in range(k * n_md, (k + 1) * n_md):
+                sel = tgt[wrng.random(len(tgt)) < p['p_md2vip']]
+                ii += [m] * len(sel); jj += sel.tolist()
+        s_md2vip.connect(i=np.array(ii, int), j=np.array(jj, int))
+    if p_vip2som_cross is None:
+        s_vip2som = Synapses(VIP, SOM, on_pre='gTotGABA_post+=gGABA_som', namespace=p)
+        s_vip2som.connect(condition='i // n_vip_ch == j // n_som_ch', p=p['p_vip2som_spike'])
+    else:
+        po, pc = p['p_vip2som_spike'], float(p_vip2som_cross)
+        p['gGABA_vip2som_eff'] = p['gGABA_som'] * po / (po + pc)
+        s_vip2som = Synapses(VIP, SOM, on_pre='gTotGABA_post+=gGABA_vip2som_eff', namespace=p)
+        ch_v = np.arange(2 * n_vip) // n_vip; ch_s = np.arange(2 * n_som) // n_som
+        P = np.where(ch_v[:, None] == ch_s[None, :], po, pc)
+        ii, jj = np.nonzero(wrng.random(P.shape) < P)
+        s_vip2som.connect(i=ii, j=jj)
+    if md2som_frac > 0:
+        p['md2som_w'] = md2som_nS * nS
+        s_md2som = Synapses(MD, SOM, on_pre='gTotAMPA_post+=md2som_w', namespace=p)
+        ii, jj = [], []
+        for k in (0, 1):
+            oth = np.arange((1 - k) * n_som, (2 - k) * n_som)
+            tgt = wrng.choice(oth, int(round(md2som_frac * n_som)), replace=False)
+            for m in range(k * n_md, (k + 1) * n_md):
+                sel = tgt[wrng.random(len(tgt)) < p['p_md2vip']]
+                ii += [m] * len(sel); jj += sel.tolist()
+        s_md2som.connect(i=np.array(ii, int), j=np.array(jj, int))
+        net.add(s_md2som)
     s_som2dend = Synapses(SOM, Dend, on_pre='gTotGABA_post+=gGABA_dend_eff', namespace=p)
     s_som2dend.connect(condition='i // n_som_ch == j', p=p['p_som2dend_spike'])
     s_pv2soma = Synapses(PV, Soma, on_pre='gTotGABA_post+=gGABA_pv2soma', namespace=p)
@@ -259,8 +306,9 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         else:
             MD.rates = md_off_rate * Hz
         if input_mode == 'context':
-            exc0.rates = (exc_rate if ctx == 0 else 0.0) * Hz
-            exc1.rates = (exc_rate if ctx == 1 else 0.0) * Hz
+            on = ctx if stim is None else stim[e]
+            exc0.rates = (exc_rate if on == 0 else 0.0) * Hz
+            exc1.rates = (exc_rate if on == 1 else 0.0) * Hz
         elif input_mode == 'patterns':
             active = idx_A if ctx == 0 else idx_B
             AFF.rates = np.where(np.isin(np.arange(n_aff), active), exc_rate, 0.0) * Hz
