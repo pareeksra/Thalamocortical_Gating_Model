@@ -1,5 +1,9 @@
 # Thalamocortical Gating & Cognitive Flexibility Model
 
+> **Status 2026-11-04:** see `docs/reports/MODEL_STATUS_2026-11-04.md` for what is robust
+> and tested, what is not, and the next steps. Yang Fig. 2 and Supp. Fig. 1 can be
+> regenerated interactively from the model in `notebooks/yang_fig2_supp1.ipynb`.
+
 > **Audit 2026-11-01/02 — see `docs/reports/AUDIT_2026-11-01.md`.** The SOM population fired in
 > lockstep in all earlier results. This revises two of the three findings:
 > - gating follows mean inhibition, not "coverage";
@@ -193,6 +197,7 @@ experiments/      Runnable experiments (Brian 2). Current audit-era work include
                   retention_pv_arm, overlap_experiment, alternation_experiment,
                   nmda_plastic_check, gating_selectivity_fig5
 tests/            Unit/regression tests (test_audit_fixes.py: run with --slow for full checks)
+notebooks/        yang_fig2_supp1.ipynb: Yang Fig. 2 / Supp. Fig. 1 from the model, interactive
 plotting/         Figure and document builders (pptx/docx)
 numpy_models/     Models B & C (frozen NumPy figure models)
 archive/          Dead code kept for reference

@@ -12,10 +12,13 @@
 > moves, this file can lag. Where this file and the code disagree, the code wins, and
 > you should fix this file.
 >
-> **Last written:** 2026-11-01. **Repo:** `github.com/pareeksra/Thalamocortical_Gating_Model`.
+> **Last written:** 2026-11-01; status sections updated 2026-11-04. **Repo:** `github.com/pareeksra/Thalamocortical_Gating_Model`.
 > **Local path (Linux):** `/run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project`
 > (an NTFS "New Volume" mount — the old Windows `D:/minsu/...` drive).
 
+> **Status 2026-11-04: read `docs/reports/MODEL_STATUS_2026-11-04.md` for the current
+> answer to "is this a robust, tested model of both papers?" and the next steps.**
+>
 > **⚠ AUDIT 2026-11-01/02. Read `docs/reports/AUDIT_2026-11-01.md` first.** Eight logic problems
 > were found and fixed. The changes that alter the science:
 > - **SOM fired in perfect lockstep in every prior run.** With desynchronised SOM (now the
@@ -480,18 +483,27 @@ passes. V1–V4 paper battery passes/sane. Phase 2 noise + ketamine sweeps done.
 resolved. Forgetting mechanism resolved in miniature (needs both input- and inhibition-gating).
 SOM-rate divergence from Yang quantitatively explained.
 
-**Committed and pushed** through `7118644` (2026-10-15): all findings, the before/after proof
-figure (`figures/pre_audit/before_after_proof.png`), and the 9-slide PI deck
-(`docs/meetings/PI_Meeting_2026-10-15.pptx`) with speaker notes.
+**Committed and pushed** (branch `audit-2026-11-01`, GitHub; no pull request yet): the audit,
+PV and soma calibration, the overlap and alternation experiments, the recall and
+NMDA-plastic options with their first check, the Yang Fig. 5 analogue, the repository
+reorganisation, the Yang Fig. 2 / Supp. Fig. 1 notebook, and the 2026-11-02 PI deck
+(`docs/meetings/PI_Meeting_2026-11-02.pptx`, speaker notes in the matching `.docx`).
+The working tree is clean after the latest commit.
 
-**Uncommitted working-tree state (as of 2026-11-01):** a large set of untracked analysis
-scripts and result JSONs exists beyond the last commit (e.g. `experiments/seed44_escape_analysis.py`,
-`experiments/across_seed_diag.py`, `experiments/model_explorer.py`,
-`experiments/gating_selectivity_readout.py`, `experiments/yang_supp_replication.py`,
-`docs/reports/PROJECT_STORY.md`, `docs/reports/NARRATIVE_WALKTHROUGH.md`, many `docs/phase1_analytical_state_*.json`,
-retention figures, supp-panel figures, and several `.docx`/`.pptx`/`.odp` deliverables).
-**Before building forward, run `git status` and decide what to commit** — this file does not
-assume any of it is saved.
+**Added 2026-11-02 to 2026-11-04:**
+- `model/context_circuit.py` options: `plastic=False`, `rho_init_syn`, `cue`, `record_dend`
+  (frozen recall); `nmda_plastic=True` (Yang: the weight scales NMDA); `stim`,
+  `md_vip_frac`, `p_vip2som_cross`, `md2som_frac` (control specificity). The defaults are
+  bit-identical to earlier runs.
+- **Recall smoke test:** with the canonical AMPA-only weight, learned weights cannot change
+  which branch plateaus; the MD cue decides. This motivates `nmda_plastic` (see
+  `docs/reports/MODEL_STATUS_2026-11-04.md`, G1).
+- `experiments/nmda_plastic_check.py`, 3 seeds: stable, gating ratio ≈ 3, always-on
+  retention 0.43–0.98 (old synapse 0.35–0.40).
+- `experiments/gating_selectivity_fig5.py`, the Yang Fig. 5 analogue: S ≈ 0.96 by default;
+  it needs channel-specific control.
+- `notebooks/yang_fig2_supp1.ipynb`: Yang Fig. 2b,c,e–g and Supp. Fig. 1f–h from the model,
+  with editable parameters and an interactive panel. S ≈ 0.6 in Fig. 2e.
 
 **NOT started:** the network-scale build (Phase 4) — Yang's ~3000-pyramidal regime vs our
 1-soma / 2-dendrite / 20-interneuron circuit. It is **unblocked in principle** (forgetting
@@ -523,8 +535,17 @@ input context-sparsity** (§7.9).
 >   frozen). Heavy runs can go to `toothless` (`~/tcg/`,
 >   `~/miniconda3/envs/myenv/bin/python`, verified bit-identical).
 > - Yang's 10 Hz needs ~1.5× gGABA (because of the dendrite's weaker shunting).
-> - No experiment yet shows inhibition gating mattering for retention; that needs
->   overlapping inputs.
+> - [2026-11-04] Overlapping inputs did show inhibition gating mattering, but for
+>   SEPARATION, not retention.
+> - [2026-11-04] **Largest open item:** learned weights do not affect output with the
+>   canonical AMPA-only weight. Yang's NMDA-plastic weight (`nmda_plastic=True`) is
+>   implemented but checked only with 3 seeds. Decide which synapse is canonical, then
+>   re-run.
+> - [2026-11-04] The branch-specific VIP→SOM channels are an assumption. Fig. 5 analogue:
+>   selectivity collapses at 15% cross-wiring.
+> - Full gap list and the prioritised plan: `docs/reports/MODEL_STATUS_2026-11-04.md`.
+>   Items 5, 8 and 9 below are resolved: the context protocol is in Model A, the
+>   forgetting test is MD-driven over 5 seeds, and `requirements.txt` is updated.
 
 1. **Network scale is the next big step and the real deliverable.** Everything so far is
    single-neuron / tiny-circuit. The novel contribution (Phase 5) needs the network.
@@ -628,6 +649,12 @@ input context-sparsity** (§7.9).
 | `experiments/dt_convergence_check.py` | 0.1 vs 0.02 ms convergence. |
 | `tests/test_audit_fixes.py` | Regression tests for the audit fixes (`--slow` adds the full-circuit legacy-equivalence check). |
 | `docs/reports/AUDIT_2026-11-01.md`, `results/current/` | The audit record and all its raw data/logs. |
+| `experiments/pv_calibration*.py`, `soma_balanced_calibration.py`, `pv_soma_calibration.py`, `retention_pv_arm.py` | PV input/output calibration; does MD→PV protect memories. |
+| `experiments/overlap_experiment.py`, `alternation_experiment.py` | Overlapping inputs; repeated A/B alternation (plans + results in `docs/reports/PLAN_*.md`). |
+| `experiments/nmda_plastic_check.py` | First check of Yang's NMDA-plastic weight. |
+| `experiments/gating_selectivity_fig5.py` | Yang Fig. 5 analogue: S from soma firing vs control specificity. |
+| `notebooks/yang_fig2_supp1.ipynb` + `plotting/yang_fig2_supp1.py` | Yang Fig. 2b,c,e–g and Supp. Fig. 1f–h from the model; parameters editable, interactive sliders. |
+| `docs/reports/MODEL_STATUS_2026-11-04.md` | What is robust, what is not, how to proceed. |
 
 Rewritten: `phase1_single_neuron_gating.py` (analytical wrapper), `demo_v2_zhang2025.py`
 (context circuit), `sweep_phase_diagram.py` (canonical full circuit), V1/V2/V4 in
@@ -701,15 +728,17 @@ figures: `before_after_proof.png` (the headline before→after), `network_archit
 `InterneuronalCircuit.py` (419 lines, LEGACY/UNUSED, references a nonexistent `p['n_som']`),
 `generate_network_synapse_figure_DARKTHEME_deprecated.py`.
 
-### `scripts/` — effectively empty now
+### Layout since 2026-11-02
 
-Only `__pycache__` remains; the real builders moved to `plotting/`. (Older README/REPAIR_LOG
-references to `scripts/generate_presentation.py` etc. now live in `plotting/`.)
+`docs/reports/` holds the write-ups and `docs/meetings/` the decks and docx files.
+`results/current/` holds audit-era data and `results/pre_audit/` the older data.
+`figures/` holds current figures; `figures/pre_audit/` the older ones. `scripts/` was
+removed. Papers: `../papers/`. Zhang's code: `../reference_code/pfc-md/`.
 
 ### Root files
 
 `README.md` (the authoritative factual status report — read it), `requirements.txt`
-(inaccurate, see §9), `.gitignore` (ignores `__pycache__`, Office temp files, and
+(updated 2026-11-04), `.gitignore` (ignores `__pycache__`, Office temp files, and
 `ROADMAP.md`), and **this file** `PROJECT_BIBLE.md`.
 
 ---
@@ -750,6 +779,12 @@ $PY tests/test_audit_fixes.py --slow                          # ~3 min
 $PY -I experiments/retention_md_context.py 10                 # MD-driven forgetting 2x2
 $PY -I experiments/som_async_sweep.py reduced|mech|full 10    # lockstep vs desync
 $PY experiments/demo_v2_zhang2025.py                          # MD selects the branch
+# 2026-11-02 onward
+$PY -I experiments/overlap_experiment.py run 10 && $PY -I experiments/overlap_experiment.py analyse
+$PY -I experiments/alternation_experiment.py run 10            # then: analyse
+$PY -I experiments/gating_selectivity_fig5.py run 10           # then: analyse
+$PY -I experiments/nmda_plastic_check.py 12
+/home/raghav/myenv/bin/jupyter lab notebooks/yang_fig2_supp1.ipynb   # Yang Fig. 2 / Supp. 1, interactive
 ```
 
 **Gotchas:**
