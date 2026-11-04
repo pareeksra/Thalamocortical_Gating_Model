@@ -71,12 +71,12 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                          md_on_rate=25.0, md_off_rate=0.0, som_bias_pA=21.32,
                          input_mode='context', inhibition=True, seed_val=42,
                          som_phase='random', md2vip_scale=1.0, bap_source='poisson',
-                         param_overrides=None, rho_init=0.5,
+                         param_overrides=None, rho_init=None,
                          soma_drive_hz=0.0, soma_drive_nS=0.0, n_soma_drive=100,
                          soma_inh_hz=0.0, soma_inh_nS=0.0, n_soma_inh=100,
                          overlap=0.0, n_pattern=20,
                          plastic=True, rho_init_syn=None, cue=None, record_dend=False,
-                         nmda_plastic=False, stim=None, md_vip_frac=None, p_vip2som_cross=None,
+                         nmda_plastic=None, synapse='yang', stim=None, md_vip_frac=None, p_vip2som_cross=None,
                          md2som_frac=0.0, md2som_nS=0.5):
     """Run the analytical-plasticity epoch loop under a context schedule.
 
@@ -93,6 +93,14 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         activates pattern B = n_pattern afferents, round(overlap*n_pattern) of them shared
         with A. Each traj record then also holds per-synapse rho ('rho0_syn', 'rho1_syn',
         index = afferent index); the result holds 'idx_A' / 'idx_B'.
+    synapse         CANONICAL SYNAPSE (2026-11-04, docs/reports/PLAN_robustness.md R1):
+                    'yang' (default): Yang 2016 -- the plastic weight scales NMDA
+                    (g = w x gNMDA, w = 3 rho), AMPA input off (gAMPA = 0 unless given in
+                    param_overrides), rho starts at 1/3 (w = 1, Yang's pre-learning 2.5 nS).
+                    'ampa': the pre-2026-11-04 synapse (w scales AMPA 0.4 nS, NMDA fixed,
+                    rho starts at 0.5). Every result committed before 2026-11-04 used 'ampa';
+                    the scripts that produced them pin synapse='ampa' and stay reproducible.
+                    nmda_plastic / rho_init, if given, override the synapse's choice.
     Recall options (2026-11-02; see docs/reports/PLAN_alternation.md and experiments/nmda_plastic_check.py):
     plastic=False   freeze plasticity (rho is not updated after epochs).
     rho_init_syn    (rho_branch0, rho_branch1) per-synapse initial rho arrays
@@ -104,7 +112,8 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                     dV{b}_pct (5/25/50/75/95th percentiles of V).
     Control-specificity options (Yang 2016 Fig. 5 analogue, experiments/gating_selectivity_fig5.py):
     stim            per-epoch list: which input pathway is on (0, 1 or None), independent
-                    of the context ('context' mode only; default: pathway = context).
+                    of the context ('context' and 'patterns' modes; default: pathway = context;
+                    in 'patterns' mode 0/1 = pattern A/B).
     md_vip_frac     q in (0, 1]: MD_k targets a fraction q of ALL VIP cells, own channel
                     first (q <= 0.5 stays inside channel k; q > 0.5 spills into the other
                     channel). Weight scaled by 0.5/q so total control drive is constant.
@@ -134,6 +143,14 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
             if k not in p:
                 raise KeyError(f"param_overrides key '{k}' is not a known model parameter")
             p[k] = v
+    if synapse not in ('yang', 'ampa'):
+        raise ValueError(f"synapse must be 'yang' or 'ampa', got {synapse!r}")
+    if nmda_plastic is None:
+        nmda_plastic = synapse == 'yang'
+    if rho_init is None:
+        rho_init = 1 / 3 if synapse == 'yang' else 0.5
+    if synapse == 'yang' and not (param_overrides and 'gAMPA' in param_overrides):
+        p['gAMPA'] = 0 * nS
     ndend = 2
     p['num_Soma'] = 1; p['num_DendEach'] = ndend; p['num_Dend'] = ndend
     p['gEachCouple_pyr'] = gcouple_nS * nS; p['gTotCouple_pyr'] = p['gEachCouple_pyr'] * ndend
@@ -310,7 +327,8 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
             exc0.rates = (exc_rate if on == 0 else 0.0) * Hz
             exc1.rates = (exc_rate if on == 1 else 0.0) * Hz
         elif input_mode == 'patterns':
-            active = idx_A if ctx == 0 else idx_B
+            on = ctx if stim is None else stim[e]
+            active = idx_A if on == 0 else (idx_B if on == 1 else np.array([], int))
             AFF.rates = np.where(np.isin(np.arange(n_aff), active), exc_rate, 0.0) * Hz
         for sb in (sb0, sb1):
             sb.ad_acc = 0 * second; sb.ap_acc = 0 * second

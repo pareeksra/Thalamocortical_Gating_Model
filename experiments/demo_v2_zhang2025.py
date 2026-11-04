@@ -26,6 +26,7 @@ sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT]
 from brian2 import prefs
 prefs.codegen.target = 'cython'
 from context_circuit import run_context_protocol
+import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
 
 N_EP = 6
 

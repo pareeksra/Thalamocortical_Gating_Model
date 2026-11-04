@@ -31,6 +31,7 @@ def _job(spec):
         return {**spec, 'r0': r['r0'], 'r1': r['r1'], 'gated': r['gated'], 'pv': r['pv_rate'],
                 'som': r['som_rate']}
     from context_circuit import run_context_protocol
+    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     if k == 'B':
         mode = 'context' if spec['cond'] == 'both' else 'always'
         r = run_context_protocol([0] * 8 + [1] * 8, T=3.0, input_mode=mode, seed_val=spec['seed'])

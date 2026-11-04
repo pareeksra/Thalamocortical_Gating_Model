@@ -21,6 +21,7 @@ def _job(ver, mode, s):
     from brian2 import prefs, nS
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
+    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     t0 = time.time()
     kw = dict(nmda_plastic=True, rho_init=1 / 3, param_overrides={'gAMPA': 0 * nS}) if ver == 'yang' else {}
     r = run_context_protocol([0] * 8 + [1] * 8, T=3.0, input_mode=mode, seed_val=s, **kw)

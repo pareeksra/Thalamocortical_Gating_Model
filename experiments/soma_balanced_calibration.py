@@ -49,6 +49,7 @@ def _run(gi, es, g, x, seed_val):
     from brian2 import prefs, nS
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
+    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     r_e, r_i = drive(gi, es)
     r = run_context_protocol([0], T=3.0, input_mode='always', seed_val=seed_val, bap_source='soma',
                              soma_drive_hz=r_e, soma_drive_nS=0.5, soma_inh_hz=r_i, soma_inh_nS=1.0,

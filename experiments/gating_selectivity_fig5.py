@@ -55,6 +55,7 @@ def _job(panel, ver, x, seed):
     from brian2 import prefs, nS
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol, BALANCED_SOMA_KW, BALANCED_SOMA_G_PV2SOMA
+    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     t0 = time.time()
     key, _, fixed = PANELS[panel]
     ov = {'gGABA_pv2soma': BALANCED_SOMA_G_PV2SOMA}

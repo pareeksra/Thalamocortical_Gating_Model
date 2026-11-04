@@ -50,6 +50,7 @@ def _job(gating, f, seed_val):
     from brian2 import prefs
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
+    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     t0 = time.time()
     r = run_context_protocol([0] * N_EP + [1] * N_EP, T=3.0, input_mode='patterns', overlap=f,
                              inhibition=(gating == 'md'), seed_val=seed_val)

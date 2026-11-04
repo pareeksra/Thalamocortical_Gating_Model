@@ -56,6 +56,7 @@ def _job(g, f, L, s):
     from brian2 import prefs
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
+    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     from overlap_experiment import metrics
     t0 = time.time()
     sch = schedule(L)

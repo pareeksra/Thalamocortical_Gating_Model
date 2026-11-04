@@ -32,6 +32,7 @@ def _job(spec):
     from brian2 import prefs, nS
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
+    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     from soma_balanced_calibration import drive
     t0 = time.time()
     kw = dict(T=3.0, input_mode=spec['input_mode'], seed_val=spec['seed'],

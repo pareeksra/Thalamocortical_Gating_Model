@@ -34,6 +34,7 @@ def _run(kind, w, pv_scale, bap, n_ep):
     from brian2 import prefs, nS
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
+    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     r = run_context_protocol([0] * n_ep, T=3.0 if n_ep > 1 else 2.0, input_mode='always',
                              seed_val=42, bap_source=bap, soma_drive_hz=DRIVE_HZ, soma_drive_nS=w,
                              param_overrides={'gAMPA_pv': 0.12 * pv_scale * nS})

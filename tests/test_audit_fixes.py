@@ -153,7 +153,7 @@ def test_balanced_soma_preset():
         res[x] = _fresh(
             "from brian2 import prefs, nS; prefs.codegen.target='cython'\n"
             "from context_circuit import run_context_protocol, BALANCED_SOMA_KW, BALANCED_SOMA_G_PV2SOMA\n"
-            f"r=run_context_protocol([0,0], T=3.0, input_mode='always', seed_val=43, bap_source='soma', **BALANCED_SOMA_KW, "
+            f"r=run_context_protocol([0,0], T=3.0, input_mode='always', seed_val=43, bap_source='soma', synapse='ampa', **BALANCED_SOMA_KW, "
             f"param_overrides={{'gAMPA_pv': 0.12*{x}*nS, 'gGABA_pv2soma': BALANCED_SOMA_G_PV2SOMA}})\n"
             "t=r['traj']; print('RESULT '+json.dumps(dict(pyr=sum(e['pyr_hz'] for e in t)/2, cv=t[-1]['pyr_cv'], pv=sum(e['pv_hz'] for e in t)/2)))")
     a, b = res[1.0], res[3.0]
