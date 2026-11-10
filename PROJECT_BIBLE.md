@@ -490,6 +490,14 @@ reorganisation, the Yang Fig. 2 / Supp. Fig. 1 notebook, and the 2026-11-02 PI d
 (`docs/meetings/PI_Meeting_2026-11-02.pptx`, speaker notes in the matching `.docx`).
 The working tree is clean after the latest commit.
 
+**Robustness pass 2026-11-04 to 2026-11-10** (`docs/reports/PLAN_robustness.md`):
+- Yang's NMDA-plastic synapse is canonical (`synapse='yang'`); scripts behind older
+  results pin `synapse='ampa'`.
+- R2 numerics pass. R3: gating is robust at ±25% except the SOM bias, which is near
+  rheobase; active-input erasure is not robust.
+- R4: learning creates output gating (S 0.86–0.89 after vs ≈ 0 before) at readout
+  drive ≤ 15 Hz/synapse, i.e. Yang Fig. 7d,e. The old synapse does not.
+
 **Added 2026-11-02 to 2026-11-04:**
 - `model/context_circuit.py` options: `plastic=False`, `rho_init_syn`, `cue`, `record_dend`
   (frozen recall); `nmda_plastic=True` (Yang: the weight scales NMDA); `stim`,
@@ -733,7 +741,7 @@ figures: `before_after_proof.png` (the headline before→after), `network_archit
 `docs/reports/` holds the write-ups and `docs/meetings/` the decks and docx files.
 `results/current/` holds audit-era data and `results/pre_audit/` the older data.
 `figures/` holds current figures; `figures/pre_audit/` the older ones. `scripts/` was
-removed. Papers: `../papers/`. Zhang's code: `../reference_code/pfc-md/`.
+removed. Papers: `../papers/`. Zhang's code: github.com/Xh-Zhang1/pfc-md (local copy removed 2026-11-10).
 
 ### Root files
 

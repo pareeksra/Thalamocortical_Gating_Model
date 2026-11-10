@@ -186,7 +186,7 @@ no double well.
 ## Repository layout
 
 Reorganised 2026-11-02. The parent folder `minsu/` also holds `papers/` (Yang 2016 + supplement,
-Zhang 2025), `reference_code/pfc-md/` (Zhang 2025's public code) and `old/`.
+Zhang 2025) and `old/`. Zhang 2025's code (removed locally 2026-11-10) is at github.com/Xh-Zhang1/pfc-md.
 
 ```
 model/            Model A: Brian 2 library (parameters, equations, circuit builders;

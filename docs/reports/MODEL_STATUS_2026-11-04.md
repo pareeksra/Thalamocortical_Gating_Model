@@ -3,6 +3,17 @@
 *2026-11-04. Covers everything up to commit `504daac` plus the Yang Fig. 2 / Supp. Fig. 1
 notebook. Evidence for every claim is in the file named beside it.*
 
+> **Update 2026-11-10** (`docs/reports/PLAN_robustness.md`, Results).
+> - **G1 closed.** With Yang's NMDA-plastic synapse (now canonical), learning creates
+>   pathway-specific output gating: S rises from ≈ 0 before learning to 0.86–0.89 after,
+>   for readout drive ≤ 15 Hz per synapse. This is Yang Fig. 7d,e. The old AMPA-only
+>   synapse learns nothing functional.
+> - Numerics robust (20/20 seeds, dt-converged).
+> - Gating robust to ±25% on 11 of 12 parameters. The exception is the SOM bias current,
+>   which sits near rheobase.
+> - New caveat: erasure of memories whose inputs stay active is parameter-dependent
+>   (0.40–1.00) with the new synapse, so it is not a robust claim.
+
 ## Short answer
 
 **Partly.** The *single-neuron mechanism* is robust and well tested: Yang's dendritic
