@@ -9,16 +9,24 @@ f {0, .25, .5, .75, 1} x seeds 42-46. Fresh process per run.
 Run:     <py> -I experiments/overlap_experiment.py run [n_workers]
 Analyse: <py> -I experiments/overlap_experiment.py analyse
 Out:     results/current/overlap_experiment.json, figures/overlap_experiment.png
+
+Canonical model: append the argument 'canonical' (2026-11-10 defaults: Yang NMDA-plastic
+synapse, noisy SOM baseline, bAP calcium x0.2; 10 seeds; outputs get a _canonical suffix;
+patterns-mode scripts add a 10 Hz recall readout, experiments/readout.py).
 """
 import os, sys, json, time
 import numpy as np
 from concurrent.futures import ProcessPoolExecutor, as_completed
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT]
+sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT, os.path.join(PROOT, 'experiments')]
 OUT = os.path.join(PROOT, 'results', 'current', 'overlap_experiment.json')
 OVERLAPS = [0.0, 0.25, 0.5, 0.75, 1.0]
 GATING = ['md', 'none']
 SEEDS = [42, 43, 44, 45, 46]
+CANON = 'canonical' in sys.argv[1:]   # canonical model (2026-11-10 defaults), 10 seeds, _canonical outputs
+if CANON:
+    OUT = OUT.replace('.json', '_canonical.json')
+    SEEDS = list(range(42, 52))
 N_EP = 8
 W1 = 3.0     # w = w0 + (w1 - w0) rho, w0 = 0
 
@@ -50,17 +58,23 @@ def _job(gating, f, seed_val):
     from brian2 import prefs
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
-    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
+    if not CANON:
+        import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     t0 = time.time()
     r = run_context_protocol([0] * N_EP + [1] * N_EP, T=3.0, input_mode='patterns', overlap=f,
                              inhibition=(gating == 'md'), seed_val=seed_val)
     tr = r['traj']; a, b = tr[N_EP - 1], tr[-1]
+    ro = {}
+    if CANON:
+        from readout import readout_S
+        ro = dict(readout_endA=readout_S(a['rho0_syn'], a['rho1_syn'], f, seed_val),
+                  readout_endB=readout_S(b['rho0_syn'], b['rho1_syn'], f, seed_val))
     mt = metrics(np.array(a['rho0_syn']), np.array(a['rho1_syn']), np.array(b['rho0_syn']),
                  np.array(b['rho1_syn']), r['idx_A'], r['idx_B'])
     return dict(gating=gating, overlap=f, seed=seed_val, idx_A=r['idx_A'], idx_B=r['idx_B'],
                 rho_endA=[a['rho0_syn'], a['rho1_syn']], rho_endB=[b['rho0_syn'], b['rho1_syn']],
                 som_A=[a['som0_hz'], a['som1_hz']], som_B=[b['som0_hz'], b['som1_hz']],
-                wall_s=round(time.time() - t0, 1), **mt)
+                wall_s=round(time.time() - t0, 1), **mt, **ro)
 
 
 def run(nw):
@@ -98,6 +112,19 @@ def analyse():
         print(f"{g:<5} {f:>5} | {v['ret_A'][0]:.3f}±{v['ret_A'][1]:.3f} {v['ret_A_shared'][0]:>11.3f} "
               f"{v['ret_A_unique'][0]:>11.3f} | {v['sep_b0'][0]:>7.3f} {v['sep_b1'][0]:>7.3f} "
               f"{v['discrim'][0]:>8.3f} | {v['rhoB_b1_endB'][0]:.3f} | {v['ret_A'][2]}")
+    if CANON:   # functional recall, 10 Hz readout
+        print(f"\nrecall readout S (gate own vs other), mean ± SD | after A: S_A | after B: S_A (A's memory), S_B")
+        RO = {}
+        for g in GATING:
+            for f in OVERLAPS:
+                rs = [r for r in d.values() if r['gating'] == g and r['overlap'] == f and 'readout_endB' in r]
+                q = lambda st, k: (float(np.nanmean([r[st][k] for r in rs])), float(np.nanstd([r[st][k] for r in rs])))
+                RO[f'{g}_{f}'] = dict(endA_S_A=q('readout_endA', 'S_A'), endB_S_A=q('readout_endB', 'S_A'),
+                                      endB_S_B=q('readout_endB', 'S_B'), n=len(rs))
+                v = RO[f'{g}_{f}']
+                print(f"{g:<5} {f:>5} | {v['endA_S_A'][0]:+.2f}±{v['endA_S_A'][1]:.2f} | "
+                      f"{v['endB_S_A'][0]:+.2f}±{v['endB_S_A'][1]:.2f}  {v['endB_S_B'][0]:+.2f}±{v['endB_S_B'][1]:.2f}")
+        json.dump(RO, open(OUT.replace('.json', '_readout_summary.json'), 'w'), indent=1)
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -117,7 +144,7 @@ def analyse():
         a.axhline(0, color='0.85', lw=1, zorder=0); a.spines[['top', 'right']].set_visible(False)
     fig.suptitle('Overlapping inputs: what MD branch gating buys (5 seeds, mean ± SD)', fontsize=11)
     fig.tight_layout()
-    fp = os.path.join(PROOT, 'figures', 'overlap_experiment.png')
+    fp = os.path.join(PROOT, 'figures', 'overlap_experiment' + ('_canonical' if CANON else '') + '.png')
     fig.savefig(fp, dpi=150, facecolor='white')
     print('saved', fp)
     return S

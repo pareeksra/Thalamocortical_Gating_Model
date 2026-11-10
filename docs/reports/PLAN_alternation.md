@@ -1,5 +1,12 @@
 # Plan — repeated A/B alternation with overlapping inputs (2026-11-02)
 
+> **Canonical re-run 2026-11-10** (Yang synapse, noisy SOM, bAP ×0.2; 10 seeds; 10 Hz recall
+> readout): `docs/reports/PLAN_robustness.md` § "A/B re-runs on the canonical model".
+> - Both contexts are recalled for f ≤ 0.25 with L = 4: S 0.90 for the current pattern, 0.93
+>   for the previous one.
+> - Recall fails with L = 1 or f ≥ 0.75.
+> - Numbers below are from the old AMPA synapse.
+
 Follow-up to `docs/reports/PLAN_overlapping_inputs.md`, which tested a single A→B sequence.
 
 ## Question

@@ -1,7 +1,10 @@
 # Thalamocortical Gating & Cognitive Flexibility Model
 
-> **Status 2026-11-04:** see `docs/reports/MODEL_STATUS_2026-11-04.md` for what is robust
-> and tested, what is not, and the next steps. Yang Fig. 2 and Supp. Fig. 1 can be
+> **Status 2026-11-10:** canonical model = Yang's NMDA-plastic synapse + fluctuation-driven
+> SOM baseline + bAP calcium ×0.2 (`model/context_circuit.py` defaults). Comparison with both
+> papers: `docs/reports/PAPER_COMPARISON.md`. Robustness and A/B results:
+> `docs/reports/PLAN_robustness.md`. Regression tests: `tests/test_replication.py [--slow]`.
+> Earlier assessment: `docs/reports/MODEL_STATUS_2026-11-04.md`. Yang Fig. 2 and Supp. Fig. 1 can be
 > regenerated interactively from the model in `notebooks/yang_fig2_supp1.ipynb`.
 
 > **Audit 2026-11-01/02 — see `docs/reports/AUDIT_2026-11-01.md`.** The SOM population fired in
@@ -259,19 +262,15 @@ outputs are measured, not estimated.
 python experiments/print_network_summary.py
 ```
 
-**2. Verification suite** — ~17 min. Writes `figures/pre_audit/validation/test{1..4}.png`.
+**2. Replication tests** (canonical model, 2026-11-10) — one command, PASS/FAIL per check.
 
 ```bash
-python experiments/validate_model.py       # long; background it
+python -I tests/test_replication.py            # fast tier, ~1 min on 8 cores
+python -I tests/test_replication.py --slow     # + learning, dt, Yang Fig. 7b, MD control (~25 min)
 ```
 
-Last recorded result (before the Phase-1 fixes): **4/6 PASSED**, with `Test 3:
-Branch-Specific Gating` and `Test 5: Reproducibility` failing. **This has not been re-run
-since the calcium/coupling fixes landed**, so treat 4/6 as stale. Note that Test 3 builds
-an *old* configuration (SOM-only, unpinned post rate, soma ~200 Hz) that the dedicated
-`experiments/phase1_single_neuron_gating.py` was written to supersede — Test 3 needs to be
-rewritten to pin the post rate at Yang's 10 Hz (see `docs/reports/REPAIR_LOG.md` §6). Re-running the
-suite and porting the Phase-1 protocol into Test 3 is the next verification task.
+The legacy 6-test suite `validate_model.py` (last recorded 4/6, stale configuration) is
+retired to `archive/`.
 
 **3. MD drive simulation** — ~3 min. Writes `figures/demo_zhang2025_context_switch.png`.
 

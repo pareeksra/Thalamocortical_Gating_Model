@@ -9,6 +9,10 @@ control (f {0,.5,1}, L = 4). Fresh process per run.
 Run:     <py> -I experiments/alternation_experiment.py run [n_workers]
 Analyse: <py> -I experiments/alternation_experiment.py analyse
 Out:     results/current/alternation_experiment.json, figures/alternation_experiment.png
+
+Canonical model: append the argument 'canonical' (2026-11-10 defaults: Yang NMDA-plastic
+synapse, noisy SOM baseline, bAP calcium x0.2; 10 seeds; outputs get a _canonical suffix;
+patterns-mode scripts add a 10 Hz recall readout, experiments/readout.py).
 """
 import os, sys, json, time
 import numpy as np
@@ -18,6 +22,10 @@ sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT, os.path.join(PROOT, 'experi
 OUT = os.path.join(PROOT, 'results', 'current', 'alternation_experiment.json')
 OVERLAPS = [0.0, 0.25, 0.5, 0.75, 1.0]
 SEEDS = [42, 43, 44, 45, 46]
+CANON = 'canonical' in sys.argv[1:]   # canonical model (2026-11-10 defaults), 10 seeds, _canonical outputs
+if CANON:
+    OUT = OUT.replace('.json', '_canonical.json')
+    SEEDS = list(range(42, 52))
 BLOCKS = [1, 4]
 N_TOT = 32
 
@@ -56,7 +64,8 @@ def _job(g, f, L, s):
     from brian2 import prefs
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
-    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
+    if not CANON:
+        import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     from overlap_experiment import metrics
     t0 = time.time()
     sch = schedule(L)
@@ -67,8 +76,15 @@ def _job(g, f, L, s):
     # per-epoch discriminability (metrics() needs rho at a reference "end of A"; reuse current)
     disc = [metrics(np.array(rho0[e]), np.array(rho1[e]), np.array(rho0[e]), np.array(rho1[e]),
                     r['idx_A'], r['idx_B'])['discrim'] for e in range(N_TOT)]
+    ro = {}
+    if CANON:   # recall at the end, and after the last block of the other context
+        from readout import readout_S
+        last = sch[-1]
+        k = max(e for e in range(N_TOT) if sch[e] != last)
+        ro = dict(readout_end=readout_S(rho0[-1], rho1[-1], f, s), readout_prev=readout_S(rho0[k], rho1[k], f, s),
+                  readout_end_ctx=int(last))
     return dict(gating=g, overlap=f, L=L, seed=s, schedule=sch, idx_A=r['idx_A'], idx_B=r['idx_B'],
-                rho0_syn=rho0, rho1_syn=rho1, discrim=disc,
+                rho0_syn=rho0, rho1_syn=rho1, discrim=disc, **ro,
                 som0=[t['som0_hz'] for t in tr], som1=[t['som1_hz'] for t in tr],
                 wall_s=round(time.time() - t0, 1))
 
@@ -141,6 +157,19 @@ def analyse():
               + ' '.join(f'{a:.2f}' for a in ae[-6:]) + f" | {len(rs)}")
     json.dump({f'{g}_f{f}_L{L}': v for (g, f, L), v in S.items()},
               open(OUT.replace('.json', '_summary.json'), 'w'), indent=1)
+    if CANON:   # functional recall at the end of the run: current context's pattern and the other one
+        print("\nrecall readout S, end of run | current-context pattern | previous-context pattern")
+        RO = {}
+        for c in conds:
+            rs = [r for r in d.values() if (r['gating'], r['overlap'], r['L']) == c and 'readout_end' in r]
+            cur = [r['readout_end']['S_A' if r['readout_end_ctx'] == 0 else 'S_B'] for r in rs]
+            prv = [r['readout_end']['S_B' if r['readout_end_ctx'] == 0 else 'S_A'] for r in rs]
+            RO[f'{c[0]}_f{c[1]}_L{c[2]}'] = dict(S_current=[float(np.nanmean(cur)), float(np.nanstd(cur))],
+                                                 S_previous=[float(np.nanmean(prv)), float(np.nanstd(prv))], n=len(rs))
+            v = RO[f'{c[0]}_f{c[1]}_L{c[2]}']
+            print(f"{c[0]:<4} {c[1]:>4} {c[2]:>2} | {v['S_current'][0]:+.2f}±{v['S_current'][1]:.2f} | "
+                  f"{v['S_previous'][0]:+.2f}±{v['S_previous'][1]:.2f} | {len(rs)}")
+        json.dump(RO, open(OUT.replace('.json', '_readout_summary.json'), 'w'), indent=1)
 
     import matplotlib
     matplotlib.use('Agg')
@@ -187,7 +216,7 @@ def analyse():
         a.spines[['top', 'right']].set_visible(False)
     fig.suptitle('Repeated A/B alternation (5 seeds, mean)', fontsize=11)
     fig.tight_layout()
-    fp = os.path.join(PROOT, 'figures', 'alternation_experiment.png')
+    fp = os.path.join(PROOT, 'figures', 'alternation_experiment' + ('_canonical' if CANON else '') + '.png')
     fig.savefig(fp, dpi=150, facecolor='white')
     print('saved', fp)
 

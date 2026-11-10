@@ -57,6 +57,10 @@ from src.v2.plasticity import yang_synapse_update
 BALANCED_SOMA_KW = dict(soma_drive_hz=18.0, soma_drive_nS=0.5, n_soma_drive=100,
                         soma_inh_hz=5.0, soma_inh_nS=1.0, n_soma_inh=100)
 BALANCED_SOMA_G_PV2SOMA = 0.1 * nS
+# Fluctuation-driven SOM baseline (2026-11-10, experiments/som_baseline_fix.py): sub-rheobase
+# bias (rheobase 20 pA) + 60 Hz x 2 nS Poisson excitation per SOM cell -> ~30 Hz, the same
+# rate as the bias-only 21.32 pA, but the rate depends smoothly on each drive parameter.
+SOM_NOISY_KW = dict(som_bias_pA=6.0, som_bg_E_hz=60.0, som_bg_nS=2.0)
 
 
 def _syn_model(eqs, nmda_plastic):
@@ -68,7 +72,7 @@ def _syn_model(eqs, nmda_plastic):
 
 
 def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple_nS=0.8,
-                         md_on_rate=25.0, md_off_rate=0.0, som_bias_pA=21.32,
+                         md_on_rate=25.0, md_off_rate=0.0, som_bias_pA=None,
                          input_mode='context', inhibition=True, seed_val=42,
                          som_phase='random', md2vip_scale=1.0, bap_source='poisson',
                          param_overrides=None, rho_init=None,
@@ -77,7 +81,9 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                          overlap=0.0, n_pattern=20,
                          plastic=True, rho_init_syn=None, cue=None, record_dend=False,
                          nmda_plastic=None, synapse='yang', stim=None, md_vip_frac=None, p_vip2som_cross=None,
-                         md2som_frac=0.0, md2som_nS=0.5):
+                         md2som_frac=0.0, md2som_nS=0.5,
+                         som_bg_E_hz=None, som_bg_I_hz=0.0, som_bg_nS=None, som_baseline=None,
+                         bap_ca_scale=None):
     """Run the analytical-plasticity epoch loop under a context schedule.
 
     schedule : list of ints (0 or 1) -- the active context for each T-second epoch.
@@ -122,6 +128,26 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
     md2som_frac     fraction of the OTHER channel's SOM cells that MD_k excites directly
                     (Yang's scheme 2), weight md2som_nS, probability p_md2vip.
     Custom wiring draws from a dedicated RNG (default_rng(20000 + seed)).
+    SOM baseline (2026-11-10, PLAN_robustness.md 'SOM knife-edge'):
+    som_baseline    'noisy' (CANONICAL with synapse='yang'): SOM_NOISY_KW, 6 pA bias +
+                    60 Hz x 2 nS Poisson excitation, ~30 Hz, irregular, robust to +/-25% of
+                    each drive parameter (experiments/som_baseline_fix.py).
+                    'bias' (default with synapse='ampa', and every result committed before
+                    2026-11-10): noiseless 21.32 pA bias just above the 20 pA rheobase, ~30 Hz.
+                    som_bias_pA / som_bg_E_hz / som_bg_nS, if given, override the preset.
+    bap_ca_scale    amplitude of the bAP calcium transient (2026-11-10). 0.2 (CANONICAL with
+                    synapse='yang'): Yang 2016 Methods' in-vivo recalibration (k_VGCC x0.2),
+                    so bAPs alone stay below theta_d and idle synapses do not drift; this
+                    also makes slow LTD independent of the epoch length T
+                    (experiments/epoch_length_check.py). 1.0 (default with synapse='ampa',
+                    and every result committed before 2026-11-10): peak = theta_d, so bAPs
+                    alone depress idle synapses over minutes (hidden by 3-s epochs).
+                    param_overrides['bAP_Ca_scale'] is equivalent.
+    som_bg_E_hz / som_bg_I_hz / som_bg_nS  independent Poisson AMPA (E) and GABA (I)
+                    background onto every SOM cell (one aggregate source each, weight
+                    som_bg_nS). With a sub-rheobase som_bias_pA this makes SOM's baseline
+                    fluctuation-driven, so its rate depends smoothly on the drive instead of
+                    switching on at rheobase (20 pA). Default 0 = off (bit-identical).
     nmda_plastic    Yang 2016 form: the plastic weight scales the NMDA conductance
                     (g = w x gNMDA, w = w0 + (w1-w0) rho, so rho = 1/3 gives Yang's 2.5 nS)
                     in both the NMDA current and its calcium. Combine with
@@ -151,10 +177,22 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         rho_init = 1 / 3 if synapse == 'yang' else 0.5
     if synapse == 'yang' and not (param_overrides and 'gAMPA' in param_overrides):
         p['gAMPA'] = 0 * nS
+    if bap_ca_scale is not None:
+        p['bAP_Ca_scale'] = float(bap_ca_scale)
+    elif not (param_overrides and 'bAP_Ca_scale' in param_overrides):
+        p['bAP_Ca_scale'] = 0.2 if synapse == 'yang' else 1.0
+    if som_baseline is None:
+        som_baseline = 'noisy' if synapse == 'yang' else 'bias'
+    if som_baseline not in ('noisy', 'bias'):
+        raise ValueError(f"som_baseline must be 'noisy' or 'bias', got {som_baseline!r}")
+    som_pre = SOM_NOISY_KW if som_baseline == 'noisy' else dict(som_bias_pA=21.32, som_bg_E_hz=0.0, som_bg_nS=0.0)
+    som_bias_pA = som_pre['som_bias_pA'] if som_bias_pA is None else som_bias_pA
+    som_bg_E_hz = som_pre['som_bg_E_hz'] if som_bg_E_hz is None else som_bg_E_hz
+    som_bg_nS = som_pre['som_bg_nS'] if som_bg_nS is None else som_bg_nS
     ndend = 2
     p['num_Soma'] = 1; p['num_DendEach'] = ndend; p['num_Dend'] = ndend
     p['gEachCouple_pyr'] = gcouple_nS * nS; p['gTotCouple_pyr'] = p['gEachCouple_pyr'] * ndend
-    t = p['tau_Ca_bAP_rise'] / p['tau_Ca_bAP_decay']; p['norm_factor_Ca'] = t ** (1 / (t - 1))
+    t = p['tau_Ca_bAP_rise'] / p['tau_Ca_bAP_decay']; p['norm_factor_Ca'] = t ** (1 / (t - 1)) * float(p.get('bAP_Ca_scale', 1.0))  # bap_ca_scale (see docstring)
     t = p['tauGABABRise'] / p['tauGABABDecay']; p['norm_factor_GABAB'] = t ** (1 / (t - 1))
     n_md, n_pv, n_som, n_vip = p['n_md'], p['n_pv'], p['n_som_spike'], p['n_vip_spike']
     p['gGABA_dend_eff'] = p['gGABA'] if inhibition else 0 * nS
@@ -206,6 +244,14 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                       refractory=p['refrac_som'], method='euler', namespace=p)
     SOM.V = som_initial_voltages(2 * n_som, p, som_bias_pA, som_phase, seed_val)
     SOM.iBaseline_som = som_bias_pA * pA
+    if som_bg_E_hz > 0 or som_bg_I_hz > 0:
+        p['som_bg_w'] = som_bg_nS * nS
+        for rate_, tgt in ((som_bg_E_hz, 'gTotAMPA'), (som_bg_I_hz, 'gTotGABA')):
+            if rate_ > 0:
+                BG_som = PoissonGroup(2 * n_som, rates=rate_ * Hz)
+                s_bg_som = Synapses(BG_som, SOM, on_pre=f'{tgt}_post += som_bg_w', namespace=p)
+                s_bg_som.connect(j='i')
+                net.add([BG_som, s_bg_som])
     VIP = NeuronGroup(2 * n_vip, eqs_vip, threshold='V>vThres_vip', reset='V=vReset_vip',
                       refractory=p['refrac_vip'], method='euler', namespace=p)
     VIP.V = p['vRest_vip']

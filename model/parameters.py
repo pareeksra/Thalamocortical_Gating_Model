@@ -55,6 +55,10 @@ params = {
 
     # Calcium dynamics
     'tau_Ca_bAP_decay': 30 * ms,
+    # bAP calcium amplitude scale (2026-11-10): 1.0 = peak at theta_d (default). Yang 2016
+    # Methods recalibrate in vivo with k_VGCC x0.2 so bAPs alone do not move idle synapses.
+    # Read by model/context_circuit.py only.
+    'bAP_Ca_scale': 1.0,
     'tau_Ca_bAP_rise': 2 * ms,
     'tau_Ca_NMDA': 30 * ms,
 

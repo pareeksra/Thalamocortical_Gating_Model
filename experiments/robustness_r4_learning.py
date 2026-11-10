@@ -49,6 +49,7 @@ def _job(syn, seed):
     from brian2 import prefs
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol, BALANCED_SOMA_KW, BALANCED_SOMA_G_PV2SOMA
+    import functools; run_context_protocol = functools.partial(run_context_protocol, som_baseline='bias', bap_ca_scale=1.0)  # pre-2026-11-10 SOM baseline and bAP calcium: reproduces the committed results
     t0 = time.time()
     learn = run_context_protocol([0] * N_EP + [1] * N_EP, T=3.0, input_mode='patterns', overlap=0.0,
                                  exc_rate=LEARN_HZ, seed_val=seed, synapse=syn)

@@ -17,6 +17,10 @@ Reference: input_mode='context' at x1 (soma), the input-sparse case that retains
 
 Run:  <py> -I experiments/retention_pv_arm.py <gI> <e_scale> <g_pv2soma> [n_workers]
 Out:  results/current/retention_pv_arm.json
+
+Canonical model: append the argument 'canonical' (2026-11-10 defaults: Yang NMDA-plastic
+synapse, noisy SOM baseline, bAP calcium x0.2; 10 seeds; outputs get a _canonical suffix;
+patterns-mode scripts add a 10 Hz recall readout, experiments/readout.py).
 """
 import os, sys, json, time
 from concurrent.futures import ProcessPoolExecutor
@@ -25,6 +29,10 @@ sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT, os.path.join(PROOT, 'experi
 OUT = os.path.join(PROOT, 'results', 'current', 'retention_pv_arm.json')
 PV_X = [0.0, 0.5, 1.0, 2.0, 3.0]
 SEEDS = [42, 43, 44, 45, 46]
+CANON = 'canonical' in sys.argv[1:]   # canonical model (2026-11-10 defaults), 10 seeds, _canonical outputs
+if CANON:
+    OUT = OUT.replace('.json', '_canonical.json')
+    SEEDS = list(range(42, 52))
 N_EP = 8
 
 
@@ -32,7 +40,8 @@ def _job(spec):
     from brian2 import prefs, nS
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
-    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
+    if not CANON:
+        import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     from soma_balanced_calibration import drive
     t0 = time.time()
     kw = dict(T=3.0, input_mode=spec['input_mode'], seed_val=spec['seed'],

@@ -18,8 +18,11 @@ This script measures the I/O of the ACTUAL Brian 2 dendrite:
 For each g_inh the half-activation g_1/2 is read off the measured curve (V halfway between
 the curve's min and max) and compared with Yang's law g_1/2 = 5.56*(4 + g_inh).
 
-Run:  <venv>/python experiments/v1_dendrite_io_measured.py
-Out:  figures/validation_vs_papers/v1_dendritic_io_measured.png, results/current/v1_dendrite_io.json
+Canonical synapse (2026-11-10, argument 'yang'): the weight scales NMDA (w = 3 rho,
+rho = 1/3 -> Yang's 2.5 nS), AMPA off, as in model/context_circuit.py synapse='yang'.
+Run:  <venv>/python experiments/v1_dendrite_io_measured.py [yang]
+Out:  figures/validation_vs_papers/v1_dendritic_io_measured[_yang].png,
+      results/current/v1_dendrite_io[_yang].json
 """
 import os, sys, json
 import numpy as np
@@ -36,9 +39,20 @@ RATES = [0, 2, 5, 10, 15, 20, 30, 40, 60, 80, 100, 150, 200, 300, 400]
 N_SYN = 20
 
 
+SYN = 'yang' if 'yang' in sys.argv[1:] else 'ampa'
+TAG = '_yang' if SYN == 'yang' else ''
+if SYN == 'yang':
+    # 40 synapses so the NMDA ceiling (40 x 2.5 nS) exceeds Yang's g_1/2 up to g_inh ~ 10 nS
+    INH = [0.0, 1.0, 2.0, 4.0, 6.0, 10.0]
+    N_SYN = 40
+    RATES = RATES + [600, 800]
+
+
 def measure(seed_val=1):
     seed(seed_val)
     p = dict(params); p.update(plasticity_params)
+    if SYN == 'yang':
+        p['gAMPA'] = 0 * nS
     p['num_DendEach'] = 1; p['gEachCouple_pyr'] = 0.8 * nS
     t = p['tau_Ca_bAP_rise'] / p['tau_Ca_bAP_decay']; p['norm_factor_Ca'] = t ** (1 / (t - 1))
     t = p['tauGABABRise'] / p['tauGABABDecay']; p['norm_factor_GABAB'] = t ** (1 / (t - 1))
@@ -49,8 +63,10 @@ def measure(seed_val=1):
     D.g_inh_tonic = np.array([c[0] for c in combos]) * nS
     D.run_regularly('gTotGABA = g_inh_tonic', when='before_groups')
     P = PoissonGroup(n * N_SYN, rates=np.repeat([c[1] for c in combos], N_SYN) * Hz)
-    S = Synapses(P, D, model=eqs_synapse_plasticity, on_pre=on_pre_plasticity, method='heun', namespace=p)
-    S.connect(j='i // %d' % N_SYN); S.rho = 0.5
+    from context_circuit import _syn_model
+    S = Synapses(P, D, model=_syn_model(eqs_synapse_plasticity, SYN == 'yang'), on_pre=on_pre_plasticity,
+                 method='heun', namespace=p)
+    S.connect(j='i // %d' % N_SYN); S.rho = 1 / 3 if SYN == 'yang' else 0.5
     mV_ = StateMonitor(D, ['V', 'gTotAMPA'], record=True, dt=1 * ms)
     mS = StateMonitor(S, 's_nmda', record=True, dt=1 * ms)
     net = Network(D, P, S, mV_, mS)
@@ -60,7 +76,8 @@ def measure(seed_val=1):
     gA = np.asarray(mV_.gTotAMPA / nS)[:, keep].mean(1)
     s = np.asarray(mS.s_nmda)[:, keep].mean(1)
     sj = np.asarray(S.j[:])
-    gN = np.array([s[sj == k].sum() for k in range(n)]) * float(p['gNMDA'] / nS)
+    w_eff = float(p['w0'] + (p['w1'] - p['w0']) / 3) if SYN == 'yang' else 1.0
+    gN = np.array([s[sj == k].sum() for k in range(n)]) * float(p['gNMDA'] / nS) * w_eff
     return combos, V, gA + gN, gN
 
 
@@ -93,7 +110,7 @@ def main():
             ax[0].plot(gh, vh, 's', color=c, ms=8, mec='k')
     ax[0].set_xscale('symlog', linthresh=1); ax[0].set_xlabel('measured mean excitatory conductance $g_E$ (nS)')
     ax[0].set_ylabel('mean branch voltage (mV)'); ax[0].legend(fontsize=8, frameon=False)
-    ax[0].set_title('Model A Brian 2 dendrite, measured (squares = half-activation)')
+    ax[0].set_title(f'Brian 2 dendrite, {SYN} synapse, measured (squares = half-activation)')
     gi = np.array(INH)
     meas = np.array([out[str(g)]['g_half_measured_nS'] or np.nan for g in INH])
     ax[1].plot(gi, 5.56 * (4 + gi), 'k--', label='Yang: $g_{1/2}=5.56(4+g_{inh})$')
@@ -108,10 +125,10 @@ def main():
     ax[1].set_title('Half-activation vs inhibition')
     fig.tight_layout()
     os.makedirs(os.path.join(PROOT, 'figures', 'validation_vs_papers'), exist_ok=True)
-    fp = os.path.join(PROOT, 'figures', 'validation_vs_papers', 'v1_dendritic_io_measured.png')
+    fp = os.path.join(PROOT, 'figures', 'validation_vs_papers', f'v1_dendritic_io_measured{TAG}.png')
     fig.savefig(fp, dpi=150, facecolor='white')
     os.makedirs(os.path.join(PROOT, 'results', 'current'), exist_ok=True)
-    json.dump(out, open(os.path.join(PROOT, 'results', 'current', 'v1_dendrite_io.json'), 'w'), indent=1)
+    json.dump(out, open(os.path.join(PROOT, 'results', 'current', f'v1_dendrite_io{TAG}.json'), 'w'), indent=1)
     print(f"{'g_inh':>6} {'g1/2 meas':>10} {'g1/2 Yang':>10} {'V range (mV)':>18}")
     for g in INH:
         o = out[str(g)]

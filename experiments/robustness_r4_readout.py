@@ -40,6 +40,7 @@ def _job(state, rate, seed, rho0, rho1):
     from brian2 import prefs
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol, BALANCED_SOMA_KW, BALANCED_SOMA_G_PV2SOMA
+    import functools; run_context_protocol = functools.partial(run_context_protocol, som_baseline='bias', bap_ca_scale=1.0)  # pre-2026-11-10 SOM baseline and bAP calcium: reproduces the committed results
     from robustness_r4_learning import READ, S_from
     t0 = time.time()
     r = run_context_protocol([c for c, _ in READ], T=5.0, input_mode='patterns', overlap=0.0,

@@ -4,6 +4,16 @@
 notebook. Evidence for every claim is in the file named beside it.*
 
 > **Update 2026-11-10** (`docs/reports/PLAN_robustness.md`, Results).
+> - **Later on 2026-11-10: canonical model changed again** (Yang synapse + noisy SOM baseline +
+>   bAP calcium ×0.2; see PLAN_robustness.md and `docs/reports/PAPER_COMPARISON.md`). This
+>   supersedes the two caveats below:
+>   - the SOM knife-edge is fixed: canonical R3 has no knife-edge at ±25% on 14 parameters,
+>     including learning (S_learn 0.88);
+>   - silent-input retention is 1.000 at any epoch length.
+>   - Still not robust: erasure with active inputs, 0.69 ± 0.26 and bimodal over 10 seeds.
+>   - A/B results with a 10 Hz recall readout: MD gating is needed for any recall. The old memory
+>     survives only at low overlap (f = 0: S 0.92; f ≥ 0.5: lost). Alternating 12-s blocks recall
+>     both contexts at f ≤ 0.25. MD→PV sets output gain, not storage.
 > - **G1 closed.** With Yang's NMDA-plastic synapse (now canonical), learning creates
 >   pathway-specific output gating: S rises from ≈ 0 before learning to 0.86–0.89 after,
 >   for readout drive ≤ 15 Hz per synapse. This is Yang Fig. 7d,e. The old AMPA-only

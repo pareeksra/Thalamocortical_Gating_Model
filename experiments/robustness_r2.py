@@ -17,7 +17,9 @@ import os, sys, json, time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT]
-OUT = os.path.join(PROOT, 'results', 'current', 'robustness_r2.json')
+CANON = 'canonical' in sys.argv[1:]   # argument 'canonical': model defaults (2026-11-10); else the committed pre-2026-11-10 model
+SOMB = 'noisy' if CANON else 'bias'
+OUT = os.path.join(PROOT, 'results', 'current', 'robustness_r2' + ('_canonical' if CANON else '') + '.json')
 
 
 def _job(kind, seed, dt_ms=0.1):
@@ -25,6 +27,8 @@ def _job(kind, seed, dt_ms=0.1):
     prefs.codegen.target = 'cython'
     defaultclock.dt = dt_ms * ms
     from context_circuit import run_context_protocol, BALANCED_SOMA_KW, BALANCED_SOMA_G_PV2SOMA
+    if not CANON:   # committed results: bias-only SOM baseline, bAP calcium x1.0
+        import functools; run_context_protocol = functools.partial(run_context_protocol, som_baseline='bias', bap_ca_scale=1.0)
     t0 = time.time()
     if kind == 'soma':
         r = run_context_protocol([0, 0], T=3.0, input_mode='always', seed_val=seed, bap_source='soma',

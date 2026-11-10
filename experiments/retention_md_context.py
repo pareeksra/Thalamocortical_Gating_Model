@@ -21,6 +21,10 @@ process.
 
 Run:  <venv>/python -I experiments/retention_md_context.py [n_workers]
 Out:  results/current/retention_md_context.json
+
+Canonical model: append the argument 'canonical' (2026-11-10 defaults: Yang NMDA-plastic
+synapse, noisy SOM baseline, bAP calcium x0.2; 10 seeds; outputs get a _canonical suffix;
+patterns-mode scripts add a 10 Hz recall readout, experiments/readout.py).
 """
 import os, sys, json, time
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -31,13 +35,18 @@ N_EP = 8
 CONDS = {'both': ('context', True), 'inhibonly': ('always', True),
          'inputonly': ('context', False), 'neither': ('always', False)}
 SEEDS = [42, 43, 44, 45, 46]
+CANON = 'canonical' in sys.argv[1:]   # canonical model (2026-11-10 defaults), 10 seeds, _canonical outputs
+if CANON:
+    OUT = OUT.replace('.json', '_canonical.json')
+    SEEDS = list(range(42, 52))
 
 
 def _job(cond, seed_val):
     from brian2 import prefs
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
-    import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
+    if not CANON:
+        import functools; run_context_protocol = functools.partial(run_context_protocol, synapse='ampa')  # pre-2026-11-04 synapse: reproduces the committed results
     t0 = time.time()
     input_mode, inhib = CONDS[cond]
     r = run_context_protocol([0] * N_EP + [1] * N_EP, T=3.0, input_mode=input_mode,

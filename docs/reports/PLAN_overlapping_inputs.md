@@ -1,5 +1,11 @@
 # Plan — overlapping-inputs experiment (2026-11-02)
 
+> **Canonical re-run 2026-11-10** (Yang synapse, noisy SOM, bAP ×0.2; 10 seeds; 10 Hz recall
+> readout): `docs/reports/PLAN_robustness.md` § "A/B re-runs on the canonical model".
+> - With MD gating, recall of A after B is S 0.92 at f = 0, 0.38 at f = 0.25 and ≤ 0 from f = 0.5.
+> - Without gating, S ≈ 0 at every f.
+> - Numbers below are from the old AMPA synapse.
+
 ## Question
 
 The audit found that, with context-*specific* inputs, retention comes entirely from input

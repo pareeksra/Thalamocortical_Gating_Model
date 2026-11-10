@@ -470,6 +470,20 @@ reproduced: Supp 1a–d full Branco morphology; Supp 2e–h stochastic switching
 
 ## 8. Where the project stands right now
 
+> [2026-11-10] **Canonical model changed.** Defaults of `run_context_protocol`:
+> - Yang's NMDA-plastic synapse;
+> - noisy SOM baseline (6 pA + 60 Hz × 2 nS Poisson input, ≈ 30 Hz), which removes the
+>   SOM-bias knife-edge;
+> - bAP calcium ×0.2 (Yang's in-vivo value), which makes silent-input retention independent
+>   of the epoch length.
+>
+> Results:
+> - Paper comparison: `docs/reports/PAPER_COMPARISON.md`.
+> - Robustness: no knife-edge at ±25%, learning S 0.88.
+> - A/B with a recall readout: `docs/reports/PLAN_robustness.md`.
+> - Older numbers in this section use the old synapse and are reproduced bit-identically
+>   through pins (`synapse='ampa'`, or `som_baseline='bias', bap_ca_scale=1.0`).
+
 > [AUDIT 2026-11-02] Current baseline: Model A with desynchronised SOM, compiled
 > coupling, analytical plasticity. Full circuit at md = 0: 20/20 seeds gated at both
 > 25 Hz and 30 Hz (11/20 at 15 Hz). V3 ratio 4.1 (free 0.925 / inhibited 0.227). V2 LTP
@@ -609,7 +623,6 @@ input context-sparsity** (§7.9).
 | `phase1_single_neuron_gating.py` | 109 | **Headline result:** branch-specific gating, free vs inhibited branch (PASS). |
 | `phase1_analytical.py` | 247 | Phase-1 under the analytical plasticity rule; has the `param_overrides` hook used by the τ sweep. |
 | `validate_vs_papers.py` | 233 | **V1–V4 replication battery** vs Yang/Zhang figures (~10 min). |
-| `validate_model.py` | 1028 | Legacy 6-test verification suite (~17 min; Test 3 stale, Test 5 now fixed). |
 | `full_circuit_reliability_sweep.py` | 123 | Multi-seed reliability in the full circuit (the 18/20 vs 20/20 evidence). |
 | `demo_v2_zhang2025.py` | 255 | MD context sim (global 5→40 Hz drive); shows disinhibition (SOM 36→0 Hz) + PV gain arm. |
 | `sweep_phase_diagram.py` | 242 | 2D sweep over MD→PV vs MD→VIP weights (raw heatmaps; one annotated point). |
@@ -667,6 +680,19 @@ input context-sparsity** (§7.9).
 Rewritten: `phase1_single_neuron_gating.py` (analytical wrapper), `demo_v2_zhang2025.py`
 (context circuit), `sweep_phase_diagram.py` (canonical full circuit), V1/V2/V4 in
 `validate_vs_papers.py`, link 5 of `tests/test_postsynaptic_calcium.py`.
+
+### Added 2026-11-10 (canonical model, robustness, replication)
+
+| File | Purpose |
+|---|---|
+| `experiments/robustness_r2.py`, `robustness_r3.py` (`canonical` arg) | Numerics (seeds, dt, soma) and ±25/50% sensitivity incl. learning. |
+| `experiments/robustness_r4_learning.py`, `_shunting.py`, `_readout.py` | Learning creates output gating; readout-drive window ≤ 15 Hz. |
+| `experiments/som_baseline_fix.py` | Noisy vs bias SOM baseline, ±25/50% drive window. |
+| `experiments/paper_comparison.py` | Yang Fig. 7b (300-s Δw vs rate × SOM) and V4 MD sweep. |
+| `experiments/epoch_length_check.py` | Plasticity epoch length T; led to bAP ×0.2. |
+| `experiments/readout.py` | Frozen-plasticity recall readout (S at 10 Hz). |
+| `tests/test_replication.py` | Replication / regression tests (fast; `--slow`). |
+| `docs/reports/PLAN_robustness.md`, `PAPER_COMPARISON.md` | Robustness record; canonical model vs both papers. |
 
 ### `numpy_models/` — Models B & C (frozen, inert)
 
@@ -777,7 +803,7 @@ $PY -I experiments/n_som_reliability_sweep.py n100 4                 # disinhibi
 
 # paper battery (~10 min) and full suite (~17 min) — background them
 nohup $PY experiments/validate_vs_papers.py > /tmp/v.txt 2>&1 &
-nohup $PY experiments/validate_model.py     > /tmp/s.txt 2>&1 &
+$PY -I tests/test_replication.py --slow                         # replication tests (canonical model)
 
 # the inert NumPy figure models (fast)
 $PY numpy_models/main_gating_figures.py
@@ -793,6 +819,15 @@ $PY -I experiments/alternation_experiment.py run 10            # then: analyse
 $PY -I experiments/gating_selectivity_fig5.py run 10           # then: analyse
 $PY -I experiments/nmda_plastic_check.py 12
 /home/raghav/myenv/bin/jupyter lab notebooks/yang_fig2_supp1.ipynb   # Yang Fig. 2 / Supp. 1, interactive
+# 2026-11-10 canonical model
+$PY -I tests/test_replication.py [--slow] [n_workers]          # replication tests (~1 min / ~8 min)
+$PY -I experiments/robustness_r2.py 11 canonical
+$PY -I experiments/robustness_r3.py run 11 canonical            # 285 jobs: use toothless
+$PY -I experiments/paper_comparison.py run 11                   # then: table
+$PY -I experiments/retention_md_context.py 12 canonical
+$PY -I experiments/overlap_experiment.py run 12 canonical       # then: analyse canonical
+$PY -I experiments/alternation_experiment.py run 12 canonical   # then: analyse canonical
+$PY -I experiments/retention_pv_arm.py 5 0.6 0.1 12 canonical
 ```
 
 **Gotchas:**
