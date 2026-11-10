@@ -1,0 +1,92 @@
+[
+  {
+    "som_bias_pA": 20.04,
+    "gGABA_nS": 4.0,
+    "som_rate_hz": 10.14,
+    "rho0": 0.91,
+    "rho1": 0.924,
+    "ratio": 1.02,
+    "source": "docs/phase1_som10hz_run.log (Step 2d)"
+  },
+  {
+    "som_bias_pA": 25.0,
+    "gGABA_nS": 4.0,
+    "som_rate_hz": 63.3,
+    "rho0": 0.329,
+    "rho1": 0.924,
+    "ratio": 2.81,
+    "source": "docs/phase1_analytical_run.log (Step 2c)"
+  },
+  {
+    "som_bias_pA": 20.3,
+    "gGABA_nS": 4.0,
+    "som_rate_hz": 16.866666666666667,
+    "rho0": 0.891807393238828,
+    "rho1": 0.9243464828167873,
+    "ratio": 1.0364866784292797,
+    "source": "sweep run"
+  },
+  {
+    "som_bias_pA": 20.6,
+    "gGABA_nS": 4.0,
+    "som_rate_hz": 21.488888888888887,
+    "rho0": 0.16778584802920637,
+    "rho1": 0.9248354626209355,
+    "ratio": 5.51199921497521,
+    "source": "sweep run"
+  },
+  {
+    "som_bias_pA": 20.9,
+    "gGABA_nS": 4.0,
+    "som_rate_hz": 25.288888888888888,
+    "rho0": 0.16579387044495236,
+    "rho1": 0.9248896898705562,
+    "ratio": 5.578551772682346,
+    "source": "sweep run"
+  },
+  {
+    "som_bias_pA": 21.2,
+    "gGABA_nS": 4.0,
+    "som_rate_hz": 28.8,
+    "rho0": 0.18695852373638405,
+    "rho1": 0.9248912753165243,
+    "ratio": 4.9470398933008415,
+    "source": "sweep run"
+  },
+  {
+    "som_bias_pA": 21.6,
+    "gGABA_nS": 4.0,
+    "som_rate_hz": 33.08888888888889,
+    "rho0": 0.21576554548314247,
+    "rho1": 0.9249166593689843,
+    "ratio": 4.286674488727613,
+    "source": "sweep run"
+  },
+  {
+    "som_bias_pA": 22.2,
+    "gGABA_nS": 4.0,
+    "som_rate_hz": 39.044444444444444,
+    "rho0": 0.25489610125643747,
+    "rho1": 0.9249126175114688,
+    "ratio": 3.6285867573194586,
+    "source": "sweep run"
+  },
+  {
+    "som_bias_pA": 23.0,
+    "gGABA_nS": 4.0,
+    "som_rate_hz": 46.48888888888889,
+    "rho0": 0.2961629539235602,
+    "rho1": 0.9249353834064094,
+    "ratio": 3.1230623923515286,
+    "source": "sweep run"
+  },
+  {
+    "som_bias_pA": 24.0,
+    "gGABA_nS": 4.0,
+    "som_rate_hz": 55.22222222222222,
+    "rho0": 0.3180797522661205,
+    "rho1": 0.9249310237499214,
+    "ratio": 2.907858853511935,
+    "source": "sweep run"
+  }
+]

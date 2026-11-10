@@ -57,7 +57,7 @@ GAMMA_P  = 177.552     # potentiation strength gamma_p (1/s)
 THETA_D  = 1.0         # depression (LTD) calcium threshold
 THETA_P  = 2.78        # potentiation (LTP) calcium threshold
 W0       = 0.0         # DOWN-state weight
-W1       = 3.0         # UP-state weight (Yang's value; see docs/gamma_tau_analysis.md 2b.1)
+W1       = 3.0         # UP-state weight (Yang's value; see docs/reports/gamma_tau_analysis.md 2b.1)
 RHO_STAR = 0.5         # unstable fixed point / decision barrier
 
 _TINY = 1e-12
@@ -114,8 +114,12 @@ def yang_synapse_update(alpha_d, alpha_p, rho_init=RHO_STAR,
     U = 0.5 * (1.0 + erf(argU))                               # Eq. 34
     D = 0.5 * (1.0 - erf(argD))                               # Eq. 35
 
-    w_post  = w_pre * (1.0 - D) + (w1 - w_pre) * U
-    rho_new = (w_post - w0) / (w1 - w0)
+    # Expected UP-occupancy after the epoch: stay UP with prob (1-D), switch DOWN->UP with
+    # prob U. General form w0 + (w1-w0)*[rho(1-D) + (1-rho)U]; Yang's printed form
+    # w_pre(1-D) + (w1-w_pre)U is the w0 = 0 special case (audit 2026-11-01: the printed
+    # form was used directly, which is wrong if w0 is overridden, e.g. via model_explorer).
+    rho_new = rho_init * (1.0 - D) + (1.0 - rho_init) * U
+    w_post  = w0 + (w1 - w0) * rho_new
     # Numerical guard: U, D in [0,1] keep rho_new in [0,1] up to rounding.
     rho_new = float(np.clip(rho_new, 0.0, 1.0))
     return dict(U=float(U), D=float(D), rho_bar=float(rho_bar),

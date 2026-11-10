@@ -1,0 +1,21 @@
+variant|param|x            |   SOM  off |  free   inh ratio seeds |     S S_lrn | ret_c ret_a | pass G S R L som
+noisy|baseline|1.0         |  30.7  0.0 | 0.928 0.299  3.10 10/10 |  0.92  0.90 | 0.999 0.868 | Y Y Y Y Y
+bias|baseline|1.0          |  30.1  0.0 | 0.928 0.298  3.12  5/5  |  0.94  0.91 | 0.999 0.676 | Y Y Y Y Y
+noisy|som_bias_pA|0.5      |  23.5  0.0 | 0.928 0.290  3.19  5/5  |  0.93  0.88 | 0.998 0.997 | Y Y Y Y Y
+noisy|som_bias_pA|0.75     |  27.0  0.0 | 0.928 0.294  3.15  5/5  |  0.93  0.88 | 0.998 0.982 | Y Y Y Y Y
+noisy|som_bias_pA|1.25     |  34.9  0.0 | 0.928 0.299  3.10  5/5  |  0.93  0.90 | 0.998 0.458 | Y Y Y Y Y
+noisy|som_bias_pA|1.5      |  40.0  0.0 | 0.928 0.301  3.08  5/5  |  0.93  0.90 | 0.998 0.391 | Y Y Y Y Y
+noisy|som_bg_E_hz|0.5      |   9.6  0.0 | 0.928 0.928  1.00  0/5  |  0.72  0.37 | 0.998 1.000 | . Y Y . .
+noisy|som_bg_E_hz|0.75     |  19.4  0.0 | 0.928 0.285  3.25  5/5  |  0.91  0.84 | 0.998 1.000 | Y Y Y Y Y
+noisy|som_bg_E_hz|1.25     |  42.8  0.0 | 0.928 0.302  3.07  5/5  |  0.94  0.90 | 0.998 0.390 | Y Y Y Y Y
+noisy|som_bg_E_hz|1.5      |  55.2  0.1 | 0.928 0.304  3.05  5/5  |  0.95  0.92 | 0.998 0.391 | Y Y Y Y Y
+noisy|som_bg_nS|0.5        |   4.5  0.0 | 0.928 0.928  1.00  0/5  |  0.23 -0.03 | 0.998 1.000 | . . Y . .
+noisy|som_bg_nS|0.75       |  17.1  0.0 | 0.928 0.281  3.31  5/5  |  0.90  0.81 | 0.998 1.000 | Y Y Y Y Y
+noisy|som_bg_nS|1.25       |  42.3  0.1 | 0.928 0.302  3.08  5/5  |  0.94  0.90 | 0.998 0.391 | Y Y Y Y Y
+noisy|som_bg_nS|1.5        |  53.1  0.1 | 0.928 0.304  3.05  5/5  |  0.93  0.92 | 0.998 0.390 | Y Y Y Y Y
+bias|som_bias_pA|0.5       |   0.0  0.0 | 0.928 0.928  1.00  0/5  | -0.10  0.00 | 0.999 1.000 | . . Y . .
+bias|som_bias_pA|0.75      |   0.0  0.0 | 0.928 0.928  1.00  0/5  | -0.10  0.00 | 0.999 1.000 | . . Y . .
+bias|som_bias_pA|1.25      |  76.3  0.1 | 0.928 0.305  3.04  5/5  |  0.95  0.94 | 0.999 0.405 | Y Y Y Y Y
+bias|som_bias_pA|1.5       | 112.4  0.1 | 0.927 0.307  3.02  5/5  |  0.96  0.95 | 0.999 0.408 | Y Y Y Y .
+knife-edge at +/-25%: {'noisy': [], 'bias': ['som_bias_pA']}
+saved /home/raghav/tcg/Thalamocortical_Gating_Project/figures/som_baseline_fix.png

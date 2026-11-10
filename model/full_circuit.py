@@ -46,13 +46,14 @@ from equations import (attach_rho_clipper, make_eqs_synapse_plasticity, eqs_soma
                         eqs_pv, eqs_som, eqs_vip, eqs_synapse_plasticity,
                         on_pre_plasticity_noisy as on_pre_plasticity)
 from src.v2.plasticity import yang_synapse_update
+from circuit_helpers import add_compiled_coupling, som_initial_voltages
 
 # 2026-08-30 migration: plasticity here now uses the same analytical epoch update as
 # experiments/phase1_analytical.py (Yang 2016 Eqs. 32-35), NOT the continuous drho/dt ODE
 # -- that ODE is commented out in model/equations.py (rho is a bare parameter there), so
 # the single-shot net.run() this function used to do would otherwise leave rho frozen at
 # its initial 0.5 for both branches (ratio identically 1.0) for every noise_level /
-# md2vip_scale / seed. See docs/Progress_Report.docx Section 7.2 for how this was found.
+# md2vip_scale / seed. See docs/meetings/Progress_Report.docx Section 7.2 for how this was found.
 
 # Background-noise "fully on" reference levels for SOM and VIP (bg_noise_scale=1.0).
 # PV's own background (rate_bg_pv/weight_bg_pv) is part of the validated model and is
@@ -71,7 +72,8 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
                           md_signal_rate=25.0, noise_level=0.0,
                           md2vip_scale=1.0, seed_val=42, n_epochs=15, som_bias_pA=21.32,
                           return_trace=False, param_overrides=None,
-                          monitor_epoch0=False, monitor_dt_ms=1.0):
+                          monitor_epoch0=False, monitor_dt_ms=1.0,
+                          som_phase='random', coupling='compiled'):
     """Build the Phase-2 branch-gating circuit and run it for n_epochs analytical
     plasticity epochs (Yang 2016 Eqs. 32-35, src/v2/plasticity.py); return measured
     outcomes averaged/final over the run.
@@ -82,9 +84,9 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
     NMDA-hypofunction / MD->VIP degradation protocol (Phase 2C); 1.0 = intact.
     som_bias_pA defaults to the 2026-09-01 full-circuit reliability lock-in value
     (21.32 pA, measured ~30.07 Hz in this circuit, 20/20 seeds passed at noise=0 --
-    docs/full_circuit_reliability_30hz_results.json). Supersedes the earlier 20.9 pA /
+    results/pre_audit/full_circuit_reliability_30hz_results.json). Supersedes the earlier 20.9 pA /
     25 Hz pick (calibrated in Phase-1's reduced circuit), which failed reproducibly at
-    noise=0 on seed 44 (docs/diag_seed44_results.json, ratio ~1.015). At
+    noise=0 on seed 44 (results/pre_audit/diag_seed44_results.json, ratio ~1.015). At
     md_signal_rate=0 / noise_level=0 (Phase 2B's baseline condition) nothing else
     synaptically drives SOM, so this bias produces the same isolated-neuron rate here as
     in the reduced circuit; this is NOT assumed to hold once MD/VIP or noise actively
@@ -135,11 +137,18 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
     Dend = NeuronGroup(ndend, eqs_dend, method='euler', namespace=p)
     Dend.V = p['vRest_pyr']; Dend.vSoma = p['vRest_pyr']
 
-    @network_operation(dt=p['sim_dt'])
-    def coupling():
-        Soma.vAveDend = np.mean(Dend.V[:])
-        Dend.vSoma = np.repeat(Soma.vShadow[:], ndend)
-    net.add([Soma, Dend, coupling])
+    net.add([Soma, Dend])
+    # 2026-11-01: compiled summed-variable coupling (bit-identical to the legacy Python
+    # network_operation, ~2x faster; tests/test_audit_fixes.py). coupling='python' keeps
+    # the legacy path for that equivalence test.
+    if coupling == 'compiled':
+        add_compiled_coupling(net, Soma, Dend, ndend, p)
+    else:
+        @network_operation(dt=p['sim_dt'])
+        def _coupling_op():
+            Soma.vAveDend = np.mean(Dend.V[:])
+            Dend.vSoma = np.repeat(Soma.vShadow[:], ndend)
+        net.add(_coupling_op)
 
     post_src = PoissonGroup(1, rates=post_rate * Hz)
     bAP = Synapses(post_src, Dend, on_pre='V_post+=bAP_amp\nbAPCa_rise_post+=norm_factor_Ca',
@@ -159,10 +168,12 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
                        refractory=p['refrac_som'], method='euler', namespace=p)
     # SOM bias: see the som_bias_pA docstring above and model/parameters.py's
     # iBaseline_som comment for the full 2026-08-30 SOM-rate sweep story. This function's
-    # own default (20.9 pA) intentionally overrides p['iBaseline_som'] rather than reading
-    # it, since that parameter's calibration is documented for Phase-1's reduced circuit
-    # specifically and this circuit's own SOM rate should be checked, not assumed.
-    SOM.V = p['vRest_som']; SOM.iBaseline_som = som_bias_pA * pA
+    # own default (som_bias_pA=21.32) intentionally overrides p['iBaseline_som'].
+    # som_phase (2026-11-01): 'random' (default) desynchronises the SOM cells with a
+    # dedicated RNG (Brian's global stream untouched); 'sync' = legacy lockstep, in which
+    # all SOM cells fire at identical times. See model/circuit_helpers.py.
+    SOM.V = som_initial_voltages(p['n_som_spike'], p, som_bias_pA, som_phase, seed_val)
+    SOM.iBaseline_som = som_bias_pA * pA
     BG_som = PoissonGroup(p['n_som_spike'], rates=bg_rate_som)
     sbg_som = Synapses(BG_som, SOM, on_pre='gTotAMPA_post+=bg_weight_som', namespace={**p, 'bg_weight_som': bg_weight_som})
     sbg_som.connect(j='i')
@@ -206,7 +217,7 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
 
     # -- Plastic pathway: independent excitatory input onto each branch --------
     # acc_eqs/accumulate: same compiled-counter trick as experiments/phase1_analytical.py
-    # -- O(1) memory, integrated at the full sim_dt rather than a coarser record_dt,
+    # -- O(1) memory, integrated every simulation step (Brian 2 default 0.1 ms; sim_dt is NOT the integration step -- audit 2026-11-01),
     # reset every epoch so alpha_d/alpha_p measure only the current epoch's calcium.
     acc_eqs = '\nad_acc : second\nap_acc : second\n'
     accumulate = ('ad_acc = ad_acc + int(c_total > theta_d)*dt\n'
@@ -236,7 +247,7 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
     # can be compared between a passing and a failing seed. Monitors are passive (they
     # draw no RNG and add no synapses), so when monitor_epoch0=False the RNG stream and
     # all returned numbers are byte-identical to before -- verified against the committed
-    # docs/across_seed_diag_results.json (seed 42 ratio 4.068, seeds 44/53 fail).
+    # results/pre_audit/across_seed_diag_results.json (seed 42 ratio 4.068, seeds 44/53 fail).
     ep0_mon = None
     if monitor_epoch0:
         # c_total = c + bAPCa_post is a per-synapse subexpression that mixes a synapse
@@ -340,12 +351,18 @@ def build_gating_circuit(T=3.0, post_rate=10.0, exc_rate=80.0, gcouple_nS=0.8,
             trace[-1]['rho1_after'] = float(np.mean(r1_new))
 
     T_total = n_epochs * T
-    w0 = float(np.mean(sb0.w[:])); w1 = float(np.mean(sb1.w[:]))
+    # (local names must not shadow the model parameters w0/w1 -- Brian 2 resolves names
+    # against the calling frame too; it happened to pick the right one but warned.)
+    w_inh = float(np.mean(sb0.w[:])); w_free = float(np.mean(sb1.w[:]))
     r0 = float(np.mean(sb0.rho[:])); r1 = float(np.mean(sb1.rho[:]))
     ratio = r1 / r0 if r0 > 1e-6 else float('inf')
     n_pv, n_som, n_vip = p['n_pv'], p['n_som_spike'], p['n_vip_spike']
     out = dict(
-        r0=r0, r1=r1, w0=w0, w1=w1, ratio=ratio,
+        r0=r0, r1=r1, w0=w_inh, w1=w_free, ratio=ratio,
+        # 2026-11-01: ratio alone is dominated by r0 (r1 saturates at ~0.925 on every
+        # seed). Report the plasticity direction explicitly as well.
+        d_rho_inh=r0 - 0.5, d_rho_free=r1 - 0.5,
+        gated=bool(r1 > 0.65 and r0 < 0.5 and ratio >= 2.0),
         pv_rate=len(mons['pv'].t) / T_total / n_pv,
         som_rate=len(mons['som'].t) / T_total / n_som,
         vip_rate=len(mons['vip'].t) / T_total / n_vip,

@@ -27,6 +27,7 @@ import sys, os
 import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'model'))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # for src.v2.plasticity
 from brian2 import *
 prefs.codegen.target = 'numpy'
 
@@ -141,11 +142,15 @@ def test_presynaptic_event():
     v_rest_mV = float(p['vRest_pyr'] / mV)
     vh = float(p['vHalfNMDA'] / mV); vs = float(p['vSpreadNMDA'] / mV)
     gate_rest = 1.0 / (1.0 + np.exp(-(v_rest_mV - vh) / vs))
-    expected = p['C_pre'] * gate_rest
-    check('a presynaptic spike raises c by C_pre * mg_gate(V_post)',
-          abs(jump - expected) < 0.05 * max(expected, 1e-3),
-          f'observed jump {jump:.5f}, expected C_pre*gate = {p["C_pre"]}*'
-          f'{gate_rest:.5f} = {expected:.5f} at V_rest = {v_rest_mV:.0f} mV')
+    # 2026-11-01 (audit): the per-spike jump c += C_pre*mg was retired for Yang Eq. 13
+    # (c = leaky integral of the NMDA current), so the old exact-jump assertion was stale.
+    # Current semantics: one presynaptic spike at rest deposits a small POSITIVE amount of
+    # calcium (NMDA mostly Mg-blocked) that stays far below theta_d -- a single input can
+    # never trigger plasticity on its own.
+    check('a single presynaptic spike at rest raises c, but stays far below theta_d',
+          0.0 < jump < 0.5 * float(p['theta_d']),
+          f'observed peak c {jump:.5f} (theta_d = {float(p["theta_d"])}); '
+          f'Mg gate at V_rest = {gate_rest:.4f}')
     check('no postsynaptic calcium appears without a somatic spike',
           float(md.bAPCa[0].max()) < 1e-9 and len(sp.t) == 0,
           f'bAPCa max = {float(md.bAPCa[0].max()):.2e}, soma spikes = {len(sp.t)}')
@@ -219,9 +224,19 @@ def _run_condition(p, connect, seed_val, rate_hz=BAP_RATE_HZ, dur=2000):
     net, ms_, md, sp, syn = build(p, pre_times=None, bap_times=times,
                                   connect_bap_calcium=connect, seed_val=seed_val)
     net.run(dur * ms)
-    rho_end = np.array([ms_.rho[i][-1] for i in range(len(syn))])
+    # 2026-11-01 (audit): rho is a held parameter since the drho/dt ODE was retired, so
+    # reading it after net.run() always gave 0.5 (drho = 0, both assertions below failed).
+    # Use the canonical analytical epoch update on this run's own calcium trace instead.
+    from src.v2.plasticity import yang_synapse_update, alpha_above_threshold
+    dt_s = float(np.diff(np.asarray(ms_.t / second))[0])   # the monitor's own sampling step
     ba = md.bAPCa[0]
-    return dict(drho=float(np.mean(rho_end - 0.5)),
+    drhos = []
+    for i in range(len(syn)):
+        c_tot = np.asarray(ms_.c[i]) + np.asarray(ba)
+        ad = alpha_above_threshold(c_tot, dt_s, float(p['theta_d']))
+        ap = alpha_above_threshold(c_tot, dt_s, float(p['theta_p']))
+        drhos.append(yang_synapse_update(ad, ap, 0.5)['rho_new'] - 0.5)
+    return dict(drho=float(np.mean(drhos)),
                 ba_max=float(ba.max()), ba_mean=float(ba.mean()),
                 f_d=float((ba > p['theta_d']).mean()),
                 f_p=float((ba > p['theta_p']).mean()),
@@ -265,12 +280,16 @@ def test_downstream_plasticity_access():
           f'(per-seed {np.array2string(d_on, precision=3)})')
     print(f'         severed      mean drho = {d_off.mean():+.4f}  '
           f'(per-seed {np.array2string(d_off, precision=3)})')
-    check('postsynaptic calcium alone drives rho DOWN (theta_D crossed -> LTD)',
-          d_on.mean() < d_off.mean() - 0.02,
-          f'connected {d_on.mean():+.4f} vs severed {d_off.mean():+.4f}')
-    check('severing the bAP calcium changes the plasticity outcome',
-          abs(d_off.mean() - d_on.mean()) > 0.02,
-          f'difference {d_off.mean() - d_on.mean():+.4f}')
+    # 2026-11-01 (audit): the old 0.02 magnitude threshold was calibrated against the
+    # retired drho/dt ODE, whose gamma terms ran 346x too strong (docs/reports/gamma_tau_analysis.md).
+    # Under Yang's analytical update with the real tau = 346 s, 2 s of post-only LTD-band
+    # calcium moves rho by only ~1e-3 -- so assert the SIGN on every seed, not a magnitude.
+    check('postsynaptic calcium alone drives rho DOWN on every seed (theta_D crossed -> LTD)',
+          bool(np.all(d_on < 0)),
+          f'connected per-seed {np.array2string(d_on, precision=5)}')
+    check('severing the bAP calcium removes the plasticity (rho held exactly)',
+          bool(np.all(d_off == 0)) and bool(np.all(d_on < d_off)),
+          f'severed per-seed {np.array2string(d_off, precision=5)}')
 
 
 # ----------------------------------------------------------------- link 6

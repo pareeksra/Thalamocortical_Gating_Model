@@ -7,7 +7,7 @@ Requires all five docs/som_reliability_<rate>hz_results.json files to have 10 se
 """
 import os, sys, json, csv
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOCS = os.path.join(PROOT, 'docs')
+DOCS = os.path.join(PROOT, 'results', 'pre_audit')
 FIG = os.path.join(PROOT, 'figures')
 
 RATES = [25, 28, 30, 33, 35]
@@ -77,7 +77,7 @@ def write_figure(by_rate, robust_rate):
                  'green = pass (ratio > 2.0), red = fail')
     ax.legend(fontsize=8, loc='lower right')
     fig.tight_layout()
-    path = os.path.join(FIG, 'som_rate_reliability.png')
+    path = os.path.join(FIG, 'pre_audit/som_rate_reliability.png')
     fig.savefig(path, dpi=140)
     print(f"Wrote {path}")
     return path

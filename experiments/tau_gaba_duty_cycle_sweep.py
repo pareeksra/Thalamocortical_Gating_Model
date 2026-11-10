@@ -4,7 +4,7 @@ tau_gaba_duty_cycle_sweep.py -- resolve the SOM-rate divergence from Yang 2016.
 Yang, Murray & Wang (2016) obtain pathway-specific gating with a SOM baseline of
 ~10 Hz (Methods: "firing of SOM neurons ~10 Hz as observed experimentally") and
 tau_GABA,dend = 20 ms. This spiking reimplementation needs ~21 Hz at the SAME
-tau = 20 ms (docs/som_rate_sweep_table.csv: fail at 16.9 Hz, pass at 21.5 Hz) --
+tau = 20 ms (results/pre_audit/som_rate_sweep_table.csv: fail at 16.9 Hz, pass at 21.5 Hz) --
 2x the biologically observed, Yang-used rate. A reviewer will ask why.
 
 Hypothesis (duty-cycle / inhibition coverage): what gates plasticity is not the
@@ -22,11 +22,11 @@ spike train, longer GABA tail rescues gating. This script quantifies the scaling
 
 Method: for each tau_GABA,dend, sweep som_bias_pA to find the fail->pass crossover
 SOM rate (ratio crosses 2.0). Uses the same reduced Phase-1 analytical protocol as
-docs/som_rate_sweep_table.csv (run_gating_analytical, 15 epochs, seed 42, gGABA
+results/pre_audit/som_rate_sweep_table.csv (run_gating_analytical, 15 epochs, seed 42, gGABA
 default), via its new param_overrides={'tauGABA': ...} hook. numpy codegen (set
 below) so changing tau does NOT trigger a cython recompile each point.
 
-Output: docs/tau_gaba_duty_cycle_results.json, docs/tau_gaba_duty_cycle_table.csv
+Output: results/pre_audit/tau_gaba_duty_cycle_results.json, results/pre_audit/tau_gaba_duty_cycle_table.csv
 Run: <venv>/python -I experiments/tau_gaba_duty_cycle_sweep.py
 """
 import os, sys, json, csv
@@ -47,8 +47,8 @@ BIASES = [20.04, 20.3, 20.45, 20.6, 20.75, 20.9, 21.2, 21.6, 22.2, 23.0, 25.0]
 N_EPOCHS = 15
 RATIO_PASS = 2.0
 
-RESULTS = os.path.join(PROOT, 'docs', 'tau_gaba_duty_cycle_results.json')
-TABLE = os.path.join(PROOT, 'docs', 'tau_gaba_duty_cycle_table.csv')
+RESULTS = os.path.join(PROOT, 'results', 'pre_audit', 'tau_gaba_duty_cycle_results.json')
+TABLE = os.path.join(PROOT, 'results', 'pre_audit', 'tau_gaba_duty_cycle_table.csv')
 
 
 def crossover_rate(points):

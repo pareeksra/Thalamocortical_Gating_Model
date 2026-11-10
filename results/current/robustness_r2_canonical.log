@@ -1,0 +1,74 @@
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('gating', 43, 0.1) {'kind': 'gating', 'seed': 43, 'dt_ms': 0.1, 'rho_free': 0.927, 'rho_inh': 0.333, 'wall_s': 64.0}
+('gating', 46, 0.1) {'kind': 'gating', 'seed': 46, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 64.2}
+('gating', 44, 0.1) {'kind': 'gating', 'seed': 44, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 64.6}
+('gating', 48, 0.1) {'kind': 'gating', 'seed': 48, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 64.4}
+('gating', 53, 0.1) {'kind': 'gating', 'seed': 53, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 64.6}
+('gating', 50, 0.1) {'kind': 'gating', 'seed': 50, 'dt_ms': 0.1, 'rho_free': 0.927, 'rho_inh': 0.333, 'wall_s': 65.0}
+('gating', 52, 0.1) {'kind': 'gating', 'seed': 52, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 65.1}
+('gating', 51, 0.1) {'kind': 'gating', 'seed': 51, 'dt_ms': 0.1, 'rho_free': 0.927, 'rho_inh': 0.333, 'wall_s': 65.2}
+('gating', 42, 0.1) {'kind': 'gating', 'seed': 42, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 65.7}
+('gating', 45, 0.1) {'kind': 'gating', 'seed': 45, 'dt_ms': 0.1, 'rho_free': 0.927, 'rho_inh': 0.333, 'wall_s': 66.7}
+('gating', 47, 0.1) {'kind': 'gating', 'seed': 47, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 66.6}
+('gating', 49, 0.1) {'kind': 'gating', 'seed': 49, 'dt_ms': 0.1, 'rho_free': 0.927, 'rho_inh': 0.333, 'wall_s': 67.1}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('soma', 42, 0.1) {'kind': 'soma', 'seed': 42, 'pyr': np.float64(11.833), 'cv': 1.031, 'pv': np.float64(52.4), 'rho0': 0.916, 'rho1': 0.333, 'wall_s': 20.8}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('soma', 43, 0.1) {'kind': 'soma', 'seed': 43, 'pyr': np.float64(11.667), 'cv': 1.38, 'pv': np.float64(46.4), 'rho0': 0.915, 'rho1': 0.333, 'wall_s': 23.6}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('gating', 54, 0.1) {'kind': 'gating', 'seed': 54, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 70.4}
+('gating', 58, 0.1) {'kind': 'gating', 'seed': 58, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 72.2}
+('gating', 60, 0.1) {'kind': 'gating', 'seed': 60, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 71.8}
+('gating', 56, 0.1) {'kind': 'gating', 'seed': 56, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 73.1}
+('gating', 57, 0.1) {'kind': 'gating', 'seed': 57, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.331, 'wall_s': 73.4}
+('gating', 55, 0.1) {'kind': 'gating', 'seed': 55, 'dt_ms': 0.1, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 73.9}
+('gating', 59, 0.1) {'kind': 'gating', 'seed': 59, 'dt_ms': 0.1, 'rho_free': 0.927, 'rho_inh': 0.333, 'wall_s': 73.2}
+('gating', 61, 0.1) {'kind': 'gating', 'seed': 61, 'dt_ms': 0.1, 'rho_free': 0.927, 'rho_inh': 0.333, 'wall_s': 73.2}
+('soma', 44, 0.1) {'kind': 'soma', 'seed': 44, 'pyr': np.float64(9.333), 'cv': 0.959, 'pv': np.float64(49.942), 'rho0': 0.915, 'rho1': 0.333, 'wall_s': 22.0}
+('dt', 44, 0.05) {'kind': 'dt', 'seed': 44, 'dt_ms': 0.05, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 104.3}
+('dt', 43, 0.05) {'kind': 'dt', 'seed': 43, 'dt_ms': 0.05, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 104.5}
+('dt', 42, 0.05) {'kind': 'dt', 'seed': 42, 'dt_ms': 0.05, 'rho_free': 0.928, 'rho_inh': 0.333, 'wall_s': 106.4}
+{
+ "gated": "20/20",
+ "gating_pass": true,
+ "dt_max_delta": [
+  3.546250253605443e-05,
+  5.179370251084947e-05,
+  0.00014266093474091246
+ ],
+ "dt_pass": true,
+ "soma_hz": [
+  11.833333333333334,
+  11.666666666666668,
+  9.333333333333334
+ ],
+ "soma_cv": [
+  1.031154737571791,
+  1.3802561188541878,
+  0.9589631428640228
+ ],
+ "soma_pass": true
+}
+rho_free mean 0.928 [0.927, 0.928]  rho_inh mean 0.333 [0.331, 0.333]

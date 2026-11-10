@@ -187,7 +187,7 @@ rho : 1                       # set per epoch via yang_synapse_update (see src/v
 # Eqs. 32-35. Preserved (commented out, not deleted) for provenance. It carried a
 # documented units problem: the gamma terms used a bare 1/second where canonical
 # Graupner-Brunel divides the whole RHS by tau, making them tau/(1 s) = 346x
-# stronger than the double-well term (see docs/gamma_tau_analysis.md). The
+# stronger than the double-well term (see docs/reports/gamma_tau_analysis.md). The
 # analytical formula removes this ambiguity by integrating the epoch in closed form.
 #
 #   rate_p = ind_p * 1/second : Hz

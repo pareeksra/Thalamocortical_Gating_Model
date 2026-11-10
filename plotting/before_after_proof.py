@@ -4,15 +4,15 @@ before_after_proof.py -- consolidated before->after proof for the 2026-10-14/15 
 Three findings, each as a before/after pair, from committed data:
 
   1. Gating reliability: 25 Hz N=20 baseline 18/20 -> N=100 (variance-reduced) 20/20.
-     (docs/full_circuit_reliability_25hz_results.json ; docs/n_som_reliability_n100_results.json)
+     (results/pre_audit/full_circuit_reliability_25hz_results.json ; results/pre_audit/n_som_reliability_n100_results.json)
   2. SOM-rate divergence: critical SOM rate vs tau_GABA,dend -- "before" the model needed
      ~2x Yang's 10 Hz at tau=20 ms; "after" (understanding duty cycle) it recovers Yang's
-     ~10 Hz regime at tau=40 ms. (docs/tau_gaba_duty_cycle_results.json)
+     ~10 Hz regime at tau=40 ms. (results/pre_audit/tau_gaba_duty_cycle_results.json)
   3. No catastrophic forgetting: inhibition-only context switch 30% retention (before) ->
      input-gated 100% retention (after).
      (docs/retention_results_{inhibonly,inputgated}.json)
 
-Run: <venv>/python -I plotting/before_after_proof.py -> figures/before_after_proof.png
+Run: <venv>/python -I plotting/before_after_proof.py -> figures/pre_audit/before_after_proof.png
 """
 import os, sys, json
 import numpy as np
@@ -21,7 +21,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOCS = os.path.join(PROOT, 'docs')
+DOCS = os.path.join(PROOT, 'results', 'pre_audit')
 BEFORE = '#D55E00'   # vermillion = the broken / baseline state
 AFTER = '#009E73'    # green = the resolved state
 
@@ -103,7 +103,7 @@ def main():
     fig.suptitle('Thalamocortical gating model — before → after (2026-10-14/15 session)',
                  fontsize=13, fontweight='bold', y=1.03)
     fig.tight_layout()
-    out = os.path.join(PROOT, 'figures', 'before_after_proof.png')
+    out = os.path.join(PROOT, 'figures', 'pre_audit', 'before_after_proof.png')
     fig.savefig(out, dpi=150, bbox_inches='tight', facecolor='white')
     print(f'Saved {out}')
     print(f"  1 reliability: {sum(r['passed'] for r in b)}/{len(b)} -> {sum(r['passed'] for r in n)}/{len(n)}")

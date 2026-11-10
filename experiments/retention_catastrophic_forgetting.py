@@ -28,8 +28,14 @@ the model should overwrite (this is the "what forgetting looks like" reference).
 approximated by leaving branch 0 free in both phases (no context switch) and checking
 it simply stays up (the trivial no-interference case), plus the key cross-branch test.
 
-Output: docs/retention_results.json + figures/retention_forgetting.png
-Run: <venv>/python -I experiments/retention_catastrophic_forgetting.py
+Output: results/pre_audit/retention_results_<mode>.json + figures/pre_audit/retention_forgetting.png
+Run: <venv>/python -I experiments/retention_catastrophic_forgetting.py [inputgated|inhibonly|inputonly]
+
+2026-11-01 (audit Problem 3): added mode 'inputonly' -- the idle input is silenced but
+SOM inhibition is switched OFF on both branches. This control was missing: without it
+the original result cannot distinguish "needs BOTH input and inhibition gating" from
+"input gating alone is enough". The multi-seed, MD-driven 2x2 version of this test is
+experiments/retention_md_context.py.
 """
 import os, sys, json
 import numpy as np
@@ -130,7 +136,7 @@ def run_epoch(net, sb0, sb1, ykw):
     return float(np.mean(sb0.rho[:])), float(np.mean(sb1.rho[:]))
 
 
-def main(gate_input=True):
+def main(gate_input=True, inhibit=True):
     """gate_input=True: context switches BOTH the disinhibition AND which input is
     active (A's input silent during B) -- the Zhang-faithful 'different contexts =
     different active inputs' test. gate_input=False: only the inhibition switches,
@@ -140,7 +146,7 @@ def main(gate_input=True):
     OFF = 0.0 * Hz if gate_input else EXC_RATE * Hz
 
     # Phase A: SOM inhibits branch 1 -> branch 0 free; branch-0 input ON, branch-1 input OFF (if gated).
-    s2d.som_gain['j==0'] = 0.0; s2d.som_gain['j==1'] = 1.0
+    s2d.som_gain['j==0'] = 0.0; s2d.som_gain['j==1'] = 1.0 if inhibit else 0.0
     exc0.rates = EXC_RATE * Hz; exc1.rates = OFF
     for e in range(1, N_EPOCHS_PER_PHASE + 1):
         r0, r1 = run_epoch(net, sb0, sb1, ykw)
@@ -149,7 +155,7 @@ def main(gate_input=True):
 
     # Phase B: SOM inhibits branch 0 -> branch 1 free; branch-1 input ON, branch-0 input OFF (if gated).
     # CATASTROPHIC-FORGETTING TEST: does rho0 (A) survive?
-    s2d.som_gain['j==0'] = 1.0; s2d.som_gain['j==1'] = 0.0
+    s2d.som_gain['j==0'] = 1.0 if inhibit else 0.0; s2d.som_gain['j==1'] = 0.0
     exc0.rates = OFF; exc1.rates = EXC_RATE * Hz
     for e in range(N_EPOCHS_PER_PHASE + 1, 2 * N_EPOCHS_PER_PHASE + 1):
         r0, r1 = run_epoch(net, sb0, sb1, ykw)
@@ -166,8 +172,8 @@ def main(gate_input=True):
         rho0_endA=round(rho0_endA, 4), rho1_endA=round(rho1_endA, 4),
         rho0_endB=round(rho0_endB, 4), rho1_endB=round(rho1_endB, 4),
         rho0_retention_frac=round(retention, 4), verdict=verdict, traj=traj)
-    mode = 'inputgated' if gate_input else 'inhibonly'
-    json.dump(out, open(os.path.join(PROOT, 'docs', f'retention_results_{mode}.json'), 'w'), indent=2)
+    mode = ('inputgated' if inhibit else 'inputonly') if gate_input else 'inhibonly'
+    json.dump(out, open(os.path.join(PROOT, 'results', 'pre_audit', f'retention_results_{mode}.json'), 'w'), indent=2)
 
     print(f"SOM rate: {som_rate:.1f} Hz")
     print(f"End of A: branch0(free,learned)={rho0_endA:.3f}  branch1(gated)={rho1_endA:.3f}")
@@ -199,5 +205,7 @@ def main(gate_input=True):
 
 if __name__ == '__main__':
     import sys
-    gi = not (len(sys.argv) > 1 and sys.argv[1] == 'inhibonly')
-    main(gate_input=gi)
+    m = sys.argv[1] if len(sys.argv) > 1 else 'inputgated'
+    if m not in ('inputgated', 'inhibonly', 'inputonly'):
+        raise SystemExit(f'unknown mode {m}')
+    main(gate_input=(m != 'inhibonly'), inhibit=(m != 'inputonly'))

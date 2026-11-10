@@ -1,0 +1,12 @@
+A: 20/20 gated; r0 0.170-0.287, r1 0.924-0.926; PV 7.0 Hz, SOM 30.1 Hz; fails []
+B: both      seed 42: retention 1.000  (B-end rho1 0.926; PV in context A 49.2 Hz)
+B: both      seed 43: retention 0.999  (B-end rho1 0.926; PV in context A 45.9 Hz)
+B: both      seed 44: retention 1.000  (B-end rho1 0.925; PV in context A 50.4 Hz)
+B: inhibonly seed 42: retention 0.367  (B-end rho1 0.926; PV in context A 49.2 Hz)
+B: inhibonly seed 43: retention 0.349  (B-end rho1 0.926; PV in context A 45.9 Hz)
+B: inhibonly seed 44: retention 0.398  (B-end rho1 0.925; PV in context A 50.4 Hz)
+C: MD->PV x0   PV    6.9 Hz  soma   0.3 Hz | free 0.922  gated 0.250 (gated ad 1.44)
+C: MD->PV x0.5 PV   21.2 Hz  soma   0.0 Hz | free 0.922  gated 0.262 (gated ad 1.37)
+C: MD->PV x1   PV   51.0 Hz  soma   0.0 Hz | free 0.923  gated 0.269 (gated ad 1.32)
+C: MD->PV x2   PV  136.8 Hz  soma   0.0 Hz | free 0.923  gated 0.273 (gated ad 1.29)
+C: MD->PV x3   PV  220.3 Hz  soma   0.0 Hz | free 0.923  gated 0.274 (gated ad 1.29)

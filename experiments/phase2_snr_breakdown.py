@@ -9,7 +9,7 @@ Protocol: MD drive is held at md_signal_rate=0 Hz throughout (the network's rest
 state -- SOM receives no VIP-mediated suppression, so its ~22 pA baseline current
 drives it to fire and tonically inhibit dendritic branch 0, while branch 1 is
 structurally never inhibited). This is the same "SOM-active" condition validated in
-Phase 1 (free/inhibited ratio ~43-65) and Section 2.3 of docs/Validation_Report.docx,
+Phase 1 (free/inhibited ratio ~43-65) and Section 2.3 of docs/meetings/Validation_Report.docx,
 now reproduced through the full circuit instead of a hand-set SOM bias.
 
 `noise_level` (model/full_circuit.py) jointly scales three biologically distinct
@@ -41,13 +41,13 @@ N_SEEDS = 3
 T_SIM = 3.0
 # 2026-08-30 migration to analytical plasticity: measured 90 s/epoch steady-state in
 # this circuit (vs. Phase-1's reduced circuit's ~74 s), so 15 epochs x 3 seeds x 11
-# noise levels would run ~12 h. Epochs reduced to 10 -- Step 2c (docs/Progress_Report.docx
+# noise levels would run ~12 h. Epochs reduced to 10 -- Step 2c (docs/meetings/Progress_Report.docx
 # Section 5.4) showed the ratio is already close to its long-run value by epoch ~10 -- to
 # bring this to ~8 h. Seeds kept at 3: the seed-to-seed disagreement in the "unstable
 # transition zone" is the specific phenomenon this sweep was designed to detect, and a
 # single seed cannot show it at all.
 N_EPOCHS = 10
-RESULTS_PATH = os.path.join(PROOT, 'docs', 'phase2_snr_sweep_results.json')
+RESULTS_PATH = os.path.join(PROOT, 'results', 'pre_audit', 'phase2_snr_sweep_results.json')
 
 import json
 
@@ -152,5 +152,5 @@ if __name__ == '__main__':
     else:
         print("\nGating selectivity remained >= 1.5 across the full sweep range.")
     os.makedirs(FIGROOT, exist_ok=True)
-    plot(records, os.path.join(FIGROOT, 'phase2_snr_curve.png'))
+    plot(records, os.path.join(FIGROOT, 'pre_audit/phase2_snr_curve.png'))
     print("\n=== Phase 2B complete ===")

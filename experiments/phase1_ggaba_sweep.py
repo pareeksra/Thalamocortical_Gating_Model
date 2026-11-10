@@ -11,11 +11,11 @@ final rho.
 Goal: does ANY gGABA value recover gating (ratio > 2) at Yang's 10 Hz SOM rate?
 
 Two points are already computed (reused, not rerun):
-  - gGABA=4.0 nS  -> ratio=1.02  (docs/phase1_som10hz_run.log, Step 2d)
-  - gGABA=10.0 nS -> ratio=1.11  (docs/gbarI_10_run.log)
+  - gGABA=4.0 nS  -> ratio=1.02  (results/pre_audit/phase1_som10hz_run.log, Step 2d)
+  - gGABA=10.0 nS -> ratio=1.11  (results/pre_audit/gbarI_10_run.log)
 
-Output: docs/gbar_I_sweep_results.json, docs/gbar_I_sweep_table.csv,
-figures/gbar_I_sweep.png
+Output: results/pre_audit/gbar_I_sweep_results.json, results/pre_audit/gbar_I_sweep_table.csv,
+figures/pre_audit/gbar_I_sweep.png
 """
 import sys, os, json, csv
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,9 +27,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from phase1_analytical import run_gating_analytical
 
-RESULTS_PATH = os.path.join(PROOT, 'docs', 'gbar_I_sweep_results.json')
-TABLE_PATH = os.path.join(PROOT, 'docs', 'gbar_I_sweep_table.csv')
-FIG_PATH = os.path.join(PROOT, 'figures', 'gbar_I_sweep.png')
+RESULTS_PATH = os.path.join(PROOT, 'results', 'pre_audit', 'gbar_I_sweep_results.json')
+TABLE_PATH = os.path.join(PROOT, 'results', 'pre_audit', 'gbar_I_sweep_table.csv')
+FIG_PATH = os.path.join(PROOT, 'figures', 'pre_audit', 'gbar_I_sweep.png')
 
 SOM_BIAS_PA = 20.04  # Yang's ~10 Hz operating point (measured 10.14-10.15 Hz)
 
@@ -37,9 +37,9 @@ SOM_BIAS_PA = 20.04  # Yang's ~10 Hz operating point (measured 10.14-10.15 Hz)
 # exc=80Hz, post=10Hz, g_c=0.8nS, som_bias=20.04pA, seed 42). Not rerun.
 REUSED = [
     dict(gGABA_nS=4.0, som_rate_hz=10.14, rho0=0.910, rho1=0.924, ratio=1.02,
-         source='docs/phase1_som10hz_run.log (Step 2d)'),
+         source='results/pre_audit/phase1_som10hz_run.log (Step 2d)'),
     dict(gGABA_nS=10.0, som_rate_hz=10.15, rho0=0.829, rho1=0.923, ratio=1.11,
-         source='docs/gbarI_10_run.log'),
+         source='results/pre_audit/gbarI_10_run.log'),
 ]
 
 # 4.0 nS is Yang's matched value (40 nS total across 10 SOM cells); 6x = 24.0 nS.

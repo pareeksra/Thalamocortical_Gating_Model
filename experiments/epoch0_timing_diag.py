@@ -25,7 +25,7 @@ Prediction to test:
   Failing seed should show a longer max SOM-ISI gap coincident with a branch-0
   calcium excursion above theta_p.
 
-Output: docs/epoch0_timing_diag_results.json + printed summary.
+Output: results/pre_audit/epoch0_timing_diag_results.json + printed summary.
 Run: <venv>/python -I experiments/epoch0_timing_diag.py
 """
 import os, sys, json
@@ -103,7 +103,7 @@ for rate in RATES:
         print(f"  frac of branch-0 LTP-time inside the biggest SOM gap = "
               f"{ov['ltp_in_biggest_gap_frac']}", flush=True)
 
-out = os.path.join(PROOT, 'docs', 'epoch0_timing_diag_results.json')
+out = os.path.join(PROOT, 'results', 'pre_audit', 'epoch0_timing_diag_results.json')
 # drop the big per-sample arrays from the saved json; keep summaries only
 with open(out, 'w') as f:
     json.dump(results, f, indent=2)

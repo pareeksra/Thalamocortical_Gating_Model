@@ -1,0 +1,20 @@
+{
+  "params": {
+    "rho_free": 0.92,
+    "rho_inhib": 0.33,
+    "exc_rate": 80.0,
+    "gcouple_nS": 0.8,
+    "som_bias_pA": 21.32,
+    "T_readout": 5.0
+  },
+  "weight_only": {
+    "r_on": 0.0,
+    "r_off": 0.0,
+    "S": 0.0
+  },
+  "full_gating": {
+    "r_on": 0.0,
+    "r_off": 0.0,
+    "S": 0.0
+  }
+}

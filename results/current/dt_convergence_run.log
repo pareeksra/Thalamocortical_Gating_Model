@@ -1,0 +1,4 @@
+  SOM 30 Hz  dt 0.1 ms: r0 0.227  r1 0.925  ratio 4.07  (inh ap/ad 0.02/1.85, free ap/ad 2.93/3.00)
+  SOM 30 Hz  dt 0.02 ms: r0 0.219  r1 0.925  ratio 4.22  (inh ap/ad 0.04/1.62, free ap/ad 2.91/3.00)
+  SOM 15 Hz  dt 0.1 ms: r0 0.159  r1 0.925  ratio 5.80  (inh ap/ad 0.05/2.83, free ap/ad 2.93/3.00)
+  SOM 15 Hz  dt 0.02 ms: r0 0.169  r1 0.925  ratio 5.48  (inh ap/ad 0.09/2.83, free ap/ad 2.91/3.00)

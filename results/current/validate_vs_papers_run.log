@@ -1,0 +1,31 @@
+======================================================================
+ VALIDATION vs Yang 2016 & Zhang 2025 paper figures  (Model A)
+======================================================================
+[V1] Dendritic I/O transfer function (Yang Fig. 2c)
+   g_half (formula): {'0.0': 22.2368204, '2.0': 33.3552306, '10.0': 77.8288714, '20.0': 133.4209224, '35.0': 216.8089989}
+   saved /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/figures/validation_vs_papers/v1_dendritic_io.png
+[V1] Dendritic I/O MEASURED on the Brian 2 dendrite (Yang Fig. 2c)
+ g_inh  g1/2 meas  g1/2 Yang       V range (mV)
+     0      19.64      22.24    -70.0 .. -6.8
+     2      27.04      33.36    -70.0 .. -9.7
+    10      45.28      77.84    -70.0 .. -23.0
+    20       47.9     133.44    -70.0 .. -42.4
+    35      48.21     216.84    -70.0 .. -53.0
+linear fit: {'slope': 0.7604774532516559, 'intercept': 27.423779353704607, 'implied_g0_nS': 36.06126550688094}
+saved /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/figures/validation_vs_papers/v1_dendritic_io_measured.png
+[V2] LTP/LTD vs presynaptic rate (Yang Fig. 7b) -- running Brian 2 sweep...
+   LTP thresholds (rate where rho crosses 0.5): {'free': 12.085145934233317, 'SOM 15 Hz': 97.73615693827244, 'SOM 30 Hz': None}
+   saved /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/figures/validation_vs_papers/v2_ltp_vs_rate.png
+   saved /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/figures/validation_vs_papers/v3_branch_gating.png
+   V3: free=0.925 inh=0.227 ratio=4.1
+[V4] MD-drive control of interneuron rates (Zhang qualitative)
+   MD = 0.0 Hz ...
+   MD = 5.0 Hz ...
+   MD = 10.0 Hz ...
+   MD = 20.0 Hz ...
+   MD = 30.0 Hz ...
+   MD = 40.0 Hz ...
+   saved /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/figures/validation_vs_papers/v4_md_interneuron_control.png
+   SOM: ['30.2', '29.3', '22.0', '0.9', '0.4', '0.4']
+   PV : ['6.9', '12.2', '22.2', '46.8', '81.9', '118.8']
+All validation figures written to /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/figures/validation_vs_papers

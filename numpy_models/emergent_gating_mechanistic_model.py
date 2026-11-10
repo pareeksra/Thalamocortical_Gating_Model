@@ -44,7 +44,7 @@ plt.rcParams.update({
 })
 
 FIG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                        "figures", "mechanistic")
+                        "figures", "pre_audit/mechanistic")
 os.makedirs(FIG_DIR, exist_ok=True)
 
 # ──────────────────────────────────────────────────────────────
@@ -490,7 +490,7 @@ def main():
     ax1.set_title("Emergent Interneuron Rates — Stochastic Poisson Inputs", fontweight='bold')
     ax1.set_xlabel("Trial"); ax1.set_ylabel("Firing Rate (Hz)")
     ax1.legend(loc='upper right'); ax1.set_xlim(0, n_trials)
-    fig1.savefig(os.path.join(FIG_DIR, "fig_emergent_rates.png"))
+    fig1.savefig(os.path.join(FIG_DIR, "pre_audit/fig_emergent_rates.png"))
     plt.close(fig1)
 
     # Fig 2 — Gating Selectivity bars
@@ -508,7 +508,7 @@ def main():
                 f'{val:.2f}', ha='center', fontweight='bold', fontsize=13)
     axes2[0].set_ylabel("Selectivity Index (GS)")
     plt.tight_layout()
-    fig2.savefig(os.path.join(FIG_DIR, "fig_gating_selectivity.png"))
+    fig2.savefig(os.path.join(FIG_DIR, "pre_audit/fig_gating_selectivity.png"))
     plt.close(fig2)
 
     # Fig 3 — Dendritic inhibition (noisy)
@@ -519,7 +519,7 @@ def main():
     ax3.set_title("Emergent Dendritic Inhibition (SOM-gated, Poisson noise)", fontweight='bold')
     ax3.set_xlabel("Trial"); ax3.set_ylabel("Inhibitory Conductance (nS)")
     ax3.legend(); ax3.set_xlim(0, n_trials)
-    fig3.savefig(os.path.join(FIG_DIR, "fig_emergent_inhibition.png"))
+    fig3.savefig(os.path.join(FIG_DIR, "pre_audit/fig_emergent_inhibition.png"))
     plt.close(fig3)
 
     # Fig 4 — Self-organised branch gating
@@ -535,7 +535,7 @@ def main():
     ax4.set_xlabel("Trial"); ax4.set_ylabel("Synaptic Weight")
     ax4.legend(loc='upper left', ncol=2, fontsize=9)
     ax4.set_ylim(-0.05, 1.10); ax4.set_xlim(0, n_trials)
-    fig4.savefig(os.path.join(FIG_DIR, "fig_self_organized_branching.png"))
+    fig4.savefig(os.path.join(FIG_DIR, "pre_audit/fig_self_organized_branching.png"))
     plt.close(fig4)
 
     print(f"All 4 figures saved to: {FIG_DIR}")

@@ -7,9 +7,9 @@ Panel A: gating ratio vs SOM rate for three tau_GABA,dend values. The fail->pass
 Panel B: critical SOM rate vs tau, with the rate x tau product annotated (constant
          for 10->20 ms = the duty-cycle law).
 
-Data from docs/tau_gaba_duty_cycle_results.json (reduced Phase-1, seed 42, 8 epochs).
+Data from results/pre_audit/tau_gaba_duty_cycle_results.json (reduced Phase-1, seed 42, 8 epochs).
 Run: <venv>/python -I plotting/som_rate_divergence_figure.py
-Out: figures/som_rate_divergence.png
+Out: figures/pre_audit/som_rate_divergence.png
 """
 import os, sys, json
 import numpy as np
@@ -18,8 +18,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RES = os.path.join(PROOT, 'docs', 'tau_gaba_duty_cycle_results.json')
-OUT = os.path.join(PROOT, 'figures', 'som_rate_divergence.png')
+RES = os.path.join(PROOT, 'results', 'pre_audit', 'tau_gaba_duty_cycle_results.json')
+OUT = os.path.join(PROOT, 'figures', 'pre_audit', 'som_rate_divergence.png')
 
 # CVD-safe sequential-by-tau (Okabe-Ito ordered light->dark-ish)
 TAU_COLOR = {10.0: '#E69F00', 20.0: '#0072B2', 40.0: '#009E73'}

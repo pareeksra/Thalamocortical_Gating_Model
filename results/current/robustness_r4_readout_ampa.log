@@ -1,0 +1,176 @@
+80 jobs
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 5.0, 43) S 0.00  rates 0.0 0.0 0.0 0.4 0.4 0.0
+('after', 10.0, 43) S 0.37  rates 0.0 0.0 1.6 1.0 1.2 0.4
+('after', 15.0, 42) S -0.02  rates 0.0 0.0 4.8 4.6 3.6 4.0
+('before', 15.0, 42) S -0.02  rates 0.0 0.0 4.8 4.6 3.6 4.0
+('after', 5.0, 43) S 0.00  rates 0.0 0.0 0.0 0.4 0.4 0.0
+('after', 5.0, 42) S -1.00  rates 0.0 0.0 0.0 0.4 0.0 0.2
+('before', 5.0, 42) S -1.00  rates 0.0 0.0 0.0 0.4 0.0 0.2
+('after', 10.0, 42) S 0.07  rates 0.0 0.0 2.0 1.0 0.4 0.6
+('after', 20.0, 42) S -0.11  rates 0.0 0.0 5.8 6.2 4.8 7.0
+('before', 10.0, 42) S -0.05  rates 0.0 0.0 1.2 1.0 0.4 0.6
+('before', 20.0, 42) S -0.08  rates 0.0 0.0 5.8 6.2 4.8 6.2
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 10.0, 43) S 0.05  rates 0.0 0.0 1.2 1.0 0.4 0.4
+('before', 15.0, 43) S -0.10  rates 0.0 0.0 3.6 3.8 3.6 5.2
+('after', 20.0, 43) S -0.07  rates 0.0 0.0 5.8 5.8 4.8 6.4
+('after', 15.0, 43) S -0.06  rates 0.0 0.0 4.0 3.8 3.8 5.2
+('before', 5.0, 44) S -1.00  rates 0.4 0.2 0.4 0.4 0.2 0.0
+('after', 10.0, 44) S 0.62  rates 0.4 0.2 1.4 0.8 1.0 0.2
+('after', 5.0, 44) S 0.00  rates 0.4 0.2 0.4 0.4 0.4 0.0
+('after', 15.0, 44) S 0.03  rates 0.4 0.2 5.6 4.0 2.0 2.6
+('before', 15.0, 44) S 0.01  rates 0.4 0.2 5.2 4.0 2.0 2.6
+('before', 10.0, 44) S 0.40  rates 0.4 0.2 0.8 0.8 0.6 0.2
+('before', 20.0, 43) S -0.06  rates 0.0 0.0 5.6 5.6 4.8 6.0
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 20.0, 44) S -0.03  rates 0.4 0.2 7.0 6.0 3.0 4.0
+('after', 20.0, 44) S -0.06  rates 0.4 0.2 7.0 6.4 3.0 4.2
+WARNING    /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/experiments/robustness_r4_learning.py:45: RuntimeWarning: Mean of empty slice
+  return float(np.nanmean(S)), S
+ [py.warnings]
+('after', 5.0, 45) S nan  rates 0.2 0.4 0.2 0.4 0.0 0.2
+('before', 20.0, 45) S -0.12  rates 0.2 0.4 7.2 8.4 4.4 5.8
+WARNING    /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/experiments/robustness_r4_learning.py:45: RuntimeWarning: Mean of empty slice
+  return float(np.nanmean(S)), S
+ [py.warnings]
+('before', 5.0, 45) S nan  rates 0.2 0.4 0.2 0.4 0.0 0.2
+('after', 10.0, 45) S 0.04  rates 0.2 0.4 1.6 1.2 0.8 0.8
+('after', 20.0, 45) S -0.12  rates 0.2 0.4 7.2 8.6 4.6 6.0
+('after', 15.0, 45) S -0.04  rates 0.2 0.4 5.4 4.8 3.4 4.4
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 15.0, 45) S -0.10  rates 0.2 0.4 4.8 5.0 3.2 4.4
+('after', 5.0, 46) S -1.00  rates 0.4 0.0 0.4 0.2 0.0 0.2
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 10.0, 45) S -0.50  rates 0.2 0.4 1.0 1.2 0.2 1.2
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 5.0, 46) S -1.00  rates 0.4 0.0 0.4 0.2 0.0 0.2
+('after', 10.0, 46) S 0.31  rates 0.4 0.0 1.4 0.8 0.6 0.6
+('before', 15.0, 46) S -0.19  rates 0.4 0.0 5.2 4.2 1.8 5.0
+('after', 5.0, 47) S -0.47  rates 0.0 0.0 0.2 0.4 0.2 0.8
+('before', 10.0, 46) S 0.00  rates 0.4 0.0 1.2 0.8 0.2 0.6
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('after', 15.0, 46) S -0.11  rates 0.4 0.0 5.8 4.4 2.4 5.0
+('after', 20.0, 46) S -0.18  rates 0.4 0.0 9.0 7.6 3.6 9.2
+('before', 5.0, 47) S -0.47  rates 0.0 0.0 0.2 0.4 0.2 0.8
+('before', 20.0, 46) S -0.18  rates 0.4 0.0 8.8 7.6 3.6 9.0
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 10.0, 47) S -0.37  rates 0.0 0.0 0.6 1.2 0.6 1.4
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('after', 10.0, 47) S -0.07  rates 0.0 0.0 0.8 0.8 1.2 1.6
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 15.0, 47) S -0.31  rates 0.0 0.0 2.4 4.4 2.8 5.6
+('after', 15.0, 47) S -0.26  rates 0.0 0.0 3.0 5.0 3.4 5.8
+('before', 20.0, 47) S -0.19  rates 0.0 0.0 5.2 6.0 4.4 8.4
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('after', 20.0, 47) S -0.19  rates 0.0 0.0 5.6 6.4 4.4 8.6
+('after', 5.0, 48) S 0.00  rates 0.0 0.0 0.6 0.0 0.0 0.4
+('before', 5.0, 48) S 0.00  rates 0.0 0.0 0.6 0.0 0.0 0.4
+('after', 10.0, 48) S 0.44  rates 0.0 0.0 2.0 0.6 0.8 0.4
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 10.0, 48) S 0.03  rates 0.0 0.0 1.4 0.6 0.2 0.4
+('after', 15.0, 48) S 0.19  rates 0.0 0.0 4.4 3.2 3.8 2.4
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 15.0, 48) S 0.09  rates 0.0 0.0 4.0 3.2 2.8 2.4
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('after', 20.0, 48) S 0.02  rates 0.0 0.0 7.0 5.6 4.6 5.2
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 20.0, 48) S 0.02  rates 0.0 0.0 6.2 5.2 4.6 5.0
+('after', 5.0, 49) S 0.00  rates 0.2 0.0 0.0 0.2 0.2 0.2
+('after', 10.0, 49) S 0.25  rates 0.2 0.0 1.2 0.6 1.0 0.8
+('after', 15.0, 49) S 0.02  rates 0.2 0.0 4.4 4.6 4.8 4.2
+('before', 10.0, 49) S -0.00  rates 0.2 0.0 1.0 0.8 0.6 0.8
+('before', 5.0, 49) S 0.00  rates 0.2 0.0 0.0 0.2 0.2 0.2
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('after', 20.0, 49) S -0.09  rates 0.2 0.0 5.4 7.4 6.2 6.4
+('before', 15.0, 49) S -0.01  rates 0.2 0.0 4.2 4.4 4.0 4.0
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 20.0, 49) S -0.10  rates 0.2 0.0 5.2 7.2 6.0 6.4
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 5.0, 50) S -1.00  rates 0.4 0.0 0.4 0.2 0.0 0.2
+('after', 5.0, 50) S -1.00  rates 0.4 0.0 0.4 0.2 0.0 0.2
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('after', 10.0, 50) S 0.62  rates 0.4 0.0 1.4 0.6 1.0 0.4
+('after', 20.0, 50) S -0.01  rates 0.4 0.0 7.6 5.8 5.8 8.0
+('before', 10.0, 50) S 0.04  rates 0.4 0.0 1.0 1.0 0.4 0.6
+('before', 15.0, 50) S -0.04  rates 0.4 0.0 4.8 4.4 3.4 4.4
+('before', 20.0, 50) S 0.02  rates 0.4 0.0 7.6 5.0 5.6 7.8
+('after', 15.0, 50) S -0.03  rates 0.4 0.0 4.8 4.4 3.8 4.6
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 5.0, 51) S 1.00  rates 0.2 0.0 0.4 0.0 0.6 0.0
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('after', 5.0, 51) S 1.00  rates 0.2 0.0 0.4 0.0 0.6 0.0
+('after', 10.0, 51) S 0.62  rates 0.2 0.0 1.6 0.0 1.0 0.8
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('before', 10.0, 51) S 0.50  rates 0.2 0.0 1.0 0.0 0.8 1.0
+('after', 15.0, 51) S 0.28  rates 0.2 0.0 4.6 1.4 2.8 2.8
+('before', 15.0, 51) S 0.22  rates 0.2 0.0 4.2 1.4 2.8 3.2
+('after', 20.0, 51) S 0.11  rates 0.2 0.0 6.4 3.6 4.8 5.4
+('before', 20.0, 51) S 0.12  rates 0.2 0.0 6.0 3.2 4.6 5.2
+before  5.0 Hz: S -0.39±0.66 | A, gate A: b0 plat 0.00 | A, gate B: b1 plat 0.00, b0 0.00 | rates 0.2 0.1 0.3 0.3 0.2 0.2
+before 10.0 Hz: S +0.01±0.28 | A, gate A: b0 plat 0.08 | A, gate B: b1 plat 0.11, b0 0.00 | rates 0.2 0.1 1.0 0.8 0.4 0.7
+before 15.0 Hz: S -0.04±0.14 | A, gate A: b0 plat 0.88 | A, gate B: b1 plat 0.89, b0 0.02 | rates 0.2 0.1 4.3 3.9 3.0 4.1
+before 20.0 Hz: S -0.06±0.09 | A, gate A: b0 plat 0.97 | A, gate B: b1 plat 0.98, b0 0.03 | rates 0.2 0.1 6.5 6.0 4.6 6.4
+after   5.0 Hz: S -0.27±0.63 | A, gate A: b0 plat 0.00 | A, gate B: b1 plat 0.00, b0 0.00 | rates 0.2 0.1 0.3 0.3 0.2 0.2
+after  10.0 Hz: S +0.33±0.24 | A, gate A: b0 plat 0.25 | A, gate B: b1 plat 0.08, b0 0.01 | rates 0.2 0.1 1.5 0.7 0.9 0.7
+after  15.0 Hz: S +0.00±0.14 | A, gate A: b0 plat 0.94 | A, gate B: b1 plat 0.86, b0 0.03 | rates 0.2 0.1 4.7 4.0 3.4 4.1
+after  20.0 Hz: S -0.07±0.09 | A, gate A: b0 plat 0.98 | A, gate B: b1 plat 0.98, b0 0.03 | rates 0.2 0.1 6.7 6.3 4.7 6.6
+saved /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/figures/robustness_r4_readout_ampa.png

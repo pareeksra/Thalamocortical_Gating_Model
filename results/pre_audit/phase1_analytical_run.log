@@ -1,0 +1,28 @@
+=== Phase 1 ANALYTICAL (Yang 2016 Eqs. 32-35): 15 epochs x 3 s (exc=80 Hz, post=10 Hz, g_c=0.8 nS, seed 42) ===
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_2', but also exists in the group-specific namespace with the value 20.04 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+epoch  1: INHIB rho=0.476 (ad=1.63 ap=0.03) | FREE rho=0.863 (ad=2.97 ap=2.90)
+epoch  2: INHIB rho=0.471 (ad=1.05 ap=0.03) | FREE rho=0.916 (ad=3.00 ap=2.91)
+epoch  3: INHIB rho=0.460 (ad=1.31 ap=0.03) | FREE rho=0.924 (ad=3.00 ap=2.93)
+epoch  4: INHIB rho=0.427 (ad=1.94 ap=0.03) | FREE rho=0.926 (ad=3.00 ap=2.96)
+epoch  5: INHIB rho=0.419 (ad=1.19 ap=0.02) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch  6: INHIB rho=0.407 (ad=1.40 ap=0.01) | FREE rho=0.924 (ad=3.00 ap=2.89)
+epoch  7: INHIB rho=0.398 (ad=1.31 ap=0.03) | FREE rho=0.925 (ad=3.00 ap=2.92)
+epoch  8: INHIB rho=0.392 (ad=1.20 ap=0.01) | FREE rho=0.925 (ad=3.00 ap=2.93)
+epoch  9: INHIB rho=0.384 (ad=1.29 ap=0.02) | FREE rho=0.925 (ad=3.00 ap=2.92)
+=== Phase 1 ANALYTICAL (Yang 2016 Eqs. 32-35): 15 epochs x 3 s (exc=80 Hz, post=10 Hz, g_c=0.8 nS, seed 42) ===
+[resume] 9/15 epochs done; free rho=0.925 inhib rho=0.384
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_2', but also exists in the group-specific namespace with the value 20.04 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+epoch 10: INHIB rho=0.370 (ad=1.54 ap=0.03) | FREE rho=0.924 (ad=2.97 ap=2.87)
+epoch 11: INHIB rho=0.367 (ad=0.99 ap=0.02) | FREE rho=0.924 (ad=3.00 ap=2.90)
+epoch 12: INHIB rho=0.361 (ad=1.24 ap=0.03) | FREE rho=0.925 (ad=3.00 ap=2.93)
+epoch 13: INHIB rho=0.341 (ad=1.85 ap=0.03) | FREE rho=0.926 (ad=3.00 ap=2.96)
+epoch 14: INHIB rho=0.336 (ad=1.15 ap=0.02) | FREE rho=0.924 (ad=3.00 ap=2.91)
+epoch 15: INHIB rho=0.329 (ad=1.34 ap=0.01) | FREE rho=0.924 (ad=3.00 ap=2.89)
+
+--- Final ---
+  Free branch (1):      rho=0.924  w=2.771
+  Inhibited branch (0): rho=0.329  w=0.986
+  Ratio (free/inhib):   2.81
+  PASS criteria: free rho>0.7 -> True ; inhibited rho<=0.5 -> True
+  STEP 2c: PASS
+  Wrote D:\minsu\Thalamocortical_Gating_Project\figures\analytical_plasticity_trajectory.png
