@@ -3,6 +3,18 @@
 *2026-11-04. Covers everything up to commit `504daac` plus the Yang Fig. 2 / Supp. Fig. 1
 notebook. Evidence for every claim is in the file named beside it.*
 
+> **Update 2026-11-11** (`docs/reports/PLAN_robustness.md`, Step 1–3a).
+> - Canonical VIP→SOM weight is now ×0.25. All checks were re-run on it: R2 20/20; R3 has no
+>   knife-edge at ±25% and its weakest S_learn rises from 0.51 to 0.64; R5 19/19; Yang Fig. 7b
+>   regimes hold. A/B conclusions are unchanged.
+> - G2 (branch specificity): MD→VIP must respect the channel; VIP→SOM tolerates ≈ 7.5% and
+>   SOM→dendrite 20% cross-talk.
+> - Zhang's SOM→VIP is tolerated when weak or within-channel; PV→PV is inert.
+> - G4 (scale): a 20-cell network with Zhang's E→all recurrence keeps gating and learning up
+>   to a stability limit. It then fails abruptly, as the inactive channel's VIP ignites.
+>   Step 3b: MD from a PFC↔MD rate loop works. A self-sustaining loop needs competition,
+>   ≤ 5% loop cross-talk and weak non-context E→MD feedback.
+>
 > **Update 2026-11-10** (`docs/reports/PLAN_robustness.md`, Results).
 > - **Later on 2026-11-10: canonical model changed again** (Yang synapse + noisy SOM baseline +
 >   bAP calcium ×0.2; see PLAN_robustness.md and `docs/reports/PAPER_COMPARISON.md`). This

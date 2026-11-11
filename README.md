@@ -1,7 +1,10 @@
 # Thalamocortical Gating & Cognitive Flexibility Model
 
-> **Status 2026-11-10:** canonical model = Yang's NMDA-plastic synapse + fluctuation-driven
-> SOM baseline + bAP calcium ×0.2 (`model/context_circuit.py` defaults). Comparison with both
+> **Status 2026-11-11:** canonical model = Yang's NMDA-plastic synapse + fluctuation-driven
+> SOM baseline + bAP calcium ×0.2 + VIP→SOM ×0.25 (`model/context_circuit.py` defaults).
+> All robustness checks were re-run on it: 19/19 tests, 20/20 seeds, no knife-edge at ±25%.
+> A 20-cell recurrent network (`model/network_circuit.py`, `experiments/network_test.py`)
+> keeps gating up to a recurrence limit set by network stability. Comparison with both
 > papers: `docs/reports/PAPER_COMPARISON.md`. Robustness and A/B results:
 > `docs/reports/PLAN_robustness.md`. Regression tests: `tests/test_replication.py [--slow]`.
 > Earlier assessment: `docs/reports/MODEL_STATUS_2026-11-04.md`. Yang Fig. 2 and Supp. Fig. 1 can be
@@ -262,7 +265,7 @@ outputs are measured, not estimated.
 python experiments/print_network_summary.py
 ```
 
-**2. Replication tests** (canonical model, 2026-11-10) — one command, PASS/FAIL per check.
+**2. Replication tests** (canonical model, 2026-11-11: 19/19 with `--slow`) — one command, PASS/FAIL per check.
 
 ```bash
 python -I tests/test_replication.py            # fast tier, ~1 min on 8 cores

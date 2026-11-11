@@ -17,8 +17,9 @@ files named in it.
   V4  Zhang 2025 wiring check: interneuron rates vs MD rate (sign and monotonicity of the
       MD -> VIP -| SOM and MD -> PV arms). Zhang's model is a trained rate RNN that gives
       wiring, not rates, so this is qualitative.
-Run:  <py> -I experiments/paper_comparison.py run [n_workers]
-      <py> -I experiments/paper_comparison.py table
+Run:  <py> -I experiments/paper_comparison.py run [n_workers] [vip1]
+      <py> -I experiments/paper_comparison.py table [vip1]
+      (vip1: VIP->SOM x1, reproduces the table committed before 2026-11-11)
 Out:  results/current/paper_comparison.json, figures/paper_comparison_v2.png,
       docs/reports/PAPER_COMPARISON.md (table)
 """
@@ -27,7 +28,9 @@ import numpy as np
 from concurrent.futures import ProcessPoolExecutor, as_completed
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT, os.path.join(PROOT, 'experiments')]
-OUT = os.path.join(PROOT, 'results', 'current', 'paper_comparison.json')
+VIP1 = 'vip1' in sys.argv[2:]   # argument 'vip1': VIP->SOM x1, the table committed before 2026-11-11
+VSCALE = 1.0 if VIP1 else None
+OUT = os.path.join(PROOT, 'results', 'current', 'paper_comparison' + ('_vip1' if VIP1 else '') + '.json')
 RATES = [2, 5, 10, 15, 20, 30, 40, 60, 80, 100, 150]
 SOM_SCALES = [0.6, 1.0, 1.6]       # scale of the SOM drive (inhibited branch): low / default / high
 SEEDS = [42, 43, 44]
@@ -42,7 +45,7 @@ def som_kw(scale):
     return kw
 
 
-def _v2(rate, scale, seed):
+def _v2(rate, scale, seed, vip2som_scale=None):
     from brian2 import prefs
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
@@ -50,7 +53,7 @@ def _v2(rate, scale, seed):
     from context_circuit import yang_synapse_update
     t0 = time.time()
     tr = run_context_protocol([0], T=T_MEAS, input_mode='always', exc_rate=float(rate), plastic=False,
-                              seed_val=seed, **som_kw(scale))['traj'][0]
+                              vip2som_scale=vip2som_scale, seed_val=seed, **som_kw(scale))['traj'][0]
     ykw = dict(sigma=float(pp['sigma']), tau=float(pp['tau']), gamma_d=float(pp['gamma_d']),
                gamma_p=float(pp['gamma_p']), w0=float(pp['w0']), w1=float(pp['w1']), rho_star=float(pp['rhoStar']))
     f = T_PROTO / T_MEAS
@@ -63,11 +66,12 @@ def _v2(rate, scale, seed):
     return out
 
 
-def _v4(md, seed):
+def _v4(md, seed, vip2som_scale=None):
+    """vip2som_scale None = canonical (x0.25); 1.0 = the pre-2026-11-11 table."""
     from brian2 import prefs
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol
-    tr = run_context_protocol([0], T=3.0, input_mode='always', md_on_rate=float(md), plastic=False,
+    tr = run_context_protocol([0], T=3.0, input_mode='always', md_on_rate=float(md), plastic=False, vip2som_scale=vip2som_scale,
                               seed_val=seed, **som_kw(1.0))['traj'][0]
     return dict(kind='v4', md=md, seed=seed, som_on=tr['som0_hz'], som_off=tr['som1_hz'],
                 vip_on=tr['vip0_hz'], vip_off=tr['vip1_hz'], pv=tr['pv_hz'])
@@ -81,7 +85,7 @@ def run(nw):
     J = [j for j in J if '_'.join(map(str, j)) not in done]
     print(f'{len(J)} jobs, {nw} workers', flush=True)
     with ProcessPoolExecutor(max_workers=nw, max_tasks_per_child=1) as ex:
-        futs = {(ex.submit(_v2, *j[1:]) if j[0] == 'v2' else ex.submit(_v4, *j[1:])): j for j in J}
+        futs = {(ex.submit(_v2, *j[1:], vip2som_scale=VSCALE) if j[0] == 'v2' else ex.submit(_v4, *j[1:], vip2som_scale=VSCALE)): j for j in J}
         for fu in as_completed(futs):
             j = futs[fu]
             try:
@@ -159,14 +163,14 @@ def plot(curves):
     ax.legend(fontsize=8, frameon=False)
     ax.spines[['top', 'right']].set_visible(False)
     fig.tight_layout()
-    fp = os.path.join(PROOT, 'figures', 'paper_comparison_v2.png')
+    fp = os.path.join(PROOT, 'figures', 'paper_comparison_v2' + ('_vip1' if VIP1 else '') + '.png')
     fig.savefig(fp, dpi=150, facecolor='white')
     print('saved', fp)
 
 
 if __name__ == '__main__':
     if sys.argv[1] == 'run':
-        run(int(sys.argv[2]) if len(sys.argv) > 2 else 11)
+        run(int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2].isdigit() else 11)
     else:
         d = json.load(open(OUT))
         cv = analyse_v2(d)

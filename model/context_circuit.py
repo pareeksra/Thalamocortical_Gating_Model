@@ -41,7 +41,7 @@ from brian2 import (Network, NeuronGroup, PoissonGroup, Synapses, SpikeMonitor, 
 
 from parameters import params, plasticity_params, pv_params, som_params, vip_params, md_params
 from equations import (attach_rho_clipper, make_eqs_synapse_plasticity, eqs_soma, eqs_dend,
-                       eqs_pv, eqs_som, eqs_vip, eqs_synapse_plasticity, on_pre_plasticity)
+                       eqs_pv, eqs_som, eqs_vip, eqs_vip_inh, eqs_synapse_plasticity, on_pre_plasticity)
 from circuit_helpers import add_compiled_coupling, som_initial_voltages
 from src.v2.plasticity import yang_synapse_update
 
@@ -60,6 +60,7 @@ BALANCED_SOMA_G_PV2SOMA = 0.1 * nS
 # Fluctuation-driven SOM baseline (2026-11-10, experiments/som_baseline_fix.py): sub-rheobase
 # bias (rheobase 20 pA) + 60 Hz x 2 nS Poisson excitation per SOM cell -> ~30 Hz, the same
 # rate as the bias-only 21.32 pA, but the rate depends smoothly on each drive parameter.
+VIP2SOM_SCALE_CANON = 0.25   # canonical VIP->SOM factor (2026-11-10, see vip2som_scale)
 SOM_NOISY_KW = dict(som_bias_pA=6.0, som_bg_E_hz=60.0, som_bg_nS=2.0)
 
 
@@ -83,7 +84,9 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                          nmda_plastic=None, synapse='yang', stim=None, md_vip_frac=None, p_vip2som_cross=None,
                          md2som_frac=0.0, md2som_nS=0.5,
                          som_bg_E_hz=None, som_bg_I_hz=0.0, som_bg_nS=None, som_baseline=None,
-                         bap_ca_scale=None):
+                         bap_ca_scale=None, som2dend_cross=0.0,
+                         som2vip_nS=0.0, p_som2vip=0.5, som2vip_wiring='uniform', pv2pv_nS=0.0, p_pv2pv=0.5,
+                         vip2som_scale=None):
     """Run the analytical-plasticity epoch loop under a context schedule.
 
     schedule : list of ints (0 or 1) -- the active context for each T-second epoch.
@@ -125,6 +128,17 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                     channel). Weight scaled by 0.5/q so total control drive is constant.
     p_vip2som_cross VIP_k -> SOM_j (j != k) connection probability; VIP->SOM weight scaled
                     by p_own/(p_own + p_cross) so each SOM's total VIP inhibition is constant.
+    som2dend_cross  x in [0, 0.5] (2026-11-10, experiments/specificity_test.py): SOM_k contacts
+                    its own branch with probability p_som2dend_spike*(1-x) and the other branch
+                    with p_som2dend_spike*x, so each SOM cell's and each branch's expected
+                    synapse count is unchanged; 0 = branch-specific (default), 0.5 = uniform.
+    Zhang 2025 wiring absent from the canonical model (2026-11-10, experiments/zhang_wiring_test.py;
+    all off by default):
+    som2vip_nS      SOM -> VIP GABA weight (nS); VIP then uses eqs_vip_inh (tauGABA_vip 20 ms).
+    p_som2vip       its connection probability.
+    som2vip_wiring  'uniform' (every SOM -> every VIP channel), 'own' (SOM_k -> VIP_k: mutual
+                    inhibition inside a channel) or 'cross' (SOM_k -> VIP_j, j != k).
+    pv2pv_nS        PV -> PV GABA weight (nS), probability p_pv2pv, no self-connections.
     md2som_frac     fraction of the OTHER channel's SOM cells that MD_k excites directly
                     (Yang's scheme 2), weight md2som_nS, probability p_md2vip.
     Custom wiring draws from a dedicated RNG (default_rng(20000 + seed)).
@@ -143,6 +157,13 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                     and every result committed before 2026-11-10): peak = theta_d, so bAPs
                     alone depress idle synapses over minutes (hidden by 3-s epochs).
                     param_overrides['bAP_Ca_scale'] is equivalent.
+    vip2som_scale   VIP -> SOM weight factor on gGABA_som (3 nS) (2026-11-10, step 1 of
+                    PLAN_robustness.md). 0.25 (CANONICAL with the noisy SOM baseline): own
+                    SOM still silenced (0.5 Hz), S_learn unchanged (0.93), and VIP->SOM
+                    cross-talk of 11% tolerated (x1: fails at 11%;
+                    experiments/specificity_test.py). 1.0 otherwise, and for every result
+                    produced before this change (scripts pin vip2som_scale=1.0).
+                    An explicit param_overrides['gGABA_som'] is used as given (not scaled).
     som_bg_E_hz / som_bg_I_hz / som_bg_nS  independent Poisson AMPA (E) and GABA (I)
                     background onto every SOM cell (one aggregate source each, weight
                     som_bg_nS). With a sub-rheobase som_bias_pA this makes SOM's baseline
@@ -185,6 +206,10 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         som_baseline = 'noisy' if synapse == 'yang' else 'bias'
     if som_baseline not in ('noisy', 'bias'):
         raise ValueError(f"som_baseline must be 'noisy' or 'bias', got {som_baseline!r}")
+    if vip2som_scale is None:
+        vip2som_scale = VIP2SOM_SCALE_CANON if som_baseline == 'noisy' else 1.0
+    if not (param_overrides and 'gGABA_som' in param_overrides):
+        p['gGABA_som'] = p['gGABA_som'] * float(vip2som_scale)
     som_pre = SOM_NOISY_KW if som_baseline == 'noisy' else dict(som_bias_pA=21.32, som_bg_E_hz=0.0, som_bg_nS=0.0)
     som_bias_pA = som_pre['som_bias_pA'] if som_bias_pA is None else som_bias_pA
     som_bg_E_hz = som_pre['som_bg_E_hz'] if som_bg_E_hz is None else som_bg_E_hz
@@ -252,7 +277,7 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                 s_bg_som = Synapses(BG_som, SOM, on_pre=f'{tgt}_post += som_bg_w', namespace=p)
                 s_bg_som.connect(j='i')
                 net.add([BG_som, s_bg_som])
-    VIP = NeuronGroup(2 * n_vip, eqs_vip, threshold='V>vThres_vip', reset='V=vReset_vip',
+    VIP = NeuronGroup(2 * n_vip, eqs_vip_inh if som2vip_nS > 0 else eqs_vip, threshold='V>vThres_vip', reset='V=vReset_vip',
                       refractory=p['refrac_vip'], method='euler', namespace=p)
     VIP.V = p['vRest_vip']
     MD = PoissonGroup(2 * n_md, rates=0 * Hz)
@@ -300,12 +325,34 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
         s_md2som.connect(i=np.array(ii, int), j=np.array(jj, int))
         net.add(s_md2som)
     s_som2dend = Synapses(SOM, Dend, on_pre='gTotGABA_post+=gGABA_dend_eff', namespace=p)
-    s_som2dend.connect(condition='i // n_som_ch == j', p=p['p_som2dend_spike'])
+    if not som2dend_cross:
+        s_som2dend.connect(condition='i // n_som_ch == j', p=p['p_som2dend_spike'])
+    else:
+        x = float(som2dend_cross); ps = p['p_som2dend_spike']
+        P = np.where((np.arange(2 * n_som) // n_som)[:, None] == np.arange(2)[None, :], ps * (1 - x), ps * x)
+        ii, jj = np.nonzero(wrng.random(P.shape) < P)
+        s_som2dend.connect(i=ii, j=jj)
     s_pv2soma = Synapses(PV, Soma, on_pre='gTotGABA_post+=gGABA_pv2soma', namespace=p)
     s_pv2soma.connect(p=p['p_pv2soma'])
     s_som2pv = Synapses(SOM, PV, on_pre='gTotGABA_post+=gGABA_pv', namespace=p)
     s_som2pv.connect(p=p['p_som2pv'])
     net.add([s_md2pv, s_md2vip, s_vip2som, s_som2dend, s_pv2soma, s_som2pv])
+    if som2vip_nS > 0:   # Zhang 2025: VIP <- SOM
+        p['som2vip_w'] = som2vip_nS * nS
+        s_som2vip = Synapses(SOM, VIP, on_pre='gTotGABA_post+=som2vip_w', namespace=p)
+        ch_s = np.arange(2 * n_som) // n_som; ch_v = np.arange(2 * n_vip) // n_vip
+        same = ch_s[:, None] == ch_v[None, :]
+        allow = {'uniform': np.ones_like(same), 'own': same, 'cross': ~same}[som2vip_wiring]
+        ii, jj = np.nonzero(allow & (wrng.random(same.shape) < p_som2vip))
+        s_som2vip.connect(i=ii, j=jj)
+        net.add(s_som2vip)
+    if pv2pv_nS > 0:     # Zhang 2025: PV <- PV
+        p['pv2pv_w'] = pv2pv_nS * nS
+        s_pv2pv = Synapses(PV, PV, on_pre='gTotGABA_post+=pv2pv_w', namespace=p)
+        M = wrng.random((n_pv, n_pv)) < p_pv2pv; np.fill_diagonal(M, False)
+        ii, jj = np.nonzero(M)
+        s_pv2pv.connect(i=ii, j=jj)
+        net.add(s_pv2pv)
 
     acc_eqs = '\nad_acc : second\nap_acc : second\n'
     accumulate = ('ad_acc = ad_acc + int(c_total > theta_d)*dt\n'
