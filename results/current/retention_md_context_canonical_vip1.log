@@ -1,0 +1,82 @@
+40 jobs, 12 workers
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+  both       seed 45: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.927 rho1 0.927 | retention 1.000  (127.7 s)
+  inhibonly  seed 43: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.567 rho1 0.928 | retention 0.611  (127.8 s)
+  both       seed 50: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.927 rho1 0.928 | retention 1.000  (127.9 s)
+  both       seed 48: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.928 rho1 0.928 | retention 1.000  (127.8 s)
+  inhibonly  seed 42: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.395 rho1 0.928 | retention 0.425  (127.9 s)
+  both       seed 51: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.927 rho1 0.928 | retention 1.000  (128.5 s)
+  both       seed 47: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.928 rho1 0.927 | retention 1.000  (128.8 s)
+  both       seed 43: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.927 rho1 0.928 | retention 1.000  (128.7 s)
+  both       seed 46: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.928 rho1 0.927 | retention 1.000  (128.8 s)
+  both       seed 44: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.928 rho1 0.928 | retention 1.000  (129.3 s)
+  both       seed 42: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.928 rho1 0.928 | retention 1.000  (130.7 s)
+  both       seed 49: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.927 rho1 0.927 | retention 1.000  (131.3 s)
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+  inhibonly  seed 44: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.396 rho1 0.928 | retention 0.427  (130.8 s)
+  inhibonly  seed 51: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.902 rho1 0.928 | retention 0.973  (130.6 s)
+  inhibonly  seed 47: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.927 rho1 0.927 | retention 0.999  (131.6 s)
+  inhibonly  seed 46: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.571 rho1 0.927 | retention 0.615  (131.7 s)
+  inhibonly  seed 50: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.927 rho1 0.928 | retention 0.999  (131.3 s)
+  inputonly  seed 43: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.927 rho1 0.928 | retention 1.000  (131.4 s)
+  inhibonly  seed 45: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.388 rho1 0.927 | retention 0.418  (133.0 s)
+  inhibonly  seed 48: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.925 rho1 0.928 | retention 0.998  (132.9 s)
+  inputonly  seed 42: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.928 rho1 0.928 | retention 1.000  (132.3 s)
+  inputonly  seed 44: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.928 rho1 0.928 | retention 1.000  (130.7 s)
+  inhibonly  seed 49: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.401 rho1 0.927 | retention 0.432  (133.1 s)
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+  inputonly  seed 45: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.927 rho1 0.927 | retention 1.000  (132.8 s)
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+  inputonly  seed 46: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.928 rho1 0.927 | retention 1.000  (131.1 s)
+  neither    seed 42: A-end rho0 0.928 rho1 0.927 | B-end rho0 0.927 rho1 0.928 | retention 1.000  (129.1 s)
+  inputonly  seed 47: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.928 rho1 0.927 | retention 1.000  (130.5 s)
+  inputonly  seed 50: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.927 rho1 0.928 | retention 1.000  (129.8 s)
+  inputonly  seed 48: A-end rho0 0.928 rho1 0.333 | B-end rho0 0.928 rho1 0.928 | retention 1.000  (130.3 s)
+  inputonly  seed 49: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.927 rho1 0.927 | retention 1.000  (131.5 s)
+  inputonly  seed 51: A-end rho0 0.927 rho1 0.333 | B-end rho0 0.927 rho1 0.928 | retention 1.000  (130.8 s)
+  neither    seed 45: A-end rho0 0.927 rho1 0.928 | B-end rho0 0.928 rho1 0.927 | retention 1.000  (130.6 s)
+  neither    seed 44: A-end rho0 0.928 rho1 0.928 | B-end rho0 0.928 rho1 0.928 | retention 1.000  (130.5 s)
+  neither    seed 43: A-end rho0 0.927 rho1 0.928 | B-end rho0 0.927 rho1 0.928 | retention 1.000  (131.1 s)
+  neither    seed 46: A-end rho0 0.928 rho1 0.927 | B-end rho0 0.928 rho1 0.927 | retention 1.000  (131.1 s)
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+  neither    seed 47: A-end rho0 0.928 rho1 0.928 | B-end rho0 0.927 rho1 0.927 | retention 1.000  (130.6 s)
+  neither    seed 50: A-end rho0 0.927 rho1 0.928 | B-end rho0 0.928 rho1 0.928 | retention 1.000  (71.3 s)
+  neither    seed 48: A-end rho0 0.928 rho1 0.927 | B-end rho0 0.927 rho1 0.928 | retention 1.000  (71.5 s)
+  neither    seed 51: A-end rho0 0.927 rho1 0.927 | B-end rho0 0.927 rho1 0.928 | retention 1.000  (71.5 s)
+  neither    seed 49: A-end rho0 0.927 rho1 0.927 | B-end rho0 0.928 rho1 0.927 | retention 1.000  (72.9 s)
+done

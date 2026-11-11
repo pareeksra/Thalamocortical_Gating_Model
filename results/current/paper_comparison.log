@@ -1,4 +1,4 @@
-120 jobs, 12 workers
+120 jobs, 11 workers
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
@@ -10,19 +10,18 @@ WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 5, 0.6, 43) {'rate': 5, 'scale': 0.6, 'som': [0.16666666666666669, 13.175], 'dw0': -0.0, 'ad0': 0.001, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 74.8}
+('v2', 2, 0.6, 44) {'rate': 2, 'scale': 0.6, 'som': [0.15, 13.393333333333334], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 75.6}
+('v2', 2, 1.0, 44) {'rate': 2, 'scale': 1.0, 'som': [0.6716666666666666, 30.813333333333333], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 75.9}
+('v2', 5, 0.6, 42) {'rate': 5, 'scale': 0.6, 'som': [0.058333333333333334, 13.456666666666667], 'dw0': -0.0, 'ad0': 0.001, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.8}
+('v2', 2, 0.6, 42) {'rate': 2, 'scale': 0.6, 'som': [0.058333333333333334, 13.456666666666667], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.5}
+('v2', 2, 0.6, 43) {'rate': 2, 'scale': 0.6, 'som': [0.16666666666666669, 13.175], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.1}
+('v2', 2, 1.0, 42) {'rate': 2, 'scale': 1.0, 'som': [0.31333333333333335, 31.021666666666665], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.7}
+('v2', 2, 1.6, 43) {'rate': 2, 'scale': 1.6, 'som': [2.6516666666666664, 59.751666666666665], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.5}
+('v2', 2, 1.0, 43) {'rate': 2, 'scale': 1.0, 'som': [0.6766666666666666, 30.438333333333333], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.7}
+('v2', 2, 1.6, 44) {'rate': 2, 'scale': 1.6, 'som': [2.54, 60.15333333333333], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 78.0}
+('v2', 2, 1.6, 42) {'rate': 2, 'scale': 1.6, 'som': [1.1233333333333333, 60.376666666666665], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 78.1}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 5, 0.6, 43) {'rate': 5, 'scale': 0.6, 'som': [0.008333333333333333, 13.175], 'dw0': -0.0, 'ad0': 0.001, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 75.5}
-('v2', 2, 1.0, 43) {'rate': 2, 'scale': 1.0, 'som': [0.03, 30.438333333333333], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.0}
-('v2', 2, 0.6, 44) {'rate': 2, 'scale': 0.6, 'som': [0.003333333333333333, 13.393333333333334], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.7}
-('v2', 5, 0.6, 42) {'rate': 5, 'scale': 0.6, 'som': [0.0016666666666666666, 13.456666666666667], 'dw0': -0.0, 'ad0': 0.001, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.9}
-('v2', 5, 0.6, 44) {'rate': 5, 'scale': 0.6, 'som': [0.003333333333333333, 13.393333333333334], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.9}
-('v2', 2, 1.6, 43) {'rate': 2, 'scale': 1.6, 'som': [0.08166666666666667, 59.751666666666665], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.2}
-('v2', 2, 0.6, 43) {'rate': 2, 'scale': 0.6, 'som': [0.008333333333333333, 13.175], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.8}
-('v2', 2, 1.0, 42) {'rate': 2, 'scale': 1.0, 'som': [0.013333333333333332, 31.021666666666665], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.8}
-('v2', 2, 1.0, 44) {'rate': 2, 'scale': 1.0, 'som': [0.02, 30.813333333333333], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.9}
-('v2', 2, 1.6, 42) {'rate': 2, 'scale': 1.6, 'som': [0.043333333333333335, 60.376666666666665], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 78.1}
-('v2', 2, 1.6, 44) {'rate': 2, 'scale': 1.6, 'som': [0.09, 60.15333333333333], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 78.1}
-('v2', 2, 0.6, 42) {'rate': 2, 'scale': 0.6, 'som': [0.0016666666666666666, 13.456666666666667], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 79.3}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
@@ -33,219 +32,220 @@ WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 5, 0.6, 44) {'rate': 5, 'scale': 0.6, 'som': [0.15, 13.393333333333334], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 75.4}
+('v2', 5, 1.0, 42) {'rate': 5, 'scale': 1.0, 'som': [0.31333333333333335, 31.021666666666665], 'dw0': -0.0, 'ad0': 0.001, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.3}
+('v2', 5, 1.6, 42) {'rate': 5, 'scale': 1.6, 'som': [1.1233333333333333, 60.376666666666665], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 75.7}
+('v2', 5, 1.0, 43) {'rate': 5, 'scale': 1.0, 'som': [0.6766666666666666, 30.438333333333333], 'dw0': -0.0, 'ad0': 0.001, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.1}
+('v2', 10, 0.6, 44) {'rate': 10, 'scale': 0.6, 'som': [0.15, 13.393333333333334], 'dw0': -0.33, 'ad0': 0.017, 'ap0': 0.0, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 75.5}
+('v2', 10, 0.6, 42) {'rate': 10, 'scale': 0.6, 'som': [0.058333333333333334, 13.456666666666667], 'dw0': -0.413, 'ad0': 0.022, 'ap0': 0.0, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 75.9}
+('v2', 5, 1.6, 43) {'rate': 5, 'scale': 1.6, 'som': [2.6516666666666664, 59.751666666666665], 'dw0': -0.0, 'ad0': 0.001, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.4}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 10, 0.6, 43) {'rate': 10, 'scale': 0.6, 'som': [0.16666666666666669, 13.175], 'dw0': -0.367, 'ad0': 0.019, 'ap0': 0.0, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 76.1}
+('v2', 5, 1.0, 44) {'rate': 5, 'scale': 1.0, 'som': [0.6716666666666666, 30.813333333333333], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 78.1}
+('v2', 10, 1.0, 42) {'rate': 10, 'scale': 1.0, 'som': [0.31333333333333335, 31.021666666666665], 'dw0': -0.362, 'ad0': 0.019, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.8}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 5, 1.0, 43) {'rate': 5, 'scale': 1.0, 'som': [0.03, 30.438333333333333], 'dw0': -0.0, 'ad0': 0.001, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.1}
-('v2', 5, 1.0, 42) {'rate': 5, 'scale': 1.0, 'som': [0.013333333333333332, 31.021666666666665], 'dw0': -0.0, 'ad0': 0.001, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.2}
-('v2', 5, 1.0, 44) {'rate': 5, 'scale': 1.0, 'som': [0.02, 30.813333333333333], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.0}
-('v2', 5, 1.6, 44) {'rate': 5, 'scale': 1.6, 'som': [0.09, 60.15333333333333], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 75.4}
-('v2', 5, 1.6, 43) {'rate': 5, 'scale': 1.6, 'som': [0.08166666666666667, 59.751666666666665], 'dw0': -0.0, 'ad0': 0.001, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.9}
-('v2', 10, 0.6, 42) {'rate': 10, 'scale': 0.6, 'som': [0.0016666666666666666, 13.456666666666667], 'dw0': -0.438, 'ad0': 0.024, 'ap0': 0.0, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 77.9}
+('v2', 5, 1.6, 44) {'rate': 5, 'scale': 1.6, 'som': [2.54, 60.15333333333333], 'dw0': 0.0, 'ad0': 0.0, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.5}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 5, 1.6, 42) {'rate': 5, 'scale': 1.6, 'som': [0.043333333333333335, 60.376666666666665], 'dw0': -0.0, 'ad0': 0.001, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 78.9}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 10, 0.6, 43) {'rate': 10, 'scale': 0.6, 'som': [0.008333333333333333, 13.175], 'dw0': -0.394, 'ad0': 0.021, 'ap0': 0.0, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 78.3}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 10, 1.0, 44) {'rate': 10, 'scale': 1.0, 'som': [0.02, 30.813333333333333], 'dw0': -0.352, 'ad0': 0.019, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 77.8}
-('v2', 10, 1.0, 43) {'rate': 10, 'scale': 1.0, 'som': [0.03, 30.438333333333333], 'dw0': -0.387, 'ad0': 0.021, 'ap0': 0.0, 'dw1': -0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 78.4}
-('v2', 10, 0.6, 44) {'rate': 10, 'scale': 0.6, 'som': [0.003333333333333333, 13.393333333333334], 'dw0': -0.351, 'ad0': 0.019, 'ap0': 0.0, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 78.6}
-('v2', 10, 1.0, 42) {'rate': 10, 'scale': 1.0, 'som': [0.013333333333333332, 31.021666666666665], 'dw0': -0.441, 'ad0': 0.024, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 78.4}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 10, 1.0, 43) {'rate': 10, 'scale': 1.0, 'som': [0.6766666666666666, 30.438333333333333], 'dw0': -0.287, 'ad0': 0.015, 'ap0': 0.0, 'dw1': -0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 67.3}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 10, 1.0, 44) {'rate': 10, 'scale': 1.0, 'som': [0.6716666666666666, 30.813333333333333], 'dw0': -0.237, 'ad0': 0.013, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 74.7}
+('v2', 10, 1.6, 43) {'rate': 10, 'scale': 1.6, 'som': [2.6516666666666664, 59.751666666666665], 'dw0': -0.099, 'ad0': 0.008, 'ap0': 0.0, 'dw1': -0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 73.8}
+('v2', 10, 1.6, 42) {'rate': 10, 'scale': 1.6, 'som': [1.1233333333333333, 60.376666666666665], 'dw0': -0.236, 'ad0': 0.013, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 75.6}
+('v2', 15, 1.0, 44) {'rate': 15, 'scale': 1.0, 'som': [0.6716666666666666, 30.813333333333333], 'dw0': 0.273, 'ad0': 0.234, 'ap0': 0.042, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 73.7}
+('v2', 15, 1.0, 43) {'rate': 15, 'scale': 1.0, 'som': [0.6766666666666666, 30.438333333333333], 'dw0': -0.076, 'ad0': 0.206, 'ap0': 0.024, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 74.5}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 15, 1.0, 42) {'rate': 15, 'scale': 1.0, 'som': [0.31333333333333335, 31.021666666666665], 'dw0': 0.511, 'ad0': 0.33, 'ap0': 0.075, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 75.1}
+('v2', 10, 1.6, 44) {'rate': 10, 'scale': 1.6, 'som': [2.54, 60.15333333333333], 'dw0': -0.047, 'ad0': 0.006, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.4}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 10, 1.6, 42) {'rate': 10, 'scale': 1.6, 'som': [0.043333333333333335, 60.376666666666665], 'dw0': -0.446, 'ad0': 0.025, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 75.9}
-('v2', 10, 1.6, 44) {'rate': 10, 'scale': 1.6, 'som': [0.09, 60.15333333333333], 'dw0': -0.347, 'ad0': 0.018, 'ap0': 0.0, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 76.7}
+('v2', 15, 0.6, 42) {'rate': 15, 'scale': 0.6, 'som': [0.058333333333333334, 13.456666666666667], 'dw0': 0.605, 'ad0': 0.378, 'ap0': 0.094, 'dw1': -0.009, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 76.2}
+('v2', 15, 0.6, 44) {'rate': 15, 'scale': 0.6, 'som': [0.15, 13.393333333333334], 'dw0': 0.525, 'ad0': 0.327, 'ap0': 0.075, 'dw1': -0.006, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 75.9}
+('v2', 15, 0.6, 43) {'rate': 15, 'scale': 0.6, 'som': [0.16666666666666669, 13.175], 'dw0': 0.254, 'ad0': 0.295, 'ap0': 0.051, 'dw1': -0.005, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 76.2}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 15, 0.6, 43) {'rate': 15, 'scale': 0.6, 'som': [0.008333333333333333, 13.175], 'dw0': 0.514, 'ad0': 0.339, 'ap0': 0.077, 'dw1': -0.005, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 77.7}
-('v2', 10, 1.6, 43) {'rate': 10, 'scale': 1.6, 'som': [0.08166666666666667, 59.751666666666665], 'dw0': -0.394, 'ad0': 0.021, 'ap0': 0.0, 'dw1': -0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 79.1}
-('v2', 15, 0.6, 44) {'rate': 15, 'scale': 0.6, 'som': [0.003333333333333333, 13.393333333333334], 'dw0': 0.685, 'ad0': 0.376, 'ap0': 0.101, 'dw1': -0.006, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 77.0}
-('v2', 15, 0.6, 42) {'rate': 15, 'scale': 0.6, 'som': [0.0016666666666666666, 13.456666666666667], 'dw0': 0.708, 'ad0': 0.406, 'ap0': 0.111, 'dw1': -0.009, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 79.5}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 15, 1.0, 42) {'rate': 15, 'scale': 1.0, 'som': [0.013333333333333332, 31.021666666666665], 'dw0': 0.789, 'ad0': 0.419, 'ap0': 0.124, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 77.7}
-('v2', 15, 1.6, 43) {'rate': 15, 'scale': 1.6, 'som': [0.08166666666666667, 59.751666666666665], 'dw0': 0.566, 'ad0': 0.354, 'ap0': 0.085, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 76.4}
-('v2', 15, 1.0, 44) {'rate': 15, 'scale': 1.0, 'som': [0.02, 30.813333333333333], 'dw0': 0.703, 'ad0': 0.382, 'ap0': 0.104, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 77.8}
-('v2', 15, 1.0, 43) {'rate': 15, 'scale': 1.0, 'som': [0.03, 30.438333333333333], 'dw0': 0.521, 'ad0': 0.342, 'ap0': 0.079, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 77.8}
-('v2', 15, 1.6, 44) {'rate': 15, 'scale': 1.6, 'som': [0.09, 60.15333333333333], 'dw0': 0.687, 'ad0': 0.369, 'ap0': 0.099, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 78.2}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 15, 1.6, 42) {'rate': 15, 'scale': 1.6, 'som': [0.043333333333333335, 60.376666666666665], 'dw0': 0.798, 'ad0': 0.426, 'ap0': 0.127, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 79.5}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 15, 1.6, 42) {'rate': 15, 'scale': 1.6, 'som': [1.1233333333333333, 60.376666666666665], 'dw0': 0.305, 'ad0': 0.228, 'ap0': 0.042, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 78.4}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 15, 1.6, 44) {'rate': 15, 'scale': 1.6, 'som': [2.54, 60.15333333333333], 'dw0': -0.422, 'ad0': 0.088, 'ap0': 0.005, 'dw1': 0.0, 'ad1': 0.0, 'ap1': 0.0, 'wall_s': 78.0}
+('v2', 15, 1.6, 43) {'rate': 15, 'scale': 1.6, 'som': [2.6516666666666664, 59.751666666666665], 'dw0': -0.426, 'ad0': 0.079, 'ap0': 0.004, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 78.6}
+('v2', 20, 1.6, 42) {'rate': 20, 'scale': 1.6, 'som': [1.1233333333333333, 60.376666666666665], 'dw0': 1.031, 'ad0': 0.681, 'ap0': 0.254, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 75.6}
+('v2', 20, 0.6, 42) {'rate': 20, 'scale': 0.6, 'som': [0.058333333333333334, 13.456666666666667], 'dw0': 1.526, 'ad0': 0.935, 'ap0': 0.613, 'dw1': -0.29, 'ad1': 0.015, 'ap1': 0.0, 'wall_s': 78.7}
+('v2', 20, 1.6, 43) {'rate': 20, 'scale': 1.6, 'som': [2.6516666666666664, 59.751666666666665], 'dw0': 0.191, 'ad0': 0.299, 'ap0': 0.049, 'dw1': -0.0, 'ad1': 0.002, 'ap1': 0.0, 'wall_s': 76.0}
+('v2', 20, 0.6, 43) {'rate': 20, 'scale': 0.6, 'som': [0.16666666666666669, 13.175], 'dw0': 1.373, 'ad0': 0.869, 'ap0': 0.466, 'dw1': -0.135, 'ad1': 0.009, 'ap1': 0.0, 'wall_s': 78.3}
+('v2', 20, 1.0, 42) {'rate': 20, 'scale': 1.0, 'som': [0.31333333333333335, 31.021666666666665], 'dw0': 1.361, 'ad0': 0.864, 'ap0': 0.457, 'dw1': -0.0, 'ad1': 0.002, 'ap1': 0.0, 'wall_s': 77.1}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 20, 0.6, 44) {'rate': 20, 'scale': 0.6, 'som': [0.15, 13.393333333333334], 'dw0': 1.415, 'ad0': 0.892, 'ap0': 0.504, 'dw1': -0.211, 'ad1': 0.012, 'ap1': 0.0, 'wall_s': 78.6}
+('v2', 20, 1.0, 43) {'rate': 20, 'scale': 1.0, 'som': [0.6766666666666666, 30.438333333333333], 'dw0': 0.961, 'ad0': 0.656, 'ap0': 0.229, 'dw1': -0.003, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 78.4}
+('v2', 20, 1.0, 44) {'rate': 20, 'scale': 1.0, 'som': [0.6716666666666666, 30.813333333333333], 'dw0': 1.109, 'ad0': 0.742, 'ap0': 0.299, 'dw1': -0.0, 'ad1': 0.002, 'ap1': 0.0, 'wall_s': 78.7}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 20, 0.6, 42) {'rate': 20, 'scale': 0.6, 'som': [0.0016666666666666666, 13.456666666666667], 'dw0': 1.55, 'ad0': 0.955, 'ap0': 0.649, 'dw1': -0.291, 'ad1': 0.016, 'ap1': 0.0, 'wall_s': 77.5}
-('v2', 20, 0.6, 43) {'rate': 20, 'scale': 0.6, 'som': [0.008333333333333333, 13.175], 'dw0': 1.515, 'ad0': 0.929, 'ap0': 0.6, 'dw1': -0.136, 'ad1': 0.009, 'ap1': 0.0, 'wall_s': 78.6}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 20, 1.0, 42) {'rate': 20, 'scale': 1.0, 'som': [0.013333333333333332, 31.021666666666665], 'dw0': 1.551, 'ad0': 0.955, 'ap0': 0.649, 'dw1': -0.0, 'ad1': 0.002, 'ap1': 0.0, 'wall_s': 78.0}
-('v2', 20, 1.0, 43) {'rate': 20, 'scale': 1.0, 'som': [0.03, 30.438333333333333], 'dw0': 1.509, 'ad0': 0.927, 'ap0': 0.593, 'dw1': -0.003, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 77.5}
-('v2', 20, 0.6, 44) {'rate': 20, 'scale': 0.6, 'som': [0.003333333333333333, 13.393333333333334], 'dw0': 1.521, 'ad0': 0.943, 'ap0': 0.614, 'dw1': -0.214, 'ad1': 0.012, 'ap1': 0.0, 'wall_s': 78.8}
-('v2', 20, 1.6, 43) {'rate': 20, 'scale': 1.6, 'som': [0.08166666666666667, 59.751666666666665], 'dw0': 1.493, 'ad0': 0.926, 'ap0': 0.58, 'dw1': -0.0, 'ad1': 0.002, 'ap1': 0.0, 'wall_s': 76.9}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 20, 1.0, 44) {'rate': 20, 'scale': 1.0, 'som': [0.02, 30.813333333333333], 'dw0': 1.513, 'ad0': 0.941, 'ap0': 0.606, 'dw1': -0.0, 'ad1': 0.002, 'ap1': 0.0, 'wall_s': 79.6}
-('v2', 20, 1.6, 44) {'rate': 20, 'scale': 1.6, 'som': [0.09, 60.15333333333333], 'dw0': 1.461, 'ad0': 0.92, 'ap0': 0.551, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 78.1}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 20, 1.6, 42) {'rate': 20, 'scale': 1.6, 'som': [0.043333333333333335, 60.376666666666665], 'dw0': 1.538, 'ad0': 0.947, 'ap0': 0.632, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 80.0}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 30, 0.6, 42) {'rate': 30, 'scale': 0.6, 'som': [0.0016666666666666666, 13.456666666666667], 'dw0': 1.673, 'ad0': 0.993, 'ap0': 0.831, 'dw1': -0.595, 'ad1': 0.098, 'ap1': 0.002, 'wall_s': 78.9}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 30, 0.6, 43) {'rate': 30, 'scale': 0.6, 'som': [0.008333333333333333, 13.175], 'dw0': 1.669, 'ad0': 0.993, 'ap0': 0.825, 'dw1': -0.542, 'ad1': 0.04, 'ap1': 0.0, 'wall_s': 78.3}
-('v2', 30, 0.6, 44) {'rate': 30, 'scale': 0.6, 'som': [0.003333333333333333, 13.393333333333334], 'dw0': 1.669, 'ad0': 0.993, 'ap0': 0.825, 'dw1': -0.623, 'ad1': 0.07, 'ap1': 0.001, 'wall_s': 77.8}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 20, 1.6, 44) {'rate': 20, 'scale': 1.6, 'som': [2.54, 60.15333333333333], 'dw0': 0.442, 'ad0': 0.396, 'ap0': 0.084, 'dw1': -0.0, 'ad1': 0.001, 'ap1': 0.0, 'wall_s': 74.6}
+('v2', 30, 0.6, 44) {'rate': 30, 'scale': 0.6, 'som': [0.15, 13.393333333333334], 'dw0': 1.642, 'ad0': 0.988, 'ap0': 0.78, 'dw1': -0.624, 'ad1': 0.07, 'ap1': 0.001, 'wall_s': 66.3}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 30, 1.6, 44) {'rate': 30, 'scale': 1.6, 'som': [2.54, 60.15333333333333], 'dw0': 1.102, 'ad0': 0.792, 'ap0': 0.317, 'dw1': -0.002, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 65.3}
+('v2', 30, 1.0, 42) {'rate': 30, 'scale': 1.0, 'som': [0.31333333333333335, 31.021666666666665], 'dw0': 1.614, 'ad0': 0.987, 'ap0': 0.741, 'dw1': -0.087, 'ad1': 0.007, 'ap1': 0.0, 'wall_s': 68.8}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 30, 0.6, 42) {'rate': 30, 'scale': 0.6, 'som': [0.058333333333333334, 13.456666666666667], 'dw0': 1.664, 'ad0': 0.993, 'ap0': 0.816, 'dw1': -0.595, 'ad1': 0.098, 'ap1': 0.002, 'wall_s': 74.1}
+('v2', 30, 0.6, 43) {'rate': 30, 'scale': 0.6, 'som': [0.16666666666666669, 13.175], 'dw0': 1.637, 'ad0': 0.991, 'ap0': 0.775, 'dw1': -0.542, 'ad1': 0.04, 'ap1': 0.0, 'wall_s': 74.7}
+('v2', 30, 1.6, 43) {'rate': 30, 'scale': 1.6, 'som': [2.6516666666666664, 59.751666666666665], 'dw0': 0.876, 'ad0': 0.733, 'ap0': 0.236, 'dw1': -0.027, 'ad1': 0.005, 'ap1': 0.0, 'wall_s': 71.2}
+('v2', 30, 1.0, 43) {'rate': 30, 'scale': 1.0, 'som': [0.6766666666666666, 30.438333333333333], 'dw0': 1.507, 'ad0': 0.968, 'ap0': 0.618, 'dw1': -0.09, 'ad1': 0.007, 'ap1': 0.0, 'wall_s': 74.4}
+('v2', 30, 1.6, 42) {'rate': 30, 'scale': 1.6, 'som': [1.1233333333333333, 60.376666666666665], 'dw0': 1.453, 'ad0': 0.941, 'ap0': 0.557, 'dw1': -0.003, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 74.1}
+('v2', 30, 1.0, 44) {'rate': 30, 'scale': 1.0, 'som': [0.6716666666666666, 30.813333333333333], 'dw0': 1.529, 'ad0': 0.959, 'ap0': 0.631, 'dw1': -0.111, 'ad1': 0.008, 'ap1': 0.0, 'wall_s': 75.0}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 30, 1.0, 42) {'rate': 30, 'scale': 1.0, 'som': [0.013333333333333332, 31.021666666666665], 'dw0': 1.673, 'ad0': 0.993, 'ap0': 0.83, 'dw1': -0.088, 'ad1': 0.007, 'ap1': 0.0, 'wall_s': 77.7}
-('v2', 30, 1.0, 43) {'rate': 30, 'scale': 1.0, 'som': [0.03, 30.438333333333333], 'dw0': 1.667, 'ad0': 0.993, 'ap0': 0.821, 'dw1': -0.091, 'ad1': 0.007, 'ap1': 0.0, 'wall_s': 77.1}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 30, 1.0, 44) {'rate': 30, 'scale': 1.0, 'som': [0.02, 30.813333333333333], 'dw0': 1.666, 'ad0': 0.992, 'ap0': 0.82, 'dw1': -0.112, 'ad1': 0.008, 'ap1': 0.0, 'wall_s': 78.2}
-('v2', 30, 1.6, 43) {'rate': 30, 'scale': 1.6, 'som': [0.08166666666666667, 59.751666666666665], 'dw0': 1.658, 'ad0': 0.991, 'ap0': 0.805, 'dw1': -0.028, 'ad1': 0.005, 'ap1': 0.0, 'wall_s': 78.1}
+('v2', 40, 0.6, 42) {'rate': 40, 'scale': 0.6, 'som': [0.058333333333333334, 13.456666666666667], 'dw0': 1.708, 'ad0': 0.997, 'ap0': 0.896, 'dw1': -0.48, 'ad1': 0.24, 'ap1': 0.011, 'wall_s': 74.2}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 30, 1.6, 42) {'rate': 30, 'scale': 1.6, 'som': [0.043333333333333335, 60.376666666666665], 'dw0': 1.669, 'ad0': 0.993, 'ap0': 0.824, 'dw1': -0.003, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 79.4}
-('v2', 30, 1.6, 44) {'rate': 30, 'scale': 1.6, 'som': [0.09, 60.15333333333333], 'dw0': 1.657, 'ad0': 0.991, 'ap0': 0.804, 'dw1': -0.003, 'ad1': 0.003, 'ap1': 0.0, 'wall_s': 79.2}
-('v2', 40, 1.0, 42) {'rate': 40, 'scale': 1.0, 'som': [0.013333333333333332, 31.021666666666665], 'dw0': 1.711, 'ad0': 0.997, 'ap0': 0.9, 'dw1': -0.381, 'ad1': 0.02, 'ap1': 0.0, 'wall_s': 76.5}
-('v2', 40, 0.6, 42) {'rate': 40, 'scale': 0.6, 'som': [0.0016666666666666666, 13.456666666666667], 'dw0': 1.711, 'ad0': 0.997, 'ap0': 0.901, 'dw1': -0.48, 'ad1': 0.24, 'ap1': 0.011, 'wall_s': 79.0}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 40, 0.6, 43) {'rate': 40, 'scale': 0.6, 'som': [0.008333333333333333, 13.175], 'dw0': 1.707, 'ad0': 0.996, 'ap0': 0.894, 'dw1': -0.666, 'ad1': 0.105, 'ap1': 0.001, 'wall_s': 78.5}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 40, 0.6, 44) {'rate': 40, 'scale': 0.6, 'som': [0.003333333333333333, 13.393333333333334], 'dw0': 1.708, 'ad0': 0.997, 'ap0': 0.897, 'dw1': -0.549, 'ad1': 0.166, 'ap1': 0.006, 'wall_s': 78.5}
-('v2', 40, 1.0, 44) {'rate': 40, 'scale': 1.0, 'som': [0.02, 30.813333333333333], 'dw0': 1.708, 'ad0': 0.997, 'ap0': 0.896, 'dw1': -0.357, 'ad1': 0.019, 'ap1': 0.0, 'wall_s': 78.5}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 40, 1.0, 43) {'rate': 40, 'scale': 1.0, 'som': [0.03, 30.438333333333333], 'dw0': 1.707, 'ad0': 0.995, 'ap0': 0.893, 'dw1': -0.256, 'ad1': 0.014, 'ap1': 0.0, 'wall_s': 79.1}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 40, 1.0, 43) {'rate': 40, 'scale': 1.0, 'som': [0.6766666666666666, 30.438333333333333], 'dw0': 1.657, 'ad0': 0.991, 'ap0': 0.805, 'dw1': -0.256, 'ad1': 0.014, 'ap1': 0.0, 'wall_s': 65.5}
+('v2', 40, 0.6, 43) {'rate': 40, 'scale': 0.6, 'som': [0.16666666666666669, 13.175], 'dw0': 1.705, 'ad0': 0.996, 'ap0': 0.888, 'dw1': -0.666, 'ad1': 0.105, 'ap1': 0.001, 'wall_s': 73.6}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 40, 1.0, 42) {'rate': 40, 'scale': 1.0, 'som': [0.31333333333333335, 31.021666666666665], 'dw0': 1.695, 'ad0': 0.995, 'ap0': 0.87, 'dw1': -0.38, 'ad1': 0.02, 'ap1': 0.0, 'wall_s': 72.6}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 40, 0.6, 44) {'rate': 40, 'scale': 0.6, 'som': [0.15, 13.393333333333334], 'dw0': 1.703, 'ad0': 0.997, 'ap0': 0.887, 'dw1': -0.549, 'ad1': 0.166, 'ap1': 0.006, 'wall_s': 74.2}
+('v2', 40, 1.6, 42) {'rate': 40, 'scale': 1.6, 'som': [1.1233333333333333, 60.376666666666665], 'dw0': 1.614, 'ad0': 0.985, 'ap0': 0.74, 'dw1': -0.079, 'ad1': 0.007, 'ap1': 0.0, 'wall_s': 70.4}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 40, 1.6, 43) {'rate': 40, 'scale': 1.6, 'som': [2.6516666666666664, 59.751666666666665], 'dw0': 1.298, 'ad0': 0.893, 'ap0': 0.439, 'dw1': -0.112, 'ad1': 0.008, 'ap1': 0.0, 'wall_s': 72.8}
+('v2', 40, 1.0, 44) {'rate': 40, 'scale': 1.0, 'som': [0.6716666666666666, 30.813333333333333], 'dw0': 1.658, 'ad0': 0.989, 'ap0': 0.804, 'dw1': -0.355, 'ad1': 0.019, 'ap1': 0.0, 'wall_s': 74.3}
+('v2', 60, 0.6, 44) {'rate': 60, 'scale': 0.6, 'som': [0.15, 13.393333333333334], 'dw0': 1.74, 'ad0': 0.998, 'ap0': 0.965, 'dw1': -0.357, 'ad1': 0.4, 'ap1': 0.027, 'wall_s': 70.2}
+('v2', 40, 1.6, 44) {'rate': 40, 'scale': 1.6, 'som': [2.54, 60.15333333333333], 'dw0': 1.412, 'ad0': 0.914, 'ap0': 0.514, 'dw1': -0.054, 'ad1': 0.006, 'ap1': 0.0, 'wall_s': 73.2}
+('v2', 60, 0.6, 42) {'rate': 60, 'scale': 0.6, 'som': [0.058333333333333334, 13.456666666666667], 'dw0': 1.741, 'ad0': 0.998, 'ap0': 0.965, 'dw1': -0.315, 'ad1': 0.544, 'ap1': 0.041, 'wall_s': 73.0}
+('v2', 60, 0.6, 43) {'rate': 60, 'scale': 0.6, 'som': [0.16666666666666669, 13.175], 'dw0': 1.741, 'ad0': 0.997, 'ap0': 0.965, 'dw1': -0.559, 'ad1': 0.279, 'ap1': 0.009, 'wall_s': 73.9}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 40, 1.6, 42) {'rate': 40, 'scale': 1.6, 'som': [0.043333333333333335, 60.376666666666665], 'dw0': 1.71, 'ad0': 0.996, 'ap0': 0.899, 'dw1': -0.08, 'ad1': 0.007, 'ap1': 0.0, 'wall_s': 77.2}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 40, 1.6, 43) {'rate': 40, 'scale': 1.6, 'som': [0.08166666666666667, 59.751666666666665], 'dw0': 1.703, 'ad0': 0.995, 'ap0': 0.885, 'dw1': -0.114, 'ad1': 0.008, 'ap1': 0.0, 'wall_s': 78.8}
-('v2', 60, 0.6, 42) {'rate': 60, 'scale': 0.6, 'som': [0.0016666666666666666, 13.456666666666667], 'dw0': 1.741, 'ad0': 0.998, 'ap0': 0.967, 'dw1': -0.314, 'ad1': 0.544, 'ap1': 0.041, 'wall_s': 77.9}
-('v2', 40, 1.6, 44) {'rate': 40, 'scale': 1.6, 'som': [0.09, 60.15333333333333], 'dw0': 1.704, 'ad0': 0.996, 'ap0': 0.888, 'dw1': -0.056, 'ad1': 0.006, 'ap1': 0.0, 'wall_s': 79.1}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 60, 1.0, 42) {'rate': 60, 'scale': 1.0, 'som': [0.013333333333333332, 31.021666666666665], 'dw0': 1.741, 'ad0': 0.998, 'ap0': 0.966, 'dw1': -0.683, 'ad1': 0.069, 'ap1': 0.0, 'wall_s': 77.3}
-('v2', 60, 0.6, 43) {'rate': 60, 'scale': 0.6, 'som': [0.008333333333333333, 13.175], 'dw0': 1.74, 'ad0': 0.998, 'ap0': 0.964, 'dw1': -0.558, 'ad1': 0.279, 'ap1': 0.009, 'wall_s': 79.7}
-('v2', 60, 1.0, 44) {'rate': 60, 'scale': 1.0, 'som': [0.02, 30.813333333333333], 'dw0': 1.74, 'ad0': 0.998, 'ap0': 0.965, 'dw1': -0.547, 'ad1': 0.052, 'ap1': 0.001, 'wall_s': 77.1}
-('v2', 60, 0.6, 44) {'rate': 60, 'scale': 0.6, 'som': [0.003333333333333333, 13.393333333333334], 'dw0': 1.74, 'ad0': 0.998, 'ap0': 0.965, 'dw1': -0.357, 'ad1': 0.4, 'ap1': 0.027, 'wall_s': 79.5}
-('v2', 60, 1.0, 43) {'rate': 60, 'scale': 1.0, 'som': [0.03, 30.438333333333333], 'dw0': 1.74, 'ad0': 0.997, 'ap0': 0.963, 'dw1': -0.547, 'ad1': 0.034, 'ap1': 0.0, 'wall_s': 78.9}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 60, 1.6, 42) {'rate': 60, 'scale': 1.6, 'som': [0.043333333333333335, 60.376666666666665], 'dw0': 1.741, 'ad0': 0.997, 'ap0': 0.965, 'dw1': -0.347, 'ad1': 0.018, 'ap1': 0.0, 'wall_s': 79.2}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 60, 1.6, 44) {'rate': 60, 'scale': 1.6, 'som': [0.09, 60.15333333333333], 'dw0': 1.74, 'ad0': 0.998, 'ap0': 0.963, 'dw1': -0.309, 'ad1': 0.016, 'ap1': 0.0, 'wall_s': 77.9}
-('v2', 60, 1.6, 43) {'rate': 60, 'scale': 1.6, 'som': [0.08166666666666667, 59.751666666666665], 'dw0': 1.74, 'ad0': 0.997, 'ap0': 0.962, 'dw1': -0.341, 'ad1': 0.018, 'ap1': 0.0, 'wall_s': 78.9}
+('v2', 60, 1.0, 42) {'rate': 60, 'scale': 1.0, 'som': [0.31333333333333335, 31.021666666666665], 'dw0': 1.736, 'ad0': 0.997, 'ap0': 0.953, 'dw1': -0.683, 'ad1': 0.069, 'ap1': 0.0, 'wall_s': 67.7}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 60, 1.0, 43) {'rate': 60, 'scale': 1.0, 'som': [0.6766666666666666, 30.438333333333333], 'dw0': 1.723, 'ad0': 0.996, 'ap0': 0.924, 'dw1': -0.546, 'ad1': 0.034, 'ap1': 0.0, 'wall_s': 74.3}
+('v2', 60, 1.0, 44) {'rate': 60, 'scale': 1.0, 'som': [0.6716666666666666, 30.813333333333333], 'dw0': 1.722, 'ad0': 0.996, 'ap0': 0.924, 'dw1': -0.546, 'ad1': 0.051, 'ap1': 0.001, 'wall_s': 73.1}
+('v2', 60, 1.6, 43) {'rate': 60, 'scale': 1.6, 'som': [2.6516666666666664, 59.751666666666665], 'dw0': 1.539, 'ad0': 0.976, 'ap0': 0.652, 'dw1': -0.339, 'ad1': 0.018, 'ap1': 0.0, 'wall_s': 69.8}
+('v2', 60, 1.6, 42) {'rate': 60, 'scale': 1.6, 'som': [1.1233333333333333, 60.376666666666665], 'dw0': 1.699, 'ad0': 0.996, 'ap0': 0.878, 'dw1': -0.345, 'ad1': 0.018, 'ap1': 0.0, 'wall_s': 74.0}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 80, 0.6, 42) {'rate': 80, 'scale': 0.6, 'som': [0.058333333333333334, 13.456666666666667], 'dw0': 1.75, 'ad0': 0.998, 'ap0': 0.986, 'dw1': -0.042, 'ad1': 0.748, 'ap1': 0.091, 'wall_s': 70.9}
+('v2', 80, 1.0, 42) {'rate': 80, 'scale': 1.0, 'som': [0.31333333333333335, 31.021666666666665], 'dw0': 1.747, 'ad0': 0.997, 'ap0': 0.979, 'dw1': -0.72, 'ad1': 0.137, 'ap1': 0.0, 'wall_s': 70.0}
+('v2', 60, 1.6, 44) {'rate': 60, 'scale': 1.6, 'som': [2.54, 60.15333333333333], 'dw0': 1.569, 'ad0': 0.977, 'ap0': 0.683, 'dw1': -0.305, 'ad1': 0.016, 'ap1': 0.0, 'wall_s': 73.8}
+('v2', 80, 0.6, 43) {'rate': 80, 'scale': 0.6, 'som': [0.16666666666666669, 13.175], 'dw0': 1.75, 'ad0': 0.998, 'ap0': 0.986, 'dw1': -0.488, 'ad1': 0.449, 'ap1': 0.02, 'wall_s': 74.1}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 80, 0.6, 42) {'rate': 80, 'scale': 0.6, 'som': [0.0016666666666666666, 13.456666666666667], 'dw0': 1.75, 'ad0': 0.998, 'ap0': 0.988, 'dw1': -0.041, 'ad1': 0.748, 'ap1': 0.091, 'wall_s': 79.5}
-('v2', 80, 0.6, 43) {'rate': 80, 'scale': 0.6, 'som': [0.008333333333333333, 13.175], 'dw0': 1.749, 'ad0': 0.998, 'ap0': 0.986, 'dw1': -0.488, 'ad1': 0.449, 'ap1': 0.02, 'wall_s': 76.2}
+('v2', 80, 0.6, 44) {'rate': 80, 'scale': 0.6, 'som': [0.15, 13.393333333333334], 'dw0': 1.751, 'ad0': 0.998, 'ap0': 0.99, 'dw1': -0.198, 'ad1': 0.599, 'ap1': 0.057, 'wall_s': 74.3}
+('v2', 80, 1.0, 43) {'rate': 80, 'scale': 1.0, 'som': [0.6766666666666666, 30.438333333333333], 'dw0': 1.742, 'ad0': 0.997, 'ap0': 0.967, 'dw1': -0.665, 'ad1': 0.06, 'ap1': 0.0, 'wall_s': 73.2}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 80, 0.6, 44) {'rate': 80, 'scale': 0.6, 'som': [0.003333333333333333, 13.393333333333334], 'dw0': 1.751, 'ad0': 0.998, 'ap0': 0.989, 'dw1': -0.198, 'ad1': 0.599, 'ap1': 0.057, 'wall_s': 79.2}
-('v2', 80, 1.0, 43) {'rate': 80, 'scale': 1.0, 'som': [0.03, 30.438333333333333], 'dw0': 1.749, 'ad0': 0.997, 'ap0': 0.985, 'dw1': -0.665, 'ad1': 0.06, 'ap1': 0.0, 'wall_s': 77.9}
-('v2', 80, 1.0, 42) {'rate': 80, 'scale': 1.0, 'som': [0.013333333333333332, 31.021666666666665], 'dw0': 1.75, 'ad0': 0.998, 'ap0': 0.987, 'dw1': -0.72, 'ad1': 0.137, 'ap1': 0.0, 'wall_s': 79.3}
-('v2', 80, 1.0, 44) {'rate': 80, 'scale': 1.0, 'som': [0.02, 30.813333333333333], 'dw0': 1.751, 'ad0': 0.998, 'ap0': 0.989, 'dw1': -0.605, 'ad1': 0.092, 'ap1': 0.002, 'wall_s': 76.9}
-('v2', 80, 1.6, 44) {'rate': 80, 'scale': 1.6, 'som': [0.09, 60.15333333333333], 'dw0': 1.75, 'ad0': 0.998, 'ap0': 0.987, 'dw1': -0.486, 'ad1': 0.028, 'ap1': 0.0, 'wall_s': 76.7}
-('v2', 80, 1.6, 43) {'rate': 80, 'scale': 1.6, 'som': [0.08166666666666667, 59.751666666666665], 'dw0': 1.749, 'ad0': 0.997, 'ap0': 0.985, 'dw1': -0.492, 'ad1': 0.028, 'ap1': 0.0, 'wall_s': 77.6}
-('v2', 80, 1.6, 42) {'rate': 80, 'scale': 1.6, 'som': [0.043333333333333335, 60.376666666666665], 'dw0': 1.75, 'ad0': 0.997, 'ap0': 0.987, 'dw1': -0.541, 'ad1': 0.034, 'ap1': 0.0, 'wall_s': 78.6}
-('v2', 100, 0.6, 43) {'rate': 100, 'scale': 0.6, 'som': [0.008333333333333333, 13.175], 'dw0': 1.753, 'ad0': 0.998, 'ap0': 0.994, 'dw1': -0.423, 'ad1': 0.58, 'ap1': 0.033, 'wall_s': 77.1}
-('v2', 100, 0.6, 42) {'rate': 100, 'scale': 0.6, 'som': [0.0016666666666666666, 13.456666666666667], 'dw0': 1.753, 'ad0': 0.999, 'ap0': 0.995, 'dw1': 0.189, 'ad1': 0.861, 'ap1': 0.14, 'wall_s': 78.1}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 80, 1.0, 44) {'rate': 80, 'scale': 1.0, 'som': [0.6716666666666666, 30.813333333333333], 'dw0': 1.738, 'ad0': 0.998, 'ap0': 0.959, 'dw1': -0.605, 'ad1': 0.091, 'ap1': 0.002, 'wall_s': 70.6}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 80, 1.6, 43) {'rate': 80, 'scale': 1.6, 'som': [2.6516666666666664, 59.751666666666665], 'dw0': 1.619, 'ad0': 0.99, 'ap0': 0.751, 'dw1': -0.49, 'ad1': 0.028, 'ap1': 0.0, 'wall_s': 62.9}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 100, 0.6, 44) {'rate': 100, 'scale': 0.6, 'som': [0.003333333333333333, 13.393333333333334], 'dw0': 1.753, 'ad0': 0.999, 'ap0': 0.995, 'dw1': -0.129, 'ad1': 0.737, 'ap1': 0.078, 'wall_s': 78.8}
+('v2', 80, 1.6, 42) {'rate': 80, 'scale': 1.6, 'som': [1.1233333333333333, 60.376666666666665], 'dw0': 1.722, 'ad0': 0.997, 'ap0': 0.924, 'dw1': -0.539, 'ad1': 0.033, 'ap1': 0.0, 'wall_s': 73.6}
+('v2', 100, 0.6, 44) {'rate': 100, 'scale': 0.6, 'som': [0.15, 13.393333333333334], 'dw0': 1.753, 'ad0': 0.998, 'ap0': 0.996, 'dw1': -0.129, 'ad1': 0.737, 'ap1': 0.078, 'wall_s': 67.1}
+('v2', 80, 1.6, 44) {'rate': 80, 'scale': 1.6, 'som': [2.54, 60.15333333333333], 'dw0': 1.636, 'ad0': 0.99, 'ap0': 0.774, 'dw1': -0.483, 'ad1': 0.028, 'ap1': 0.0, 'wall_s': 73.6}
+('v2', 100, 0.6, 42) {'rate': 100, 'scale': 0.6, 'som': [0.058333333333333334, 13.456666666666667], 'dw0': 1.753, 'ad0': 0.998, 'ap0': 0.994, 'dw1': 0.189, 'ad1': 0.861, 'ap1': 0.14, 'wall_s': 73.4}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 100, 1.6, 42) {'rate': 100, 'scale': 1.6, 'som': [1.1233333333333333, 60.376666666666665], 'dw0': 1.731, 'ad0': 0.997, 'ap0': 0.943, 'dw1': -0.641, 'ad1': 0.052, 'ap1': 0.0, 'wall_s': 66.9}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 100, 0.6, 43) {'rate': 100, 'scale': 0.6, 'som': [0.16666666666666669, 13.175], 'dw0': 1.753, 'ad0': 0.998, 'ap0': 0.994, 'dw1': -0.423, 'ad1': 0.58, 'ap1': 0.033, 'wall_s': 73.2}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 100, 1.0, 42) {'rate': 100, 'scale': 1.0, 'som': [0.31333333333333335, 31.021666666666665], 'dw0': 1.751, 'ad0': 0.998, 'ap0': 0.989, 'dw1': -0.689, 'ad1': 0.203, 'ap1': 0.002, 'wall_s': 72.5}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 100, 1.0, 42) {'rate': 100, 'scale': 1.0, 'som': [0.013333333333333332, 31.021666666666665], 'dw0': 1.753, 'ad0': 0.998, 'ap0': 0.995, 'dw1': -0.689, 'ad1': 0.203, 'ap1': 0.002, 'wall_s': 76.1}
-('v2', 100, 1.0, 43) {'rate': 100, 'scale': 1.0, 'som': [0.03, 30.438333333333333], 'dw0': 1.753, 'ad0': 0.998, 'ap0': 0.994, 'dw1': -0.707, 'ad1': 0.091, 'ap1': 0.0, 'wall_s': 77.8}
+('v2', 100, 1.0, 43) {'rate': 100, 'scale': 1.0, 'som': [0.6766666666666666, 30.438333333333333], 'dw0': 1.748, 'ad0': 0.997, 'ap0': 0.981, 'dw1': -0.707, 'ad1': 0.091, 'ap1': 0.0, 'wall_s': 74.2}
+('v2', 100, 1.0, 44) {'rate': 100, 'scale': 1.0, 'som': [0.6716666666666666, 30.813333333333333], 'dw0': 1.744, 'ad0': 0.998, 'ap0': 0.974, 'dw1': -0.632, 'ad1': 0.136, 'ap1': 0.003, 'wall_s': 73.6}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 100, 1.6, 44) {'rate': 100, 'scale': 1.6, 'som': [0.09, 60.15333333333333], 'dw0': 1.753, 'ad0': 0.998, 'ap0': 0.994, 'dw1': -0.586, 'ad1': 0.04, 'ap1': 0.0, 'wall_s': 75.5}
-('v2', 100, 1.6, 43) {'rate': 100, 'scale': 1.6, 'som': [0.08166666666666667, 59.751666666666665], 'dw0': 1.753, 'ad0': 0.997, 'ap0': 0.993, 'dw1': -0.58, 'ad1': 0.039, 'ap1': 0.0, 'wall_s': 78.3}
-('v2', 100, 1.6, 42) {'rate': 100, 'scale': 1.6, 'som': [0.043333333333333335, 60.376666666666665], 'dw0': 1.753, 'ad0': 0.998, 'ap0': 0.994, 'dw1': -0.642, 'ad1': 0.052, 'ap1': 0.0, 'wall_s': 79.1}
-('v2', 150, 0.6, 44) {'rate': 150, 'scale': 0.6, 'som': [0.003333333333333333, 13.393333333333334], 'dw0': 1.754, 'ad0': 0.999, 'ap0': 0.998, 'dw1': 0.094, 'ad1': 0.901, 'ap1': 0.13, 'wall_s': 77.0}
-('v2', 150, 0.6, 43) {'rate': 150, 'scale': 0.6, 'som': [0.008333333333333333, 13.175], 'dw0': 1.754, 'ad0': 0.998, 'ap0': 0.998, 'dw1': -0.296, 'ad1': 0.778, 'ap1': 0.061, 'wall_s': 78.1}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 150, 0.6, 42) {'rate': 150, 'scale': 0.6, 'som': [0.0016666666666666666, 13.456666666666667], 'dw0': 1.754, 'ad0': 0.999, 'ap0': 0.998, 'dw1': 0.541, 'ad1': 0.961, 'ap1': 0.225, 'wall_s': 79.2}
-('v2', 100, 1.0, 44) {'rate': 100, 'scale': 1.0, 'som': [0.02, 30.813333333333333], 'dw0': 1.753, 'ad0': 0.998, 'ap0': 0.995, 'dw1': -0.632, 'ad1': 0.136, 'ap1': 0.003, 'wall_s': 80.7}
-('v2', 150, 1.0, 42) {'rate': 150, 'scale': 1.0, 'som': [0.013333333333333332, 31.021666666666665], 'dw0': 1.754, 'ad0': 0.998, 'ap0': 0.998, 'dw1': -0.674, 'ad1': 0.344, 'ap1': 0.004, 'wall_s': 78.2}
-('v2', 150, 1.0, 43) {'rate': 150, 'scale': 1.0, 'som': [0.03, 30.438333333333333], 'dw0': 1.754, 'ad0': 0.998, 'ap0': 0.997, 'dw1': -0.725, 'ad1': 0.165, 'ap1': 0.0, 'wall_s': 78.4}
+('v2', 100, 1.6, 43) {'rate': 100, 'scale': 1.6, 'som': [2.6516666666666664, 59.751666666666665], 'dw0': 1.661, 'ad0': 0.995, 'ap0': 0.813, 'dw1': -0.579, 'ad1': 0.039, 'ap1': 0.0, 'wall_s': 75.3}
+('v2', 100, 1.6, 44) {'rate': 100, 'scale': 1.6, 'som': [2.54, 60.15333333333333], 'dw0': 1.666, 'ad0': 0.994, 'ap0': 0.82, 'dw1': -0.584, 'ad1': 0.04, 'ap1': 0.0, 'wall_s': 73.3}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v2', 150, 1.0, 44) {'rate': 150, 'scale': 1.0, 'som': [0.02, 30.813333333333333], 'dw0': 1.754, 'ad0': 0.998, 'ap0': 0.998, 'dw1': -0.662, 'ad1': 0.241, 'ap1': 0.003, 'wall_s': 78.9}
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 150, 0.6, 42) {'rate': 150, 'scale': 0.6, 'som': [0.058333333333333334, 13.456666666666667], 'dw0': 1.754, 'ad0': 0.999, 'ap0': 0.998, 'dw1': 0.541, 'ad1': 0.961, 'ap1': 0.225, 'wall_s': 68.9}
 ('v4', 0, 42) {'md': 0, 'som_on': 32.6, 'som_off': 31.3, 'vip_on': 0.0, 'vip_off': 0.0, 'pv': np.float64(1.983)}
-('v4', 0, 44) {'md': 0, 'som_on': 30.4, 'som_off': 31.333, 'vip_on': 0.0, 'vip_off': 0.0, 'pv': np.float64(1.867)}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 150, 1.0, 44) {'rate': 150, 'scale': 1.0, 'som': [0.6716666666666666, 30.813333333333333], 'dw0': 1.749, 'ad0': 0.998, 'ap0': 0.984, 'dw1': -0.662, 'ad1': 0.24, 'ap1': 0.003, 'wall_s': 67.3}
+('v2', 150, 0.6, 44) {'rate': 150, 'scale': 0.6, 'som': [0.15, 13.393333333333334], 'dw0': 1.754, 'ad0': 0.999, 'ap0': 0.998, 'dw1': 0.094, 'ad1': 0.901, 'ap1': 0.131, 'wall_s': 71.3}
+('v2', 150, 1.0, 42) {'rate': 150, 'scale': 1.0, 'som': [0.31333333333333335, 31.021666666666665], 'dw0': 1.753, 'ad0': 0.998, 'ap0': 0.994, 'dw1': -0.674, 'ad1': 0.344, 'ap1': 0.004, 'wall_s': 71.9}
+('v2', 150, 0.6, 43) {'rate': 150, 'scale': 0.6, 'som': [0.16666666666666669, 13.175], 'dw0': 1.754, 'ad0': 0.998, 'ap0': 0.997, 'dw1': -0.296, 'ad1': 0.778, 'ap1': 0.061, 'wall_s': 74.4}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 ('v4', 0, 43) {'md': 0, 'som_on': 31.167, 'som_off': 30.683, 'vip_on': 0.0, 'vip_off': 0.0, 'pv': np.float64(2.1)}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 150, 1.0, 43) {'rate': 150, 'scale': 1.0, 'som': [0.6766666666666666, 30.438333333333333], 'dw0': 1.751, 'ad0': 0.997, 'ap0': 0.989, 'dw1': -0.725, 'ad1': 0.165, 'ap1': 0.0, 'wall_s': 73.5}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v4', 0, 44) {'md': 0, 'som_on': 30.4, 'som_off': 31.333, 'vip_on': 0.0, 'vip_off': 0.0, 'pv': np.float64(1.867)}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v2', 150, 1.6, 43) {'rate': 150, 'scale': 1.6, 'som': [2.6516666666666664, 59.751666666666665], 'dw0': 1.697, 'ad0': 0.997, 'ap0': 0.875, 'dw1': -0.677, 'ad1': 0.066, 'ap1': 0.0, 'wall_s': 71.2}
+('v2', 150, 1.6, 42) {'rate': 150, 'scale': 1.6, 'som': [1.1233333333333333, 60.376666666666665], 'dw0': 1.739, 'ad0': 0.998, 'ap0': 0.961, 'dw1': -0.715, 'ad1': 0.106, 'ap1': 0.0, 'wall_s': 74.0}
 ('v4', 5, 42) {'md': 5, 'som_on': 32.6, 'som_off': 31.3, 'vip_on': 0.0, 'vip_off': 0.0, 'pv': np.float64(3.75)}
-('v4', 5, 44) {'md': 5, 'som_on': 30.4, 'som_off': 31.333, 'vip_on': 0.0, 'vip_off': 0.0, 'pv': np.float64(3.45)}
-('v4', 10, 42) {'md': 10, 'som_on': 27.067, 'som_off': 31.3, 'vip_on': 0.45, 'vip_off': 0.0, 'pv': np.float64(8.167)}
+('v2', 150, 1.6, 44) {'rate': 150, 'scale': 1.6, 'som': [2.54, 60.15333333333333], 'dw0': 1.694, 'ad0': 0.996, 'ap0': 0.869, 'dw1': -0.693, 'ad1': 0.076, 'ap1': 0.0, 'wall_s': 72.9}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 ('v4', 5, 43) {'md': 5, 'som_on': 31.167, 'som_off': 30.683, 'vip_on': 0.0, 'vip_off': 0.0, 'pv': np.float64(3.933)}
-('v4', 10, 43) {'md': 10, 'som_on': 28.1, 'som_off': 30.683, 'vip_on': 0.217, 'vip_off': 0.0, 'pv': np.float64(7.35)}
+('v4', 5, 44) {'md': 5, 'som_on': 30.4, 'som_off': 31.333, 'vip_on': 0.0, 'vip_off': 0.0, 'pv': np.float64(3.45)}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v4', 10, 42) {'md': 10, 'som_on': 29.933, 'som_off': 31.3, 'vip_on': 0.45, 'vip_off': 0.0, 'pv': np.float64(7.233)}
+('v4', 10, 43) {'md': 10, 'som_on': 29.817, 'som_off': 30.683, 'vip_on': 0.217, 'vip_off': 0.0, 'pv': np.float64(6.733)}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v4', 10, 44) {'md': 10, 'som_on': 29.183, 'som_off': 31.333, 'vip_on': 0.233, 'vip_off': 0.0, 'pv': np.float64(6.367)}
+WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
+('v4', 15, 42) {'md': 15, 'som_on': 15.7, 'som_off': 31.3, 'vip_on': 4.8, 'vip_off': 0.0, 'pv': np.float64(17.917)}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v4', 10, 44) {'md': 10, 'som_on': 28.033, 'som_off': 31.333, 'vip_on': 0.233, 'vip_off': 0.0, 'pv': np.float64(6.667)}
+('v4', 15, 43) {'md': 15, 'som_on': 18.917, 'som_off': 30.683, 'vip_on': 2.917, 'vip_off': 0.0, 'pv': np.float64(14.917)}
 WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v4', 15, 42) {'md': 15, 'som_on': 7.833, 'som_off': 31.3, 'vip_on': 4.8, 'vip_off': 0.0, 'pv': np.float64(22.183)}
-('v4', 15, 43) {'md': 15, 'som_on': 10.183, 'som_off': 30.683, 'vip_on': 2.917, 'vip_off': 0.0, 'pv': np.float64(19.167)}
-('v4', 20, 42) {'md': 20, 'som_on': 0.583, 'som_off': 31.3, 'vip_on': 17.4, 'vip_off': 0.0, 'pv': np.float64(37.017)}
-('v4', 15, 44) {'md': 15, 'som_on': 10.05, 'som_off': 31.333, 'vip_on': 3.067, 'vip_off': 0.0, 'pv': np.float64(18.65)}
-('v4', 20, 43) {'md': 20, 'som_on': 0.767, 'som_off': 30.683, 'vip_on': 12.483, 'vip_off': 0.0, 'pv': np.float64(36.0)}
-('v4', 20, 44) {'md': 20, 'som_on': 0.9, 'som_off': 31.333, 'vip_on': 12.7, 'vip_off': 0.0, 'pv': np.float64(32.783)}
-('v4', 30, 42) {'md': 30, 'som_on': 0.133, 'som_off': 31.3, 'vip_on': 55.017, 'vip_off': 0.0, 'pv': np.float64(65.667)}
-('v4', 30, 43) {'md': 30, 'som_on': 0.083, 'som_off': 30.683, 'vip_on': 43.517, 'vip_off': 0.0, 'pv': np.float64(63.033)}
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-WARNING    'iBaseline_som' is an internal variable of group 'neurongroup_3', but also exists in the group-specific namespace with the value 21.32 * pamp. The internal variable will be used. [brian2.groups.group.Group.resolve.resolution_conflict]
-('v4', 30, 44) {'md': 30, 'som_on': 0.033, 'som_off': 31.333, 'vip_on': 45.85, 'vip_off': 0.0, 'pv': np.float64(61.217)}
+('v4', 15, 44) {'md': 15, 'som_on': 18.817, 'som_off': 31.333, 'vip_on': 3.067, 'vip_off': 0.0, 'pv': np.float64(14.133)}
+('v4', 20, 42) {'md': 20, 'som_on': 2.967, 'som_off': 31.3, 'vip_on': 17.4, 'vip_off': 0.0, 'pv': np.float64(34.817)}
+('v4', 20, 43) {'md': 20, 'som_on': 4.617, 'som_off': 30.683, 'vip_on': 12.483, 'vip_off': 0.0, 'pv': np.float64(33.217)}
+('v4', 30, 42) {'md': 30, 'som_on': 0.183, 'som_off': 31.3, 'vip_on': 55.017, 'vip_off': 0.0, 'pv': np.float64(65.6)}
+('v4', 20, 44) {'md': 20, 'som_on': 4.783, 'som_off': 31.333, 'vip_on': 12.7, 'vip_off': 0.0, 'pv': np.float64(30.017)}
+('v4', 30, 44) {'md': 30, 'som_on': 0.2, 'som_off': 31.333, 'vip_on': 45.85, 'vip_off': 0.0, 'pv': np.float64(61.067)}
+('v4', 40, 42) {'md': 40, 'som_on': 0.067, 'som_off': 31.3, 'vip_on': 94.033, 'vip_off': 0.0, 'pv': np.float64(96.767)}
+('v4', 30, 43) {'md': 30, 'som_on': 0.25, 'som_off': 30.683, 'vip_on': 43.517, 'vip_off': 0.0, 'pv': np.float64(62.917)}
 ('v4', 40, 43) {'md': 40, 'som_on': 0.083, 'som_off': 30.683, 'vip_on': 79.667, 'vip_off': 0.0, 'pv': np.float64(96.75)}
 ('v4', 40, 44) {'md': 40, 'som_on': 0.033, 'som_off': 31.333, 'vip_on': 81.983, 'vip_off': 0.0, 'pv': np.float64(92.617)}
-('v4', 40, 42) {'md': 40, 'som_on': 0.067, 'som_off': 31.3, 'vip_on': 94.033, 'vip_off': 0.0, 'pv': np.float64(96.767)}
-('v2', 150, 1.6, 42) {'rate': 150, 'scale': 1.6, 'som': [0.043333333333333335, 60.376666666666665], 'dw0': 1.754, 'ad0': 0.998, 'ap0': 0.997, 'dw1': -0.715, 'ad1': 0.106, 'ap1': 0.0, 'wall_s': 58.2}
-('v2', 150, 1.6, 43) {'rate': 150, 'scale': 1.6, 'som': [0.08166666666666667, 59.751666666666665], 'dw0': 1.754, 'ad0': 0.998, 'ap0': 0.997, 'dw1': -0.678, 'ad1': 0.066, 'ap1': 0.0, 'wall_s': 57.2}
-('v2', 150, 1.6, 44) {'rate': 150, 'scale': 1.6, 'som': [0.09, 60.15333333333333], 'dw0': 1.754, 'ad0': 0.998, 'ap0': 0.997, 'dw1': -0.694, 'ad1': 0.077, 'ap1': 0.0, 'wall_s': 56.1}
 done
-disinhibited (MD on) SOM 0.0 Hz dw [0.0, -0.0, -0.394, 0.663, 1.517, 1.667, 1.708, 1.74, 1.75, 1.753, 1.754] LTP from 15.0 LTD [10.0, 10.0]
-SOM drive x0.6 SOM 13.3 Hz dw [0.0, 0.0, -0.0, -0.007, -0.214, -0.587, -0.565, -0.41, -0.242, -0.121, 0.113] LTP from 150.0 LTD [20.0, 100.0]
-SOM drive x1.0 SOM 30.8 Hz dw [0.0, 0.0, -0.0, -0.0, -0.001, -0.097, -0.332, -0.592, -0.663, -0.676, -0.687] LTP from None LTD [30.0, 150.0]
-SOM drive x1.6 SOM 60.1 Hz dw [0.0, 0.0, -0.0, -0.0, -0.0, -0.011, -0.083, -0.332, -0.506, -0.603, -0.696] LTP from None LTD [40.0, 150.0]
-som_on [31.4, 31.4, 27.7, 9.4, 0.8, 0.1, 0.1]
+disinhibited (MD on) SOM 0.9 Hz dw [0.0, -0.0, -0.264, 0.172, 1.045, 1.447, 1.606, 1.69, 1.717, 1.729, 1.738] LTP from 15.0 LTD [10.0, 10.0]
+SOM drive x0.6 SOM 13.3 Hz dw [0.0, 0.0, -0.0, -0.007, -0.212, -0.587, -0.565, -0.41, -0.243, -0.121, 0.113] LTP from 150.0 LTD [20.0, 100.0]
+SOM drive x1.0 SOM 30.8 Hz dw [0.0, 0.0, -0.0, -0.0, -0.001, -0.096, -0.331, -0.592, -0.663, -0.676, -0.687] LTP from None LTD [30.0, 150.0]
+SOM drive x1.6 SOM 60.1 Hz dw [0.0, 0.0, -0.0, -0.0, -0.0, -0.011, -0.082, -0.33, -0.504, -0.601, -0.695] LTP from None LTD [40.0, 150.0]
+som_on [31.4, 31.4, 29.6, 17.8, 4.1, 0.2, 0.1]
 som_off [31.1, 31.1, 31.1, 31.1, 31.1, 31.1, 31.1]
 vip_on [0.0, 0.0, 0.3, 3.6, 14.2, 48.1, 85.2]
-pv [2.0, 3.7, 7.4, 20.0, 35.3, 63.3, 95.4]
+pv [2.0, 3.7, 6.8, 15.7, 32.7, 63.2, 95.4]
 saved /run/media/raghav/New Volume/minsu/Thalamocortical_Gating_Project/figures/paper_comparison_v2.png

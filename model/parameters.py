@@ -245,6 +245,8 @@ vip_params = {
     'vReset_vip': -55.0 * mV,
     'vE_vip': 0.0 * mV,
     'refrac_vip': 2.0 * ms,
+    'vI_vip': -70.0 * mV,      # SOM->VIP reversal (only with som2vip_nS > 0, 2026-11-10)
+    'tauGABA_vip': 20.0 * ms,  # SOM-type (slow) GABA decay onto VIP (only with som2vip_nS > 0)
     'tauAMPA_vip': 2.0 * ms,
     'gAMPA_vip': 0.5 * nS,    # MD→VIP synapse weight
     # Phase 2: background Poisson conductance onto VIP (same AMPA channel as the MD

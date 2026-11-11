@@ -287,6 +287,17 @@ iAMPA = -gTotAMPA * (V - vE_vip) : amp
 dgTotAMPA/dt = -gTotAMPA / tauAMPA_vip : siemens
 '''
 
+# VIP with GABA input (2026-11-10): used only when SOM->VIP is switched on
+# (context_circuit som2vip_nS > 0; Zhang 2025 mask VIP <- E, SOM). Otherwise eqs_vip.
+eqs_vip_inh = '''
+dV/dt = (iL + iAMPA + iGABA) / C_vip : volt (unless refractory)
+iL = -gL_vip * (V - vRest_vip) : amp
+iAMPA = -gTotAMPA * (V - vE_vip) : amp
+iGABA = -gTotGABA * (V - vI_vip) : amp
+dgTotAMPA/dt = -gTotAMPA / tauAMPA_vip : siemens
+dgTotGABA/dt = -gTotGABA / tauGABA_vip : siemens
+'''
+
 
 
 # ============================================================

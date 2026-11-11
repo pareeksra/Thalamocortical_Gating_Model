@@ -21,7 +21,7 @@ Slow (--slow, ~25 min on 8 cores):
   S2 dt convergence: |rho(dt 0.05) - rho(dt 0.1)| < 0.01 -- robustness_r2.json
   S3 Yang Fig. 7b regimes: free branch LTP at high rate, inhibited branch LTD at the same
      rate, no change at 2 Hz -- paper_comparison.json
-  S4 MD control (Zhang wiring): VIP silences its SOM channel, PV rises with MD
+  S4 MD control (Zhang wiring): VIP silences its SOM channel, PV rises with MD. MD 25 Hz = the canonical context rate (was 20 Hz until VIP->SOM x0.25 became canonical; at 20 Hz own SOM is now 3 Hz)
      -- paper_comparison.json
   S5 epoch-length independence: learn A, then a 300-s idle phase (A silent) applied as ONE
      epoch keeps A (retention >= 0.98) -- epoch_length_check.json (bAP x1.0 gave 0.12)
@@ -165,7 +165,7 @@ def main(slow, nw):
             F.update({f'learn{s}': ex.submit(j_learn, s) for s in (42, 43, 44)})
             F['dt'] = ex.submit(j_gating, 42, 0.05)
             F.update({f'v2_{r}': ex.submit(j_v2, r) for r in (2, 60)})
-            F.update({f'v4_{m}': ex.submit(j_v4, m) for m in (0, 20, 40)})
+            F.update({f'v4_{m}': ex.submit(j_v4, m) for m in (0, 25, 40)})
             F['idle'] = ex.submit(j_idle)
         audit = subprocess.run([sys.executable, '-I', os.path.join(PROOT, 'tests', 'test_audit_fixes.py')],
                                capture_output=True, text=True)
@@ -206,11 +206,11 @@ def main(slow, nw):
               abs(v2lo['dw0']) < 0.05 and abs(v2lo['dw1']) < 0.05, f"{v2lo['dw0']:.3f} / {v2lo['dw1']:.3f}")
         check('S3 Fig. 7b: 60 Hz -> free branch LTP, inhibited branch LTD', v2hi['dw0'] > 0.5 and v2hi['dw1'] < 0,
               f"{v2hi['dw0']:.2f} / {v2hi['dw1']:.2f}")
-        v4 = [R[f'v4_{m}'] for m in (0, 20, 40)]
+        v4 = [R[f'v4_{m}'] for m in (0, 25, 40)]
         check('S4 MD on: VIP up, own SOM channel silenced, other channel unchanged',
               v4[1]['vip_on'] > 5 and v4[1]['som_on'] < 2 and abs(v4[1]['som_off'] - v4[0]['som_off']) < 5,
               f"VIP {v4[1]['vip_on']:.1f} Hz, SOM on/off {v4[1]['som_on']:.1f}/{v4[1]['som_off']:.1f} Hz")
-        check('S4 PV rises monotonically with MD (0/20/40 Hz)', v4[0]['pv'] < v4[1]['pv'] < v4[2]['pv'],
+        check('S4 PV rises monotonically with MD (0/25/40 Hz)', v4[0]['pv'] < v4[1]['pv'] < v4[2]['pv'],
               '/'.join(f"{x['pv']:.0f}" for x in v4))
         check('S5 300-s idle phase as one epoch keeps A (retention >= 0.98)', R['idle'] >= 0.98, f"{R['idle']:.3f}")
     n_fail = sum(not ok for _, ok in RESULTS)

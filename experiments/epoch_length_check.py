@@ -33,6 +33,7 @@ PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT, os.path.join(PROOT, 'experiments')]
 BAP1 = 'bap1' in sys.argv[1:]   # 'bap1': the pre-2026-11-10 bAP calcium x1.0 (first run); default: canonical x0.2
 KW = dict(bap_ca_scale=1.0) if BAP1 else {}
+KW['vip2som_scale'] = 1.0   # results produced before VIP->SOM x0.25 became canonical (2026-11-10)
 OUT = os.path.join(PROOT, 'results', 'current', 'epoch_length_check' + ('_bap1' if BAP1 else '') + '.json')
 TS = [1.5, 3.0, 6.0, 12.0, 24.0]
 SEEDS = [42, 43, 44]
