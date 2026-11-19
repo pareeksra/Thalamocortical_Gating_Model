@@ -20,6 +20,8 @@ Analyse: <py> -I experiments/robustness_r3.py analyse [canonical]
 SOM Poisson-drive parameters and S_learn (R4 learning test, 10 Hz readout); outputs get a
 _canonical suffix. Without it: the committed pre-2026-11-10 model.
 Out:     results/current/robustness_r3.json, figures/robustness_r3.png
+2026-11-19: 'canonical' also scales bap_ca_scale (0.2) and vip2som_scale (0.25), the two
+canonical choices R3 had not covered. Existing results are kept; only the new jobs run.
 """
 import os, sys, json, time
 import numpy as np
@@ -34,12 +36,13 @@ SEEDS = [42, 43, 44, 45, 46]
 PARAMS = ['gNMDA', 'gLDend_pyr', 'gGABA', 'tauGABA', 'couple', 'som_bias', 'md_rate',
           'gAMPA_vip', 'p_vip2som_spike', 'pv_pair', 'soma_bg', 'exc_rate']
 if CANON:
-    PARAMS = PARAMS + ['som_bg_E_hz', 'som_bg_nS']
+    PARAMS = PARAMS + ['som_bg_E_hz', 'som_bg_nS', 'bap_ca_scale', 'vip2som_scale']   # last two added 2026-11-19
 LABEL = {'gNMDA': 'NMDA conductance', 'gLDend_pyr': 'dendritic leak', 'gGABA': 'SOM→dend GABA',
          'tauGABA': 'dend GABA decay', 'couple': 'soma–dend coupling', 'som_bias': 'SOM bias current',
          'md_rate': 'MD rate (context on)', 'gAMPA_vip': 'MD→VIP weight', 'p_vip2som_spike': 'P(VIP→SOM)',
          'pv_pair': 'PV bg weight + SOM→PV', 'soma_bg': 'soma background (E and I)', 'exc_rate': 'input rate',
-         'som_bg_E_hz': 'SOM Poisson input rate', 'som_bg_nS': 'SOM Poisson input weight'}
+         'som_bg_E_hz': 'SOM Poisson input rate', 'som_bg_nS': 'SOM Poisson input weight',
+         'bap_ca_scale': 'bAP calcium (x0.2)', 'vip2som_scale': 'VIP→SOM weight (x0.25)'}
 
 
 def kwargs_for(param, f):
@@ -66,6 +69,10 @@ def kwargs_for(param, f):
         kw['exc_rate'] = 80.0 * f
     elif param == 'soma_bg':
         soma_scale = f
+    elif param == 'bap_ca_scale':     # canonical 0.2 (Yang's in-vivo recalibration)
+        kw['bap_ca_scale'] = 0.2 * f
+    elif param == 'vip2som_scale':    # canonical 0.25 (VIP2SOM_SCALE_CANON)
+        kw['vip2som_scale'] = 0.25 * f
     return ov, kw, soma_scale
 
 

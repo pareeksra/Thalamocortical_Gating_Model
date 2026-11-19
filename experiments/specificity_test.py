@@ -27,6 +27,8 @@ ret_A should stay ~1 at every level (A's inputs are silent during B).
 Run:     <py> -I experiments/specificity_test.py run [n_workers]
 Analyse: <py> -I experiments/specificity_test.py analyse
 Out:     results/current/specificity_test.json, _summary.json, figures/specificity_test.png
+Argument 'canonical' (2026-11-19): the same sweeps at the canonical VIP->SOM x0.25 (the
+committed run used x1, before x0.25 became canonical). Outputs get a _canonical suffix.
 """
 import os, sys, json, time
 import numpy as np
@@ -34,6 +36,9 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 PROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path[:0] = [os.path.join(PROOT, 'model'), PROOT, os.path.join(PROOT, 'experiments')]
 OUT = os.path.join(PROOT, 'results', 'current', 'specificity_test.json')
+CANON = 'canonical' in sys.argv[1:]
+if CANON:
+    OUT = OUT.replace('.json', '_canonical.json')
 SEEDS = [42, 43, 44, 45, 46]
 AXES = {
     'md_vip_frac': [0.5, 0.625, 0.75, 0.875, 1.0],
@@ -64,7 +69,7 @@ def measure(kw, seed):
     t0 = time.time()
     out = dict(seed=seed, kw={k: (v if isinstance(v, (int, float, str)) else repr(v)) for k, v in kw.items()})
     kw = dict(kw); kw_ov = kw.pop('param_overrides', None) or {}
-    kw.setdefault('vip2som_scale', 1.0)   # these sweeps were run at VIP->SOM x1 (before x0.25 became canonical)
+    kw.setdefault('vip2som_scale', 0.25 if CANON else 1.0)   # committed sweeps: VIP->SOM x1 (before x0.25 became canonical)
 
     def run_context_protocol(*a, _run=run_context_protocol, **c):   # kw + caller's call; param_overrides merged
         ov = {**kw_ov, **(c.pop('param_overrides', None) or {})}
@@ -220,9 +225,10 @@ def analyse():
         ax.axhline(0, color='grey', lw=0.5)
         ax.set_xlabel(LABEL[a], fontsize=8); ax.set_title(a)
     axs[0].set_ylabel('selectivity / ρ difference'); axs[0].legend(fontsize=7)
-    fig.suptitle('Branch specificity of MD→VIP→SOM→dendrite (canonical model, 5 seeds; left end = specific)')
+    fig.suptitle('Branch specificity of MD→VIP→SOM→dendrite (canonical model, VIP→SOM ×'
+                 + ('0.25' if CANON else '1') + ', 5 seeds; left end = specific)')
     fig.tight_layout()
-    fp = os.path.join(PROOT, 'figures', 'specificity_test.png')
+    fp = os.path.join(PROOT, 'figures', 'specificity_test' + ('_canonical' if CANON else '') + '.png')
     fig.savefig(fp, dpi=130); print('saved', fp)
 
 

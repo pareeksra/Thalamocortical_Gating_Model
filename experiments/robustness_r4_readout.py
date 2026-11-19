@@ -18,7 +18,13 @@ the same rates for comparison.
 Contrast (argument 'ampa'): the same readout on the OLD synapse's learned weights
 (robustness_r4_learning.json, synapse='ampa', rho0 0.5), rates 5-20 Hz, 10 seeds.
 Prediction: S_after ~ S_before (learning changes only AMPA), unlike the Yang synapse.
-Run:  <py> -I experiments/robustness_r4_readout.py [n_workers] [ampa]
+Canonical (argument 'canonical', 2026-11-19): the committed figure predates the noisy SOM
+baseline, bAP calcium x0.2 and VIP->SOM x0.25. Here each seed (42-48) first learns A then B
+with the canonical model ('patterns', overlap 0, 8 x 3 s each at 50 Hz, as R4), then the same
+readout sweep runs on the canonical model. Outputs get a _canonical suffix.
+Prediction: same shape as the committed figure -- S_after high (~0.9) at 5-10 Hz, falling to ~0
+by 30-50 Hz; S_before ~0 at all rates.
+Run:  <py> -I experiments/robustness_r4_readout.py [n_workers] [ampa|canonical]
 Out:  results/current/robustness_r4_readout.json, figures/robustness_r4_readout.png
 """
 import os, sys, json, time
@@ -30,6 +36,20 @@ SRC = os.path.join(PROOT, 'results', 'current', 'robustness_r4_shunting.json')
 OUT = os.path.join(PROOT, 'results', 'current', 'robustness_r4_readout.json')
 RATES = [5.0, 10.0, 15.0, 20.0, 30.0, 50.0]
 SYN = 'ampa' if 'ampa' in sys.argv[1:] else 'yang'
+CANON = 'canonical' in sys.argv[1:]
+if CANON:
+    OUT = os.path.join(PROOT, 'results', 'current', 'robustness_r4_readout_canonical.json')
+CANON_SEEDS = list(range(42, 49))
+
+
+def _learn(seed):
+    from brian2 import prefs
+    prefs.codegen.target = 'cython'
+    from context_circuit import run_context_protocol
+    from robustness_r4_learning import N_EP, LEARN_HZ
+    tr = run_context_protocol([0] * N_EP + [1] * N_EP, T=3.0, input_mode='patterns', overlap=0.0,
+                              exc_rate=LEARN_HZ, seed_val=seed)['traj']
+    return seed, (tr[-1]['rho0_syn'], tr[-1]['rho1_syn'])
 if SYN == 'ampa':
     SRC = os.path.join(PROOT, 'results', 'current', 'robustness_r4_learning.json')
     OUT = os.path.join(PROOT, 'results', 'current', 'robustness_r4_readout_ampa.json')
@@ -40,7 +60,8 @@ def _job(state, rate, seed, rho0, rho1):
     from brian2 import prefs
     prefs.codegen.target = 'cython'
     from context_circuit import run_context_protocol, BALANCED_SOMA_KW, BALANCED_SOMA_G_PV2SOMA
-    import functools; run_context_protocol = functools.partial(run_context_protocol, som_baseline='bias', bap_ca_scale=1.0)  # pre-2026-11-10 SOM baseline and bAP calcium: reproduces the committed results
+    if not CANON:
+        import functools; run_context_protocol = functools.partial(run_context_protocol, som_baseline='bias', bap_ca_scale=1.0)  # pre-2026-11-10 SOM baseline and bAP calcium: reproduces the committed results
     from robustness_r4_learning import READ, S_from
     t0 = time.time()
     r = run_context_protocol([c for c, _ in READ], T=5.0, input_mode='patterns', overlap=0.0,
@@ -54,12 +75,26 @@ def _job(state, rate, seed, rho0, rho1):
 
 
 def main(nw):
+    if CANON:
+        lp = OUT.replace('.json', '_learned.json')
+        learned = {int(k): v for k, v in json.load(open(lp)).items()} if os.path.exists(lp) else {}
+        todo = [s_ for s_ in CANON_SEEDS if s_ not in learned]
+        if todo:
+            with ProcessPoolExecutor(max_workers=min(nw, len(todo)), max_tasks_per_child=1) as ex:
+                for seed, rr in ex.map(_learn, todo):
+                    learned[seed] = rr; print('learned seed', seed, flush=True)
+            json.dump({str(k): v for k, v in learned.items()}, open(lp, 'w'))
+        return _readouts(nw, learned, 1 / 3)
     src = json.load(open(SRC))['runs']
     if SYN == 'ampa':
         learned = {r['seed']: (r['learned']['rho0'], r['learned']['rho1']) for r in src.values() if r['syn'] == 'ampa'}
     else:
         learned = {r['seed']: (r['learned']['rho0'], r['learned']['rho1']) for r in src.values() if r['scale'] == 1.0}
     rho_b = 0.5 if SYN == 'ampa' else 1 / 3
+    return _readouts(nw, learned, rho_b)
+
+
+def _readouts(nw, learned, rho_b):
     n_aff = len(next(iter(learned.values()))[0])
     done = json.load(open(OUT)) if os.path.exists(OUT) else {}
     J = []
@@ -114,8 +149,11 @@ def analyse(done=None):
               title='Is there a window where only the learned branch plateaus?')
     for a in ax:
         a.legend(frameon=False, fontsize=8); a.spines[['top', 'right']].set_visible(False)
+    if CANON:
+        fig.suptitle(f'Canonical model (noisy SOM, bAP ×0.2, VIP→SOM ×0.25), {len(CANON_SEEDS)} seeds', fontsize=10)
     fig.tight_layout()
-    fp = os.path.join(PROOT, 'figures', 'robustness_r4_readout' + ('_ampa' if SYN == 'ampa' else '') + '.png')
+    fp = os.path.join(PROOT, 'figures', 'robustness_r4_readout' + ('_ampa' if SYN == 'ampa' else '')
+                      + ('_canonical' if CANON else '') + '.png')
     fig.savefig(fp, dpi=150, facecolor='white'); print('saved', fp)
 
 

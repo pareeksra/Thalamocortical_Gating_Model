@@ -86,7 +86,7 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                          som_bg_E_hz=None, som_bg_I_hz=0.0, som_bg_nS=None, som_baseline=None,
                          bap_ca_scale=None, som2dend_cross=0.0,
                          som2vip_nS=0.0, p_som2vip=0.5, som2vip_wiring='uniform', pv2pv_nS=0.0, p_pv2pv=0.5,
-                         vip2som_scale=None):
+                         vip2som_scale=None, stim_rates=None):
     """Run the analytical-plasticity epoch loop under a context schedule.
 
     schedule : list of ints (0 or 1) -- the active context for each T-second epoch.
@@ -132,6 +132,9 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                     its own branch with probability p_som2dend_spike*(1-x) and the other branch
                     with p_som2dend_spike*x, so each SOM cell's and each branch's expected
                     synapse count is unchanged; 0 = branch-specific (default), 0.5 = uniform.
+    stim_rates      per-epoch list of (rate_A, rate_B) in Hz ('patterns' mode, overlap 0 only;
+                    2026-11-19, Yang Fig. 7d,e tuning curves): pattern A's afferents fire at
+                    rate_A and pattern B's at rate_B in that epoch; overrides stim and exc_rate.
     Zhang 2025 wiring absent from the canonical model (2026-11-10, experiments/zhang_wiring_test.py;
     all off by default):
     som2vip_nS      SOM -> VIP GABA weight (nS); VIP then uses eqs_vip_inh (tauGABA_vip 20 ms).
@@ -359,6 +362,8 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
                   'ap_acc = ap_acc + int(c_total > theta_p)*dt')
     if input_mode not in ('context', 'always', 'patterns'):
         raise ValueError(f"input_mode must be 'context', 'always' or 'patterns', got {input_mode!r}")
+    if stim_rates is not None and (input_mode != 'patterns' or overlap != 0.0):
+        raise ValueError("stim_rates needs input_mode='patterns' and overlap 0")
     if input_mode == 'patterns':
         n_sh = int(round(overlap * n_pattern))
         n_aff = 2 * n_pattern - n_sh
@@ -419,6 +424,9 @@ def run_context_protocol(schedule, T=3.0, exc_rate=80.0, post_rate=10.0, gcouple
             on = ctx if stim is None else stim[e]
             exc0.rates = (exc_rate if on == 0 else 0.0) * Hz
             exc1.rates = (exc_rate if on == 1 else 0.0) * Hz
+        elif input_mode == 'patterns' and stim_rates is not None:
+            rr = np.zeros(n_aff); rr[idx_A] = stim_rates[e][0]; rr[idx_B] = stim_rates[e][1]
+            AFF.rates = rr * Hz
         elif input_mode == 'patterns':
             on = ctx if stim is None else stim[e]
             active = idx_A if on == 0 else (idx_B if on == 1 else np.array([], int))
