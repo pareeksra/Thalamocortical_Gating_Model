@@ -43,7 +43,7 @@ our assumption. Section 8, step 1 tests how much mixing it tolerates.”
 
 ---
 
-## §4 — Yang Supp. Fig. 1f–h (`figures/yang_supp1_fgh_model.png`)
+## §4 — Yang Supp. Fig. 1f–h (`figures/yang_replication/supp1_fgh.png`)
 
 **On it.**
 - **f:** dendritic voltage when 5–40 synapses fire once together. Below ~20 synapses the
@@ -66,7 +66,7 @@ plateau, it removes the calcium, and the branch cannot strengthen.”
 
 ---
 
-## §4 — Yang Fig. 2b,c,e–g (`figures/yang_fig2_model.png`)
+## §4 — Yang Fig. 2b,c,e–g (`figures/yang_replication/fig2.png`)
 
 **On it.**
 - **b:** the plateau, as in Supp. 1f.
@@ -135,35 +135,82 @@ is Yang’s mechanism too.”
 
 ---
 
-## §4 — Yang Fig. 7d,e: learning creates gating (`figures/robustness_r4_readout.png`)
+## §4 — Yang Supp. Fig. 4: the rate model refit to our neuron (`figures/yang_replication/supp4.png`)
 
-**On it.**
-- **Left:** selectivity S against the readout input rate. Grey is before learning; blue is after.
-  - After learning, S = 0.86–0.89 at 5–10 Hz, 0.75 at 15 Hz, 0.27 at 20 Hz, and ≈ 0 at 50 Hz.
-  - Before learning, S is around 0. The −0.6 at 5 Hz is noise: the cell barely fires there.
-- **Right:** fraction of time each branch is in a plateau when pattern A is shown.
-  - After learning, A’s own branch plateaus from 5 Hz on.
-  - The other branch plateaus only from 20 Hz.
-  - Before learning, both start at 15–20 Hz.
+**On it.** Left: mean dendritic voltage against excitatory conductance, one curve per inhibition
+level; dots are our spiking dendrite, black is Yang's formula fitted to it, dotted is Yang's own fit.
+Right: soma rate against the current the dendrites deliver; black our fit, orange Yang's.
 
-**Say.** “This is the result that changed most since the last meeting. After learning pattern A
-on branch 0, the cell responds to A when A’s gate is open, 9.3 Hz, and almost not at all when the
-other gate is open, 0.5 Hz. Selectivity goes from about zero before learning to almost 0.9. The
-right panel shows why there is a window. Between 5 and 15 Hz input, only the learned branch
-reaches a plateau. Above 20 Hz an open gate makes even an unlearned branch plateau, so learning no
-longer shows. We state this readout condition with every functional claim.”
+**Say.** "Yang made his network figures with a rate model fitted to his spiking neuron. We fitted
+the same formula to ours. The numbers come out almost the same: half-activation slope 5.62 against
+his 5.56, soma exponent 2.63 against 2.89. So for the network figures our neuron is essentially his."
 
-**Likely question:** “Is this the final model?”
-**Answer:** “This sweep was made with Yang’s synapse on 10 November, before the last two
-calibration fixes (noisy SOM, bAP calcium ×0.2). The canonical model’s regression test repeats
-the 10 Hz point and gives S = 0.91, 0.95 and 0.82 on three seeds.”
+**Likely question:** "Why does the soma fit stop at 100 Hz?" **Answer:** "Our soma bends below a
+power law above ~100 Hz because of refractoriness; the network figures never drive it that high."
+
+---
+
+## §4 — Yang Fig. 3: sparseness and disinhibition (`figures/yang_replication/fig3.png`)
+
+**On it.** Gating selectivity against the fraction of dendrites a pathway targets. Points are our
+spiking neuron with 10, 20 or 30 dendrites; lines the rate model; diamonds non-overlapping patterns.
+Right panel: 10, 20, 30 Hz disinhibition.
+
+**Say.** "Yang did this with his rate model; we did it on the spiking neuron itself, with up to 30
+dendrites. Sparse patterns gate best, about 0.6, and selectivity falls to zero when every dendrite
+is targeted, because the two pathways then overlap completely. Stronger disinhibition gates better.
+The rate model lies on the spiking points, which validates using it for the next three figures."
+
+---
+
+## §4 — Yang Figs. 4–6: the interneuron network (`fig4.png`, `fig5.png`, `fig6.png` in `figures/yang_replication/`)
+
+**On them.** Yang's column: 1,000 pyramidal cells × 30 dendrites, 160 SOM, 140 VIP, 200 PV, random
+connections, our fitted neuron. Curves are means, bands 10–90% of cells; dotted = Yang's fit in the
+same code.
+
+**Say.**
+- Fig. 4: "With about five SOM cells per dendrite, as measured, selectivity is 0.38; Yang reports
+  about 0.5, and his own fit in our code gives 0.41. As in Yang, only the number of SOM cells per
+  dendrite matters."
+- Fig. 5: "If control reaches only VIP, it works only when a few VIP cells are targeted (peak 0.42).
+  If control reaches SOM too, what matters is which SOM cells it targets, not VIP."
+- Fig. 6: "Adding somatic PV inhibition raises selectivity from 0.39 to 0.68, until it is so strong
+  that it silences cells."
+
+**Likely question:** "Is this your circuit?" **Answer:** "The pyramidal neuron is ours; the
+interneuron populations are Yang's rate units, as in his paper. Our own circuit has one SOM group per
+branch, which is the specific case where selectivity is highest (0.93)."
+
+---
+
+## §4 — Yang Fig. 7c–e: learning creates gating (`fig7c.png`, `fig7de.png`)
+
+**On them.** 7c: weights per synapse after learning A, then B; and mean weights over the run. 7d,e:
+tuning to pathway 1 with gate 1 or gate 2 open, before and after learning; bottom, 2-D tuning.
+
+**Say.** "Each pattern ends up strong on the branch its context opened, w 2.78, and stays at 1 on the
+other; in Yang it would also weaken there, which in our runs needs longer exposure. Before learning
+both gates give the same tuning, S = 0.06; after learning only the open gate transmits it, S = 0.92.
+Yang reports about 0.7."
+
+---
+
+## §4 — Learned gating against readout drive (`figures/robustness_r4_readout_canonical.png`)
+
+**On it.** Left: selectivity against readout input rate, before (grey) and after (blue) learning;
+open symbols = the cell does not respond, S undefined. Right: plateau fraction of each branch.
+
+**Say.** "Re-made on the final model. After learning, S is 0.9 at 5–10 Hz per synapse, 0.62 at 15,
+about zero from 30. Between 5 and 15 Hz only the learned branch reaches a plateau; above 20 Hz an
+open gate makes any branch plateau. We state this readout condition with every functional claim."
 
 ---
 
 ## §6 — Parameter sensitivity, R3 (`figures/robustness_r3_canonical.png`)
 
 **On it.**
-- Six panels; each line is one of 14 parameters, scaled ×0.5, ×0.75, ×1.25, ×1.5 (5 seeds). The
+- Six panels; each line is one of 16 parameters, scaled ×0.5, ×0.75, ×1.25, ×1.5 (5 seeds). The
   grey band is ±25%.
 - Panels:
   - gating ratio (pass ≥ 2);
@@ -173,7 +220,7 @@ the 10 Hz point and gives S = 0.91, 0.95 and 0.82 on three seeds.”
   - retention with inputs always on (reported only);
   - ρ of the inhibited branch.
 
-**Say.** “To check that nothing depends on a lucky parameter value, we scaled 14 parameters up
+**Say.** “To check that nothing depends on a lucky parameter value, we scaled 16 parameters up
 and down by 25% and 50%. Inside the grey ±25% band every measure passes: gating, selectivity,
 learned selectivity (lowest 0.64), and retention with silent inputs, which is 1.000 everywhere.
 Failures happen only at half the value of six parameters, such as the NMDA conductance or the MD
@@ -183,6 +230,19 @@ so we do not claim it.”
 
 **Likely question:** “Which parameter is most sensitive?”
 **Answer:** “Dendritic leak at ×0.75 gives the lowest learned selectivity (0.64), still a pass.”
+
+---
+
+## §6 — Is the alternation claim robust? (`figures/robustness_claims.png`)
+
+**On it.** For each of 16 parameters scaled ×0.75 (blue) and ×1.25 (orange): recall of the previous
+context (filled) and the current one (open), at 25% overlap (left) and 50% (right). Vertical lines =
+baseline; dashed = 0.5.
+
+**Say.** "We tested the main context result itself under ±25% changes: 330 runs. It holds in 30 of
+32. It breaks with 25% stronger NMDA or 25% weaker SOM drive. There, learning itself suffers: even the
+current context is barely recalled at 50% overlap. So the result needs SOM inhibition strong relative
+to NMDA drive, which is a stated condition rather than a hidden tuning."
 
 ---
 
@@ -220,7 +280,7 @@ so there is no context separation.”
 
 ---
 
-## §8 step 1 — Channel specificity (`figures/specificity_test.png`)
+## §8 step 1 — Channel specificity (`figures/specificity_test_canonical.png`)
 
 **On it.** Three panels. Each mixes one stage of the MD→VIP→SOM→dendrite chain from fully
 specific (left end) to uniform (right end). Lines:
@@ -235,12 +295,10 @@ The panels:
 - **Right, SOM→dendrite:** the fraction of SOM synapses on the wrong branch (0.5 = uniform).
 
 **Say.** “Since the one-channel-per-branch wiring is our assumption, we asked how specific it
-has to be. SOM→dendrite tolerates 20% of synapses on the wrong branch (right panel). VIP→SOM, in
-this run, tolerated less than 10% (middle). MD→VIP tolerates no spill-over at all (left): as soon
-as an MD channel reaches the other channel’s VIP, learning selectivity collapses. This run was at
-the old VIP→SOM weight. We then found that weight was far stronger than needed. At a quarter of
-it, which is now canonical, VIP→SOM tolerates 7.5%, and 20% at a tenth. So the one hard
-requirement on anatomy is a channel-specific MD→VIP projection.”
+has to be. This is the final model, VIP→SOM at a quarter of the original weight. SOM→dendrite
+tolerates 20% of synapses on the wrong branch (right panel), VIP→SOM 7.5% (middle). MD→VIP is the
+weak point (left): 25% spill-over to the other channel already loses one seed in five, and more
+collapses learning. So the one hard requirement on anatomy is a channel-specific MD→VIP projection.”
 
 **Likely question:** “Why does MD→VIP spill-over break it?”
 **Answer:** “It drives the other context’s VIP, which silences the other SOM, so both branches
@@ -322,15 +380,27 @@ loop. Up to 50% overlap it reproduces the single cell within about 0.05, and the
 same result as a fixed MD input. Without gating nothing is recalled. One new effect: with large
 overlap and 12-s blocks, the network is more biased to the latest context (at full overlap 0.41
 for the current context against −0.41 for the previous one, versus 0.10 / −0.16 in the single
-cell). We haven’t separated the cause yet. The network learns at 50 Hz input against 80 Hz in the
-single cell, it has recurrence, and S is averaged over 20 cells. The conclusion stays the same:
-both contexts are recalled only up to 25% overlap with 12-s blocks.”
+cell). We then traced it — next figure — and it is not a network effect. The conclusion stays the
+same: both contexts are recalled only up to 25% overlap with 12-s blocks.”
+
+---
+
+## §8 step 4b — What caused the extra recency? (`figures/recency_cause.png`)
+
+**On it.** Recall of the current (left) and previous (right) context against overlap for: single
+cell at 80 and 50 Hz learning, network at 50 Hz, network without recurrence, network at 80 Hz.
+
+**Say.** “On the same seeds the single cell and the network agree at 75% overlap; the earlier gap
+came from comparing a 10-seed single-cell mean with 5 network seeds. At full overlap the difference
+is the learning rate: a single cell learning at 50 Hz, like the network, behaves like the network.
+So the network adds no recency of its own. One thing we can't explain yet: the network learning at
+80 Hz keeps the previous context at 50% overlap, 0.53. We are not claiming it until we understand it.”
 
 **Likely question:** “What is next?”
 **Answer:**
-- Separate that cause: the single cell at 50 Hz, and the network without recurrence.
-- Then run overlap and retention on the network.
-- Then a more realistic E/I balance, to see whether the stability limit moves.
+- Understand the 80 Hz network result.
+- Overlap and retention on the network.
+- A more realistic E/I balance, to see whether the stability limit moves.
 
 ---
 
@@ -340,9 +410,11 @@ both contexts are recalled only up to 25% overlap with 12-s blocks.”
    open gate routes an input to the output (Fig. 2). Inhibition moves the LTP threshold (Fig. 7b).
 2. **MD now picks the branch, and learning changes behaviour.** Selectivity goes from 0 to 0.9
    after learning (Fig. 7d,e analogue), robustly (R3).
-   Not reproduced: Yang Figs. 3–4 (network-scale selectivity with many dendrites per cell); only the
-   Fig. 5 logic has been run, on one cell.
+   Every reproducible Yang figure is reproduced, including Fig. 3 on a spiking neuron with many
+   dendrites and his network Figs. 4–6 (rate model refit to our neuron, as Yang did); one PDF:
+   `docs/reports/Yang2016_replication.pdf`.
 3. **What it buys.** Context separation and protection of old memories for disjoint or
-   lightly overlapping inputs, but not at high overlap (alternation).
+   lightly overlapping inputs, but not at high overlap (alternation). This holds under ±25% of
+   30 of 32 parameter changes, given SOM inhibition strong relative to NMDA.
 4. **It scales to a first network** up to a stability limit, and works with MD from a PFC↔MD loop
    (steps 3a, 3b, 4a).

@@ -1,0 +1,80 @@
+[
+ [
+  "Fig. 2e",
+  "S \u2248 0.6 (strong vs weak tuning)",
+  "S = 0.60",
+  "match"
+ ],
+ [
+  "Supp. 1g,h",
+  "inhibition gates NMDA \u226b AMPA",
+  "NMDA 41 mV vs AMPA 7 mV",
+  "match"
+ ],
+ [
+  "Supp. 2c,d",
+  "moderate inhibition keeps saturated input below \u03b8_NMDA",
+  "\u03b8 \u2248 4.88; ceiling at g_GABA 4/8 nS = 4.69/3.12",
+  "match"
+ ],
+ [
+  "Supp. 3c",
+  "S decreases with AMPA fraction",
+  "S 0.73 (NMDA only) \u2192 0.15 (AMPA only)",
+  "match"
+ ],
+ [
+  "Supp. 4",
+  "b_g 5.56, k 9.64, \u03b3 6.54, V0 0.78; soma p 2.89",
+  "b_g 5.62, k 8.9, \u03b3 5.6, V0 1.05; p 2.63",
+  "refit"
+ ],
+ [
+  "Fig. 3b,c",
+  "S falls with N_disinh/N_dend; rises with disinhibition; non-overlap highest but < 1",
+  "spiking N_dend 10: S 0.73 \u2192 -0.00; non-overlap 0.52\u20130.62",
+  "match"
+ ],
+ [
+  "Fig. 4",
+  "S \u2248 0.5 at N_SOM\u2192dend \u2248 5; set by N_SOM\u2192dend alone",
+  "S = 0.38 (Yang fit in our code 0.41); c\u2013e flat",
+  "match"
+ ],
+ [
+  "Fig. 5b,c",
+  "VIP-only control: S high only for sparse targeting and sparse VIP\u2192SOM",
+  "peak S 0.42 at \u226410% VIP targeted \u2192 0.00 at 100%; 0.43 at P_VIP\u2192SOM \u2264 0.1 \u2192 0.00 at 1",
+  "match"
+ ],
+ [
+  "Fig. 5e,f",
+  "depends on SOM targeting, not VIP or P_VIP\u2192SOM",
+  "VIP range 0.05, P_VIP\u2192SOM range 0.02, SOM range 0.56",
+  "match"
+ ],
+ [
+  "Fig. 6b",
+  "moderate somatic inhibition raises S; too strong lowers it",
+  "S 0.39 \u2192 peak 0.68 at w = 0.12; 0.08 at w = 0.16",
+  "match"
+ ],
+ [
+  "Fig. 7b",
+  "no change / LTD / LTP; threshold rises with inhibition; no LTP at strong inhibition",
+  "see table in PAPER_COMPARISON.md (V2)",
+  "match"
+ ],
+ [
+  "Fig. 7c",
+  "synapses onto disinhibited branches strengthen, onto inhibited ones weaken",
+  "A on its branch w = 2.78, on the other w = 1.00 (start 1.00)",
+  "partial (no weakening)"
+ ],
+ [
+  "Fig. 7d,e",
+  "S \u2248 0 before, \u2248 0.7 after learning",
+  "S 0.06 before, 0.92 \u00b1 0.10 after",
+  "match"
+ ]
+]

@@ -510,17 +510,75 @@ blocks of L epochs; recall at the end of the run.
 - Fixed Poisson MD gives the same numbers within 0.01. No gating during learning (L = 4):
   S 0.01–0.03 at f = 0, 0.5, 1. E 12–17 Hz with gating, 68 Hz without.
 - **Prediction holds for f ≤ 0.5.**
-- **New: at high overlap with 12-s blocks the network is more recency-biased than the single
-  cell.** The current context is recalled better, and at f = 1 the previous one is more
-  reversed. The shared afferents swing fully to the latest context's branch each block (shared
-  on branch 0: 0.93 at the end of A, 0.54 at the end of B). The cause is not separated: the
-  learning rate (50 Hz here, 80 Hz in the single-cell runs), the recurrence, or averaging S
-  over 20 cells.
+- ~~New: at high overlap with 12-s blocks the network is more recency-biased than the single
+  cell.~~ **Corrected 2026-11-19 (step 4b below):** there is no network effect. At f = 0.75 the
+  gap came from comparing the 10-seed single-cell mean with 5 network seeds (on the same seeds
+  both give 0.68 / −0.15). At f = 1 it is the learning rate: a single cell learning at 50 Hz
+  gives 0.41 / −0.45, the network 0.41 / −0.41.
 - **Claim unchanged:** both contexts are recalled only for f ≤ 0.25 with 12-s blocks; the loop
   and the recurrence do not change that.
 
+### Step 4b — what caused the network's extra recency? (2026-11-19)
+`experiments/recency_cause.py`, `results/current/recency_cause{,_summary}.json`, `figures/recency_cause.png`.
+- 2 × 2 design on the same 5 seeds (42–46), L = 4: single cell vs network × learning at 50 vs
+  80 Hz, plus the network at recurrence gain 0. 60 new runs.
+- Prediction: recurrence minor; no confident prediction for the rate effect.
+
+| f | cell 80 Hz | cell 50 Hz | network 50 Hz (4a) | network gain 0 | network 80 Hz |
+|---|---|---|---|---|---|
+| 0.25 | 0.89 / 0.86 | 0.86 / 0.84 | 0.92 / 0.92 | 0.91 / 0.72 | — |
+| 0.5 | 0.91 / 0.02 | 0.89 / 0.04 | 0.85 / 0.08 | 0.80 / 0.06 | 0.86 / **0.53 ± 0.13** |
+| 0.75 | 0.68 / −0.15 | 0.71 / −0.13 | 0.68 / −0.15 | 0.58 / −0.14 | 0.64 / −0.14 |
+| 1.0 | 0.11 / −0.18 | **0.41 / −0.45** | **0.41 / −0.41** | 0.30 / −0.30 | 0.33 / −0.32 |
+
+- **f = 0.75:** no difference on matched seeds. The step-4a gap came from the 10-seed single-cell
+  mean (seeds 47–51 are low; single-cell S ranges 0.84 to −0.23 across seeds). The network
+  averages 20 cells, so its sd is ~4× smaller.
+- **f = 1:** the learning rate explains it (cell at 50 Hz = network at 50 Hz). Recurrence adds a
+  little (0.30 → 0.41).
+- **New, unexplained:** the network learning at 80 Hz keeps the previous context at f = 0.5
+  (0.53 ± 0.13, all seeds); the single cell at 80 Hz (0.02) and the network at 50 Hz (0.08) do
+  not. Not a claim until understood.
+- **Conclusion:** the network adds no recency of its own.
+
+### Step 5 — robustness of the alternation claim and the remaining R3 gaps (2026-11-19)
+`experiments/robustness_claims.py` (`results/current/robustness_claims{,_summary}.json`,
+`figures/robustness_claims.png`); `experiments/robustness_r3.py canonical` extended.
+- **R3 gaps closed:** bAP calcium (×0.2) and VIP→SOM (×0.25) scaled ×0.5–×1.5. Nothing changes
+  (gating 5/5, S 0.93–0.94, S_learn 0.89–0.91). R3 has no knife-edge at ±25% over 16 parameters.
+- **The claim** (L = 4: previous context kept at f = 0.25, S > 0.5; lost at f = 0.5) under ×0.75
+  and ×1.25 of each of the 16 parameters, 5 seeds, 330 runs. Prediction: holds everywhere.
+- **Result: holds in 30 of 32 conditions.** Baseline 0.89 / 0.86 at f = 0.25, 0.91 / 0.02 at 0.5.
+
+| breaks at | f = 0.25 current / previous | f = 0.5 current / previous |
+|---|---|---|
+| gNMDA ×1.25 | 0.53 / 0.42 | 0.09 / 0.09 |
+| SOM Poisson weight ×0.75 | 0.74 / 0.39 | −0.10 / 0.10 |
+
+- Neither failure moves the overlap boundary: learning itself degrades (even the current
+  context is barely recalled at f = 0.5). Both make the inhibited branch easier to potentiate
+  (stronger NMDA, or SOM below ~30 Hz) — the same two directions where R3's S_learn drops
+  (0.73, 0.81). SOM Poisson rate ×0.75 is borderline (previous 0.53 ± 0.34; current at f = 0.5 0.09).
+- **Claim we can make:** the alternation result holds across ±25% of most parameters, provided
+  SOM inhibition of the closed branch is strong relative to the NMDA drive.
+
+### Step 6 — outdated figures re-made on the canonical model (2026-11-19)
+- `robustness_r4_readout.py canonical` (`figures/robustness_r4_readout_canonical.png`, 7 seeds,
+  learned on the canonical model): S after learning 0.90 / 0.91 / 0.62 / 0.31 / 0.05 / −0.13 at
+  5 / 10 / 15 / 20 / 30 / 50 Hz; before learning ≈ 0 wherever the pattern evokes a response (at
+  5–10 Hz it evokes < 0.3 Hz, so S is undefined; open symbols). Same window as the committed figure.
+- `specificity_test.py canonical` (`figures/specificity_test_canonical.png`, VIP→SOM ×0.25):
+  VIP→SOM tolerates 7.5% cross-talk (fails at 15%: 2/5, S_learn 0.66); SOM→dendrite 20%
+  (fails at 30%); MD→VIP spill-over 25% (q 0.625) 4/5 gated, S_learn 0.81 — still the weak point.
+  Matches the follow-up table above.
+
+### Step 7 — every reproducible Yang 2016 figure (2026-11-19)
+`experiments/yang_figures.py`, `plotting/yang_rate_model.py`, `notebooks/yang_replication.ipynb`,
+`docs/reports/Yang2016_replication.pdf`, `figures/yang_replication/`. Summary in
+`docs/reports/PAPER_COMPARISON.md`. New: Fig. 3 on a spiking neuron with 10–30 dendrites, Figs.
+4–6 and Supp. 2, 4, 5, 6 with Yang's rate model refit to our neuron, Fig. 7c–e with tuning curves.
+
 ### Still to do
-- Separate the cause of the stronger recency at high overlap (single cell at 50 Hz; network at
-  recurrence gain 0).
+- Why the network learning at 80 Hz keeps the previous context at f = 0.5 (step 4b).
 - Step 3b is done with rate-unit context populations. A spiking context/MD loop is not built (no regime found).
 - Inhibited-branch weakening is slow at the 8 × 3-s learning length.

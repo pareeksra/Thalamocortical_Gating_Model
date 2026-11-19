@@ -1,4 +1,4 @@
-# Canonical model vs the papers (R4 of PLAN_robustness.md, 2026-11-10)
+# Canonical model vs the papers (R4 of PLAN_robustness.md, 2026-11-10; Yang Figs. 3–7 added 2026-11-19)
 
 **Canonical model** = `model/context_circuit.py` defaults since 2026-11-10:
 - Yang's NMDA-plastic synapse (w scales NMDA, AMPA off, ρ₀ = 1/3).
@@ -23,8 +23,16 @@ RNN, so it supplies wiring, not rates.
 | Fig. 7d,e | Before learning no gate preference; after learning strong pathway-specific gating | S before ≈ 0 at equal drive (0.06, −0.01, −0.12); after learning S = 0.88 (5 seeds, 10 Hz readout; R5 S1: 0.92, 0.93, 0.81) | **match**, at readout drive ≤ 15 Hz/synapse | `robustness_r3_canonical.json`, `tests/test_replication.py --slow` S1 |
 | Fig. 2e–g | Open gate transmits tuning; S of the 2-D tuning ≈ 0.6 at Yang's settings | 27 vs 8 Hz at the preferred stimulus, S ≈ 0.6 | **match** (with 0.8 nS clamped-soma coupling, 300 Hz soma background) | `notebooks/yang_fig2_supp1.ipynb` |
 | Supp. Fig. 1f–h | Inhibition gates NMDA input strongly, AMPA input weakly | qualitative match | **match** | same notebook, `figures/yang_supp1_fgh_model.png` |
-| Fig. 5 | Gating selectivity typically 0.5–0.9, high when control is branch-specific; collapses with non-specific control | Fig. 5 protocol at default wiring: S = 0.93 (5 seeds) | **match**, *given* branch-specific VIP→SOM (assumption G2) | `robustness_r3_canonical.json`; `gating_selectivity_fig5.py` (old synapse) |
-| Figs. 3–4 | Network-scale gating selectivity (many dendrites per neuron, sparse control) | not run: our cells have 2 branches | **not reproduced** | — |
+| Fig. 5 (circuit analogue) | Gating selectivity typically 0.5–0.9, high when control is branch-specific; collapses with non-specific control | Fig. 5 protocol at default wiring: S = 0.93 (5 seeds) | **match**, *given* branch-specific VIP→SOM (assumption G2) | `robustness_r3_canonical.json`; `gating_selectivity_fig5.py` (old synapse) |
+| Fig. 3b,c | Single neuron: S falls as patterns get denser (N_disinh/N_dend), rises with disinhibition; non-overlapping highest but < 1 | Our SPIKING neuron with 10/20/30 dendrites: S 0.44–0.73 at the sparsest pattern → 0 when every dendrite is targeted; ≈ 0.25 / 0.43 / 0.58 at 10 / 20 / 30 Hz disinhibition (N_dend 20, mean of N_disinh 1–4); non-overlapping 0.52–0.62. Rate model with our fit lies on the spiking points | **match** | `experiments/yang_figures.py` (fig3), `notebooks/yang_replication.ipynb` |
+| Supp. Fig. 4 | Rate model fitted to the spiking neuron: b_g 5.56, k 9.64 nS, γ 6.54 nS, V0 0.78 mV; soma r = [(I + 174.86)/45.16]^2.89 | Refit to OUR spiking neuron: b_g 5.62, k 8.9, γ 5.6, V0 1.05; soma I0 −171, c 42.1, p 2.63 (500 Hz background, rest 2.2 Hz vs 1.8) | **refit**, close to Yang's | `yang_figures.py` (supp4), `plotting/yang_rate_model.py` |
+| Fig. 4c–f | SOM–pyramidal column: S ≈ 0.5 at N_SOM→dend ≈ 5, set by N_SOM→dend alone | Yang's network with our fitted neuron: S = 0.38 (10–90%: 0.10–0.66); Yang's fit in the same code 0.41; c–e flat; S falls with N_SOM→dend beyond 2 | **match** (0.38 vs ~0.5) | notebook (rate model) |
+| Fig. 5b,c,e,f (network) | VIP-only control: high S only for sparse targeting and sparse VIP→SOM; VIP+SOM control: S set by SOM targeting | Peak S 0.42 at 5–10% VIP targeted → 0 at 100%; 0.43 at P_VIP→SOM ≤ 0.1 → 0; VIP+SOM: VIP targeting and P_VIP→SOM change S by ≤ 0.05, SOM targeting by 0.56 | **match** | notebook (rate model) |
+| Fig. 6b, Supp. 5–6 | Somatic PV inhibition raises S; too much lowers it; uniform across cells | S 0.39 → 0.68 (w_SOM→PV 0.12 per connection) → 0.08 at 0.16; PV→soma change −44 ± 1 pA | **match** | notebook (rate model) |
+| Supp. Fig. 2c,d | NMDA saturation caps the effective input below θ_NMDA under moderate inhibition | θ ≈ 4.88; saturated input 9.4 / 4.7 / 3.1 at g_GABA 0 / 4 / 8 nS | **match** (analytic, our constants) | notebook |
+| Supp. Fig. 3c | S falls with the AMPA fraction | 0.73 (NMDA only) → 0.15 (AMPA only) | **match** | `yang_figures.py` (supp3) |
+| Fig. 7c (weights) / 7d,e (tuning) | Alignment of excitation and disinhibition; S ≈ 0 before, ≈ 0.7 after | Our circuit: A's synapses w 2.78 on their branch, 1.00 on the other; tuning with drive equalised as Yang: S 0.06 ± 0.21 before, 0.92 ± 0.10 after | **match** (7c partial: no weakening) | `yang_figures.py` (fig7) |
+| Not reproducible | Fig. 1 (schematic), Fig. 8 + Supp. 8 (monkey behaviour fits), Supp. 1a–d (NEURON morphology), Supp. 2a,b,e–h, Supp. 3d,e (GABA_B), Supp. 7 (slice data) | — | — | reasons in `docs/reports/Yang2016_replication.pdf` |
 
 ## Zhang et al. 2025 (wiring, qualitative)
 

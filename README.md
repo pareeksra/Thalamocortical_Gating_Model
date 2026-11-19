@@ -1,5 +1,11 @@
 # Thalamocortical Gating & Cognitive Flexibility Model
 
+> **Status 2026-11-19:** every reproducible Yang 2016 figure is reproduced from our model
+> (`notebooks/yang_replication.ipynb`, `docs/reports/Yang2016_replication.pdf`), including Figs. 3–6
+> with Yang's rate model refit to our neuron. The alternation claim holds under ±25% of 30 of 32
+> parameter changes (fails at NMDA ×1.25, SOM Poisson weight ×0.75); the network adds no recency
+> of its own (`PLAN_robustness.md`, steps 4b–7).
+>
 > **Status 2026-11-11:** canonical model = Yang's NMDA-plastic synapse + fluctuation-driven
 > SOM baseline + bAP calcium ×0.2 + VIP→SOM ×0.25 (`model/context_circuit.py` defaults).
 > All robustness checks were re-run on it: 19/19 tests, 20/20 seeds, no knife-edge at ±25%.

@@ -120,6 +120,8 @@ def _readouts(nw, learned, rho_b):
 
 def analyse(done=None):
     done = done or json.load(open(OUT))
+    if 'runs' in done:   # file already holds {summary, runs}
+        done = done['runs']
     summ = {}
     for st in ('before', 'after'):
         for rate in RATES:
@@ -139,6 +141,11 @@ def analyse(done=None):
     for st, c in (('before', '#999999'), ('after', '#0072B2')):
         ax[0].errorbar(RATES, [summ[f'{st}_{r}']['S'][0] for r in RATES], yerr=[summ[f'{st}_{r}']['S'][1] for r in RATES],
                        fmt='o-', color=c, lw=2, capsize=3, label=f'{st} learning')
+        # S is meaningless where the pattern evokes (almost) no response: open symbols
+        quiet = [r for r in RATES if max(summ[f'{st}_{r}']['rates'][2] - summ[f'{st}_{r}']['rates'][0], 0) < 1.0]
+        if quiet:
+            ax[0].plot(quiet, [summ[f'{st}_{r}']['S'][0] for r in quiet], 'o', ms=9, mfc='white', mec=c, mew=2, zorder=5,
+                       label=f'{st}: no response (< 1 Hz evoked), S undefined')
         ax[1].plot(RATES, [summ[f'{st}_{r}']['plat'][2][0] for r in RATES], 'o-', color=c, lw=2,
                    label=f'{st}: own branch, its gate open')
         ax[1].plot(RATES, [summ[f'{st}_{r}']['plat'][3][1] for r in RATES], 's--', color=c, lw=2,

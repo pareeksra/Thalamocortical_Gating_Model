@@ -39,6 +39,9 @@ Result (2026-11-12, 115 runs on toothless, ~19 min each):
     0.93 at the end of A, 0.54 at the end of B, f = 1). Not separated: learning input rate
     (50 Hz here, 80 Hz in the single-cell runs), recurrence, and averaging S over 20 cells.
   - Conclusion unchanged: both contexts are recalled only for f <= 0.25 with 12-s blocks.
+  - CORRECTION (2026-11-19, experiments/recency_cause.py): the network adds no recency of its own.
+    At f = 0.75 the gap came from comparing the 10-seed single-cell mean with these 5 seeds (same
+    seeds: 0.68 / -0.15 both). At f = 1 it is the learning rate (single cell at 50 Hz: 0.41 / -0.45).
 Run:     <py> -I experiments/network_alternation.py run [n_workers]
 Analyse: <py> -I experiments/network_alternation.py analyse
 Out:     results/current/network_alternation.json, _summary.json, figures/network_alternation.png

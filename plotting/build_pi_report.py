@@ -208,12 +208,13 @@ def network_alternation():
 NET_ALT_READING = ("Reading: for overlap ≤ 0.5 the network reproduces the single cell within about 0.05, and the "
                    "MD loop gives the same result as a fixed MD input (within 0.01). Without MD gating nothing is "
                    "recalled. New: at high overlap with 12-s blocks the network is more biased toward the latest "
-                   "context than the single cell (f = 1: 0.41 / −0.41 against 0.10 / −0.16); the shared synapses "
-                   "move fully to the latest context’s branch every block. Not yet separated: the learning input "
-                   "rate (50 Hz here, 80 Hz in the single cell), the recurrence, or averaging over 20 cells. The "
-                   "conclusion is unchanged: both contexts are recalled only for ≤ 25% overlap with 12-s blocks.")
-NET_ALT_STAND = ('done (12 November): matches the single cell for overlap ≤ 0.5, with the MD loop as with '
-                 'fixed MD; stronger recency at high overlap')
+                   "context than the single cell (f = 1: 0.41 / −0.41 against 0.10 / −0.16). Step 4b (19 November) traced "
+                   "this: it is not a network effect. At f = 0.75 the single-cell value in this table is a 10-seed mean; on "
+                   "the same 5 seeds the cell and the network agree exactly (0.68 / −0.15). At f = 1 it is the learning "
+                   "rate: a single cell learning at 50 Hz, as the network does, gives 0.41 / −0.45. The conclusion is "
+                   "unchanged: both contexts are recalled only for ≤ 25% overlap with 12-s blocks.")
+NET_ALT_STAND = ('done (12 November): matches the single cell, with the MD loop as with fixed MD; the apparent '
+                 'extra recency at high overlap was traced to seed choice and learning rate (19 November, step 4b)')
 
 
 # ===========================================================================
@@ -240,12 +241,16 @@ sp('What we have built.', "A spiking model (Brian 2) of one pyramidal cell with 
 sp('What works and is tested.', "")
 bullets([
     "MD selects which branch learns, in every seed (20/20), independent of the time step, with no "
-    "fragile parameter at ±25% on 14 parameters, and 19/19 automated regression checks.",
+    "fragile parameter at ±25% on 16 parameters, and 19/19 automated regression checks.",
+    "The main context result (both contexts kept at 25% input overlap, the old one lost at 50%) holds "
+    "when each of 16 parameters is changed by ±25%, in 30 of 32 cases; it breaks only with stronger NMDA "
+    "or weaker SOM drive, where learning itself degrades (§6).",
     "Learning changes behaviour: after learning, the cell responds to a pattern only when that "
     "pattern’s context gate is open (selectivity 0.86–0.89, from ≈ 0 before) — Yang Fig. 7d,e.",
-    "The papers’ figures are reproduced where they can be checked (Yang Supp. Fig. 1, Fig. 2, the "
-    "Fig. 2c dendrite fit, Fig. 7b, 7d,e; Zhang’s wiring) — §4. One partial mismatch: the inhibited "
-    "branch weakens only slowly.",
+    "Every reproducible figure of Yang 2016 is reproduced from our model (13 match: Figs. 2–7 and "
+    "Supp. Figs. 1–6, including Fig. 3 on a spiking neuron with 10–30 dendrites and Figs. 4–6 with Yang’s "
+    "rate model refit to our neuron), plus Zhang’s wiring — §4. One partial mismatch: the inhibited branch "
+    "weakens only slowly.",
     "The mechanism survives a recurrent network up to a stability limit, and works with MD produced "
     "by a PFC↔MD loop instead of a fixed input; the context-alternation results carry over to the network.",
 ])
@@ -255,7 +260,8 @@ sp('What we can claim today.', "MD gating decides where learning happens and is 
    "input sparsity, not from inhibition itself.")
 sp('What we can not claim (yet).', "That MD gating prevents forgetting in general (at ≥ 50% input "
    "overlap the old memory is lost); that the network results hold at biological recurrence strength "
-   "(our recurrent weights are guesses); anything at Yang’s network scale (~3000 neurons).")
+   "(our recurrent weights are guesses); the learning results at Yang’s network scale (~3000 neurons; "
+   "his network figures are reproduced with a rate model, not with learning spiking cells).")
 sp('Main open points.', "Slow weakening on the inhibited branch; learned gating shows only for "
    "readout drive ≤ 15 Hz per synapse; the branch-specific MD→VIP channels are our assumption; SOM "
    "must fire at ≈ 30 Hz against Yang’s ≈ 10 Hz.")
@@ -360,7 +366,7 @@ p("The audit also checked the integration step (results converged), compiled the
   "coupling (2× faster), fixed worker reuse in parallel sweeps, recalibrated PV, added a balanced "
   "soma, and ran the first overlap and alternation experiments. Branch-specific VIP→SOM channels "
   "were recorded as a modelling assumption.")
-h2('3.4  4–12 November: a robust canonical model, then a network')
+h2('3.4  4–19 November: a robust canonical model, then a network')
 p("A status review (4 Nov) found the largest gap: with the old synapse, learned weights scaled only "
   "a small AMPA conductance, so learning did not change the cell’s output. A five-step robustness "
   "plan followed: R1 choose the synapse, R2 numerics, R3 parameter sensitivity, R4 agreement with "
@@ -380,6 +386,10 @@ table(['Change', 'Why', 'Effect'],
         'Tolerates 7.5% VIP→SOM cross-talk; all results re-run']])
 p("Then the network work (§8): how specific the MD channels must be, Zhang’s remaining connections, "
   "a 20-cell recurrent network, and a PFC↔MD loop producing the MD signal.")
+p("19 November: the remaining checks. The context-alternation claim was stress-tested against ±25% of 16 "
+  "parameters (§6); the network’s apparent extra recency was traced to seed choice and learning rate (§8); "
+  "the two outdated figures were re-made on the canonical model; and every reproducible Yang 2016 figure "
+  "was reproduced, with a notebook and a PDF (§4, §5).")
 
 # ===========================================================================
 h1('4. Replication of the papers’ figures')
@@ -395,16 +405,25 @@ table(['Paper figure', 'What the paper shows', 'Our model', 'Verdict'],
        ['Yang Fig. 7b', 'Weak inhibition: no change / LTD / LTP as the rate rises; more inhibition raises the LTP threshold; strong inhibition: no LTP',
         'Free branch: 0 at ≤ 5 Hz, LTD at 10 Hz, LTP from 15 Hz; SOM 13 Hz: LTP only from 150 Hz; SOM 31/60 Hz: no LTP up to 150 Hz', 'match'],
        ['Yang Methods (bAP ×0.2)', 'Non-activated synapses do not change', 'Δw = 0.000 at 0–2 Hz; 300-s idle phase keeps 1.000', 'match'],
-       ['Yang Fig. 7c', 'Free branch strengthens, inhibited branch weakens', 'Free 0.93; inhibited stays at 0.33 (weakens only with longer exposure)', 'partial'],
-       ['Yang Fig. 7d,e', 'No gate preference before learning; strong pathway gating after', 'S ≈ 0 before; 0.86–0.89 after (readout ≤ 15 Hz per synapse)', 'match'],
-       ['Yang Fig. 5', 'Selectivity 0.5–0.9, needs branch-specific control', 'S = 0.93 with branch-specific channels; collapses when mixed', 'match (given our assumption)'],
-       ['Yang Figs. 3–4', 'Gating selectivity across a network of neurons with many dendrites; dependence on sparse control', 'Not run: our cells have 2 branches', 'not reproduced'],
+       ['Yang Fig. 7c', 'Free branch strengthens, inhibited branch weakens', 'Learned pattern w 2.78 on its branch; stays at 1.00 on the other (weakens only with longer exposure)', 'partial'],
+       ['Yang Fig. 7d,e', 'No gate preference before learning; strong pathway gating after (S ≈ 0.7)', 'Tuning curves with Yang’s equalised drive: S 0.06 before, 0.92 ± 0.10 after', 'match'],
+       ['Yang Supp. Fig. 2c,d', 'NMDA saturation lets moderate inhibition keep the input below the plateau threshold', 'Same, analytic with our constants (θ ≈ 4.9; ceiling 4.7 / 3.1 at 4 / 8 nS)', 'match'],
+       ['Yang Supp. Fig. 3c', 'AMPA input degrades gating', 'S 0.73 (NMDA only) → 0.15 (AMPA only)', 'match'],
+       ['Yang Supp. Fig. 4', 'Rate model fitted to the spiking neuron', 'Refit to ours: b_g 5.62 (Yang 5.56), k 8.9 (9.64), γ 5.6 (6.54); soma exponent 2.63 (2.89)', 'close'],
+       ['Yang Fig. 3', 'One neuron: sparser and stronger disinhibition gate better; non-overlapping patterns best, < 1', 'Spiking neuron with 10–30 dendrites: S 0.44–0.73 sparse → 0 dense; rises with disinhibition; rate model on the points', 'match'],
+       ['Yang Fig. 4', 'SOM–pyramidal column: S ≈ 0.5 at ≈ 5 SOM per dendrite, set by that number alone', 'S = 0.38 (Yang’s own fit in the same code: 0.41); flat when the number is held', 'match'],
+       ['Yang Fig. 5 (network)', 'VIP-only control needs sparse targeting; VIP+SOM control is set by SOM targeting', 'Peak 0.42 at 5–10% VIP targeted → 0; SOM targeting changes S by 0.56, VIP by ≤ 0.05', 'match'],
+       ['Yang Fig. 6, Supp. 5–6', 'Somatic PV inhibition raises S until it silences cells; uniform', 'S 0.39 → 0.68 → 0.08; PV→soma change −44 ± 1 pA', 'match'],
+       ['Yang Fig. 5 (circuit analogue)', 'Selectivity 0.5–0.9, needs branch-specific control', 'S = 0.93 with branch-specific channels; collapses when mixed', 'match (given our assumption)'],
+       ['Not reproducible', 'Fig. 1 (schematic), Fig. 8 and Supp. 8 (monkey behaviour), Supp. 1a–d, 2a,b,e–h, 3d,e, 7', 'Need data or models outside this project', '—'],
        ['Zhang 2025 wiring', 'MD→PV, MD→VIP, VIP→SOM, SOM→E/PV/VIP, PV→E/PV, E→all, PFC↔MD loop',
         'All present; SOM→VIP and PV→PV as options; E→all and the loop in the network (§8)', 'match (signs)'],
        ['Zhang 2025, MD activation', 'MD disinhibits through VIP and adds PV gain', 'MD 0→40 Hz: VIP 0→85 Hz, own SOM 31→0.1 Hz, other SOM unchanged, PV 2→95 Hz', 'match']])
-figure('figures/yang_supp1_fgh_model.png',
-       'Yang Supp. Fig. 1f–h reproduced: NMDA plateau and its gating by inhibition (notebook).', 6.2)
-figure('figures/yang_fig2_model.png',
+p("All figures below are in one PDF with Yang’s claim, our number and the verdict per page: "
+  "docs/reports/Yang2016_replication.pdf (built from notebooks/yang_replication.ipynb).")
+figure('figures/yang_replication/supp1_fgh.png',
+       'Yang Supp. Fig. 1f–h reproduced: NMDA plateau and its gating by inhibition (NMDA 41 mV vs AMPA 7 mV).', 6.2)
+figure('figures/yang_replication/fig2.png',
        'Yang Fig. 2b,c,e–g reproduced: plateau, disinhibition, and pathway-specific tuning (S = 0.60).', 6.4)
 v1 = make_v1_figure()
 if v1:
@@ -413,14 +432,36 @@ if v1:
 figure('figures/paper_comparison_v2.png',
        'Yang Fig. 7b analogue (300 s, 3 seeds): the three plasticity regimes, and the LTP threshold moving up '
        'with SOM inhibition.', 5.4)
-figure('figures/robustness_r4_readout.png',
-       'Yang Fig. 7d,e analogue: selectivity before and after learning against readout drive. Learned gating '
-       'shows for readout drive ≤ 15 Hz per synapse. (Made on 10 Nov with Yang’s synapse but before the noisy SOM and bAP ×0.2; '
-       'the canonical model gives S 0.91, 0.95, 0.82 at 10 Hz in the regression test.)', 6.2)
+figure('figures/yang_replication/supp4.png',
+       'Yang Supp. Fig. 4: Yang’s rate model fitted to our spiking dendrite and soma (black) against Yang’s '
+       'published fit (dotted). The two neurons are close.', 6.4)
+figure('figures/yang_replication/fig3.png',
+       'Yang Fig. 3, on our spiking neuron with 10–30 dendrites (points) and the rate model (lines): sparser and '
+       'stronger disinhibition gate better.', 6.4)
+figure('figures/yang_replication/fig4.png',
+       'Yang Fig. 4c–f: SOM–pyramidal column with random connectivity (rate model fitted to our neuron; band = '
+       '10–90% of neurons; dotted = Yang’s fit).', 6.6)
+figure('figures/yang_replication/fig5.png', 'Yang Fig. 5b,c,e,f: making SOM context-selective with VIP (and SOM) control.', 6.6)
+figure('figures/yang_replication/fig6.png', 'Yang Fig. 6b and Supp. Fig. 6: somatic PV inhibition improves gating until it silences cells.', 6.4)
+figure('figures/yang_replication/fig7c.png',
+       'Yang Fig. 7c: learning aligns excitation with disinhibition in our circuit (synapses onto the inhibited '
+       'branch stay at w = 1: the partial mismatch).', 6.4)
+figure('figures/yang_replication/fig7de.png',
+       'Yang Fig. 7d,e: tuning before and after learning, drive equalised as in Yang (S 0.06 → 0.92).', 5.6)
+figure('figures/robustness_r4_readout_canonical.png',
+       'Learned gating against readout drive (canonical model, re-made 19 November, 7 seeds): S 0.90–0.91 at '
+       '5–10 Hz per synapse, 0.62 at 15 Hz, ≈ 0 from 30 Hz. Open symbols: no response, S undefined.', 6.2)
 
 # ===========================================================================
-h1('5. The Yang Fig. 2 / Supp. Fig. 1 notebook')
-p("notebooks/yang_fig2_supp1.ipynb re-runs Yang Fig. 2b,c,e–g and Supp. Fig. 1f–h directly from the "
+h1('5. The notebooks')
+p("notebooks/yang_replication.ipynb (new, 19 November) goes through every figure of Yang 2016 and its "
+  "supplement: each is reproduced from our model or listed as not reproducible with the reason, and a "
+  "summary table compares our numbers with Yang’s. The spiking simulations run on toothless "
+  "(experiments/yang_figures.py, about 20 min on 38 cores) and are loaded from "
+  "results/current/yang_figures.json; the rate-network figures (Figs. 3–6) are computed in the notebook "
+  "in about a minute (plotting/yang_rate_model.py). plotting/build_yang_replication_pdf.py turns its "
+  "figures into docs/reports/Yang2016_replication.pdf.")
+p("notebooks/yang_fig2_supp1.ipynb (the earlier, interactive notebook) re-runs Yang Fig. 2b,c,e–g and Supp. Fig. 1f–h directly from the "
   "model files (model/equations.py, model/parameters.py) through plotting/yang_fig2_supp1.py; "
   "nothing is re-implemented in the notebook, so changing model/parameters.py changes the figures.")
 bullets([
@@ -448,13 +489,25 @@ table(['Check', 'Criterion', 'Result'],
       [['Gating over 20 seeds', '≥ 19/20', '20/20 (free branch 0.928, inhibited 0.333, ratio 2.8)'],
        ['Time step 0.1 vs 0.05 ms', 'Δρ < 0.01', 'max 0.00014'],
        ['Soma background', '5–15 Hz, irregular', '8.8–11.5 Hz, CV 0.96–1.38'],
-       ['14 parameters × {0.5, 0.75, 1.25, 1.5}, 5 seeds', 'gating; S > 0.5; learned S > 0.5',
+       ['16 parameters × {0.5, 0.75, 1.25, 1.5}, 5 seeds', 'gating; S > 0.5; learned S > 0.5',
         'No failure at ±25% (S 0.84–0.99, learned S 0.64–0.95). Failures only at ×0.5 of six parameters '
-        '(NMDA conductance, dendritic leak, MD rate, MD→VIP weight, SOM input rate and weight)'],
+        '(NMDA conductance, dendritic leak, MD rate, MD→VIP weight, SOM input rate and weight). bAP calcium '
+        'and VIP→SOM weight (added 19 Nov) change nothing from ×0.5 to ×1.5'],
+       ['Alternation claim, 16 parameters × {0.75, 1.25}, 5 seeds (330 runs)',
+        'previous context kept at 25% overlap (S > 0.5), lost at 50%',
+        'Holds in 30/32. Breaks at NMDA ×1.25 (previous 0.42) and SOM Poisson weight ×0.75 (0.39): learning '
+        'itself degrades there (current context at 50% overlap 0.09 / −0.10)'],
        ['Regression tests (tests/test_replication.py)', 'all pass', 'fast tier 11/11; full tier 19/19 (456 s)']])
 figure('figures/robustness_r3_canonical.png',
-       'Parameter sensitivity: 14 parameters scaled ×0.5–×1.5 (grey band ±25%). Gating, selectivity, learned '
+       'Parameter sensitivity: 16 parameters scaled ×0.5–×1.5 (grey band ±25%). Gating, selectivity, learned '
        'selectivity and retention with silent inputs hold inside the band.', 6.6)
+figure('figures/robustness_claims.png',
+       'Is the alternation claim robust? Recall of the current (open) and previous (filled) context with each '
+       'parameter ×0.75 / ×1.25. It holds except for stronger NMDA and weaker SOM drive, where the inhibited '
+       'branch becomes easier to potentiate.', 6.6)
+p("Reading: the claim needs SOM inhibition of the closed branch to be strong relative to the NMDA drive. "
+  "That is a stated condition, not a hidden tuning: the same two directions already lowered the learned "
+  "selectivity in the single-parameter sweep.")
 
 # ===========================================================================
 h1('7. Context experiments (learn A, then B), single cell')
@@ -488,8 +541,9 @@ sp('Step 1: how branch-specific must the MD→VIP→SOM→dendrite channels be?'
    "specific to uniform. SOM→dendrite tolerates 20% wrong-branch synapses; VIP→SOM tolerates 7.5% at "
    "the canonical weight ×0.25 (20% at ×0.1); MD→VIP must respect the channel. So the one requirement "
    "on the anatomy is a channel-specific MD→VIP projection.")
-figure('figures/specificity_test.png', 'Step 1: gating and learning as each stage of the channel is mixed (VIP→SOM at ×1, '
-       'before the change to ×0.25; at ×0.25 the VIP→SOM tolerance widens to 7.5%).', 6.4)
+figure('figures/specificity_test_canonical.png', 'Step 1, re-made on the canonical model (VIP→SOM ×0.25, 19 November): '
+       'gating and learning as each stage of the channel is mixed. SOM→dendrite tolerates 20%, VIP→SOM 7.5%; '
+       'MD→VIP spill-over of 25% already loses one seed in five.', 6.4)
 sp('Step 2: Zhang’s other connections.', "SOM→VIP is compatible with gating when weak (≲ 0.1 nS, a "
    "quarter of the MD drive), within-channel (any strength tested), or opposed by stronger MD. PV→PV has "
    "no effect on gating or learning.")
@@ -526,11 +580,23 @@ if na and na[0]:
     figure('figures/network_alternation.png', 'Step 4a: alternation on the network against the single cell.', 6.6)
 else:
     p("Running at the time of writing (115 simulations); results will be added here.", italic=True)
+sp('Step 4b: what caused the extra recency?', "A 2 × 2 design on the same 5 seeds: single cell vs network, "
+   "learning at 50 vs 80 Hz, plus the network without recurrence (60 runs). Recall at 12-s blocks, current / "
+   "previous context:")
+table(['overlap f', 'cell, 80 Hz', 'cell, 50 Hz', 'network, 50 Hz', 'network, no recurrence', 'network, 80 Hz'],
+      [['0.5', '0.91 / 0.02', '0.89 / 0.04', '0.85 / 0.08', '0.80 / 0.06', '0.86 / 0.53'],
+       ['0.75', '0.68 / −0.15', '0.71 / −0.13', '0.68 / −0.15', '0.58 / −0.14', '0.64 / −0.14'],
+       ['1.0', '0.11 / −0.18', '0.41 / −0.45', '0.41 / −0.41', '0.30 / −0.30', '0.33 / −0.32']])
+p("Reading: the network adds no recency of its own. At 75% overlap the cell and the network agree on the same "
+  "seeds (single-cell seeds vary from 0.84 to −0.23; the network averages 20 cells). At full overlap a cell "
+  "learning at 50 Hz behaves like the network. One new, unexplained result: the network learning at 80 Hz "
+  "keeps the previous context at 50% overlap (0.53 ± 0.13, every seed); it is not a claim until understood.")
+figure('figures/recency_cause.png', 'Step 4b: recall against overlap for the five conditions.', 6.4)
 
 # ===========================================================================
 h1('9. What we can claim, open points, next steps')
 table(['Claim', 'Status', 'Evidence'],
-      [['MD selects which dendritic branch learns', 'supported, robust', '20/20 seeds, ±25% on 14 parameters, regression tests'],
+      [['MD selects which dendritic branch learns', 'supported, robust', '20/20 seeds, ±25% on 16 parameters, regression tests'],
        ['Learning creates context-specific output gating (Yang Fig. 7d,e)', 'supported, for readout ≤ 15 Hz per synapse', '§4, §6'],
        ['The model reproduces Yang’s single-neuron figures and Zhang’s wiring', 'supported; inhibited-branch weakening partial', '§4'],
        ['MD gating is needed for context-specific recall', 'supported', 'no gating: S ≈ 0 at every overlap (§7)'],
@@ -538,7 +604,9 @@ table(['Claim', 'Status', 'Evidence'],
        ['Inhibition erases a memory whose inputs stay active', 'not robust (0.69 ± 0.26, bimodal); not claimed', '§7'],
        ['The mechanism survives a recurrent network', 'supported up to a stability limit (gain 0.6 of our weights)', '§8'],
        ['MD can come from a PFC↔MD loop', 'supported (rate loop); a self-sustained loop needs competition and specificity', '§8'],
-       ['Context alternation works the same in the network', 'supported for overlap ≤ 0.5; stronger recency at high overlap (cause open)', '§8 step 4a']])
+       ['Context alternation works the same in the network', 'supported at every overlap (the apparent extra recency was seeds and learning rate)', '§8 steps 4a, 4b'],
+       ['The alternation result is robust to parameters', 'supported in 30/32 ±25% changes; needs SOM inhibition strong relative to NMDA', '§6'],
+       ['Our neuron and circuit reproduce Yang’s network-level figures (3–6)', 'supported with Yang’s method (rate model refit to our neuron)', '§4']])
 sp('Open points.', "")
 bullets([
     ('Inhibited-branch weakening', "is slow at our learning length (8 × 3 s); gating does not depend on it."),
@@ -549,10 +617,12 @@ bullets([
      "units (a spiking version had no working regime)."),
     ('SOM rate.', "Gating needs SOM at ≈ 30 Hz against Yang’s ≈ 10 Hz, because our dendrite is less "
      "shunted by inhibition than Yang’s fit."),
+    ('Network at 80 Hz learning', "keeps the previous context at 50% overlap (0.53), unlike the single cell "
+     "and the network at 50 Hz. Unexplained."),
 ])
 sp('Next steps.', "")
 bullets([
-    "Separate the cause of the stronger recency in the network (single cell at 50 Hz; network without recurrence).",
+    "Understand why the network learning at 80 Hz keeps the previous context at 50% overlap.",
     "Overlap and retention experiments on the network.",
     "A more realistic E/I balance or a larger network, to see whether the stability limit moves.",
     "Re-run the ketamine / MD→VIP block experiment on the canonical model.",

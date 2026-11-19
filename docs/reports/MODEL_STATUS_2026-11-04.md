@@ -3,6 +3,17 @@
 *2026-11-04. Covers everything up to commit `504daac` plus the Yang Fig. 2 / Supp. Fig. 1
 notebook. Evidence for every claim is in the file named beside it.*
 
+> **Update 2026-11-19** (`PLAN_robustness.md`, steps 4b–7).
+> - Every reproducible Yang 2016 figure is reproduced (13 match, Fig. 7c partial; Fig. 3 on a
+>   spiking neuron with 10–30 dendrites; Figs. 4–6 with Yang's rate model refit to our neuron,
+>   whose fit is close to Yang's: b_g 5.62 vs 5.56). `docs/reports/Yang2016_replication.pdf`.
+> - Alternation claim under ×0.75 / ×1.25 of 16 parameters: holds in 30/32; breaks at NMDA ×1.25
+>   and SOM Poisson weight ×0.75, where learning itself degrades. R3 has no knife-edge over 16 parameters.
+> - The network's extra recency (step 4a) is not a network effect: matched seeds and the
+>   learning rate explain it. New and unexplained: the network learning at 80 Hz keeps the
+>   previous context at f = 0.5 (0.53).
+> - Readout window and specificity re-made on the canonical model: unchanged.
+>
 > **Update 2026-11-12** (`PLAN_robustness.md`, Step 4a). The alternation experiment on the
 > 20-cell network with the PFC↔MD loop reproduces the single cell for overlap ≤ 0.5; at higher
 > overlap with 12-s blocks the network is more recency-biased (f = 1: 0.41 / −0.41 vs 0.10 / −0.16).

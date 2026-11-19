@@ -711,7 +711,13 @@ Rewritten: `phase1_single_neuron_gating.py` (analytical wrapper), `demo_v2_zhang
 | `experiments/specificity_test.py` | Step 1: cross-talk at MD→VIP, VIP→SOM, SOM→dendrite (`run`, `weak`, `analyse`). |
 | `experiments/zhang_wiring_test.py` | Step 2: Zhang's SOM→VIP (uniform/own/cross) and PV→PV. |
 | `model/network_circuit.py`, `experiments/network_test.py` | Step 3a: N canonical cells + Zhang E→all recurrence; gain sweep. |
-| `experiments/network_alternation.py` | Step 4a (2026-11-12): canonical A/B alternation on the network (amp loop and Poisson MD, gain 0.35); matches the single cell for f ≤ 0.5, more recency at high overlap. |
+| `experiments/network_alternation.py` | Step 4a (2026-11-12): canonical A/B alternation on the network (amp loop and Poisson MD, gain 0.35); matches the single cell for f ≤ 0.5; the extra recency at high overlap was later traced to seeds and learning rate (step 4b). |
+| `experiments/recency_cause.py` | Step 4b (2026-11-19): single cell vs network × 50/80 Hz learning, network at gain 0; the network's extra recency was a seed/learning-rate artefact. |
+| `experiments/robustness_claims.py` | Step 5 (2026-11-19): the alternation claim (f 0.25 kept, 0.5 lost, L = 4) under ×0.75/×1.25 of 16 parameters; holds in 30/32. |
+| `experiments/yang_figures.py` | Step 7 (2026-11-19): spiking simulations for every reproducible Yang 2016 figure (Supp. 4 fit data, Fig. 2, Supp. 1/3c, Fig. 3 multi-dendrite, Fig. 7c–e). |
+| `plotting/yang_rate_model.py` | Yang's multi-compartment rate model refit to our neuron + his SOM/VIP/PV networks (Figs. 3–6, Supp. 2, 5, 6). |
+| `notebooks/yang_replication.ipynb` | Every Yang 2016 figure: reproduced from our model or marked not reproducible, with a summary table. |
+| `plotting/build_yang_replication_pdf.py` | Builds `docs/reports/Yang2016_replication.pdf` from the notebook's figures and summary. |
 | `plotting/build_pi_report.py` | Builds `docs/meetings/Progress_Report.docx`: the whole project start to now, for the PI (rewritten 2026-11-12). |
 | `model/md_loop.py`, `experiments/network_loop_test.py` | Step 3b: PFC↔MD rate loop as the MD source (`md_loop=` in network_circuit); competition, E→MD feedback, loop cross-talk. |
 
