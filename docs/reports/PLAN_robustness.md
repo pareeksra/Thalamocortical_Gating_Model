@@ -489,6 +489,38 @@ blocks of L epochs; recall at the end of the run.
   by a sustained cue, the loop needs its own specificity and competition. PFC feedback to
   MD that does not code the context must stay weak.
 
+### Step 4a — alternation on the network (2026-11-12)
+`experiments/network_alternation.py`, `results/current/network_alternation{,_summary}.json`,
+`figures/network_alternation.png`.
+- The canonical alternation protocol (32 × 3-s epochs, blocks of L, overlap f) on the step-3
+  network at recurrence gain 0.35, with MD from the `amp` loop and with fixed Poisson MD.
+  Learning at 50 Hz (as steps 3a/3b), recall with the 10 Hz frozen readout, S averaged over
+  the 20 cells. 5 seeds; 115 runs.
+- Prediction: the single-cell table is reproduced within ~0.1 for f ≤ 0.25 and keeps its shape
+  at higher f; amp = Poisson.
+
+| f | L = 1: network (amp) | single cell | L = 4: network (amp) | single cell |
+|---|---|---|---|---|
+| 0 | 0.93 / 0.92 | 0.94 / 0.95 | 0.93 / 0.92 | 0.94 / 0.95 |
+| 0.25 | 0.67 / 0.50 | 0.63 / 0.50 | 0.92 / 0.92 | 0.91 / 0.90 |
+| 0.5 | 0.32 / 0.12 | 0.28 / 0.12 | 0.85 / 0.08 | 0.82 / 0.11 |
+| 0.75 | 0.18 / 0.03 | 0.06 / −0.01 | **0.68 / −0.15** | 0.46 / −0.14 |
+| 1.0 | 0.07 / −0.07 | 0.02 / −0.05 | **0.41 / −0.41** | 0.10 / −0.16 |
+
+- Fixed Poisson MD gives the same numbers within 0.01. No gating during learning (L = 4):
+  S 0.01–0.03 at f = 0, 0.5, 1. E 12–17 Hz with gating, 68 Hz without.
+- **Prediction holds for f ≤ 0.5.**
+- **New: at high overlap with 12-s blocks the network is more recency-biased than the single
+  cell.** The current context is recalled better, and at f = 1 the previous one is more
+  reversed. The shared afferents swing fully to the latest context's branch each block (shared
+  on branch 0: 0.93 at the end of A, 0.54 at the end of B). The cause is not separated: the
+  learning rate (50 Hz here, 80 Hz in the single-cell runs), the recurrence, or averaging S
+  over 20 cells.
+- **Claim unchanged:** both contexts are recalled only for f ≤ 0.25 with 12-s blocks; the loop
+  and the recurrence do not change that.
+
 ### Still to do
+- Separate the cause of the stronger recency at high overlap (single cell at 50 Hz; network at
+  recurrence gain 0).
 - Step 3b is done with rate-unit context populations. A spiking context/MD loop is not built (no regime found).
 - Inhibited-branch weakening is slow at the 8 × 3-s learning length.

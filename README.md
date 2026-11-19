@@ -4,7 +4,9 @@
 > SOM baseline + bAP calcium ×0.2 + VIP→SOM ×0.25 (`model/context_circuit.py` defaults).
 > All robustness checks were re-run on it: 19/19 tests, 20/20 seeds, no knife-edge at ±25%.
 > A 20-cell recurrent network (`model/network_circuit.py`, `experiments/network_test.py`)
-> keeps gating up to a recurrence limit set by network stability. Comparison with both
+> keeps gating up to a recurrence limit set by network stability; with MD from a PFC↔MD loop it
+> reproduces the single-cell alternation results (2026-11-12, `experiments/network_alternation.py`).
+> Progress report for the PI: `docs/meetings/Progress_Report.docx` (`plotting/build_pi_report.py`). Comparison with both
 > papers: `docs/reports/PAPER_COMPARISON.md`. Robustness and A/B results:
 > `docs/reports/PLAN_robustness.md`. Regression tests: `tests/test_replication.py [--slow]`.
 > Earlier assessment: `docs/reports/MODEL_STATUS_2026-11-04.md`. Yang Fig. 2 and Supp. Fig. 1 can be

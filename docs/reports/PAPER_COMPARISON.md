@@ -23,7 +23,8 @@ RNN, so it supplies wiring, not rates.
 | Fig. 7d,e | Before learning no gate preference; after learning strong pathway-specific gating | S before ≈ 0 at equal drive (0.06, −0.01, −0.12); after learning S = 0.88 (5 seeds, 10 Hz readout; R5 S1: 0.92, 0.93, 0.81) | **match**, at readout drive ≤ 15 Hz/synapse | `robustness_r3_canonical.json`, `tests/test_replication.py --slow` S1 |
 | Fig. 2e–g | Open gate transmits tuning; S of the 2-D tuning ≈ 0.6 at Yang's settings | 27 vs 8 Hz at the preferred stimulus, S ≈ 0.6 | **match** (with 0.8 nS clamped-soma coupling, 300 Hz soma background) | `notebooks/yang_fig2_supp1.ipynb` |
 | Supp. Fig. 1f–h | Inhibition gates NMDA input strongly, AMPA input weakly | qualitative match | **match** | same notebook, `figures/yang_supp1_fgh_model.png` |
-| Figs. 3–5 | Gating selectivity typically 0.5–0.9, high when control is branch-specific; collapses with non-specific control | Fig. 5 protocol at default wiring: S = 0.93 (5 seeds) | **match**, *given* branch-specific VIP→SOM (assumption G2) | `robustness_r3_canonical.json`; `gating_selectivity_fig5.py` (old synapse) |
+| Fig. 5 | Gating selectivity typically 0.5–0.9, high when control is branch-specific; collapses with non-specific control | Fig. 5 protocol at default wiring: S = 0.93 (5 seeds) | **match**, *given* branch-specific VIP→SOM (assumption G2) | `robustness_r3_canonical.json`; `gating_selectivity_fig5.py` (old synapse) |
+| Figs. 3–4 | Network-scale gating selectivity (many dendrites per neuron, sparse control) | not run: our cells have 2 branches | **not reproduced** | — |
 
 ## Zhang et al. 2025 (wiring, qualitative)
 

@@ -711,6 +711,8 @@ Rewritten: `phase1_single_neuron_gating.py` (analytical wrapper), `demo_v2_zhang
 | `experiments/specificity_test.py` | Step 1: cross-talk at MD→VIP, VIP→SOM, SOM→dendrite (`run`, `weak`, `analyse`). |
 | `experiments/zhang_wiring_test.py` | Step 2: Zhang's SOM→VIP (uniform/own/cross) and PV→PV. |
 | `model/network_circuit.py`, `experiments/network_test.py` | Step 3a: N canonical cells + Zhang E→all recurrence; gain sweep. |
+| `experiments/network_alternation.py` | Step 4a (2026-11-12): canonical A/B alternation on the network (amp loop and Poisson MD, gain 0.35); matches the single cell for f ≤ 0.5, more recency at high overlap. |
+| `plotting/build_pi_report.py` | Builds `docs/meetings/Progress_Report.docx`: the whole project start to now, for the PI (rewritten 2026-11-12). |
 | `model/md_loop.py`, `experiments/network_loop_test.py` | Step 3b: PFC↔MD rate loop as the MD source (`md_loop=` in network_circuit); competition, E→MD feedback, loop cross-talk. |
 
 ### `numpy_models/` — Models B & C (frozen, inert)

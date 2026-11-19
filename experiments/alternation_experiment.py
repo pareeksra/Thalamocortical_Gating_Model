@@ -214,7 +214,7 @@ def analyse():
         a.set_xlabel('input overlap f'); a.legend(frameon=False, fontsize=7)
     for a in ax.flat:
         a.spines[['top', 'right']].set_visible(False)
-    fig.suptitle('Repeated A/B alternation (5 seeds, mean)', fontsize=11)
+    fig.suptitle(f'Repeated A/B alternation ({len(SEEDS)} seeds, mean)', fontsize=11)
     fig.tight_layout()
     fp = os.path.join(PROOT, 'figures', 'alternation_experiment' + ('_canonical' if CANON else '') + '.png')
     fig.savefig(fp, dpi=150, facecolor='white')

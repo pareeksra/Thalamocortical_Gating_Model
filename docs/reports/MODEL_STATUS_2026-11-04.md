@@ -3,6 +3,11 @@
 *2026-11-04. Covers everything up to commit `504daac` plus the Yang Fig. 2 / Supp. Fig. 1
 notebook. Evidence for every claim is in the file named beside it.*
 
+> **Update 2026-11-12** (`PLAN_robustness.md`, Step 4a). The alternation experiment on the
+> 20-cell network with the PFC↔MD loop reproduces the single cell for overlap ≤ 0.5; at higher
+> overlap with 12-s blocks the network is more recency-biased (f = 1: 0.41 / −0.41 vs 0.10 / −0.16).
+> Both contexts are recalled only for f ≤ 0.25 with 12-s blocks, as in the single cell.
+>
 > **Update 2026-11-11** (`docs/reports/PLAN_robustness.md`, Step 1–3a).
 > - Canonical VIP→SOM weight is now ×0.25. All checks were re-run on it: R2 20/20; R3 has no
 >   knife-edge at ±25% and its weakest S_learn rises from 0.51 to 0.64; R5 19/19; Yang Fig. 7b
